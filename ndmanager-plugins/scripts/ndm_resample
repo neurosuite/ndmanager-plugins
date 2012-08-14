@@ -1,0 +1,82 @@
+#!/bin/bash
+
+#////////////////////////////////////////////////////////////////////////////
+#//
+#//   Resample individual multiplexed binary data files
+#//
+#//   copyright       (C) 2007-2010 by Michaël Zugaro
+#//   email           michael.zugaro@college-de-france.fr
+#//
+#//   This program is free software; you can redistribute it and/or modify
+#//   it under the terms of the GNU General Public License as published by
+#//   the Free Software Foundation; either version 3 of the License, or
+#//   (at your option) any later version.
+#//
+#////////////////////////////////////////////////////////////////////////////
+
+# Source helper functions
+source ndm_functions
+
+# Parse command-line
+program=$(basename $0)
+if [ $# -ne 1 ]
+then
+	echo_error "usage: $program xml-file"
+	exit $GENERAL_ERROR
+fi
+session=${1%.xml}
+directory=$(basename "$(pwd)")
+
+# Print a header to indicate current processing step
+print_header "$session - Resampling individual data files"
+
+# Check required programs
+check_commands_installed xpathReader process_resample
+
+# Check input files
+inputs_missing $session.xml && exit $INPUTS_MISSING
+
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+# // Read Parameters
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+samplingRate=$(xml_read $session "//acquisitionSystem/samplingRate")
+suffixes=($(read_script_parameter $session suffixes))
+nChannels=($(read_script_parameter $session nChannels))
+samplingRates=($(read_script_parameter $session samplingRates))
+
+# Parameters not supplied => no resampling requested
+if check_empty_variables ${suffixes[0]} ${nChannels[0]} ${samplingRates[0]}
+then
+	echo_info "no resampling requested"
+	exit $NO_ERROR
+fi
+
+check_mandatory_variable ${suffixes[0]} "missing suffixes"
+check_mandatory_variable ${nChannels[0]} "missing number of channels"
+check_mandatory_variable ${samplingRates[0]} "missing original sampling rates"
+check_mandatory_variable $samplingRate "missing target sampling rate"
+
+if [ ${#nChannels[*]} -ne ${#suffixes[*]} ] || [ ${#nChannels[*]} -ne ${#samplingRates[*]} ] || [ ${#samplingRates[*]} -ne ${#suffixes[*]} ]
+then
+	echo_error "inconsistent numbers of suffixes, channels and sampling rates."
+	exit $GENERAL_ERROR
+fi
+
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+# // Process
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+n=$(get_n_suffixes ${suffixes[*]})
+for (( i=0;i<$n;i++ ))
+do
+	suffix=$(get_suffix $i ${suffixes[*]})
+	c=${nChannels[$i]}
+	r=${samplingRates[$i]}
+	echo_info "Resampling '$session-$suffix.dat'"
+	inputs_missing $session-$suffix.dat && exit $INPUTS_MISSING
+	process_resample -n $c -f $r,$samplingRate $session-$suffix.dat $session-$suffix-tmp.dat
+	check_command_status process_resample
+	mv $session-$suffix-tmp.dat $session-$suffix.dat
+done
+

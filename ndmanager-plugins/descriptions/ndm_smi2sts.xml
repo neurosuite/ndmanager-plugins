@@ -1,0 +1,31 @@
+<?xml version='1.0'?>
+<parameter>
+ <program>
+  <name>ndm_smi2sts</name>
+  <parameters>
+   <parameter>
+    <name>suffix</name>
+    <value></value>
+    <status>Mandatory</status>
+   </parameter>
+  </parameters>
+  <help>Extract spots timestamps from .smi (Neuralynx files).
+
+	  WARNING: In the absence of a useable NVT file, you may wish to extract spots from the MPEG file(s) and timestamps from the SMI file(s), and then match them. This is what ndm_smi2sts is for, and spots2pos will try its best to help you do this, but the results are *not* reliable. This is because Neuralynx systems do not control MPEG video streams. Instead, they leave the task to the operating system, which does a very poor job as far as timing accuracy is concerned. As a result, the video gets started after a random delay following acquisition start, and video frames are shifted by an unpredictable amount (up to hundreds of milliseconds). Again, in the absence of a useable NVT file, this may be your only solution, but please keep these limitations in mind when analyzing your data.
+
+PARAMETERS
+
+# suffix
+
+Suffix of the directory where the SMI file is located
+
+OPTIONAL PARAMETERS
+
+Note: To keep the interface simpler, optional parameters have default values and are not listed in the 'Parameters' tab; to choose custom values, click the 'Add' button and manually add the required parameters (and custom values) to the list.
+
+# gap
+
+A data record is considered to match an 'acquisition restart' event if it is close in time and follows a sampling gap exceeding this threshold (in seconds, default = 1).
+</help>
+ </program>
+</parameter>

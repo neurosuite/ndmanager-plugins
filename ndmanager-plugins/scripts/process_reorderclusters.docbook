@@ -1,0 +1,74 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+          "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="process_reorderclusters">
+
+	<refmeta>
+		<refentrytitle>process_reorderclusters</refentrytitle>
+		<manvolnum>1</manvolnum>
+	</refmeta>
+
+	<refnamediv>
+		<refname>process_reorderclusters</refname><refpurpose>reorder clusters.</refpurpose>
+	</refnamediv>
+
+	<refsynopsisdiv>
+		<cmdsynopsis>
+		<command>process_reorderclusters</command>
+		<arg choice="plain">
+			<replaceable>file</replaceable>
+		</arg>
+		<arg choice="plain">
+			<replaceable>cluster1</replaceable>
+		</arg>
+		<arg choice="plain">
+			...
+		</arg>
+		<arg choice="plain">
+			<replaceable>clusterN</replaceable>
+		</arg>
+		</cmdsynopsis>
+	</refsynopsisdiv>
+
+	<refsect1>
+		<title>Description</title>
+		<para>
+			<command>process_reorderclusters</command> reorders clusters.
+		</para>
+	</refsect1>
+
+	<refsect1>
+		<title>Options</title>
+		<variablelist>
+			<varlistentry>
+				<term><replaceable>file</replaceable></term>
+				<listitem>
+					<para>
+						name of the <replaceable>.clu</replaceable> file
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><replaceable>cluster1</replaceable> ... <replaceable>clusterN</replaceable></term>
+				<listitem>
+					<para>
+						reordered list of cluster IDs (ranging from 2 to N)
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</refsect1>
+
+	<refsect1>
+		<title>Author</title>
+		<para>
+		<author>
+			<firstname>Michael</firstname>
+			<othername role="mi">B</othername>
+			<surname>Zugaro</surname>
+			<contrib>Original author</contrib>
+		</author>,&nbsp;
+		<email>michael.zugaro@college-de-france.fr</email>.
+		</para>
+	</refsect1>
+
+</refentry>

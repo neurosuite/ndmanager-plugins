@@ -1,0 +1,163 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+          "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="process_smrconvert">
+
+	<refmeta>
+		<refentrytitle>process_smrconvert</refentrytitle>
+		<manvolnum>1</manvolnum>
+	</refmeta>
+
+	<refnamediv>
+		<refname>process_smrconvert</refname><refpurpose>convert files recorded with Spike2.</refpurpose>
+	</refnamediv>
+
+	<refsynopsisdiv>
+		<cmdsynopsis>
+		<command>process_smrconvert</command>
+		<arg>
+			<option>-i</option>
+		</arg>
+		<arg>
+			<option>-r</option>
+		</arg>
+		<arg>
+			<option>-w</option>
+		</arg>
+		<arg>
+			<option>-c</option> <replaceable>channels</replaceable>
+		</arg>
+		<arg>
+			<option>-x</option> <replaceable>channels</replaceable>
+		</arg>
+		<arg>
+			<option>-s</option>
+		</arg>
+		<arg>
+			<option>-e</option>
+		</arg>
+		<arg>
+			<option>-f</option>
+		</arg>
+		<arg>
+			<option>-v</option>
+		</arg>
+		<arg choice="plain">
+			<replaceable>input</replaceable>
+		</arg>
+		</cmdsynopsis>
+	</refsynopsisdiv>
+
+	<refsect1>
+		<title>Description</title>
+		<para>
+			<command>process_smrconvert</command> converts files recorded with Spike2.
+		</para>
+	</refsect1>
+
+	<refsect1>
+		<title>Options</title>
+		<variablelist>
+			<varlistentry>
+				<term><option>-i</option>, <option>--info</option></term>
+				<listitem>
+					<para>
+						display header info (file and channels)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-r</option>, <option>--reverse</option></term>
+				<listitem>
+					<para>
+						reverse all signals (some acquisition systems invert all signals; compensate for this)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-w</option>, <option>--wideband</option></term>
+				<listitem>
+					<para>
+						convert ADC channels (-> .dat file)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-c</option> <replaceable>channels</replaceable></term>
+				<listitem>
+					<para>
+						convert only listed ADC channels, e.g. 1,8,10,12 (incompatible with '-x' option)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-x</option> <replaceable>channels</replaceable></term>
+				<listitem>
+					<para>
+						do not convert listed ADC channels, e.g. 1,8,10,12 (incompatible with '-c' option)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-s</option>, <option>--spikes</option></term>
+				<listitem>
+					<para>
+						convert ADC mark channels (-> .spk and .res files)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-e</option>, <option>--events</option></term>
+				<listitem>
+					<para>
+						convert events (-> .evt file)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-f</option>, <option>--force</option></term>
+				<listitem>
+					<para>
+						overwrite existing files (default = off)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-v</option></term>
+				<listitem>
+					<para>
+						verbose mode, displays progress information
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><replaceable>input</replaceable></term>
+				<listitem>
+					<para>
+						input file
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</refsect1>
+
+	<refsect1>
+		<title>Note</title>
+		<para>
+			When no conversion options are provided, '-i -w -s -e' is assumed by default.
+		</para>
+	</refsect1>
+
+	<refsect1>
+		<title>Author</title>
+		<para>
+			<author>
+				<firstname>Michael</firstname>
+				<othername role="mi">B</othername>
+				<surname>Zugaro</surname>
+				<contrib>Original author</contrib>
+			</author>
+			<email>michael.zugaro@college-de-france.fr</email>.
+		</para>
+	</refsect1>
+
+</refentry>

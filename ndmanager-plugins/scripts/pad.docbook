@@ -1,0 +1,119 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+          "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="pad">
+
+	<refmeta>
+		<refentrytitle>pad</refentrytitle>
+		<manvolnum>1</manvolnum>
+	</refmeta>
+
+	<refnamediv>
+		<refname>pad</refname><refpurpose>pad numbers in file names with appropriate numbers of '0' to yield a given length.</refpurpose>
+	</refnamediv>
+
+	<refsynopsisdiv>
+		<cmdsynopsis>
+		<command>pad</command>
+		<arg>
+			<option>-d</option> <replaceable>N</replaceable>
+		</arg>
+		<arg>
+			<option>-n</option>
+		</arg>
+		<arg choice="plain">
+			<replaceable>file1</replaceable>
+		</arg>
+		<arg>
+			<replaceable>file2</replaceable>...
+		</arg>
+		</cmdsynopsis>
+	</refsynopsisdiv>
+
+	<refsect1>
+		<title>Description</title>
+		<para>
+			<command>pad</command> pads numbers in file names with appropriate numbers of '0' to yield a given length.
+		</para>
+	</refsect1>
+
+	<refsect1>
+		<title>Options</title>
+		<variablelist>
+			<varlistentry>
+				<term><option>-d</option>,<option>--digits</option> <replaceable>N</replaceable></term>
+				<listitem>
+					<para>
+						target number of digits (default = 5)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-n</option>,<option>--no-action</option></term>
+				<listitem>
+					<para>
+						simulate, do not actually rename the files
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><replaceable>file1</replaceable> [<replaceable>file2</replaceable>...]</term>
+				<listitem>
+					<para>
+						files to rename
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+
+	</refsect1>
+
+	<refsect1><title>Example</title>
+		<para>
+			In this example, a recording session yielded the following sixteen Neuralynx CSC files:
+		</para>
+<programlisting>
+# ls
+CSC10.ncs  CSC12.ncs  CSC14.ncs  CSC16.ncs  CSC2.ncs  CSC4.ncs  CSC6.ncs  CSC8.ncs
+CSC11.ncs  CSC13.ncs  CSC15.ncs  CSC1.ncs   CSC3.ncs  CSC5.ncs  CSC7.ncs  CSC9.ncs
+</programlisting>
+		<para>
+			To rename these files so that they all have the same number of digits (e.g. 3) and are listed in the appropriate order:
+		</para>
+<programlisting>
+# pad -d 3 CSC*
+`CSC10.ncs' -> `CSC010.ncs'
+`CSC11.ncs' -> `CSC011.ncs'
+`CSC12.ncs' -> `CSC012.ncs'
+`CSC13.ncs' -> `CSC013.ncs'
+`CSC14.ncs' -> `CSC014.ncs'
+`CSC15.ncs' -> `CSC015.ncs'
+`CSC16.ncs' -> `CSC016.ncs'
+`CSC1.ncs' -> `CSC001.ncs'
+`CSC2.ncs' -> `CSC002.ncs'
+`CSC3.ncs' -> `CSC003.ncs'
+`CSC4.ncs' -> `CSC004.ncs'
+`CSC5.ncs' -> `CSC005.ncs'
+`CSC6.ncs' -> `CSC006.ncs'
+`CSC7.ncs' -> `CSC007.ncs'
+`CSC8.ncs' -> `CSC008.ncs'
+`CSC9.ncs' -> `CSC009.ncs'
+# ls
+CSC001.ncs  CSC003.ncs  CSC005.ncs  CSC007.ncs  CSC009.ncs  CSC011.ncs  CSC013.ncs  CSC015.ncs
+CSC002.ncs  CSC004.ncs  CSC006.ncs  CSC008.ncs  CSC010.ncs  CSC012.ncs  CSC014.ncs  CSC016.ncs
+</programlisting>
+	</refsect1>
+
+	<refsect1>
+		<title>Author</title>
+		<para>
+		<author>
+			<firstname>Michael</firstname>
+			<othepadame role="mi">B</othepadame>
+			<supadame>Zugaro</supadame>
+			<contrib>Original author</contrib>
+		</author>,&nbsp;
+		<email>michael.zugaro@college-de-france.fr</email>.
+		</para>
+	</refsect1>
+
+</refentry>

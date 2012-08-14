@@ -1,0 +1,351 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+          "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="ndm">
+
+	<refmeta>
+		<refentrytitle>ndm</refentrytitle>
+		<manvolnum>1</manvolnum>
+	</refmeta>
+
+	<refnamediv>
+		<refname>ndm</refname><refpurpose>the <application>NDManager Plugins</application> are a collection of scripts and tools to process wideband brain signals, video and behavioral events.</refpurpose>
+	</refnamediv>
+
+	<refsect1>
+		<title>Description</title>
+		<para>
+			The <application>NDManager Plugins</application> include scripts and tools to help you process data recorded using electrophysiological data acquisition systems: they perform format conversion, resampling and filtering, spike extraction, video tracking, etc.
+		</para>
+		<para>
+			The typical manner to use <application>NDManager Plugins</application> is as follows:
+		</para>
+		<orderedlist>
+			<listitem>
+				<para>
+					Prepare data files using the simple graphical application <command>ndm_prepare</command>. This will rename and reorganize the files for <application>NDManager</application>, then check the results and help you make sure that no files are missing (this can also be done independently, using <command>ndm_checkconsistency</command>).
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Create a template XML parameter file with <application>NDManager</application>, load all scripts (descriptions are located in <filename>/usr/share/descriptions</filename>) and set their parameters: numbers of channels, sampling rates, codecs, thresholds, etc. Or better, just copy and edit an existing XML parameter file.
+				</para>
+			</listitem>
+			<listitem>
+				<para>
+					Run <command>ndm_start</command>.
+				</para>
+			</listitem>
+		</orderedlist>
+		<para>
+			This will convert data files, resample, reorder and/or extract brain signals, track LEDs, etc. then concatenate the resulting files before processing spikes (detection, extraction, PCA) and creating LFP files.
+		</para>
+		<para>
+			Please read the manual page for <command>ndm_start</command> for additional information.
+		</para>
+	</refsect1>
+
+	<refsect1>
+		<title>Technical Reference</title>
+		<para>
+			Briefly, scripts and tools form a kind of pyramid where lower levels (tools) perform simple tasks, while higher levels (scripts) perform progressively more complex and integrated tasks. At the top of the pyramid is <command>ndm_start</command>, which automatically takes care of all processing steps.
+		</para>
+
+		<para>
+			More precisely:
+			<itemizedlist>
+				<listitem>
+					<para>
+						Tools perform single, unitary processing steps (conversion, filtering, resampling... see manual page for <command>process</command> for details). Although tools are powerful and flexible, they are command-line programs and are not user-friendly. You should normally not need to run them directly.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						Unitary scripts perform equivalent functions but are easier to use: they read all the necessary parameters from a single XML parameter file, which can be graphically edited using <application>NDManager</application>. They also provide some additional features, such as better feedback (warning and error messages). Similar to tools, you should normally not need to run unitary scripts directly.
+					</para>
+				</listitem>
+				<listitem>
+					<para>
+						The batch script <command>ndm_start</command> automatically takes care of all the processing steps for a given recording session or collection of sessions.
+					</para>
+				</listitem>
+			</itemizedlist>
+		</para>
+
+		<para>
+			NOTE: <application>NDManager Plugins</application> assume that the data files are named according to a flexible naming scheme described in the manual page for <command>ndm_start</command>.
+		</para>
+
+		<refsect2><title>Batch processing script</title>
+
+			<para>
+				This script takes care of all processing steps for a given session or collection of sessions (see the manual page for <command>ndm_start</command> for details).
+			</para>
+
+			<variablelist>
+				<varlistentry>
+					<term><command moreinfo="refentry">ndm_start</command></term>
+					<listitem>
+						<para>
+							perform all processing steps for multiple sets of multiple sessions.
+						</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</refsect2>
+
+		<refsect2><title>Unitary processing scripts</title>
+
+			<para>
+				Unitary processing scripts take care of a single processing step (conversion, filtering, resampling...) Under normal circumstances, you should not need to use them explicitly: instead, <command>ndm_start</command> will handle all processing steps automatically. However, in special cases where performing a single processing step is required, unitary scripts can be used directly (see their help pages in <application>NDManager</application> for details).
+			</para>
+
+			<variablelist>
+				<varlistentry>
+					<term>File format conversion</term>
+					<listitem>
+						<variablelist>
+							<varlistentry>
+								<term><command moreinfo="refentry">ndm_ncs2dat</command></term>
+								<listitem>
+									<para>
+										convert Neuralynx <replaceable>.ncs</replaceable> data files to multiplexed binary (<replaceable>.dat</replaceable>) format.
+									</para>
+								</listitem>
+							</varlistentry>
+							<varlistentry>
+								<term><command moreinfo="refentry">ndm_nev2ent</command></term>
+								<listitem>
+									<para>
+										convert Neuralynx <replaceable>.nev</replaceable> files to event format.
+									</para>
+								</listitem>
+							</varlistentry>
+							<varlistentry>
+								<term><command moreinfo="refentry">ndm_nvt2spots</command></term>
+								<listitem>
+									<para>
+										convert Neuralynx <replaceable>.nvt</replaceable> tracker files to spots format.
+									</para>
+								</listitem>
+							</varlistentry>
+							<varlistentry>
+								<term><command moreinfo="refentry">ndm_smi2sts</command></term>
+								<listitem>
+									<para>
+										convert Neuralynx <replaceable>.smi</replaceable> video timestamp file to spots timestamps  (<replaceable>.sts</replaceable> file).
+									</para>
+								</listitem>
+							</varlistentry>
+							<varlistentry>
+								<term><command moreinfo="refentry">ndm_smr2dat</command></term>
+								<listitem>
+									<para>
+										convert Spike2 <replaceable>.smr</replaceable> data files to multiplexed binary format.
+									</para>
+								</listitem>
+							</varlistentry>
+							<varlistentry>
+								<term><command moreinfo="refentry">ndm_smr2evt</command></term>
+								<listitem>
+									<para>
+										convert Spike2 <replaceable>.smr</replaceable> data files to event format.
+									</para>
+								</listitem>
+							</varlistentry>
+						</variablelist>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>Electrophysiological data processing</term>
+					<listitem>
+						<variablelist>
+							<varlistentry>
+								<term><command moreinfo="refentry">ndm_resample</command></term>
+								<listitem>
+									<para>
+										resample multiplexed binary (<replaceable>.dat</replaceable>) data files.
+									</para>
+								</listitem>
+							</varlistentry>
+							<varlistentry>
+								<term><command moreinfo="refentry">ndm_mergedat</command></term>
+								<listitem>
+									<para>
+										merge simultaneously recorded multiplexed binary (<replaceable>.dat</replaceable>) data files.
+									</para>
+								</listitem>
+							</varlistentry>
+							<varlistentry>
+								<term><command moreinfo="refentry">ndm_extractchannels</command></term>
+								<listitem>
+									<para>
+										extract channels from a multiplexed binary (<replaceable>.dat</replaceable>) data file.
+									</para>
+								</listitem>
+							</varlistentry>
+							<varlistentry>
+								<term><command moreinfo="refentry">ndm_reorderchannels</command></term>
+								<listitem>
+									<para>
+										reorder channels in a multiplexed binary (<replaceable>.dat</replaceable>) data file.
+									</para>
+								</listitem>
+							</varlistentry>
+							<varlistentry>
+								<term><command moreinfo="refentry">ndm_hipass</command></term>
+								<listitem>
+									<para>
+										hi-pass filter a multiplexed binary (<replaceable>.dat</replaceable>) data file (-> <replaceable>.fil</replaceable> file).
+									</para>
+								</listitem>
+							</varlistentry>
+							<varlistentry>
+								<term><command moreinfo="refentry">ndm_extractspikes</command></term>
+								<listitem>
+									<para>
+										extract spike waveforms (<replaceable>.spk</replaceable>) and timestamps (<replaceable>.res</replaceable>) from a high-pass filtered multiplexed binary (<replaceable>.fil</replaceable>) data file.
+									</para>
+								</listitem>
+							</varlistentry>
+							<varlistentry>
+								<term><command moreinfo="refentry">ndm_pca</command></term>
+								<listitem>
+									<para>
+										compute principal component analysis (PCA) on spike data for subsequent cluster cutting (-> <replaceable>.fet</replaceable> file).
+									</para>
+								</listitem>
+							</varlistentry>
+						</variablelist>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>Video processing</term>
+					<listitem>
+						<variablelist>
+							<varlistentry>
+								<term><command moreinfo="refentry">ndm_extractleds</command></term>
+								<listitem>
+									<para>
+										extract LEDs from a video (<replaceable>.mpg</replaceable>, <replaceable>.avi</replaceable>, etc.) or tracker (<replaceable>.nvt</replaceable>) file.
+									</para>
+								</listitem>
+							</varlistentry>
+							<varlistentry>
+								<term><command moreinfo="refentry">ndm_transcodevideo</command></term>
+								<listitem>
+									<para>
+										transcode a video file (convert to a different codec).
+									</para>
+								</listitem>
+							</varlistentry>
+						</variablelist>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term>Concatenation</term>
+					<listitem>
+						<variablelist>
+							<varlistentry>
+								<term><command moreinfo="refentry">ndm_concatenate</command></term>
+								<listitem>
+									<para>
+										concatenate wideband signals and behavioral events from successive sessions, keeping them synchronized (video frames can later be concatenated and synchronized using the Matlab script <command>spots2pos</command>).
+									</para>
+								</listitem>
+							</varlistentry>
+						</variablelist>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</refsect2>
+
+		<refsect2><title>Additional helper scripts</title>
+
+			<para>
+				These scripts are not actually part of the <application>NDManager Plugins</application>, but provide useful additional functionality (see their respective manual pages for details).
+			</para>
+
+			<variablelist>
+				<varlistentry>
+					<term><command moreinfo="refentry">ndm_recolorchannels</command></term>
+					<listitem>
+						<para>
+							change channel colors in a XML parameter file.
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term><command moreinfo="refentry">ndm_prepare</command></term>
+					<listitem>
+						<para>
+							rename and reorganize raw data files so that they conform to the naming scheme used by <command>ndm_start</command>.
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term><command moreinfo="refentry">ndm_checkconsistency</command></term>
+					<listitem>
+						<para>
+							check file consistency across recording sessions and setups before running <command>ndm_start</command>.
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term><command moreinfo="refentry">duration</command></term>
+					<listitem>
+						<para>
+							determine the duration and number of samples in one or more data files.
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term><command moreinfo="refentry">rn</command></term>
+					<listitem>
+						<para>
+							rename a group of files as a numbered file list.
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term><command moreinfo="refentry">pad</command></term>
+					<listitem>
+						<para>
+							pad numbers in file names with appropriate numbers of '0' to yield a given length
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term><command moreinfo="refentry">cnt</command></term>
+					<listitem>
+						<para>
+							count unique existing files (or directories) among listed names
+						</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+		</refsect2>
+	</refsect1>
+
+	<refsect1>
+		<title>Authors</title>
+		<para>
+			<author>
+				<firstname>Michael</firstname>
+				<othername role="mi">B</othername>
+				<surname>Zugaro</surname>
+				<contrib>Original author</contrib>
+			</author>,&nbsp;
+			<email>michael.zugaro@college-de-france.fr</email>.
+		</para>
+		<para>
+			<author>
+				<firstname>Lynn</firstname>
+				<othername role="mi">N</othername>
+				<surname>Hazan</surname>
+				<contrib>Original author</contrib>
+			</author>,&nbsp;
+			<email>lynn.hazan@myrealbox.com</email>.
+		</para>
+	</refsect1>
+
+</refentry>

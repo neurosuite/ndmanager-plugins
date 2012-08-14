@@ -1,0 +1,53 @@
+<?xml version='1.0'?>
+<parameter>
+ <program>
+  <name>ndm_start</name>
+  <parameters>
+   <parameter>
+    <name>suffixes</name>
+    <value/>
+    <status>Mandatory</status>
+   </parameter>
+  </parameters>
+  <help>Perform all processing steps for a multiple sets of multiple-session recordings: format conversion, channel extraction and reordering, video transcoding and tracking, data concatenation, spike detection and extraction, etc.
+
+PARAMETERS
+
+# suffixes
+
+List of suffixes for the individual files to convert
+
+OPTIONAL PARAMETERS
+
+Note: To keep the interface simpler, optional parameters have default values and are not listed in the 'Parameters' tab; to choose custom values, click the 'Add' button and manually add the required parameters (and custom values) to the list.
+
+# wideband
+
+Process the wideband data files recorded by the acquisition system: convert to .dat format, resample, merge, extract and reorder channels (default = true)
+
+# video
+
+Process video files recorded by the acquisition system: transcode and extract LEDs (default = true)
+
+# events
+
+Process event files recorded by the acquisition system: convert to .evt format and rename events (default = true)
+
+# spikes
+
+Process spikes: detect and extract spike waveforms, perform PCA (default = true)
+
+# lfp
+
+Downsample wideband signals to produce LFP files (default = true)
+
+# clean
+
+Remove intermediate files after pre-processing is complete (default = false)
+
+# log
+
+Save progress information to log files for later review (use 'cat' or 'less -R' for correct formatting) (default = false)
+</help>
+</program>
+</parameter>

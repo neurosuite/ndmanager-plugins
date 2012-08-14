@@ -1,0 +1,149 @@
+#!/bin/bash
+
+#////////////////////////////////////////////////////////////////////////////
+#//
+#//   Concatenate session files
+#//
+#//   copyright       (C) 2007-2011 by Michaël Zugaro
+#//   email           michael.zugaro@college-de-france.fr
+#//
+#//   This program is free software; you can redistribute it and/or modify
+#//   it under the terms of the GNU General Public License as published by
+#//   the Free Software Foundation; either version 3 of the License, or
+#//   (at your option) any later version.
+#//
+#////////////////////////////////////////////////////////////////////////////
+
+# Source helper functions
+source ndm_functions
+
+# Parse command-line
+program=$(basename $0)
+if [ $# -lt 1 ]
+then
+	echo_error "usage: $program xml-file"
+	exit $GENERAL_ERROR
+fi
+concatenated=${1%.xml}
+directory=$(basename "$(pwd)")
+
+# Check required files
+inputs_missing $concatenated.xml && exit $INPUTS_MISSING
+
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+# // Read Parameters
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+n_channels=$(xml_read $concatenated "//acquisitionSystem/nChannels")
+samplingRate=$(xml_read $concatenated "//acquisitionSystem/samplingRate")
+resolution=$(xml_read $concatenated "//acquisitionSystem/nBits")
+spots_sampling_rate=$(read_script_parameter $concatenated spotsSamplingRate)
+max_shift=$(read_script_parameter $concatenated maxShift)
+
+check_mandatory_variable $n_channels "missing number of channels"
+check_mandatory_variable $samplingRate "missing sampling rate"
+check_mandatory_variable $resolution "missing resolution"
+check_durations=true
+if ! check_optional_variable $spots_sampling_rate
+then
+	echo_warning "missing sampling rate for .spots files, will not check wideband vs video durations"
+	check_durations=false
+fi
+if ! check_optional_variable $max_shift
+then
+	max_shift=3
+fi
+
+
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+# // Process
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+duration=0
+start=0
+stop=0
+
+# Check existing target files (will skip them)
+dat_exists=false
+[ -f "$concatenated.dat" ] && dat_exists=true
+cat_exists=false
+[ -f "$concatenated.cat.evt" ] && cat_exists=true
+evt_exists=false
+[ ! -z "$(ls $concatenated.*.evt 2>/dev/null | grep -v $concatenated.cat.evt 2>/dev/null)" ] && evt_exists=true
+
+# Concatenate wideband files and create event file containing timestamps for beginning/end of individual sessions
+wideband_files=$(ls *dat | grep -v $concatenated.dat 2>/dev/null)
+f=($wideband_files)
+n_wideband_files=${#f[*]}
+for wideband_file in $wideband_files
+do
+	session=${wideband_file/.dat/}
+	spots_file=$session.spots
+	echo_info "$session ... "
+
+	# Compare durations of wideband and video signals, and report large shift
+	wideband_duration=$(unset LANG && duration -F $samplingRate -n $n_channels -r $(($resolution/8)) $wideband_file | awk '{printf $2}')
+	echo_info "Durations:"
+	echo_info "  wideband signals  $wideband_duration s"
+	if $check_durations || inputs_missing $spots_file
+	then
+		spots_duration=$(unset LANG && duration -v $spots_sampling_rate $spots_file | awk '{printf $2}')
+		delta_duration=$(unset LANG && echo $wideband_duration $spots_duration | awk '{printf $1-$2}')
+		echo_info "  video signals     $spots_duration s"
+		echo_info "  difference        $delta_duration s"
+		if test_time_delta $delta_duration $max_shift
+		then
+			echo_warning "  large shift may indicate a problem."
+		fi
+	else
+		echo_info "  video signals     --"
+	fi
+
+	# Timestamp at beginning and end of wideband (beginning = end of previous wideband file) (time in ms)
+	start=$stop
+	stop=$(unset LANG && echo $start $wideband_duration | awk '{printf "%f",$1+$2*1000}')
+
+	# Save info to 'cat' event file
+	echo_info -n "  Concatenation info ... "
+	if $cat_exists
+	then
+		echo_warning "skipping (output exists)"
+	else
+		echo_info "$start    beginning of $session" >> $concatenated.cat.evt
+		echo_info "$stop    end of $session" >> $concatenated.cat.evt
+		echo_info "done"
+	fi
+
+	# Concatenate wideband data
+	echo_info -n "  Wideband data ... "
+	if $dat_exists
+	then
+		echo_warning "skipping (output exists)"
+	else
+		if [ $n_wideband_files -eq 1 ]
+		then
+			# Only one file: rename and create link for session file
+			mv $wideband_file $concatenated.dat && echo_info "done"
+			ln -s $concatenated.dat $wideband_file
+		else
+			# Multiple files: concatenate
+			cat $wideband_file >> $concatenated.dat && echo_info "done"
+		fi
+	fi
+
+	# Concatenate events
+	echo_info -n "  Events ... "
+	if $evt_exists
+	then
+		echo_warning "skipping (output exists)"
+	else
+		event_files=$(ls ${wideband_file/.dat/}*.evt 2>/dev/null)
+		for event_file in $event_files
+		do
+			unset LANG && awk 'BEGIN { dropped = 0 } {$1=$1+'$start';if ($1 < '$stop') { printf "%f",$1;for (i=2;i<=NF;i++){printf " %s",$i};printf "\n"} else { dropped = dropped + 1 } } END { if ( dropped != 0 ) exit dropped }' $event_file >> $concatenated.all.evt
+			dropped=$?
+			[ "$dropped" -ne 0 ] && echo_warning "($dropped events dropped)"
+		done
+		echo_info "done"
+	fi
+done

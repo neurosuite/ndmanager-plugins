@@ -1,0 +1,102 @@
+#!/bin/bash
+
+#////////////////////////////////////////////////////////////////////////////
+#//
+#//   Merge individual files in multiplexed binary format
+#//
+#//   copyright       (C) 2007-2010 by Michaël Zugaro
+#//   email           michael.zugaro@college-de-france.fr
+#//
+#//   This program is free software; you can redistribute it and/or modify
+#//   it under the terms of the GNU General Public License as published by
+#//   the Free Software Foundation; either version 3 of the License, or
+#//   (at your option) any later version.
+#//
+#////////////////////////////////////////////////////////////////////////////
+
+# Source helper functions
+source ndm_functions
+
+# Parse command-line
+program=$(basename $0)
+if [ $# -ne 1 ]
+then
+	echo_error "usage: $program xml-file"
+	exit $GENERAL_ERROR
+fi
+session=${1%.xml}
+directory=$(basename "$(pwd)")
+
+# Print a header to indicate current processing step
+print_header "$session - Merging DAT files"
+
+# Check input and output files
+inputs_missing $session.xml && exit $INPUTS_MISSING
+outputs_exist $session.dat && exit $OUTPUTS_EXIST
+
+# Check required programs
+check_commands_installed xpathReader process_merge
+
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+# // Read Parameters
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+nChannels=($(read_script_parameter $session nChannels))
+suffixes=($(read_script_parameter $session suffixes))
+
+# Parameters not supplied => nothing to merge, rename file (if there is only one; otherwise, report an error)
+if check_empty_variables ${nChannels[0]} ${suffixes[0]}
+then
+	file=$(ls $session-*.dat 2>/dev/null)
+	n_files=$(echo $file|wc -w)
+	if [ $n_files -ne 1 ]
+	then
+		# There is more than one candidate file, but parameters are missing: report an error
+		check_mandatory_variable ${nChannels[0]} "missing number of channels in individual data files"
+	fi
+	echo_info "Nothing to merge - renaming '$file' -> '$session.dat'."
+	mv $file $session.dat
+	exit $NO_ERROR
+fi
+
+check_mandatory_variable ${nChannels[0]} "missing number of channels in individual data files"
+check_mandatory_variable ${suffixes[0]} "missing suffixes for individual data files"
+if [ ${#nChannels[*]} -ne ${#suffixes[*]} ]
+then
+	echo_error "inconsistent numbers of suffixes and channels."
+	exit $GENERAL_ERROR
+fi
+
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+# // Process
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+n=$(get_n_suffixes ${suffixes[*]})
+# One file: just rename
+if [ $n -eq 1 ]
+then
+	suffix=$(get_suffix 0 ${suffixes[*]})
+	if [ -f "$session-$suffix.dat" ]
+	then
+		echo_info "Nothing to merge - renaming '$session-$suffix.dat'"
+		mv $session-$suffix.dat $session.dat
+	fi
+	exit $NO_ERROR
+fi
+echo_info "Merging..."
+# Two or more files: merge
+for (( i=0;i<$n;i++ ))
+do
+	suffix=$(get_suffix $i ${suffixes[*]})
+	c=${nChannels[$i]}
+	[ $c -eq 1 ] && echo_info -e " $session-$suffix.dat\t[1 channel]" || echo_info -e " $session-$suffix.dat\t[$c channels]"
+	file_info="$file_info $session-$suffix.dat $c"
+	files="$files $session-$suffix.dat"
+	inputs_missing $session-$suffix.dat && exit $INPUTS_MISSING
+done
+
+process_merge -t $file_info $session.dat
+check_command_status process_merge
+rm $files
+
+

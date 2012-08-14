@@ -1,0 +1,92 @@
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
+<class>ChannelColorsLayout</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>ChannelColorsLayout</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>424</width>
+            <height>314</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Channel Colors</string>
+    </property>
+    <grid>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QLayoutWidget" row="0" column="0">
+            <property name="name">
+                <cstring>layout49</cstring>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QTable" row="1" column="0" rowspan="1" colspan="2">
+                    <column>
+                        <property name="text">
+                            <string>Current Color</string>
+                        </property>
+                    </column>
+                    <column>
+                        <property name="text">
+                            <string>Anatomical Color</string>
+                        </property>
+                    </column>
+                    <column>
+                        <property name="text">
+                            <string>Spike Color</string>
+                        </property>
+                    </column>
+                    <property name="name">
+                        <cstring>colorTable</cstring>
+                    </property>
+                    <property name="minimumSize">
+                        <size>
+                            <width>350</width>
+                            <height>0</height>
+                        </size>
+                    </property>
+                    <property name="numRows">
+                        <number>0</number>
+                    </property>
+                    <property name="numCols">
+                        <number>3</number>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="0" column="0">
+                    <property name="name">
+                        <cstring>textLabel1</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Channel Colors</string>
+                    </property>
+                </widget>
+                <spacer row="0" column="1">
+                    <property name="name">
+                        <cstring>spacer10_2_3_3</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>231</width>
+                            <height>16</height>
+                        </size>
+                    </property>
+                </spacer>
+            </grid>
+        </widget>
+    </grid>
+</widget>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

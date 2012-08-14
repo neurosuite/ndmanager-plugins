@@ -1,0 +1,79 @@
+#!/bin/bash
+
+#////////////////////////////////////////////////////////////////////////////
+#//
+#//   Clean directory (remove unnecessary files)
+#//
+#//   copyright       (C) 2011 by Michaël Zugaro
+#//   email           michael.zugaro@college-de-france.fr
+#//
+#//   This program is free software; you can redistribute it and/or modify
+#//   it under the terms of the GNU General Public License as published by
+#//   the Free Software Foundation; either version 3 of the License, or
+#//   (at your option) any later version.
+#//
+#////////////////////////////////////////////////////////////////////////////
+
+# Source helper functions
+source ndm_functions
+
+# Parse command-line
+program=$(basename $0)
+if [ $# -ne 1 ]
+then
+	echo_error "usage: $program xml-file"
+	exit $GENERAL_ERROR
+fi
+session=${1%.xml}
+directory=$(basename "$(pwd)")
+
+# Print a header to indicate current processing step
+print_header "$session - Cleaning"
+
+# Check required programs
+check_commands_installed xpathReader
+
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+# // Read Parameters
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+delete_wideband=$(read_script_parameter $session wideband)
+delete_xml=$(read_script_parameter $session xml)
+delete_hipass=$(read_script_parameter $session hipass)
+delete_spots=$(read_script_parameter $session spots)
+delete_pos=$(read_script_parameter $session pos)
+
+check_optional_variable $delete_wideband || delete_wideband=true
+check_optional_variable $delete_xml || delete_xml=true
+check_optional_variable $delete_hipass || delete_hipass=true
+check_optional_variable $delete_spots || delete_spots=false
+check_optional_variable $delete_pos || delete_pos=false
+
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+# // Process
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+if $delete_wideband
+then
+	wideband_files=$(ls *dat | grep -v $session.dat 2>/dev/null)
+	[ ! -z "$wideband_files" ] && rm -f $wideband_files
+fi
+if $delete_xml
+then
+	xml_files=$(ls *xml | grep -v $session.xml 2>/dev/null)
+	[ ! -z "$xml_files" ] && rm -f $xml_files
+fi
+if $delete_spots
+then
+	spots_files=$(ls *spots 2>/dev/null)
+	[ ! -z "$spots_files" ] && rm -f $spots_files
+fi
+if $delete_pos
+then
+	pos_files=$(ls *pos | grep -v $session.pos 2>/dev/null)
+	[ ! -z "$pos_files" ] && rm -f $pos_files
+fi
+if $delete_hipass
+then
+	rm -f $session.fil
+fi

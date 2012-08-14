@@ -1,0 +1,42 @@
+<?xml version='1.0'?>
+<parameter>
+ <program>
+  <name>ndm_ncs2dat</name>
+  <parameters>
+   <parameter>
+    <name>reverse</name>
+    <value>false</value>
+    <status>Mandatory</status>
+   </parameter>
+   <parameter>
+    <name>suffixes</name>
+    <value></value>
+    <status>Mandatory</status>
+   </parameter>
+  </parameters>
+  <help>Convert from .ncs (Neuralynx files) to .dat format.
+
+PARAMETERS
+
+# reverse
+
+Whether the signals should be reversed (by default, NeuraLynx reverses all signals - this sets them back to normal)
+
+# suffixes
+
+List of suffixes of the directories where the NCS files are located
+
+OPTIONAL PARAMETERS
+
+Note: To keep the interface simpler, optional parameters have default values and are not listed in the 'Parameters' tab; to choose custom values, click the 'Add' button and manually add the required parameters (and custom values) to the list.
+
+# gap
+
+A data record is considered to match an 'acquisition restart' event if it is close in time and follows a sampling gap exceeding this threshold (in seconds, default = 1).
+
+# ignoreEvents
+
+In newer versions of Neuralynx, NEV files may not correctly list 'acquisition start/stop' events, which results in incorrect conversion; if this happens, set ignoreEvents to 'true' and reprocess to fix this issue (default = false).
+</help>
+ </program>
+</parameter>

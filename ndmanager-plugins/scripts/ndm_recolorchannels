@@ -1,0 +1,80 @@
+#!/bin/bash
+
+#////////////////////////////////////////////////////////////////////////////
+#//
+#//   Change channel colors in XML parameter file
+#//
+#//   copyright       (C) 2008-2010 by Michaël Zugaro
+#//   email           michael.zugaro@college-de-france.fr
+#//
+#//   This program is free software; you can redistribute it and/or modify
+#//   it under the terms of the GNU General Public License as published by
+#//   the Free Software Foundation; either version 3 of the License, or
+#//   (at your option) any later version.
+#//
+#////////////////////////////////////////////////////////////////////////////
+
+# Source helper functions
+source ndm_functions
+
+# Parse parameters
+program=$(basename $0)
+declare -i n=0
+while true
+do
+	case $1 in
+		-h|--help)
+			echo ""
+			echo "usage: $program [OPTIONS] xml_file"
+			echo " xml_file           xml parameter file"
+			echo " -c ch1-ch2,color   range of channel IDs (counted from 0) and hexadecimal color code"
+			echo "                    (e.g. 000000 = black, ffffff = white, ff0000 = bright red, etc.)"
+			echo ""
+			echo " For example, to recolor tetrode 1 in red, tetrode 2 in green and channel 17 in blue:"
+			echo " # $program -c 0-3,ff0000 -c 4-7,00ff00 -c 17,0000ff file.xml"
+			echo ""
+			exit $NO_ERROR
+			;;
+		-c)
+			rgb=$(echo $2|cut -f 2 -d ',')
+			channels=$(echo $2|cut -f 1 -d ',')
+			first=$(echo $channels|cut -f 1 -d '-')
+			last=$(echo $channels|cut -f 2 -d '-')
+			[ -z "$last" ] && last=$first
+			k=$(($last-$first+1))
+			for ((i=0;i<$k;i++))
+			do
+				channel[$n]=$(($first+$i))
+				color[$n]=$rgb
+				n=$n+1
+			done
+			shift 2
+			;;
+		*)
+			if [ -z "$1" ]
+			then
+				echo_error "missing xml_file"
+				exit $GENERAL_ERROR
+			elif [ "${1:0:1}" == '-' ]
+			then
+				echo_error "unknown option '$1'"
+				exit $GENERAL_ERROR
+			else
+				break
+			fi
+			;;
+	esac
+done
+
+# Check parameter file
+file=$1
+[ ! -f "$file" ] && echo_error "missing parameter file '$file'" && exit $GENERAL_ERROR
+
+command=""
+for ((i=0;i<n;i++))
+do
+	s="<channel>${channel[$i]}<\/channel>"
+	command='/'$s'/N;/'$s'/N;/'$s'/s/#....../#'${color[$i]}'/g;'$command
+done
+
+[ ! -z "$command" ] && sed -i -e $command $file

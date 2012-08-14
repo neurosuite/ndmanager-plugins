@@ -1,0 +1,1 @@
+NDManager (Neurophysiological Data Manager) is a simple graphical application designed to help neurophysiologists manage their experimental recording parameters (e.g., number of channels and sampling rate of the acquisition system) and process their data (data filtering, spike extraction, PCA, etc.)

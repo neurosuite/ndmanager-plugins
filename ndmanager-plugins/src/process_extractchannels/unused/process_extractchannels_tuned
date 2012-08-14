@@ -1,0 +1,52 @@
+#!/bin/sh
+
+# Usage information
+
+if [ $# -lt 4 ]
+then
+  echo "usage: $0 input output channels channel1 [channel2...]"
+  echo
+  echo "  input                         .dat file to process"
+  echo "  output                        output file"
+  echo "  channels                      total number of channels"
+  echo "  channel1 [channel2...]        list of channels to extract"
+  echo
+  exit 0
+
+fi
+
+# Number of channels
+
+channels=$(($#-3))
+
+# Tune: create foo file and process it with different buffer sizes
+
+echo
+dd if=/dev/zero of=.20megs bs=1M count=20
+echo
+
+min=1000000
+factor=0
+for i in 128 256 512 1024 2048 4096 8192 16392
+do
+  echo Testing buffer size factor $i
+  a=`time -p extractchannels -b $i .20megs .20megs2 $3 $channels 2>&1 |  awk '/real/ {a=$2*1000;print a}'`
+  b=`time -p extractchannels -b $i .20megs .20megs2 $3 $channels 2>&1 |  awk '/real/ {a=$2*1000;print a}'`
+  c=`time -p extractchannels -b $i .20megs .20megs2 $3 $channels 2>&1 |  awk '/real/ {a=$2*1000;print a}'`
+  total=$((a+b+c))
+  if [ $min -gt $total ]
+  then
+    min=$total
+    factor=$i
+  fi
+done
+rm -f .20megs .20megs2
+
+echo $min
+
+t=`echo $min \`ls -l $1\` | awk '{a=$1/3000*$6/20971520;m=int(a/60);s=int(a%60+.5);printf("%02d:",m);printf("%02d",s)}'`
+
+echo
+echo "Calling: extractchannels -b $factor $@ (ETA $t)"
+echo
+extractchannels -b $factor $@

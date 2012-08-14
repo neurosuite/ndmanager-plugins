@@ -1,0 +1,131 @@
+Source: ffmpeg
+Section: libs
+Priority: optional
+Maintainer: Ubuntu MOTU Developers <ubuntu-motu@lists.ubuntu.com>
+XSBC-Original-Maintainer: Debian multimedia packages maintainers <pkg-multimedia-maintainers@lists.alioth.debian.org>
+Uploaders: Sam Hocevar (Debian packages) <sam+deb@zoy.org>, Loic Minier <lool@dooz.org>, Reinhard Tartler <siretart@tauware.de>
+Build-Depends: debhelper (>= 4.0), quilt, libogg-dev, libvorbis-dev, zlib1g-dev, libsdl1.2-dev, libfreetype6-dev, libimlib2-dev, texi2html, libraw1394-dev [!kfreebsd-i386 !kfreebsd-amd64 !hurd-i386], libdc1394-13-dev [!kfreebsd-i386 !kfreebsd-amd64 !hurd-i386], libtheora-dev (>> 0.0.0.alpha4), libgsm1-dev
+Standards-Version: 3.7.2
+
+Package: ffmpeg
+Section: graphics
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: multimedia player, server and encoder
+ This package contains the ffplay multimedia player, the ffserver streaming
+ server and the ffmpeg audio and video encoder. They support most existing
+ file formats (AVI, MPEG, OGG, Matroska, ASF...) and encoding formats (MPEG,
+ DivX, MPEG4, AC3, DV...).
+
+Package: libavutil1d
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: ffmpeg utility library
+ This is the common utility library from the ffmpeg project. It is required
+ by all other ffmpeg libraries.
+ .
+ This package contains a Debian-specific version of the libswscale shared
+ object that should only be used by Debian packages.
+
+Package: libavcodec1d
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: ffmpeg codec library
+ This is the codec library from the ffmpeg project. It supports most existing
+ encoding formats (MPEG, DivX, MPEG4, AC3, DV...).
+ .
+ This package contains a Debian-specific version of the libavcodec shared
+ object that should only be used by Debian packages.
+
+Package: libpostproc1d
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: ffmpeg video postprocessing library
+ This is the video postprocessing library from the ffmpeg project.
+ .
+ This package contains a Debian-specific version of the libpostproc shared
+ object that should only be used by Debian packages.
+
+Package: libavformat1d
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: ffmpeg file format library
+ This is the demuxer library from the ffmpeg project. It supports most
+ existing file formats (AVI, MPEG, OGG, Matroska, ASF...).
+ .
+ This package contains a Debian-specific version of the libavformat shared
+ object that should only be used by Debian packages.
+
+Package: libswscale1d
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: ffmpeg video scaling library
+ This is the video scaling library from the ffmpeg project.
+ .
+ This package contains a Debian-specific version of the libswscale shared
+ object that should only be used by Debian packages.
+
+Package: libavutil-dev
+Section: libdevel
+Architecture: any
+Depends: libavutil1d (= ${Source-Version}), ${shlibs:Depends}
+Conflicts: libavformat-dev (<< 0.cvs20060329-4), libavcodec-dev (<< 0.cvs20070307-1)
+Replaces: libavformat-dev (<< 0.cvs20060329-4), libavcodec-dev (<< 0.cvs20070307-1)
+Description: development files for libavutil
+ This is the common utility library from the ffmpeg project. It is required
+ by all other ffmpeg libraries.
+ .
+ This package contains the header files and static libraries needed to
+ compile applications or shared objects that use libavutil.
+
+Package: libavcodec-dev
+Section: libdevel
+Architecture: any
+Depends: libavcodec1d (= ${Source-Version}), libavutil-dev (= ${Source-Version}), libvorbis-dev, libogg-dev, zlib1g-dev, ${lib1394-dev}, libtheora-dev (>> 0.0.0.alpha4), libgsm1-dev, ${shlibs:Depends}
+Conflicts: libavformat-dev (<< 0.cvs20060329-4)
+Replaces: libavformat-dev (<< 0.cvs20060329-4)
+Description: development files for libavcodec
+ This is the codec library from the ffmpeg project. It supports most existing
+ encoding formats (MPEG, DivX, MPEG4, AC3, DV...).
+ .
+ This package contains the header files and static libraries needed to
+ compile applications or shared objects that use libavcodec.
+
+Package: libpostproc-dev
+Section: libdevel
+Architecture: any
+Depends: libpostproc1d (= ${Source-Version}), libavcodec-dev (= ${Source-Version}), ${shlibs:Depends}
+Description: development files for libpostproc
+ This is the video postprocessing library from the ffmpeg project.
+ .
+ This package contains the header files and static libraries needed to
+ compile applications or shared objects that use libpostproc.
+
+Package: libavformat-dev
+Section: libdevel
+Architecture: any
+Depends: libavformat1d (= ${Source-Version}), libavcodec-dev (= ${Source-Version}), ${shlibs:Depends}
+Conflicts: libavcodec-dev (<< 0.cvs20060306-1)
+Replaces: libavcodec-dev (<< 0.cvs20060306-1)
+Description: development files for libavformat
+ This is the demuxer library from the ffmpeg project. It supports most
+ existing file formats (AVI, MPEG, OGG, Matroska, ASF...).
+ .
+ This package contains the header files and static libraries needed to
+ compile applications or shared objects that use libavformat.
+
+Package: libswscale-dev
+Section: libdevel
+Architecture: any
+Depends: libswscale1d (= ${Source-Version}), libavutil-dev (= ${Source-Version}), ${shlibs:Depends}
+Description: development files for libswscale
+ This is the video scaling library from the ffmpeg project.
+ .
+ This package contains the header files and static libraries needed to
+ compile applications or shared objects that use libswscale.
+

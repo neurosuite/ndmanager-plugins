@@ -1,0 +1,52 @@
+#!/bin/bash
+
+start=$(pwd)
+install=false
+
+source ./version
+
+# Parse parameters
+while [ $# -ne 0 ]
+do
+	case "$1" in
+		-i)
+			install=true
+			;;
+	esac
+	shift
+done
+
+(
+	cd ..
+	ln -s $start/description-pak .
+
+	# Package
+	sudo checkinstall $output --maintainer 'Michael Zugaro' --pkgname $name --pkgversion $version --pkgrelease $release --pkglicense GPL --pkggroup Scientific --pkgsource $source --pkgarch $arch --requires $requires --pakdir $start --delspec
+
+	rm description-pak
+)
+
+# Add 'Replaces' info to package
+mkdir repackaged
+mv ndmanager-plugins*.deb repackaged
+cd repackaged
+ar -x ndmanager-plugins*.deb
+mv ndmanager-plugins*.deb ..
+tar xf control.tar.gz
+tar xf data.tar.gz
+rm *gz debian-binary
+mkdir DEBIAN
+sed -i '/Replaces:/d' control
+echo "Replaces: process" >> control
+mv con* DEBIAN
+cd ..
+dpkg -b repackaged
+rm -rf repackaged
+mv -f repackaged.deb ndmanager-plugins*.deb
+sudo chown root.root ndmanager-plugins*.deb
+
+# Install?
+if $install
+then
+	sudo eval $install_cmd
+fi

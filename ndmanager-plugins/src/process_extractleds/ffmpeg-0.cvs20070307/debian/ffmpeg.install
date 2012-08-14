@@ -1,0 +1,10 @@
+etc/ffserver.conf
+usr/lib/vhook
+usr/bin/ffmpeg
+usr/bin/ffserver
+usr/bin/ffplay
+usr/bin/qt-faststart
+usr/share/doc/ffmpeg
+usr/share/man/man1/ffmpeg.1
+usr/share/man/man1/ffserver.1
+usr/share/man/man1/ffplay.1

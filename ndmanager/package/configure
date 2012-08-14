@@ -1,0 +1,7 @@
+#!/bin/bash
+
+(
+	cd ..
+	kde_htmldir=/usr/share/doc/kde/HTML ./configure --prefix=$(kde-config --prefix) --without-arts
+)
+

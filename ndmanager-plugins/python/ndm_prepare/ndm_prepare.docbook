@@ -1,0 +1,58 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+          "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="ndm_prepare">
+
+	<refmeta>
+		<refentrytitle>ndm_prepare</refentrytitle>
+		<manvolnum>1</manvolnum>
+	</refmeta>
+
+	<refnamediv>
+		<refname>ndm_prepare</refname><refpurpose> rename and reorganize raw data files for <application>NDManager</application>.</refpurpose>
+	</refnamediv>
+
+	<refsynopsisdiv>
+		<cmdsynopsis>
+		<command>ndm_prepare</command>
+		<arg>
+			<replaceable>directory1</replaceable> <replaceable>directory2</replaceable> ...
+		</arg>
+		</cmdsynopsis>
+	</refsynopsisdiv>
+
+	<refsect1>
+		<title>Description</title>
+		<para>
+			<command>ndm_prepare</command> renames and reorganizes raw data files for <application>NDManager</application>, then checks the results and helps you make sure that no files are missing (this can also be done independently, using <command>ndm_checkconsistency</command>). The easiest way to use it is to select the directories in <application>Konqueror</application> or <application>Dolphin</application>, then right-click and choose 'Prepare for NDManager' from the context menu. The second method is to type 'ndm_checkconsistency' at the command-line prompt and graphically select the directories. Finally, the list of directories can also be explicitly provided on the command-line.
+		</para>
+	</refsect1>
+
+	<refsect1>
+		<title>Options</title>
+		<variablelist>
+			<varlistentry>
+				<term><replaceable>directory1</replaceable> <option><replaceable>directory2</replaceable> ...</option></term>
+				<listitem>
+					<para>
+						directories to process
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+
+	</refsect1>
+
+	<refsect1>
+		<title>Author</title>
+		<para>
+		<author>
+			<firstname>Michael</firstname>
+			<othername role="mi">B</othername>
+			<surname>Zugaro</surname>
+			<contrib>Original author</contrib>
+		</author>,&nbsp;
+		<email>michael.zugaro@college-de-france.fr</email>.
+		</para>
+	</refsect1>
+
+</refentry>

@@ -1,0 +1,43 @@
+#!/bin/bash
+
+#////////////////////////////////////////////////////////////////////////////
+#//
+#//   Rename events and event files
+#//
+#//   copyright       (C) 2007-2010 by Michaël Zugaro
+#//   email           michael.zugaro@college-de-france.fr
+#//
+#//   This program is free software; you can redistribute it and/or modify
+#//   it under the terms of the GNU General Public License as published by
+#//   the Free Software Foundation; either version 3 of the License, or
+#//   (at your option) any later version.
+#//
+#////////////////////////////////////////////////////////////////////////////
+
+# Parse command-line
+program=$(basename $0)
+if [ $# -ne 1 ]
+then
+	echo_error "usage: $program xml-file"
+	exit $GENERAL_ERROR
+fi
+session=${1%.xml}
+
+# Transform arcane codes into human-readable event messages
+[ -z "$(ls $session*evt 2> /dev/null)" ] && exit $NO_ERROR
+for eventfile in $session*evt
+do
+	sed -i \
+		-e 's/[[:space:]]0$/\tTurn left/' \
+		-e 's/[[:space:]]1$/\tTurn right/' \
+		-e 's/[[:space:]]100$/\tTrial start/' \
+		-e 's/[[:space:]]-56$/\tTrial end/' \
+		-e 's/[[:space:]]6$/\tVisual cue/' \
+		-e 's/[[:space:]]10$/\tReward left/' \
+		-e 's/[[:space:]]11$/\tReward right/' \
+		-e 's/[[:space:]]73$/\tEnd of session/' \
+		$eventfile
+done
+
+# Rename event files
+rename -f 's/e30/eos/;s/e31/all/;s/-red//' $session*evt

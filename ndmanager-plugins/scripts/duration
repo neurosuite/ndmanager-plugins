@@ -1,0 +1,484 @@
+#!/bin/bash
+
+#////////////////////////////////////////////////////////////////////////////
+#//
+#//   Determine duration and number of samples in one or more files
+#//
+#//   copyright       (C) 2003-2010 by Michaël Zugaro
+#//   email           michael.zugaro@college-de-france.fr
+#//
+#//   This program is free software; you can redistribute it and/or modify
+#//   it under the terms of the GNU General Public License as published by
+#//   the Free Software Foundation; either version 3 of the License, or
+#//   (at your option) any later version.
+#//
+#////////////////////////////////////////////////////////////////////////////
+
+BLACK="\e[1;30m"
+DARK_GREY="\e[1;30m"
+BLUE="\e[1;34m"
+LIGHT_BLUE="\e[1;34m"
+GREEN="\e[0;32m"
+LIGHT_GREEN="\e[1;32m"
+CYAN="\e[1;36m"
+LIGHT_CYAN="\e[1;36m"
+RED="\e[1;31m"
+LIGHT_RED="\e[1;31m"
+PURPLE="\e[0;35m"
+LIGHT_PURPLE="\e[1;35m"
+BROWN="\e[0;33m"
+YELLOW="\e[1;33m"
+LIGHT_GREY="\e[1;37m"
+WHITE="\e[1;37m"
+BOLD_BLACK="\e[1m"
+PLAIN="\e[0m"
+
+#////////////////////////////////////////////////////////////////////////////
+#//   Compute and print duration
+#////////////////////////////////////////////////////////////////////////////
+
+# Print n characters
+print_chars(){
+	[ $# -ne 2 ] && return
+	n=$1
+	char=$2
+	for ((i=1;i<=$n;i++))
+	do
+		echo -n $char
+	done
+}
+
+# Print one line in the output array (header or data)
+print_line(){
+	$useColor && echo -en $1
+	if [ $# -eq 4 ]
+	then
+		echo $2 $3 $4 $5 | awk '{printf " %-*s %15s %10s %10s\n",'$name_space',$1,$2,$3,$4}'
+	else
+		echo $2 $3 $4 $5 $6 $7 $8 | awk '{printf " %-*s %15s %10s %10s %15s %10s %10s\n",'$name_space',$1,$2,$3,$4,$5,$6,$7}'
+	fi
+	$useColor && echo -en $PLAIN
+}
+
+# Print a separator line
+print_separator(){
+	print_chars $name_space "-"
+	echo "----------------------------------------"
+}
+
+# Print a long separator line
+print_long_separator(){
+	print_chars $name_space "-"
+	echo "------------------------------------------------------------------------------"
+}
+
+# Format time (in seconds) as mm:ss, e.g. 167 as 02:47
+format_time() {
+	echo $1 | awk '{t=$1;m=int(t/60);s=int(t%60+.5);printf("%02d:%02d",m,s)}'
+}
+
+# Compute duration; return time in seconds, formatted time, and number of samples
+get_info(){
+	if [ -z "$customInfo1" ]
+	then
+		nChannels=$defaultNChannels
+		nElectrodesPerGroup=$defaultNElectrodesPerGroup
+		videoFrequency=$defaultVideoFrequency
+	else
+		nChannels=$customInfo1
+		nElectrodesPerGroup=$customInfo1
+		videoFrequency=$customInfo1
+	fi
+	if [ -z "$customInfo2" ]
+	then
+		frequency=0 # determined later based on file extension (high or low frequency)
+		nSamplesPerWaveform=$defaultNSamplesPerWaveform
+	else
+		frequency=$customInfo2
+		nSamplesPerWaveform=$customInfo2
+	fi
+	info=""
+	if [ ! -f "$filename" ]
+	then
+		echo "$filename not found"
+		return 1
+	fi
+
+	# Files can have several different naming conventions, thus finding the extension is somewhat tricky.
+	# Here are the different naming conventions ('d' is one digit, 'n' is a number,'s' is a character
+	# string with no '.' in it):
+	#
+	#    File name        Example(s)
+	# 1) BASENAME.ddd     file-001.013 -> 013
+	# 2) BASENAME.s.n     file.fet.4 -> fet, OtherFile.whl.15 -> whl
+	# 3) BASENAME.n.s     whatever-file.4.fet -> fet, anotherFile.17.spk -> spk
+	#
+	# And the corresponding sed expressions ('chars' refers to any character except '.'):
+
+# 	# 1) start with one or more chars, then '.', then 3 digits
+# 	case1='/^[^.]+\.([0-9]{3})$/'
+# 	# 2) start with one or more chars, then one or more chars, then one or more digits
+# 	case2='/^[^.]+\.([^.]+)\.[0-9]+$/'
+# 	# 3) start with one or more chars, then one or more digits, then one or more chars
+# 	case3='/^[^.]+\.[0-9]+\.([^.]+)$/'
+# 	# 4) start with one or more chars, then '.', then one or more chars
+# 	case4='/^[^.]+\.([^.-]+)(-shifted)?$/'
+# 	# 5) start with one or more chars, then '.', then three chars, then one or more chars (for 'evt' etc.)
+# 	case5='/^[^.]+\.[^.]{3}\.([^.-]*)+(-shifted)?$/'
+
+	# 1) start with one or more chars, then '.', then 3 digits
+	case1='/^.+\.([0-9]{3})$/'
+	# 2) start with one or more chars, then one or more chars, then one or more digits
+	case2='/^.+\.([^.]+)\.[0-9]+$/'
+	# 3) start with one or more chars, then one or more digits, then one or more chars
+	case3='/^.+\.[0-9]+\.([^.]+)$/'
+	# 4) start with one or more chars, then '.', then one or more chars
+	case4='/^.+\.([^.-]+)(-shifted)?$/'
+	# 5) start with one or more chars, then '.', then three chars, then one or more chars (for 'evt' etc.)
+	case5='/^.+\.[^.]{3}\.([^.-]*)+(-shifted)?$/'
+
+	extension=$(basename $filename | sed -r -e "$case1 s//\1/;$case2 s//\1/;$case3 s//\1/;$case4 s//\1/;$case5 s//\1/")
+
+	# Compute duration in ms
+	case $extension in
+		[0-9][0-9][0-9])
+			bytes=$(unset LANG && ls -lL $filename | awk '{print $5-65536}')
+			if [ $frequency == 0 ]
+			then
+				frequency=$defaultHighFrequency
+			fi
+			t=$(unset LANG && echo $bytes $frequency $nChannels | awk '{printf "%8.8f",$1/$2/'$resolution'/$3}')
+			time=$(format_time $t)
+			samples=$(($bytes/$resolution/$nChannels))
+			;;
+
+		dat|fil)
+			bytes=$(unset LANG && ls -lL $filename | awk '{print $5}')
+			if [ $frequency == 0 ]
+			then
+				frequency=$defaultHighFrequency
+			fi
+			t=$(unset LANG && echo $bytes $frequency $nChannels | awk '{printf "%8.8f",$1/$2/'$resolution'/$3}')
+			time=$(format_time $t)
+			samples=$(($bytes/$resolution/$nChannels))
+			;;
+
+		lfp|eeg)
+			bytes=$(unset LANG && ls -lL $filename | awk '{print $5}')
+			if [ $frequency == 0 ]
+			then
+				frequency=$defaultLowFrequency
+			fi
+			t=$(unset LANG && echo $bytes $frequency $nChannels | awk '{printf "%8.8f",$1/$2/'$resolution'/$3}')
+			time=$(format_time $t)
+			samples=$(($bytes/$resolution/$nChannels))
+			;;
+
+		led)
+			bytes=$(unset LANG && ls -lL $filename | awk '{print $5}')
+			if [ $frequency == 0 ]
+			then
+				frequency=$defaultLowFrequency
+			fi
+			t=$(unset LANG && echo $bytes $frequency | awk '{printf "%8.8f",$1/$2/'$resolution'}')
+			time=$(format_time $t)
+			samples=$(($bytes/$resolution))
+			;;
+
+		maz|evt|events)
+			t1=$(unset LANG && head -1 $filename | awk '{print $1}')
+			t2=$(unset LANG && tail -1 $filename | awk '{print $1}')
+			t=$(unset LANG && echo $t1 $t2 | awk '{printf "%8.8f",($2-$1)/1000}')
+			time=$(format_time $t)
+			lines=$(unset LANG && wc -lL $filename | awk '{print $1}')
+			samples=$lines
+			;;
+
+		spots)
+			t1=0
+			t2=$(unset LANG && tail -1 $filename | awk '{print $1}')
+			t=$(unset LANG && echo $t1 $t2 $videoFrequency | awk '{printf "%8.8f",($2-$1)/$3}')
+			time=$(format_time $t)
+			lines=$(unset LANG && wc -lL $filename | awk '{print $1}')
+			samples=$lines
+			;;
+
+		whl|pos)
+			lines=$(unset LANG && wc -lL $filename | awk '{print $1}')
+			t=$(unset LANG && echo $lines $videoFrequency | awk '{printf "%8.8f",$1/$2}')
+			time=$(format_time $t)
+			samples=$lines
+			;;
+
+		ts|sts|cts)
+			t1=$(unset LANG && head -1 $filename | awk '{print $1}')
+			t2=$(unset LANG && tail -1 $filename | awk '{print $1}')
+			t=$(unset LANG && echo $t1 $t2 | awk '{printf "%8.8f",($2-$1)/1e6}')
+			time=$(format_time $t)
+			lines=$(unset LANG && wc -lL $filename | awk '{print $1}')
+			samples=$lines
+			;;
+
+		fet)
+			column=$(head -1 $filename)
+			last=$(unset LANG && tail -1 $filename | awk '{print $'$column'}')
+			if [ $frequency == 0 ]
+			then
+				frequency=$defaultHighFrequency
+			fi
+			t=$(unset LANG && echo $last $frequency | awk '{printf "%8.8f",$1/$2}')
+			time=$(format_time $t)
+			samples=$(unset LANG && wc -l $filename | awk '{print $1-1}')
+			;;
+
+		res)
+			last=$(unset LANG && tail -1 $filename | awk '{print $1}')
+			if [ $frequency == 0 ]
+			then
+				frequency=$defaultHighFrequency
+			fi
+			t=$(unset LANG && echo $last $frequency | awk '{printf "%8.8f",$1/$2}')
+			time=$(format_time $t)
+			samples=$(unset LANG && wc -l $filename | awk '{print $1}')
+			;;
+
+		clu)
+			t="-"
+			time="--:--"
+			samples=$(unset LANG && wc -l $filename | awk '{print $1-1}')
+			;;
+
+		spk)
+			t="-"
+			time="--:--"
+			samples=$(unset LANG && ls -l $filename | awk '{print $5/('$nSamplesPerWaveform'*'$nElectrodesPerGroup'*'$resolution')}')
+			;;
+
+		smr)
+			if which process_smrconvert >/dev/null
+			then
+				t=$(process_smrconvert -i $filename | grep 'Max F time' |sed 's/.*(\([^ ]*\).*/\1/')
+				time=$(format_time $t)
+				frequency=$(process_smrconvert -i $filename | grep 'ADC Sampling Rate' | awk '{print $NF}')
+				samples=$(unset LANG && echo $t $frequency | awk '{printf "%d",$1*$2}')
+			else
+				t="-"
+				time="--:--"
+				samples="-"
+			fi
+			;;
+
+		mpg|avi|m1v|mp4)
+			if which process_extractleds >/dev/null
+			then
+				t=$(process_extractleds -i $filename | grep 'Duration' | cut -f 2)
+                        	frequency=$(process_extractleds -i $filename | grep 'Sampling rate' | cut -f 2)
+				time=$(format_time $t)
+				samples=$(unset LANG && echo $t $frequency | awk '{printf "%d",$1*$2}')
+			else
+				t="-"
+				time="--:--"
+				samples="-"
+			fi
+			;;
+
+		*)
+			t="-"
+			time="--:--"
+			samples="-"
+			;;
+	esac
+	echo $filename $t $time $samples
+}
+
+longest_name_length(){
+	max=0
+	for i in $*
+	do
+		n=${#i}
+		if [ $n -gt $max ]
+		then
+			max=$n
+		fi
+	done
+	echo $max
+}
+
+#////////////////////////////////////////////////////////////////////////////
+#//   Start here
+#////////////////////////////////////////////////////////////////////////////
+
+# Default values
+resolution=2
+defaultNChannels=32
+defaultLowFrequency=1250
+defaultHighFrequency=20000
+defaultNElectrodesPerGroup=4
+defaultNSamplesPerWaveform=32
+defaultVideoFrequency=39.0625
+printTotal=false
+printHeader=false
+printCumulative=false
+useColor=false
+
+# Parse parameters
+while [ $# -ge 0 ]
+do
+	case $1 in
+		-h|--help)
+			# Help message
+			echo ""
+			echo "Determine the duration and number of samples in one or more data files."
+			echo "This currently works for DataMAX, .dat, .eeg, .lfp, .fil, .led, .spots,"
+			echo ".whl, .maz, .evt, .events, .res, .fet, .smr, .ts, .sts, .cts, and video"
+			echo " files."
+			echo "For some additional file types (.clu and .spk), only the number of samples"
+			echo "can be provided."
+			echo ""
+			echo "usage: $(basename $0) [options] filename [filename2 filename3...]"
+			echo " -f frequency     frequency for low-frequency files, including .eeg, .lfp and .led files (default = 1250)"
+			echo " -F frequency     frequency for high-frequency files, including .dat, .fil and DataMAX files (default = 20000)"
+			echo " -v frequency     frequency for position files, including .spots, .pos and .whl files (default = 39.0625)"
+			echo " -n nChannels     number of channels for multichannel files (default = 32)"
+			echo " -e nElectrodes   number of electrodes in .spk files (default = 4)"
+			echo " -s nSamples      number of samples per waveform in .spk files (default = 32)"
+			echo " -r resolution    sampling resolution, in bytes per sample (default = 2)"
+			echo " -t               print total duration for file list"
+			echo " -c               print cumulative duration for file list"
+			echo " -H               print descriptive header"
+			echo " -C               print in color"
+			echo ""
+			echo "It is also possible to provide information on a file-by-file basis:"
+			echo " For DataMAX, .dat, .eeg, .lfp and .fil files:"
+			echo "  $(basename $0) filename:n     n channels."
+			echo "  $(basename $0) filename:n,f   n channels and sampling frequency f (in Hz)."
+			echo " For spk files:"
+			echo "  $(basename $0) filename:e     e electrodes."
+			echo "  $(basename $0) filename:e,s   e electrodes and s samples per waveform."
+			echo " For video files (.pos):"
+			echo "  $(basename $0) filename:f     sampling frequency f (in Hz)."
+			echo ""
+			exit 0
+			;;
+		-f)
+			defaultLowFrequency=$2
+			shift 2
+			;;
+		-F)
+			defaultHighFrequency=$2
+			shift 2
+			;;
+		-p|-v)
+			defaultVideoFrequency=$2
+			shift 2
+			;;
+		-n)
+			defaultNChannels=$2
+			shift 2
+			;;
+		-e)
+			defaultNElectrodesPerGroup=$2
+			shift 2
+			;;
+		-s)
+			defaultNSamplesPerWaveform=$2
+			shift 2
+			;;
+		-r)
+			resolution=$2
+			shift 2
+			;;
+		-t)
+			printTotal=true
+			shift
+			;;
+		-H)
+			printHeader=true
+			shift
+			;;
+		-c)
+			printCumulative=true
+			shift
+			;;
+		-C)
+			useColor=true
+			shift
+			;;
+		*)
+			break
+			;;
+	esac
+done
+
+# Longest file name?
+name_space=$(longest_name_length $*)
+
+# Optionnally print header
+if $printHeader
+then
+	if $printCumulative
+	then
+		print_line $BOLD_BLACK File "Duration(s)" Duration Samples "Duration(s)" "Duration" "Samples"
+		print_long_separator
+	else
+		print_line $BOLD_BLACK File "Duration(s)" Duration Samples
+		print_separator
+	fi
+fi
+
+# Loop through files listed on the command line
+totalTime=0
+totalSamples=0
+for filename in $*
+do
+	if [ -d $filename ]
+	then
+		continue
+	fi
+	# Extract custom info from filename string (if provided)
+	colon=$(echo $filename | awk '{print match($1,":")}')
+	customInfo1=""
+	customInfo2=""
+	if [ $colon != 0 ]
+	then
+		customInfo1=${filename:$colon:${#filename}-$colon+1}
+		filename=${filename:0:$colon-1}
+		comma=$(echo $customInfo1 | awk '{print match($1,",")}')
+		if [ $comma != 0 ]
+		then
+			customInfo2=${customInfo1:$comma:${#customInfo1}-$comma+1}
+			customInfo1=${customInfo1:0:$comma-1}
+		fi
+	fi
+	# Compute duration
+	info=$(get_info)
+	# Update total duration
+	totalTime=$(unset LANG && echo $totalTime $info | awk '{printf "%8.8f",$1+$3}')
+	totalSamples=$(unset LANG && echo $totalSamples $info | awk '{printf $1+$5}')
+	# Print duration
+	if [ ${info:${#info}-1:1} == '-' ]
+	then
+		color=$DARK_GREY
+	else
+		color=$PLAIN
+	fi
+	if $printCumulative
+	then
+		print_line $color $info $totalTime $(format_time $totalTime) $totalSamples
+	else
+		print_line $color $info
+	fi
+done
+
+# Optionnally print the total duration
+if [ $# != 1 ] && $printTotal
+then
+	if $printCumulative
+	then
+		print_long_separator
+		print_line $PLAIN Total $totalTime $(format_time $totalTime) $totalSamples $totalTime $(format_time $totalTime) $totalSamples
+	else
+		print_separator
+		print_line $PLAIN Total $totalTime $(format_time $totalTime) $totalSamples
+	fi
+fi

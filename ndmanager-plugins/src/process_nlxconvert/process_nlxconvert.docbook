@@ -1,0 +1,359 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+          "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="process_nlxconvert">
+
+	<refmeta>
+		<refentrytitle>process_nlxconvert</refentrytitle>
+		<manvolnum>1</manvolnum>
+	</refmeta>
+
+	<refnamediv>
+		<refname>process_nlxconvert</refname><refpurpose>convert files recorded with Neuralynx acquisition systems.</refpurpose>
+	</refnamediv>
+
+	<refsynopsisdiv>
+		<cmdsynopsis>
+		<command>process_nlxconvert</command>
+		<arg>
+			<option>-o</option> <replaceable>base</replaceable>
+		</arg>
+		<arg>
+			<option>-w</option>
+		</arg>
+		<arg>
+			<option>-r</option>
+		</arg>
+		<arg>
+			<option>-v</option>
+		</arg>
+		<arg>
+			<option>-F</option> <replaceable>frequency</replaceable>
+		</arg>
+		<arg>
+			<option>-e</option>
+		</arg>
+		<arg>
+			<option>-t</option>
+		</arg>
+		<arg>
+			<option>-s</option>
+		</arg>
+		<arg>
+			<option>-a</option>
+		</arg>
+		<arg>
+			<option>-g</option> <replaceable>dt</replaceable>
+		</arg>
+		<arg>
+			<option>-i</option>
+		</arg>
+		<arg>
+			<option>-f</option>
+		</arg>
+		<arg choice="plain">
+			<replaceable>input1</replaceable>
+		</arg>
+		<arg>
+			<replaceable>input2...</replaceable>
+		</arg>
+		</cmdsynopsis>
+	</refsynopsisdiv>
+
+	<refsect1>
+		<title>Description</title>
+		<para>
+			<command>process_nlxconvert</command> converts files recorded with Neuralynx acquisition systems. It can convert NCS channels (wideband signals), NVT frames (video tracker data) and NEV records (events), and synchronize them.
+		</para>
+		<para>
+			Why does data need to be synchronized? Neuralynx systems do not start recording all data synchronously. This would be fairly easy to deal with if the timestamp clock started at t=0, but unfortunately it does not: instead, it starts at a different, seemingly arbitrary value, each time a new recording is initiated. To make matters even more difficult, stopping acquisition and then restarting a few minutes later does not generate new data files: instead, data is appended to the same files, starting at a new, again seemingly arbitrary, timestamp. And although an event is recorded in the event file to indicate that acquisition was restarted, this does not occur until a few milliseconds after acquisistion has actually been restarted. In addition, tracker files also are shifted relative to brain signals and events. Last but not least, MPEG video files are treated differently: a new file is created each time acquisition is restarted. As a result, converting all data files and keeping them synchronized is not as easy a task as one would like.
+		</para>
+		<para>
+			<command>process_nlxconvert</command> can convert and synchronize all data files at once in a fully automated manner.
+		</para>
+		<para>
+			Alternatively, files can be processed separately. This is almost as easy as the fully automated way. As the above paragraph suggests, synchronization requires information from all files at once (almost). Therefore, when files are processed separately, information gathered at each step must be saved in intermediate files, so that it can be made available in subsequent steps. There are two such intermediate files: the <replaceable>synchronization</replaceable> file, which helps compensate for the arbitrary initial timestamps each time acquisition is started or restarted, and the <replaceable>acquisition restart</replaceable> file, which lists when acquisition was stopped/started.
+		</para>
+		<para>
+			See Examples below for more details.
+		</para>
+	</refsect1>
+
+	<refsect1>
+		<title>Options</title>
+		<variablelist>
+			<varlistentry>
+				<term><option>-o</option>, <option>--output</option> <replaceable>base</replaceable></term>
+				<listitem>
+					<para>
+						output basename
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-w</option>, <option>--wideband</option></term>
+				<listitem>
+					<para>
+						convert NCS channels (-> <replaceable>.dat</replaceable> file)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-r</option>, <option>--reverse</option></term>
+				<listitem>
+					<para>
+						reverse NCS channels
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-v</option>, <option>--video</option></term>
+				<listitem>
+					<para>
+						convert NVT or SMI records (-> <replaceable>.spots</replaceable> and <replaceable>.sts</replaceable> files)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-F</option>, <option>--frequency</option> <replaceable>frequency</replaceable></term>
+				<listitem>
+					<para>
+						optional video sampling rate, used to detect unexpected gaps (default = 25 Hz)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-e</option>, <option>--events</option></term>
+				<listitem>
+					<para>
+						convert NEV records (-> <replaceable>.evt</replaceable> file)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-t</option>, <option>--timestamps</option></term>
+				<listitem>
+					<para>
+						generate non-synchronized timestamp files (for debugging)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-s</option>, <option>--sync</option></term>
+				<listitem>
+					<para>
+						generate synchronization file
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-a</option>, <option>--acquisition</option></term>
+				<listitem>
+					<para>
+						generate acquisition restart file
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-g</option>, <option>--gap</option> <replaceable>dt</replaceable></term>
+				<listitem>
+					<para>
+						a data record is considered to match an 'acquisition restart' event if it is close in time and follows a sampling gap exceeding this threshold (in seconds, default = 1)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-i</option>, <option>--info</option></term>
+				<listitem>
+					<para>
+						display file header information
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-f</option>, <option>--force</option></term>
+				<listitem>
+					<para>
+						overwrite existing files (default = off)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><replaceable>input1</replaceable> <replaceable>input2...</replaceable></term>
+				<listitem>
+					<para>
+						input files
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</refsect1>
+
+	<refsect1>
+		<title>Note</title>
+		<para>
+			when no conversion options are provided, '-w -v -e -s -a' is assumed by default.
+		</para>
+	</refsect1>
+
+	<refsect1>
+		<title>Examples</title>
+		<para>
+			To automatically convert all session files at once:
+		</para>
+		<programlisting>
+# process_nlxconvert -o output CSC*.ncs Events.nev VT1.nvt
+		</programlisting>
+		<para>
+			In the above example, the moment-to-moment positions of the animal were extracted from a video tracker (NVT) file. Alternatively, MPEG video files can be used instead. Positions can then be extracted using <command>process_extractleds</command>, but video timestamps will have to be synchronized using <command>process_nlxconvert</command>:
+		</para>
+		<programlisting>
+# process_nlxconvert -o output CSC*.ncs Events.nev VT1.smi VT1_01.smi VT1_02.smi
+		</programlisting>
+		<para>
+			Note that there can be several video timestamp (SMI) files, since Neuralynx creates a new file each time acquisition is restarted. List them all on the command-line, they will automatically be concatenated and synchronized as appropriate.
+		</para>
+		<para>
+			To process files separately, start by generating the <replaceable>acquisition restart</replaceable> file:
+		</para>
+		<programlisting>
+# process_nlxconvert -o output -a Events.nev
+		</programlisting>
+		<para>
+			Then generate the <replaceable>synchronization</replaceable> file. This requires the newly created <replaceable>acquisition restart</replaceable> file (in this example, 'output.restart'), as well as the NCS files (as all data are synchronized relative to wideband signals):
+		</para>
+		<programlisting>
+# process_nlxconvert -o output -s CSC*.ncs output.restart
+		</programlisting>
+		<para>
+			All conversion and synchronization steps can now be performed separately:
+		</para>
+		<programlisting>
+# process_nlxconvert -o output -w CSC*.ncs output.restart output.sync
+# process_nlxconvert -o output -e Events.nev output.restart output.sync
+# process_nlxconvert -o output -v VT1.nvt output.restart output.sync
+		</programlisting>
+		<para>
+			You may have noticed that the wideband (NCS) files had to be processed twice: first to generate the <replaceable>synchronization</replaceable> file, then to convert the signals. A more efficient solution is to perform both operations simultaneously:
+		</para>
+		<programlisting>
+# process_nlxconvert -o output -s -w CSC*.ncs output.restart
+		</programlisting>
+		<para>
+			More generally, different steps can be combined in a very flexible way. It is also worth mentioning that if for any reason the event (NEV) file is missing, <command>process_nlxconvert</command> can still guess <replaceable>acquisition restart</replaceable> events based on the occurrence of large time gaps in the data files.
+		</para>
+
+	</refsect1>
+
+	<refsect1>
+		<title>Progress Information</title>
+		<para>
+			Progress information typically looks like:
+		</para>
+		<programlisting>
+output [W,S]    0% ####.............................................. 100%  (restart @ 159.995744)
+output [W,S]    0% #################################################. 100%
+		</programlisting>
+		<para>
+			This includes the output basename (here, 'output'), current processing step (see below), a progress bar, and optional information messages. In this example, a restart event was found at t=159.995744 seconds. Parentheses indicate that this message is purely informational: warnings and errors which cannot be corrected will be displayed without parentheses.
+		</para>
+		<para>
+			Processing steps are indicated in brackets. They include:
+		</para>
+		<variablelist>
+			<varlistentry>
+				<term>W</term>
+				<listitem>
+					<para>
+						converting and synchronizing wideband signals (NCS)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>V</term>
+				<listitem>
+					<para>
+						converting and synchronizing video frames and timestamps (NVT or SMI)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>E</term>
+				<listitem>
+					<para>
+						converting and synchronizing event records (NEV)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>S</term>
+				<listitem>
+					<para>
+						generating <replaceable>synchronization</replaceable> file
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>S*</term>
+				<listitem>
+					<para>
+						generating <replaceable>synchronization</replaceable> information, but not saving to disk (when this information is necessary but file generation was not requested)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>A</term>
+				<listitem>
+					<para>
+						generating <replaceable>acquisition restart</replaceable> file
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>A*</term>
+				<listitem>
+					<para>
+						generating <replaceable>acquisition restart</replaceable> events, but not saving to disk (when this information is necessary but file generation was not requested)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Wt</term>
+				<listitem>
+					<para>
+						generating non-synchronized wideband timestamp file (for debugging)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Vt</term>
+				<listitem>
+					<para>
+						generating non-synchronized video tracker timestamp file (for debugging)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Et</term>
+				<listitem>
+					<para>
+						generating non-synchronized event timestamp file (for debugging)
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</refsect1>
+
+	<refsect1>
+		<title>Author</title>
+		<para>
+			<author>
+				<firstname>Michael</firstname>
+				<othername role="mi">B</othername>
+				<surname>Zugaro</surname>
+				<contrib>Original author</contrib>
+			</author>
+			<email>michael.zugaro@college-de-france.fr</email>.
+		</para>
+	</refsect1>
+
+</refentry>

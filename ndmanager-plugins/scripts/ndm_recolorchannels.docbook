@@ -1,0 +1,78 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+          "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="ndm_recolorchannels">
+
+	<refmeta>
+		<refentrytitle>ndm_recolorchannels</refentrytitle>
+		<manvolnum>1</manvolnum>
+	</refmeta>
+
+	<refnamediv>
+		<refname>ndm_recolorchannels</refname><refpurpose>change channel colors in a XML parameter file.</refpurpose>
+	</refnamediv>
+
+	<refsynopsisdiv>
+		<cmdsynopsis>
+		<command>ndm_recolorchannels</command>
+		<arg choice="plain">
+			<option>-c</option> <replaceable>channel1</replaceable>[-<replaceable>channel2</replaceable>],<replaceable>color</replaceable>
+		</arg>
+		<arg>
+			<option>-c</option> <replaceable>channel1</replaceable>[-<replaceable>channel2</replaceable>],<replaceable>color</replaceable>...
+		</arg>
+		<arg choice="plain">
+			<replaceable>xml_file</replaceable>
+		</arg>
+		</cmdsynopsis>
+	</refsynopsisdiv>
+
+	<refsect1>
+		<title>Description</title>
+		<para>
+			<command>ndm_recolorchannels</command> changes channel colors in a XML parameter file.
+		</para>
+	</refsect1>
+
+	<refsect1>
+		<title>Options</title>
+		<variablelist>
+			<varlistentry>
+				<term><option>-c</option> <replaceable>channel1</replaceable>[-<replaceable>channel2</replaceable>],<replaceable>color</replaceable></term>
+				<listitem>
+					<para>
+						range of channel IDs (counted from 0) and hexadecimal color code (e.g. 000000 = black, ffffff = white, ff0000 = red, etc.)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><replaceable>xml_file</replaceable></term>
+				<listitem>
+					<para>
+						XML parameter file
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+
+		<para>
+			For example, to recolor tetrode 1 in red, tetrode 2 in green and channel 17 in blue:
+		</para>
+		<programlisting>
+# ndm_recolorchannels -c 0-3,ff0000 -c 4-7,00ff00 -c 17,0000ff file.xml
+		</programlisting>
+	</refsect1>
+
+	<refsect1>
+		<title>Author</title>
+		<para>
+		<author>
+			<firstname>Michael</firstname>
+			<othername role="mi">B</othername>
+			<surname>Zugaro</surname>
+			<contrib>Original author</contrib>
+		</author>,&nbsp;
+		<email>michael.zugaro@college-de-france.fr</email>.
+		</para>
+	</refsect1>
+
+</refentry>

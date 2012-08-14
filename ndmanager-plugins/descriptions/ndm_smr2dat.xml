@@ -1,0 +1,38 @@
+<?xml version='1.0'?>
+<parameter>
+ <program>
+  <name>ndm_smr2dat</name>
+  <parameters>
+   <parameter>
+    <name>reverse</name>
+    <value>true</value>
+    <status>Mandatory</status>
+   </parameter>
+   <parameter>
+    <name>suffixes</name>
+    <value></value>
+    <status>Mandatory</status>
+   </parameter>
+   <parameter>
+    <name>channelsExcluded</name>
+    <value/>
+    <status>Mandatory</status>
+   </parameter>
+  </parameters>
+  <help>Convert from .smr (CED files) to .dat format.
+
+PARAMETERS
+
+# reverse
+
+Whether the signals should be reversed (e.g. to compensate for NeuraLynx amplifiers which reverse all signals - this sets them back to normal)
+
+# suffixes
+
+List of suffixes for the individual files to convert
+
+# channelsExcluded
+
+List of channels to exclude for each individual file to convert (type - for none)</help>
+ </program>
+</parameter>

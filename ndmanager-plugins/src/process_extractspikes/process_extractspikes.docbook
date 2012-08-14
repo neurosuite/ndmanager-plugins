@@ -1,0 +1,152 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+          "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="process_extractspikes">
+
+	<refmeta>
+		<refentrytitle>process_extractspikes</refentrytitle>
+		<manvolnum>1</manvolnum>
+	</refmeta>
+
+	<refnamediv>
+		<refname>process_extractspikes</refname><refpurpose>extract spike waveforms and timestamps from a high-pass filtered multiplexed binary data file.</refpurpose>
+	</refnamediv>
+
+	<refsynopsisdiv>
+		<cmdsynopsis>
+		<command>process_extractspikes</command>
+		<arg choice="plain">
+			<option>-t</option> <replaceable>thresholds</replaceable>
+		</arg>
+		<arg choice="plain">
+			<option>-r</option> <replaceable>refractoryPeriod</replaceable>
+		</arg>
+		<arg choice="plain">
+			<option>-w</option> <replaceable>waveformLength</replaceable>
+		</arg>
+		<arg choice="plain">
+			<option>-p</option> <replaceable>peakSample</replaceable>
+		</arg>
+		<arg choice="plain">
+			<option>-n</option> <replaceable>nChannels</replaceable>
+		</arg>
+		<arg choice="plain">
+			<option>-c</option> <replaceable>channels</replaceable>
+		</arg>
+		<arg>
+			<option>-l</option> <replaceable>peakSearchLength</replaceable>
+		</arg>
+		<arg>
+			<option>-v</option>
+		</arg>
+		<arg choice="plain">
+			<replaceable>basename</replaceable>
+		</arg>
+		</cmdsynopsis>
+	</refsynopsisdiv>
+
+	<refsect1><title>Description</title>
+
+		<para>
+			<command>process_extractspikes</command> extracts spike waveforms and timestamps from high-pass a filtered multiplexed binary data file (both upward and downward going spikes are detected).
+		</para>
+
+		<variablelist>
+			<varlistentry>
+				<term><option>-t</option> <replaceable>thresholds</replaceable></term>
+				<listitem>
+					<para>
+						list of thresholds for spike detection (e.g. 10.4,11.2,10:54.1,51,57.2 for 2 groups with 3 channels each)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-r</option> <replaceable>refractoryPeriod</replaceable></term>
+				<listitem>
+					<para>
+						Refractory period (minimum time between two consecutive spikes)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-w</option> <replaceable>waveformLength</replaceable></term>
+				<listitem>
+					<para>
+						number of samples per waveform
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-p</option> <replaceable>peakSample</replaceable></term>
+				<listitem>
+					<para>
+						position of the peak within the waveform (in number of samples)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-n</option> <replaceable>nChannels</replaceable></term>
+				<listitem>
+					<para>
+						total number of channels in the file
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-c</option> <replaceable>channels</replaceable></term>
+				<listitem>
+					<para>
+						list of channels for each group (e.g. 0,1,2:4,5,7 for 2 groups with 3 channels each)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-l</option> <replaceable>peakSearchLength</replaceable></term>
+				<listitem>
+					<para>
+						size of the window within which to look for the peak (do not change this unless you know what you are doing)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-v</option></term>
+				<listitem>
+					<para>
+						verbose mode
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><replaceable>basename</replaceable></term>
+				<listitem>
+					<para>
+						common basename (= filename without extension) for the input and output files
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+
+	</refsect1>
+
+	<refsect1>
+		<title>Author</title>
+		<para>
+			<author>
+				<firstname>Nicolas</firstname>
+				<othername role="mi">B</othername>
+				<surname>Lebas</surname>
+				<contrib>Original author</contrib>
+			</author>,&nbsp;
+			<email>nicolas.lebas@college-de-france.fr</email>.
+		</para>
+		<para>
+			<author>
+				<firstname>Michael</firstname>
+				<othername role="mi">B</othername>
+				<surname>Zugaro</surname>
+				<contrib>LFS support, bug corrections</contrib>
+			</author>,&nbsp;
+			<email>michael.zugaro@college-de-france.fr</email>.
+		</para>
+	</refsect1>
+
+</refentry>

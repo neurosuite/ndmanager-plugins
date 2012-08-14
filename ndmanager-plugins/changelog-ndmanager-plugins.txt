@@ -1,0 +1,138 @@
+The following notes describe the changes from 1.4.3 to 1.4.4
+
+* fixed bug in process_smrconvert that prevented processing of large files in version 7 format
+* 'duration' can now handle (unusual) file names including '.' in their basename
+
+------------------------------------------------------------------------------------------------------------
+
+The following notes describe the changes from 1.4.2 to 1.4.3
+
+* process_extractchannels: possibility to select post-hoc a different reference (among recorded channels) for each channel
+* Bux fixes in ndm_pca (feature count) and ndm_extractleds (list of video files for Spike2)
+
+------------------------------------------------------------------------------------------------------------
+
+The following notes describe the changes from 1.4.1 to 1.4.2
+
+Bux fixes
+
+* Files are now sorted by name rather than by creation date (ndm_prepare)
+* Duplicate <help> tag was removed (ndm_start.xml)
+
+------------------------------------------------------------------------------------------------------------
+
+The following notes describe the changes from 1.4 to 1.4.1
+
+Features
+
+* Batch progress can be saved to log files (ndm_start)
+* PCA can (again) be performed on portions of the waveforms (ndm_pca)
+* Peak voltages on each electrode can be extracted in addition to PCA components (ndm_pca)
+* Custom gains can be set for individual channels (ndm_extractchannels)
+
+Bux fixes
+
+* Fixed a regression that prevented listing video files when ignoring tracking (ndm_extractleds)
+* Fixed an UTF-8 encoding issue that prevented Python applications to work on some systems (ndm_prepare and ndm_checkconsistency)
+* Fixed a copy-paste error that prevented cleaning intermediate files (ndm_clean)
+* Fixed a nasty bug that replaced /usr/bin/man with an empty link (python makefile)
+
+------------------------------------------------------------------------------------------------------------
+
+Version 1.4 is a major overhaul. The following notes try to describe most of the changes from 1.3.4 to 1.4.
+
+Batch Processing
+----------------
+
+* Single-Pass Batches
+
+Because in previous versions of the NDManager Plugins, concatenating session files required .pos files, which depended on the Matlab function spots2pos and could not be automated within the batch system, processing was typically done in two steps: 1) convert, track, resample, etc. 2) concatenate, extract spikes, downsample LFPs, etc. after manually running spots2pos on each session file.
+
+This is no longer the case: you now need to run ndm_start only once! This will run all steps in a single pass, including concatenation, spike extraction and LFP downsampling. Then run spots2pos on all sessions at once, and be done! (See § Video below).
+
+* Links
+
+ndm_start no longer needs to create links to source files in the target directory. Although this was completely transparent to the user, it did have a few negative consequences.
+
+Instead, all scripts now find source files in the appropriate original directories. This makes it easier (and more consistent) to manually run a unitary script (e.g. ndm_ncs2dat) because this no longer requires either manually creating the relevant links, or copying the xml parameter file to the source directory and running the script from there.
+
+* Split Files (Neuralynx)
+
+See § Neuralynx below.
+
+Neuralynx
+---------
+
+* Conversion
+
+process_ncs2dat, process_nvt2spots and process_nev2evt were replaced with process_nlxconvert. This fairly complex piece of code now handles all conversion and synchronization scenarios flexibly. And this is not an easy task!
+
+Citing the manual page: "Why does data need to be synchronized? Neuralynx systems do not start recording all data synchronously. This would be fairly easy to deal with if the timestamp clock started at t=0, but unfortunately it does not: instead, it starts at a different, seemingly arbitrary value, each time a new recording is initiated. To make matters even more difficult, stopping acquisition and then restarting a few minutes later does not generate new data files: instead, data is appended to the same files, starting at a new, again seemingly arbitrary, timestamp. And although an event is recorded in the event file to indicate that acquisition was restarted, this does not occur until a few milliseconds after acquisistion has actually been restarted. In addition, tracker files also are shifted relative to brain signals and events. Last but not least, MPEG video files are treated differently: a new file is created each time acquisition is restarted. As a result, converting all data files and keeping them synchronized is not as easy a task as one would like."
+
+* Gaps
+
+Another issue with ncs files is that all channels do not start/stop synchronously. The new code now fills these gaps (as well as gaps that could result from dropped data records) with 0, so that all signals remain in sync. There is also some logic to try and guess acquisition restart events when these are incorrectly listed in the event files, as seems to happen on newer recording systems.
+
+* Split Files
+
+Sessions where acquisition was stopped/restarted are now handled completely differently. Data files are no longer split to match MPEG files. Instead, wideband and event files now 'skip' the corresponding large time gaps, and spots2pos handles all the burden of synchronizing the video. As a result, sorting extensions ('x01', 'x02', etc.) are *gone*, and so are --split options, which are no longer required.
+
+* MPEG Files
+
+ndm_smi2sts is a new script which can be used to try and synchronize MPEG files with wideband signals (Neuralynx). However, due to technical details in the Neuralynx acquisition system, this cannot be done reliably.
+
+Citing the Help tab: "In the absence of a useable NVT file, you may wish to extract spots from the MPEG file(s) and timestamps from the SMI file(s), and then match them. This is what ndm_smi2sts is for, and spots2pos will try its best to help you do this, but the results are *not* reliable. This is because Neuralynx systems do not control MPEG video streams. Instead, they leave the task to the operating system, which does a very poor job as far as timing accuracy is concerned. As a result, the video gets started after a random delay following acquisition start, and video frames are shifted by an unpredictable amount (up to hundreds of milliseconds). Again, in the absence of a useable NVT file, this may be your only solution, but please keep these limitations in mind when analyzing your data."
+
+Spike2
+------
+
+Support for file format version 9, allowing for longer recordings.
+
+Video
+-----
+
+* spots2pos
+
+This Matlab function extracts position samples from spots files (and some more). It was previously part of FMAToolbox but is now shipped as part of NDManager Plugins. Changes include:
+
+- Made the code self-contained, i.e. independent of other FMAToolbox functions.
+
+- All .spots file belonging to a set of related session files can now be processed at once, while keeping them in sync with wideband signals (.dat) and events. This dramatically simplifies batch processing (see § Batch Processing above).
+
+- Split video files (Neuralynx systems) are now handled appropriately.
+
+- Spot timestamp (.sts) files are now automatically used to determine real frame timestamps.
+
+- Added a manual (man) page. Although this is a Matlab function and shouldn't need to be documented in this manner, some users may be confused and may try to get help in the shell.
+
+* MPEG Files
+
+See § Neuralynx above.
+
+* Spots Files
+
+process_extractleds and process_nlxconvert now add a final dummy line in .spots files, so that we know how many frames were in the video, even if there is no spot in the last frame.
+
+
+Preparing Files for NDManager
+-----------------------------
+
+correctnames and checkconsistency were replaced with small graphical applications. In konqueror or dolphin, select a group of related directories (e.g. parallel recordings in CED, sequential recordings in Neuralynx) then right click and choose 'Prepare for NDManager'. This will take care of renaming and reorganising all the files. To control already processed directories, right click and select 'Check for NDManager'.
+
+New Programs and Scripts
+------------------------
+
+The legacy process_feature was replaced with process_pca. Gone also is process_variance, which is no longer required.
+
+
+Miscellaneous
+-------------
+
+* Global Variables
+
+All scripts were rewritten so they no longer use global variables (e.g. 'base'). This makes them more flexible.
+
+* Manual Pages and Description Files
+
+All relevant manual pages and description files were updated to reflect the above changes.
+

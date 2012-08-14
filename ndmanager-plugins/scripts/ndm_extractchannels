@@ -1,0 +1,70 @@
+#!/bin/bash
+
+#////////////////////////////////////////////////////////////////////////////
+#//
+#//   Extract channels in multiplexed binary format
+#//
+#//   copyright       (C) 2007-2010 by Michaël Zugaro
+#//   email           michael.zugaro@college-de-france.fr
+#//
+#//   This program is free software; you can redistribute it and/or modify
+#//   it under the terms of the GNU General Public License as published by
+#//   the Free Software Foundation; either version 3 of the License, or
+#//   (at your option) any later version.
+#//
+#////////////////////////////////////////////////////////////////////////////
+
+# Source helper functions
+source ndm_functions
+
+# Parse command-line
+program=$(basename $0)
+if [ $# -ne 1 ]
+then
+	echo_error "usage: $program xml-file"
+	exit $GENERAL_ERROR
+fi
+session=${1%.xml}
+directory=$(basename "$(pwd)")
+
+# Print a header to indicate current processing step
+print_header "$session - Extracting channels"
+
+# Check required programs
+check_commands_installed xpathReader process_extractchannels
+
+# Check required files
+inputs_missing $session.xml $session.dat && exit $INPUTS_MISSING
+
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+# // Read Parameters
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+nChannels=$(read_script_parameter $session nChannels)
+channels=$(read_script_parameter $session channels)
+
+# Parameters not supplied => no extraction requested
+if check_empty_variables $nChannels $channels
+then
+	echo_info "No extraction requested"
+	exit $NO_ERROR
+fi
+
+check_mandatory_variable $nChannels "missing number of channels"
+check_mandatory_variable $channels "missing channel list"
+
+nChannelsListed=$(echo $channels | wc -w)
+if [ $nChannelsListed -lt 1 ]
+then
+  echo_error  "no channels listed"
+  exit $GENERAL_ERROR
+fi
+
+
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+# // Process
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+process_extractchannels $session.dat $session-tmp.dat $nChannels $channels
+check_command_status process_extractchannels
+mv $session-tmp.dat $session.dat

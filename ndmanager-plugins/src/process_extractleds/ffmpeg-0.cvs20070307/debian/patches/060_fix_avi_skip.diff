@@ -1,0 +1,12 @@
+--- ffmpeg-0.cvs20060329.orig/libavformat/avidec.c
++++ ffmpeg-0.cvs20060329/libavformat/avidec.c
+@@ -594,7 +594,8 @@
+ 
+         if (i >= avi->movi_end) {
+             if (avi->is_odml) {
+-                url_fskip(pb, avi->riff_end - i);
++                if (i < avi->riff_end)
++                    url_fskip(pb, avi->riff_end - i);
+                 avi->riff_end = avi->movi_end = url_fsize(pb);
+             } else
+                 break;

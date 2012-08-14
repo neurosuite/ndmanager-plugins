@@ -1,0 +1,79 @@
+#!/bin/bash
+
+#////////////////////////////////////////////////////////////////////////////
+#//
+#//   Pad numbers in file list
+#//
+#//   copyright       (C) 2009-2010 by Michaël Zugaro
+#//   email           michael.zugaro@college-de-france.fr
+#//
+#//   This program is free software; you can redistribute it and/or modify
+#//   it under the terms of the GNU General Public License as published by
+#//   the Free Software Foundation; either version 3 of the License, or
+#//   (at your option) any later version.
+#//
+#////////////////////////////////////////////////////////////////////////////
+
+program=$(basename $0)
+
+simulate=false
+declare -i digits=5
+# Parse parameters
+while true
+do
+	case $1 in
+		-h|--help)
+			echo "usage: $program [-n] length file1 [file2...]"
+			echo " -d,--digits N      target number of digits (default = 5)"
+			echo " -n,--no-action     simulate, do not actually rename the files"
+			echo " file1 [file2...]   files to rename"
+			echo ""
+			echo " Pad numbers in file names with appropriate numbers of '0' to yield a given length"
+			echo ""
+			exit 0
+			;;
+		-d|--digits)
+			digits=$2
+			# Make sure parameter is a number
+			test "$digits" -ne "$digits" 2>/dev/null
+			if [ $? -eq 2 ] || [ $# -lt 2 ]
+			then
+				echo "error: '$digits' is not a number"
+				exit 1
+			fi
+			shift 2
+			;;
+		-n|--no-action)
+			simulate=true
+			shift
+			;;
+		*)
+			break
+			;;
+	esac
+done
+
+# Enough parameters left?
+if [ $# -lt 1 ]
+then
+	echo "error: missing file list (type '$program -h' for help)"
+	exit 1
+fi
+
+# Pad numbers
+for filename in $*
+do
+	n=$(echo $filename|sed 's/[^0-9]*\([0-9]\+\).*/\1/')
+	length=${#n}
+	pad_length=$(($digits-$length))
+	pad=""
+	for ((i=1;i<=$pad_length;i++));do pad="0$pad";done
+	n="$pad$n"
+	new_filename=$(echo $filename|sed 's/\([^0-9]*\)[0-9]\+\([^0-9]*.*\)/\1'$n'\2/')
+	if $simulate
+	then
+		[ $filename != $new_filename ] && echo "$filename -> $new_filename"
+	else
+		[ $filename != $new_filename ] && mv -v $filename $new_filename
+	fi
+done

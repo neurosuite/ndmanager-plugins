@@ -1,0 +1,101 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+          "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="process_removeartefacts">
+
+	<refmeta>
+		<refentrytitle>process_removeartefacts</refentrytitle>
+		<manvolnum>1</manvolnum>
+	</refmeta>
+
+	<refnamediv>
+		<refname>process_removeartefacts</refname><refpurpose>remove artefacts (channel 0) from spike waveform, spike time, feature and cluster files.</refpurpose>
+	</refnamediv>
+
+	<refsynopsisdiv>
+		<cmdsynopsis>
+		<command>process_removeartefacts</command>
+		<arg choice="plain">
+			<replaceable>basename</replaceable>
+		</arg>
+		<arg choice="plain">
+			<replaceable>group</replaceable>
+		</arg>
+		<arg choice="plain">
+			<replaceable>nElectrodes</replaceable>
+		</arg>
+		<arg choice="plain">
+			<replaceable>nSamples</replaceable>
+		</arg>
+		<arg choice="plain">
+			<replaceable>resolution</replaceable>
+		</arg>
+		</cmdsynopsis>
+	</refsynopsisdiv>
+
+	<refsect1>
+		<title>Description</title>
+		<para>
+			<command>process_removeartefacts</command> removes artefacts (channel 0) from spike waveform, spike time, feature and cluster files.
+		</para>
+	</refsect1>
+
+	<refsect1>
+		<title>Options</title>
+		<variablelist>
+			<varlistentry>
+				<term><replaceable>basename</replaceable></term>
+				<listitem>
+					<para>
+						basename of the data files
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><replaceable>group</replaceable></term>
+				<listitem>
+					<para>
+						electrode group
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><replaceable>nElectrodes</replaceable></term>
+				<listitem>
+					<para>
+						number of electrodes in group
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><replaceable>nSamples</replaceable></term>
+				<listitem>
+					<para>
+						number of samples per waveform
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><replaceable>resolution</replaceable></term>
+				<listitem>
+					<para>
+						resolution of the acquisition system (in bits)
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</refsect1>
+
+	<refsect1>
+		<title>Author</title>
+		<para>
+			<author>
+				<firstname>Michael</firstname>
+				<othername role="mi">B</othername>
+				<surname>Zugaro</surname>
+				<contrib>Original author</contrib>
+			</author>,&nbsp;
+			<email>michael.zugaro@college-de-france.fr</email>.
+		</para>
+	</refsect1>
+
+</refentry>

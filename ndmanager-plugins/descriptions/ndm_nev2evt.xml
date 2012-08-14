@@ -1,0 +1,29 @@
+<?xml version='1.0'?>
+<parameter>
+ <program>
+  <name>ndm_nev2evt</name>
+  <parameters>
+   <parameter>
+    <name>suffixes</name>
+    <value></value>
+    <status>Mandatory</status>
+   </parameter>
+  </parameters>
+  <help>Convert from .nev (Neuralynx files) to .evt format.
+
+PARAMETERS
+
+# suffixes
+
+List of suffixes of the directories where the NEV files to convert are located
+
+OPTIONAL PARAMETERS
+
+Note: To keep the interface simpler, optional parameters have default values and are not listed in the 'Parameters' tab; to choose custom values, click the 'Add' button and manually add the required parameters (and custom values) to the list.
+
+# gap
+
+A data record is considered to match an 'acquisition restart' event if it is close in time and follows a sampling gap exceeding this threshold (in seconds, default = 1).
+</help>
+ </program>
+</parameter>

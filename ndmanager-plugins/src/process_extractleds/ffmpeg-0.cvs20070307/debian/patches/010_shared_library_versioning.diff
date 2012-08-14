@@ -1,0 +1,123 @@
+Index: ffmpeg-0.cvs20070307/configure
+===================================================================
+--- ffmpeg-0.cvs20070307.orig/configure	2007-03-09 17:07:42.000000000 +0100
++++ ffmpeg-0.cvs20070307/configure	2007-03-09 17:18:29.000000000 +0100
+@@ -1924,11 +1924,11 @@
+   echo "BUILD_DOC=yes" >> config.mak
+ fi
+ 
+-sws_version=`grep '#define LIBSWSCALE_VERSION ' "$source_path/libswscale/swscale.h" | sed 's/[^0-9\.]//g'`
+-pp_version=`grep '#define LIBPOSTPROC_VERSION ' "$source_path/libpostproc/postprocess.h" | sed 's/[^0-9\.]//g'`
+-lavc_version=`grep '#define LIBAVCODEC_VERSION ' "$source_path/libavcodec/avcodec.h" | sed 's/[^0-9\.]//g'`
+-lavf_version=`grep '#define LIBAVFORMAT_VERSION ' "$source_path/libavformat/avformat.h" | sed 's/[^0-9\.]//g'`
+-lavu_version=`grep '#define LIBAVUTIL_VERSION ' "$source_path/libavutil/avutil.h" | sed 's/[^0-9\.]//g'`
++sws_version=`grep '#define LIBSWSCALE_VERSION ' "$source_path/libswscale/swscale.h" | sed 's/[^0-9\.]*//'`
++pp_version=`grep '#define LIBPOSTPROC_VERSION ' "$source_path/libpostproc/postprocess.h" | sed 's/[^0-9\.]*//'`
++lavc_version=`grep '#define LIBAVCODEC_VERSION ' "$source_path/libavcodec/avcodec.h" | sed 's/[^0-9\.]*//'`
++lavf_version=`grep '#define LIBAVFORMAT_VERSION ' "$source_path/libavformat/avformat.h" | sed 's/[^0-9\.]*//'`
++lavu_version=`grep '#define LIBAVUTIL_VERSION ' "$source_path/libavutil/avutil.h" | sed 's/[^0-9\.]*//'`
+ 
+ 
+ 
+@@ -2057,9 +2057,9 @@
+ pkgconfig_generate(){
+ name=$1
+ comment=$2
+-version=$3
++version=$(echo $3 | sed 's/\<[0-9][0-9]*d[.]//g')
+ libs=$4
+-requires=$5
++requires=$(echo $5 | sed 's/\<[0-9][0-9]*d[.]//g')
+ include=$6
+ cat <<EOF >$name.pc
+ prefix=$PREFIX
+@@ -2081,9 +2081,9 @@
+ name=$1
+ shortname=${name#lib}
+ comment=$2
+-version=$3
++version=$(echo $3 | sed 's/\<[0-9][0-9]*d[.]//g')
+ libs=$4
+-requires=$5
++requires=$(echo $5 | sed 's/\<[0-9][0-9]*d[.]//g')
+ cat <<EOF >$name-uninstalled.pc
+ prefix=
+ exec_prefix=
+Index: ffmpeg-0.cvs20070307/libavutil/avutil.h
+===================================================================
+--- ffmpeg-0.cvs20070307.orig/libavutil/avutil.h	2007-03-07 14:37:01.000000000 +0100
++++ ffmpeg-0.cvs20070307/libavutil/avutil.h	2007-03-09 17:07:44.000000000 +0100
+@@ -35,7 +35,7 @@
+ #define AV_TOSTRING(s) #s
+ 
+ #define LIBAVUTIL_VERSION_INT   ((49<<16)+(3<<8)+0)
+-#define LIBAVUTIL_VERSION       49.3.0
++#define LIBAVUTIL_VERSION       1d.49.3.0
+ #define LIBAVUTIL_BUILD         LIBAVUTIL_VERSION_INT
+ 
+ #define LIBAVUTIL_IDENT         "Lavu" AV_STRINGIFY(LIBAVUTIL_VERSION)
+Index: ffmpeg-0.cvs20070307/libavcodec/avcodec.h
+===================================================================
+--- ffmpeg-0.cvs20070307.orig/libavcodec/avcodec.h	2007-03-07 14:37:04.000000000 +0100
++++ ffmpeg-0.cvs20070307/libavcodec/avcodec.h	2007-03-09 17:07:44.000000000 +0100
+@@ -38,7 +38,7 @@
+ #define AV_TOSTRING(s) #s
+ 
+ #define LIBAVCODEC_VERSION_INT  ((51<<16)+(38<<8)+0)
+-#define LIBAVCODEC_VERSION      51.38.0
++#define LIBAVCODEC_VERSION      1d.51.38.0
+ #define LIBAVCODEC_BUILD        LIBAVCODEC_VERSION_INT
+ 
+ #define LIBAVCODEC_IDENT        "Lavc" AV_STRINGIFY(LIBAVCODEC_VERSION)
+Index: ffmpeg-0.cvs20070307/libavformat/avformat.h
+===================================================================
+--- ffmpeg-0.cvs20070307.orig/libavformat/avformat.h	2007-03-07 14:37:06.000000000 +0100
++++ ffmpeg-0.cvs20070307/libavformat/avformat.h	2007-03-09 17:07:44.000000000 +0100
+@@ -26,7 +26,7 @@
+ #endif
+ 
+ #define LIBAVFORMAT_VERSION_INT ((51<<16)+(10<<8)+0)
+-#define LIBAVFORMAT_VERSION     51.10.0
++#define LIBAVFORMAT_VERSION     1d.51.10.0
+ #define LIBAVFORMAT_BUILD       LIBAVFORMAT_VERSION_INT
+ 
+ #define LIBAVFORMAT_IDENT       "Lavf" AV_STRINGIFY(LIBAVFORMAT_VERSION)
+Index: ffmpeg-0.cvs20070307/common.mak
+===================================================================
+--- ffmpeg-0.cvs20070307.orig/common.mak	2007-03-07 14:37:06.000000000 +0100
++++ ffmpeg-0.cvs20070307/common.mak	2007-03-09 17:07:44.000000000 +0100
+@@ -68,7 +68,7 @@
+ 	cd "$(shlibdir)" && \
+ 		ln -sf $(SLIBNAME_WITH_VERSION) $(SLIBNAME_WITH_MAJOR)
+ 	cd "$(shlibdir)" && \
+-		ln -sf $(SLIBNAME_WITH_VERSION) $(SLIBNAME)
++		ln -sf $(SLIBNAME_WITH_MAJOR) $(SLIBNAME)
+ 	$(SLIB_INSTALL_EXTRA_CMD)
+ 
+ install-lib-static: $(LIB)
+Index: ffmpeg-0.cvs20070307/libpostproc/postprocess.h
+===================================================================
+--- ffmpeg-0.cvs20070307.orig/libpostproc/postprocess.h	2007-03-07 11:17:32.000000000 +0100
++++ ffmpeg-0.cvs20070307/libpostproc/postprocess.h	2007-03-09 17:07:44.000000000 +0100
+@@ -32,7 +32,7 @@
+ #endif
+ 
+ #define LIBPOSTPROC_VERSION_INT ((51<<16)+(1<<8)+0)
+-#define LIBPOSTPROC_VERSION     51.1.0
++#define LIBPOSTPROC_VERSION     1d.51.1.0
+ #define LIBPOSTPROC_BUILD       LIBPOSTPROC_VERSION_INT
+ 
+ #define LIBPOSTPROC_IDENT       "postproc" AV_STRINGIFY(LIBPOSTPROC_VERSION)
+Index: ffmpeg-0.cvs20070307/libswscale/swscale.h
+===================================================================
+--- ffmpeg-0.cvs20070307.orig/libswscale/swscale.h	2007-03-07 11:17:32.000000000 +0100
++++ ffmpeg-0.cvs20070307/libswscale/swscale.h	2007-03-09 17:07:44.000000000 +0100
+@@ -37,7 +37,7 @@
+ #define AV_TOSTRING(s) #s
+ 
+ #define LIBSWSCALE_VERSION_INT  ((0<<16)+(5<<8)+0)
+-#define LIBSWSCALE_VERSION      0.5.0
++#define LIBSWSCALE_VERSION      1d.0.5.0
+ #define LIBSWSCALE_BUILD        LIBSWSCALE_VERSION_INT
+ 
+ #define LIBSWSCALE_IDENT        "SwS" AV_STRINGIFY(LIBSWSCALE_VERSION)

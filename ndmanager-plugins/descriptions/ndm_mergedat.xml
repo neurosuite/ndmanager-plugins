@@ -1,0 +1,30 @@
+<?xml version='1.0'?>
+<parameter>
+ <program>
+  <name>ndm_mergedat</name>
+  <parameters>
+   <parameter>
+    <name>suffixes</name>
+    <value></value>
+    <status>Mandatory</status>
+   </parameter>
+   <parameter>
+    <name>nChannels</name>
+    <value></value>
+    <status>Mandatory</status>
+   </parameter>
+  </parameters>
+  <help>Merge multiple .dat files recorded simultaneously.
+
+PARAMETERS
+
+# suffixes
+
+List of suffixes for the individual files to merge
+
+# nChannels
+
+List of number of channels in individual data files (in the same order as the suffixes)
+</help>
+ </program>
+</parameter>

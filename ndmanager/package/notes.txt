@@ -1,0 +1,5 @@
+In case of problems with MOC files and/or Makefiles:
+
+# cd <topdir>
+# make -f Makefile.cvs
+

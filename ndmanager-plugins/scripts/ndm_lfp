@@ -1,0 +1,57 @@
+#!/bin/bash
+
+#////////////////////////////////////////////////////////////////////////////
+#//
+#//   Create LFP files by resampling .dat files
+#//
+#//   copyright       (C) 2007-2010 by Michaël Zugaro
+#//   email           michael.zugaro@college-de-france.fr
+#//
+#//   This program is free software; you can redistribute it and/or modify
+#//   it under the terms of the GNU General Public License as published by
+#//   the Free Software Foundation; either version 3 of the License, or
+#//   (at your option) any later version.
+#//
+#////////////////////////////////////////////////////////////////////////////
+
+# Source helper functions
+source ndm_functions
+
+# Parse command-line
+program=$(basename $0)
+if [ $# -ne 1 ]
+then
+	echo_error "usage: $program xml-file"
+	exit $GENERAL_ERROR
+fi
+session=${1%.xml}
+directory=$(basename "$(pwd)")
+
+# Print a header to indicate current processing step
+print_header "$session - Creating LFP file"
+
+# Check input and output files
+outputs_exist $session.lfp && exit $OUTPUTS_EXIST
+inputs_missing $session.xml $session.dat && exit $INPUTS_MISSING
+
+# Check required programs
+check_commands_installed xpathReader process_resample
+
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+# // Read Parameters
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+nChannels=$(xml_read $session "//acquisitionSystem/nChannels")
+oldSamplingRate=$(xml_read $session "//acquisitionSystem/samplingRate")
+newSamplingRate=$(read_script_parameter $session samplingRate)
+
+check_mandatory_variable $nChannels "missing number of channels"
+check_mandatory_variable $oldSamplingRate "missing source sampling rate"
+check_mandatory_variable $newSamplingRate "missing target sampling rate"
+
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+# // Process
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+process_resample -n $nChannels -f $oldSamplingRate,$newSamplingRate $session.dat $session.lfp
+check_command_status process_resample

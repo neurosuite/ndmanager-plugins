@@ -1,0 +1,197 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+          "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="process">
+
+	<refmeta>
+		<refentrytitle>process</refentrytitle>
+		<manvolnum>1</manvolnum>
+	</refmeta>
+
+	<refnamediv>
+		<refname>process</refname><refpurpose>a collection of command-line tools to process electrophysiological signals, video and behavioral events.</refpurpose>
+	</refnamediv>
+
+	<refsect1>
+		<title>Description</title>
+		<para>
+			This is a collection of command-line tools to process electrophysiological signals, video and behavioral events. They are similar to <command>ndm</command> scripts, except that parameters are read from the command-line rather than from a central XML parameter file. Under normal circumstances, you should not need to use these tools directly: instead, you should simply run <command>ndm_start</command> and let it automatically handle all processing tasks (see the manual page for <command>ndm</command> for details).
+		</para>
+	</refsect1>
+	<refsect1>
+		<title>Technical Reference</title>
+		<variablelist>
+			<varlistentry>
+				<term>File format conversion</term>
+				<listitem>
+					<variablelist>
+						<varlistentry>
+							<term><command moreinfo="refentry">process_nlxconvert</command></term>
+							<listitem>
+								<para>
+									convert files recorded with Neuralynx acquisition systems.
+								</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term><command moreinfo="refentry">process_smrconvert</command></term>
+							<listitem>
+								<para>
+									convert files recorded with Spike2 acquisition systems.
+								</para>
+							</listitem>
+						</varlistentry>
+					</variablelist>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Wideband signal processing</term>
+				<listitem>
+					<variablelist>
+						<varlistentry>
+							<term><command moreinfo="refentry">process_resample</command></term>
+							<listitem>
+								<para>
+									resample a multiplexed binary data file (<replaceable>.dat</replaceable>, <replaceable>.fil</replaceable>, etc.)
+								</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term><command moreinfo="refentry">process_merge</command></term>
+							<listitem>
+								<para>
+									merge simultaneously recorded multiplexed binary files (<replaceable>.dat</replaceable>, <replaceable>.fil</replaceable>, etc.)
+								</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term><command moreinfo="refentry">process_extractchannels</command></term>
+							<listitem>
+								<para>
+									extract channels from a multiplexed binary file (<replaceable>.dat</replaceable>, <replaceable>.fil</replaceable>, etc.)
+								</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term><command moreinfo="refentry">process_medianfilter</command></term>
+							<listitem>
+								<para>
+									hi-pass filter a multiplexed binary data file (e.g. <replaceable>.dat</replaceable> -> <replaceable>.fil</replaceable>).
+								</para>
+							</listitem>
+						</varlistentry>
+					</variablelist>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Spike processing</term>
+				<listitem>
+					<variablelist>
+						<varlistentry>
+							<term><command moreinfo="refentry">process_medianthreshold</command></term>
+							<listitem>
+								<para>
+									compute the spike detection threshold for a hi-pass filtered multiplexed binary  (<replaceable>.fil</replaceable>) file.
+								</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term><command moreinfo="refentry">process_extractspikes</command></term>
+							<listitem>
+								<para>
+									extract spike waveforms (<replaceable>.spk</replaceable>) and timestamps (<replaceable>.res</replaceable>) from a high-pass filtered multiplexed binary (<replaceable>.fil</replaceable>) data file.
+								</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term><command moreinfo="refentry">process_pca</command></term>
+							<listitem>
+								<para>
+									compute principal component analysis (PCA) on spike data for subsequent cluster cutting (-> <replaceable>.fet</replaceable> file).
+								</para>
+							</listitem>
+						</varlistentry>
+						<varlistentry>
+							<term><command moreinfo="refentry">process_reorderclusters</command></term>
+							<listitem>
+								<para>
+									reorder clusters in a cluster (<replaceable>.clu</replaceable>) file.
+								</para>
+							</listitem>
+						</varlistentry>
+					</variablelist>
+					<variablelist>
+						<varlistentry>
+							<term><command moreinfo="refentry">process_removeartefacts</command></term>
+							<listitem>
+								<para>
+									removes artefacts (channel 0) from spike waveform (<replaceable>.spk</replaceable>), spike time (<replaceable>.res</replaceable>), feature (<replaceable>.fet</replaceable>) and cluster (<replaceable>.clu</replaceable>) files.
+								</para>
+							</listitem>
+						</varlistentry>
+					</variablelist>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Video processing</term>
+				<listitem>
+					<variablelist>
+						<varlistentry>
+							<term><command moreinfo="refentry">process_extractleds</command></term>
+							<listitem>
+								<para>
+										extract LEDs from a video (<replaceable>.mpg</replaceable>, <replaceable>.avi</replaceable>, etc.) file.
+								</para>
+							</listitem>
+						</varlistentry>
+					</variablelist>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term>Miscellaneous</term>
+				<listitem>
+					<variablelist>
+						<varlistentry>
+							<term><command moreinfo="refentry">xpathReader</command></term>
+							<listitem>
+								<para>
+									read information from an XML file using XPath syntax queries.
+								</para>
+							</listitem>
+						</varlistentry>
+					</variablelist>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</refsect1>
+
+	<refsect1>
+		<title>Authors</title>
+		<para>
+			<author>
+				<firstname>Lynn</firstname>
+				<othername role="mi">N</othername>
+				<surname>Hazan</surname>
+				<contrib>Original author</contrib>
+			</author>,&nbsp;
+			<email>lynn.hazan@myrealbox.com</email>.
+		</para>
+		<para>
+			<author>
+				<firstname>Michael</firstname>
+				<othername role="mi">B</othername>
+				<surname>Zugaro</surname>
+				<contrib>Original author</contrib>
+			</author>,&nbsp;
+			<email>michael.zugaro@college-de-france.fr</email>.
+		</para>
+		<para>
+			<author>
+				<firstname>Nicolas</firstname>
+				<surname>Lebas</surname>
+				<contrib>Original author</contrib>
+			</author>,&nbsp;
+			<email>nicolas.lebas@college-de-france.fr</email>.
+		</para>
+	</refsect1>
+
+</refentry>

@@ -1,0 +1,12 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libswscale
+Description: FFmpeg image rescaling library
+Version: 0.5.0
+Requires:  libavcodec = 51.38.0
+Conflicts:
+Libs:
+Cflags: -I${includedir} -I${includedir}/swscale

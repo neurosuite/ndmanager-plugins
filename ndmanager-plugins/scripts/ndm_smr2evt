@@ -1,0 +1,67 @@
+#!/bin/bash
+
+#////////////////////////////////////////////////////////////////////////////
+#//
+#//   Convert from .smr (CED files) to event files .evt
+#//
+#//   copyright       (C) 2007-2010 by Michaël Zugaro
+#//   email           michael.zugaro@college-de-france.fr
+#//
+#//   This program is free software; you can redistribute it and/or modify
+#//   it under the terms of the GNU General Public License as published by
+#//   the Free Software Foundation; either version 3 of the License, or
+#//   (at your option) any later version.
+#//
+#////////////////////////////////////////////////////////////////////////////
+
+# Source helper functions
+source ndm_functions
+
+# Parse command-line
+program=$(basename $0)
+if [ $# -ne 1 ]
+then
+	echo_error "usage: $program xml-file"
+	exit $GENERAL_ERROR
+fi
+session=${1%.xml}
+directory=$(basename "$(pwd)")
+
+# Print a header to indicate current processing step
+print_header "$session - Converting SMR files -> evt"
+
+# Check required programs
+check_commands_installed xpathReader process_smrconvert
+
+# Check input files (but do not check output)
+inputs_missing $session.xml && exit $INPUTS_MISSING
+
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+# // Read Parameters
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+options="-e"
+
+suffixes=($(read_script_parameter $session suffixes))
+rename_script=$(read_script_parameter $session rename)
+
+check_mandatory_variable ${suffixes[0]} "missing suffixes"
+
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+# // Process
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+# Convert selected files (overwrite outputs if they exist)
+n=$(get_n_suffixes ${suffixes[*]})
+for (( i=0;i<$n;i++ ))
+do
+	suffix=$(get_suffix $i ${suffixes[*]})
+	echo_info "Converting '$session-$suffix.smr'"
+	smr_file=../$directory-$suffix/$session-$suffix.smr
+	inputs_missing $smr_file && exit $INPUTS_MISSING
+	process_smrconvert $options $smr_file
+	check_command_status process_smrconvert
+done
+
+# If requested, rename events and event files
+check_optional_variable $rename_script && exec $rename_script $session.xml

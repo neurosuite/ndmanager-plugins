@@ -1,0 +1,59 @@
+<?xml version='1.0'?>
+<parameter>
+ <program>
+  <name>ndm_extractspikes</name>
+  <parameters>
+   <parameter>
+    <name>thresholdFactor</name>
+    <value>1.5</value>
+    <status>Mandatory</status>
+   </parameter>
+   <parameter>
+    <name>refractoryPeriod</name>
+    <value>16</value>
+    <status>Mandatory</status>
+   </parameter>
+   <parameter>
+    <name>peakSearchLength</name>
+    <value>32</value>
+    <status>Mandatory</status>
+   </parameter>
+   <parameter>
+    <name>start</name>
+    <value>0</value>
+    <status>Mandatory</status>
+   </parameter>
+   <parameter>
+    <name>duration</name>
+    <value>60</value>
+    <status>Mandatory</status>
+   </parameter>
+  </parameters>
+  <help>Extract spikes from high-pass filtered .fil file (this creates .res and .spk files).
+
+First, the program automatically computes a baseline 'noise' level, using a subset of the data. Then, spikes are extracted whenever the signal crosses a threshold proportional to the baseline 'noise' level. To avoid spurious detections, the signal must have a local maximum (or minimum, depending on the sign of the signal) within a fixed search window starting at threshold crossing. Also, the duration between consecutive spikes must be greater than a fixed 'refractory' period.
+
+PARAMETERS
+
+# thresholdFactor
+
+Threshold = thresholdFactor * baseline 'noise' level
+
+# refractoryPeriod
+
+Number of samples to skip after a spike, before trying to detect a new spike
+
+# peakSearchLength
+
+Length of the peak search window (in number of samples)
+
+# start
+
+Starting point in the file (in s) for computation of baseline 'noise' level
+
+# duration
+
+Duration (in s) for computation of baseline 'noise' level
+</help>
+ </program>
+</parameter>

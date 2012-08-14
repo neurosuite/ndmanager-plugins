@@ -1,0 +1,42 @@
+process_pca
+-------------------------------
+30/11/2011
+author : nicolas.lebas@college-de-france.fr
+
+1) USAGE :
+-------------
+process_pca [options] input
+
+OR 
+
+process_pca [options] -   (use to read from stdin)
+
+  input          data file name
+ -f output       output filename
+ -n channels     number of channels in the spike file
+ -B length       number of samples to consider for PCA before spike
+ -p peakPosition position of the peak within the waveform, in number of samples
+ -A length       number of samples to consider for PCA after spike
+ -w length       number of samples per waveform
+ -d components   number of principal components per channel
+ -s size         input data size in bytes (ex : 32000000) when reading from standard input
+ -C              use centered data for the projection
+ -x              add extra features in output file (spike values)
+ -v              verbose mode
+ -h              display help
+
+All arguments are mandatory, except 
+  -x (-p is necessary if you use it)
+  -s which is required only when reading from standard input
+  -B, -A and -p could be not used (all spike length will be considered).
+
+Example :
+------------
+>> process_pca -n 4 -w 32 -B 16 -p 16 -A 15 -d 2 -f rat42-20080429-01-visualcue1.fet.1 -s 3256000 -x -v rat42-20080429-01-visualcue1.spk.1
+
+
+
+2) OUTPUTS :
+----------------
+
+rat42-20080429-01-visualcue1.fet.1 : features file

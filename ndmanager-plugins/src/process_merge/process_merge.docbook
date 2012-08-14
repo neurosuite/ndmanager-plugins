@@ -1,0 +1,115 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+          "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="process_merge">
+
+	<refmeta>
+		<refentrytitle>process_merge</refentrytitle>
+		<manvolnum>1</manvolnum>
+	</refmeta>
+
+	<refnamediv>
+		<refname>process_merge</refname><refpurpose>merge simultaneously recorded multiplexed binary data files.</refpurpose>
+	</refnamediv>
+
+	<refsynopsisdiv>
+		<cmdsynopsis>
+		<command>process_merge</command>
+		<arg>
+			<option>-t</option>
+		</arg>
+		<arg>
+			<option>-b</option> <replaceable>buffer</replaceable>
+		</arg>
+		<arg choice="plain">
+			<replaceable>input1</replaceable>
+		</arg>
+		<arg choice="plain">
+			<replaceable>n1</replaceable>
+		</arg>
+		<arg choice="plain">
+			<replaceable>input2</replaceable>
+		</arg>
+		<arg choice="plain">
+			<replaceable>n2</replaceable>
+		</arg>
+		<arg rep="repeat">
+			<arg choice="plain">
+				<replaceable>input3</replaceable>
+			</arg>
+			<arg choice="plain">
+				<replaceable>n3</replaceable>
+			</arg>
+		</arg>
+		<arg choice="plain">
+			<replaceable>output</replaceable>
+		</arg>
+		</cmdsynopsis>
+	</refsynopsisdiv>
+
+	<refsect1>
+		<title>Description</title>
+		<para>
+			<command>process_merge</command> merges simultaneously recorded multiplexed binary data files.
+		</para>
+	</refsect1>
+
+	<refsect1>
+		<title>Options</title>
+		<variablelist>
+			<varlistentry>
+				<term><option>-t</option>, <option>--truncate</option></term>
+				<listitem>
+					<para>
+						truncate to size of smallest input file
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-b</option>, <option>--buffer</option> <replaceable>factor</replaceable></term>
+				<listitem>
+					<para>
+						buffer size factor (default 8192) - this can be used to optimize file I/O throughput
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><replaceable>input1</replaceable>, <replaceable>input2</replaceable> ...</term>
+				<listitem>
+					<para>
+						input files
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><replaceable>n1</replaceable>, <replaceable>n2</replaceable>, ...</term>
+				<listitem>
+					<para>
+						number of channels in each of the input files
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><replaceable>output</replaceable></term>
+				<listitem>
+					<para>
+						output file
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</refsect1>
+
+	<refsect1>
+		<title>Author</title>
+		<para>
+			<author>
+				<firstname>Michael</firstname>
+				<othername role="mi">B</othername>
+				<surname>Zugaro</surname>
+				<contrib>Original author</contrib>
+			</author>,&nbsp;
+			<email>michael.zugaro@college-de-france.fr</email>.
+		</para>
+	</refsect1>
+
+</refentry>

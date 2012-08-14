@@ -1,0 +1,20 @@
+<?xml version='1.0'?>
+<parameter>
+ <program>
+  <name>ndm_lfp</name>
+  <parameters>
+   <parameter>
+    <name>samplingRate</name>
+    <value>1250</value>
+    <status>Mandatory</status>
+   </parameter>
+  </parameters>
+  <help>Downsample a .dat file to create the corresponding LFP file.
+
+PARAMETERS
+
+# samplingRate
+
+Target sampling rate (default = 1250Hz)</help>
+ </program>
+</parameter>

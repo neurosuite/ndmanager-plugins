@@ -1,0 +1,187 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+          "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="process_pca">
+
+	<refmeta>
+		<refentrytitle>process_pca</refentrytitle>
+		<manvolnum>1</manvolnum>
+	</refmeta>
+
+	<refnamediv>
+		<refname>process_pca</refname><refpurpose>perform PCA on a spike waveform file.</refpurpose>
+	</refnamediv>
+
+	<refsynopsisdiv>
+		<cmdsynopsis>
+		<command>process_pca</command>
+		<arg choice="plain">
+			<option>-f</option> <replaceable>output</replaceable>
+		</arg>
+		<arg choice="plain">
+			<option>-n</option> <replaceable>channels</replaceable>
+		</arg>
+		<arg choice="plain">
+			<option>-p</option> <replaceable>position</replaceable>
+		</arg>
+		<arg choice="plain">
+			<option>-b</option> <replaceable>length</replaceable>
+		</arg>
+		<arg choice="plain">
+			<option>-a</option> <replaceable>length</replaceable>
+		</arg>
+		<arg choice="plain">
+			<option>-w</option> <replaceable>length</replaceable>
+		</arg>
+		<arg choice="plain">
+			<option>-d</option> <replaceable>components</replaceable>
+		</arg>
+		<arg choice="plain">
+			<option>-s</option> <replaceable>size</replaceable>
+		</arg>
+		<arg>
+			<option>-c</option>
+		</arg>
+		<arg>
+			<option>-x</option>
+		</arg>
+		<arg>
+			<option>-v</option>
+		</arg>
+		<arg choice="plain">
+			<replaceable>input</replaceable>
+		</arg>
+		</cmdsynopsis>
+	</refsynopsisdiv>
+
+	<refsect1>
+		<title>Description</title>
+		<para>
+			<command>process_pca</command> performs a PCA on a spike waveform (<replaceable>.spk</replaceable>) file, keeps only the first n components and saves the projected waveforms to a feature (<replaceable>.fet</replaceable>) file.
+		</para>
+	</refsect1>
+
+	<refsect1>
+		<title>Options</title>
+		<variablelist>
+			<varlistentry>
+				<term><option>-f</option> <replaceable>output</replaceable></term>
+				<listitem>
+					<para>
+						output filename
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-n</option> <replaceable>channels</replaceable></term>
+				<listitem>
+					<para>
+						number of channels in the spike file
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-p</option> <replaceable>peakPosition</replaceable></term>
+				<listitem>
+					<para>
+						position of the peak in the waveform (starting from 0)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-b</option> <replaceable>length</replaceable></term>
+				<listitem>
+					<para>
+						number of samples before the peak to use for PCA
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-a</option> <replaceable>length</replaceable></term>
+				<listitem>
+					<para>
+						number of samples after the peak to use for PCA
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-w</option> <replaceable>length</replaceable></term>
+				<listitem>
+					<para>
+						number of samples per waveform
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-d</option> <replaceable>components</replaceable></term>
+				<listitem>
+					<para>
+						number of principal components
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-s</option> <replaceable>size</replaceable></term>
+				<listitem>
+					<para>
+						input size in bytes (ex : 32000000), when reading from standard input
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-c</option></term>
+				<listitem>
+					<para>
+						use centered data (X - mean) for the final PCA projection
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-x</option></term>
+				<listitem>
+					<para>
+						include extra features in output file (spike peak values)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-v</option></term>
+				<listitem>
+					<para>
+						verbose mode
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><replaceable>input</replaceable></term>
+				<listitem>
+					<para>
+						input filename
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</refsect1>
+
+	<refsect1>
+		<title>Author</title>
+		<para>
+			<author>
+				<firstname>Nicolas</firstname>
+				<othername role="mi">B</othername>
+				<surname>Lebas</surname>
+				<contrib>Original author</contrib>
+			</author>,&nbsp;
+			<email>nicolas.lebas@college-de-france.fr</email>
+		</para>
+		<para>
+			<author>
+				<firstname>Michael</firstname>
+				<othername role="mi">B</othername>
+				<surname>Zugaro</surname>
+				<contrib>LFS support, bug corrections</contrib>
+			</author>,&nbsp;
+			<email>michael.zugaro@college-de-france.fr</email>
+		</para>
+	</refsect1>
+
+</refentry>

@@ -1,0 +1,20 @@
+<?xml version='1.0'?>
+<parameter>
+ <program>
+  <name>ndm_reorderchannels</name>
+  <parameters>
+   <parameter>
+    <name>channels</name>
+    <value></value>
+    <status>Mandatory</status>
+   </parameter>
+  </parameters>
+  <help>Reorder channels in .dat file.
+
+PARAMETERS
+
+# channels
+
+List of reordered channels, numbered from 0</help>
+ </program>
+</parameter>

@@ -1,0 +1,4 @@
+
+METASOURCES = AUTO
+imagesdir = $(kde_htmldir)/en/ndmanager/Images
+images_DATA = acquisitionSystem.png anatomy.png example1-check.png example1-initial.png example1-prepare1.png example1-prepare2.png example1-prepared.png example1-processing1.png example1-processing2.png example1-spikegroups.png example1-suffix.png example2-acquisition.png example2-check.png example2-initial.png example2-prepare1.png example2-prepared.png example2-processing.png example2-suffixes1.png example2-suffixes2.png example3-check.png example3-initial.png example3-prepare1.png example3-prepare2.png example3-prepared.png example3-processing.png example3-spikegroups.png example3-suffix.png files.png general.png lfp.png more-neuroscope-create.png more-neuroscope-edit.png more-video.png ndmanager.png neuroscope.png processManager.png programs.png spike.png units.png video.png

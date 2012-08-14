@@ -1,0 +1,50 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+          "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="spots2pos">
+
+	<refmeta>
+		<refentrytitle>spots2pos</refentrytitle>
+		<manvolnum>1</manvolnum>
+	</refmeta>
+
+	<refnamediv>
+		<refname>spots2pos</refname><refpurpose>extract position samples from spots files.</refpurpose>
+	</refnamediv>
+
+	<refsect1>
+		<title>Description</title>
+		<para>
+			<command>spots2pos</command> extracts position samples from one or more .spots files, separates or merges multiple LEDs, interpolates missing samples, synchronizes, resamples, saves to <replaceable>.pos</replaceable> file(s) and concatenates the results.
+		</para>
+		<para>
+			<command>spots2pos</command> is a <application>Matlab</application> function, not a command-line tool. For more information, in the <application>Matlab</application> command window type:
+		</para>
+<programlisting>
+>> help spots2pos
+</programlisting>
+		<para>
+			<command>spots2pos</command> is typically installed in <filename>/usr/share/matlab</filename>. To make it available in <application>Matlab</application>, copy the file to an appropriate location in your <application>Matlab</application> path.
+		</para>
+	</refsect1>
+
+	<refsect1>
+		<title>Author</title>
+		<para>
+			<author>
+				<firstname>Michael</firstname>
+				<othername role="mi">B</othername>
+				<surname>Zugaro</surname>
+				<contrib>Original author</contrib>
+			</author>,&nbsp;
+			<email>michael.zugaro@college-de-france.fr</email>.
+		</para>
+		<para>
+			<author>
+				<firstname>Kenneth</firstname>
+				<surname>Harris</surname>
+				<contrib>Author</contrib>
+			</author>
+		</para>
+	</refsect1>
+
+</refentry>

@@ -1,0 +1,20 @@
+Index: ffmpeg-0.cvs20070307/configure
+===================================================================
+--- ffmpeg-0.cvs20070307.orig/configure	2007-03-09 17:23:30.000000000 +0100
++++ ffmpeg-0.cvs20070307/configure	2007-03-09 17:25:58.000000000 +0100
+@@ -2103,11 +2103,11 @@
+ pkgconfig_generate libavutil "FFmpeg utility library" "$lavu_version" -lavutil "" ffmpeg
+ pkgconfig_generate_uninstalled libavutil "FFmpeg utility library" "$lavu_version"
+ 
+-pkgconfig_generate libavcodec "FFmpeg codec library" "$lavc_version" "-lavcodec $extralibs" "$pkg_requires libavutil = $lavu_version" ffmpeg
+-pkgconfig_generate_uninstalled libavcodec "FFmpeg codec library" "$lavc_version" "$extralibs" "$pkg_requires libavutil = $lavu_version"
++pkgconfig_generate libavcodec "FFmpeg codec library" "$lavc_version" "-lavcodec" "$pkg_requires libavutil = $lavu_version" ffmpeg
++pkgconfig_generate_uninstalled libavcodec "FFmpeg codec library" "$lavc_version" "" "$pkg_requires libavutil = $lavu_version"
+ 
+-pkgconfig_generate libavformat "FFmpeg container format library" "$lavf_version" "-lavformat $extralibs" "$pkg_requires libavcodec = $lavc_version" ffmpeg
+-pkgconfig_generate_uninstalled libavformat "FFmpeg container format library" "$lavf_version" "$extralibs" "$pkg_requires libavcodec = $lavc_version"
++pkgconfig_generate libavformat "FFmpeg container format library" "$lavf_version" "-lavformat" "$pkg_requires libavcodec = $lavc_version" ffmpeg
++pkgconfig_generate_uninstalled libavformat "FFmpeg container format library" "$lavf_version" "" "$pkg_requires libavcodec = $lavc_version"
+ 
+ if enabled pp; then
+   pkgconfig_generate libpostproc "FFmpeg post processing library" "$pp_version" -lpostproc "" postproc

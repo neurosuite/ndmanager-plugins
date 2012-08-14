@@ -1,0 +1,715 @@
+#!/bin/bash
+
+#////////////////////////////////////////////////////////////////////////////
+#//
+#//   Helper functions for NDManager plugins (ndm_ scripts)
+#//
+#//   copyright       (C) 2004 by Lynn Hazan,
+#//                   (C) 2007-2011 by Michaël Zugaro
+#//   email           lynn.hazan@myrealbox.com
+#//                   michael.zugaro@college-de-france.fr
+#//
+#//   This program is free software; you can redistribute it and/or modify
+#//   it under the terms of the GNU General Public License as published by
+#//   the Free Software Foundation; either version 3 of the License, or
+#//   (at your option) any later version.
+#//
+#////////////////////////////////////////////////////////////////////////////
+
+# Guidelines for NDManager plugins (ndm_ scripts):
+#
+# Given that these scripts are designed to run in batches, each individual
+# script must follow a certain number of rules:
+#
+# 1) If the output files are already present in the target directory (they
+#    have already been produced by a previous run), exit $OUTPUTS_EXIST
+#     => batch jobs can decide to ignore the 'error' and proceed
+#
+# 2) If the output files are not present and the input files are missing,
+#    there is no way the output files can be produced, exit $INPUTS_MISSING
+#     => some further steps of the batch may have to be skipped, or
+#        the batch may even have to be interrupted altogether
+#
+# 3) If the output files cannot be produced because of a processing error,
+#    return that error
+#     => some further steps of the batch may have to be skipped, or
+#        the batch may even have to be interrupted altogether
+#
+# This can be ensured by performing the following steps:
+#
+# 1) check number of parameters on command-line
+# 2) source ndm_functions (this file)
+# 3) print header to indicate current processing step
+# 4) check for existing output files (exist => exit $OUTPUTS_EXIST)
+# 5) check for missing input files (missing => exit $INPUTS_MISSING)
+# 6) read XML parameter file
+# 7) process
+# 8) check for processing errors and return error code
+
+NO_ERROR=0
+GENERAL_ERROR=1
+OUTPUTS_EXIST=10
+INPUTS_MISSING=11
+VAR_MISSING=20
+
+BLACK="\e[1;30m"
+DARK_GREY="\e[1;30m"
+BLUE="\e[1;34m"
+LIGHT_BLUE="\e[1;34m"
+GREEN="\e[1;32m"
+LIGHT_GREEN="\e[1;32m"
+CYAN="\e[1;36m"
+LIGHT_CYAN="\e[1;36m"
+RED="\e[1;31m"
+LIGHT_RED="\e[1;31m"
+PURPLE="\e[1;35m"
+LIGHT_PURPLE="\e[1;35m"
+BROWN="\e[0;33m"
+YELLOW="\e[1;33m"
+LIGHT_GREY="\e[1;37m"
+WHITE="\e[1;37m"
+BOLD_BLACK="\e[1m"
+PLAIN="\e[0m"
+
+#////////////////////////////////////////////////////////////////////////////
+#//  Messages (erros, warnings, headers)
+#////////////////////////////////////////////////////////////////////////////
+
+# Print error message
+echo_error()
+{
+	indent=$(echo "$1"|sed -r 's/^([ ]*).*/\1/')
+	message=$(echo "$1"|sed 's/^ *//g')
+
+	echo -en "$RED" >&2
+	echo "$indent$program - error: $message" >&2
+	echo -en "$PLAIN" >&2
+}
+
+# Print warning message
+echo_warning()
+{
+	indent=$(echo "$1"|sed -r 's/^([ ]*).*/\1/')
+	message=$(echo "$1"|sed 's/^ *//g')
+
+	echo -en "$BLUE" >&2
+	echo "$indent$program - warning: $message" >&2
+	echo -en "$PLAIN" >&2
+}
+
+# Print information message
+echo_info()
+{
+# 	local options
+# 	while [ $# -gt 0 ]
+# 	do
+# 		if [ ${1:0:1} == '-' ]
+# 		then
+# 			options="$options $1"
+# 			shift
+# 		else
+# 			break
+# 		fi
+# 	done
+# 	indent=$(echo "$1"|sed -r 's/^([ ]*).*/\1/')
+# 	message=$(echo "$1"|sed 's/^ *//g')
+#
+	echo $*
+}
+
+# Print a header to indicate current processing step
+#  usage: print_header message [character [style]]
+print_header()
+{
+	local title N n l char style i
+
+	title=$1
+	N=150
+	n=${#title}
+	l=$((($N-$n)/2+1))
+
+	char="="
+	if [ $# -gt 1 ]
+	then
+		char=${2:0:1}
+	fi
+	if [ $# -gt 2 ]
+	then
+		style=$3
+	else
+		style="$PLAIN"
+	fi
+
+	echo -e "$style"
+	for (( i=1;i<$N;i++ ));do echo -n "$char";done;echo ""
+	for (( i=1;i<$l;i++ ));do echo -n " ";done;echo $title
+	for (( i=1;i<$N;i++ ));do echo -n "$char";done;
+	echo -e "$PLAIN"
+}
+
+#////////////////////////////////////////////////////////////////////////////
+#//  Check environment (commands, inputs, outputs)
+#////////////////////////////////////////////////////////////////////////////
+
+# Check that certain required commands are installed (command missing => exit with error)
+#  usage: check_commands_installed command1 [command2...]
+check_commands_installed()
+{
+	local command=$1
+
+	for command in $*
+	do
+		if [ -z "$(which $command)" ]
+		then
+			echo_error "command '$command' is missing (check installation)."
+			exit $GENERAL_ERROR
+		fi
+	done
+}
+
+# *** This function should not be used to evaluate the status of an ndm_ script (use step_completed instead) ***
+# Make sure that the previous command succeeded; if not, exit
+#  usage: check_command_status command_name
+#  usage: check_command_status command_name error
+#  The first usage tests $?
+check_command_status()
+{
+	local error=$?
+	local command=$1
+
+	if [ $# -eq 2 ]
+	then
+		error=$2
+	fi
+
+	# Just in case this function is used to evaluate the status of an ndm_ script (although it shouldn't),
+	# ignore missing input files and existing output files (these should be dealt with elsewhere)
+	if [ $error -eq $OUTPUTS_EXIST ] || [ $error -eq $INPUTS_MISSING ]
+	then
+		return
+	fi
+
+	if [ $error -eq 127 ]
+	then
+		echo_error "the program '$command' was not found."
+		exit $GENERAL_ERROR
+	fi
+
+	if [ $error -eq 126 ]
+	then
+		echo_error "the program '$command' is not executable."
+		exit $GENERAL_ERROR
+	fi
+
+	# One of the processes in the command could be receiving a term signal of 13 (128 + 13 =
+	# 141) SIGPIPE. Apparrently this could happen if the process after the pipe
+	# closes its STDIN before the original process is finished.
+	# This seems to be the case of spower | sbaselin, and this is not an error
+
+	if [ $error -ne 141 ] && [ $error -ne 0 ]
+	then
+		echo_error "the program '$command' exited with the error code $error."
+		exit $GENERAL_ERROR
+	fi
+}
+
+# Make sure that the previous batch step (ndm_ script) succeeded
+# No warning/error reporting is required at this point, because this should have already been performed
+# during the previous step (ndm_ script)
+#  usage: step_completed script_name
+#  usage: step_completed script_name error
+#  typical usage 1: step_completed script_name || exit 1 (exit with error if step failed)
+#  typical usage 2: step_completed script_name && { ... } (execute instructions if step succeeded)
+#  The first usage tests $?
+step_completed()
+{
+	local error=$?
+	local script=$1
+
+	if [ $# -eq 2 ]
+	then
+		error=$2
+	fi
+
+	if [ $error -eq $NO_ERROR ] || [ $error -eq $OUTPUTS_EXIST ]
+	then
+		return $NO_ERROR
+	else
+		return $GENERAL_ERROR
+	fi
+}
+
+# Check for the presence of input files (missing => return 0)
+#  usage: inputs_missing file1 [file2...]
+#  typical usage 1: inputs_missing file1 file2 && exit 1 (exit with error if input files are missing)
+#  typical usage 2: inputs_missing file1 file2 || { ... } (execute instructions if input files are present)
+inputs_missing()
+{
+	local missing=false file
+
+	for file in $*
+	do
+		if [ ! -f "$file" ]
+		then
+			echo_warning "input file '$file' not found, skipping this step."
+			missing=true
+		fi
+	done
+	$missing && return $NO_ERROR || return $GENERAL_ERROR
+}
+
+# Check if output files already exist (found => return 1)
+#  usage: outputs_exist file1 [file2...]
+#  typical usage 1: outputs_exist file1 file2 && exit 1 (exit with error if output files are already present)
+#  typical usage 2: outputs_exist file1 file2 || { ... } (execute instructions if output files are absent)
+outputs_exist()
+{
+	local found=false file
+	for file in $*
+	do
+		if [ -f "$file" ]
+		then
+			echo_warning "output file '$file' exists, skipping this step."
+			found=true
+		fi
+	done
+	$found && return $NO_ERROR || return $GENERAL_ERROR
+}
+
+#////////////////////////////////////////////////////////////////////////////
+#//  Read parameter file (read, count and test variables)
+#////////////////////////////////////////////////////////////////////////////
+
+# Read data from the parameter file for current session (low level)
+#  usage: xml_read file xpath
+xml_read()
+{
+	local file=$1
+	local xpath=$2
+
+	file=${file%.xml}.xml
+	xpathReader $file $xpath
+}
+
+# Count items in a given list in the parameter file for current session
+#  usage: xml_count file xpath
+xml_count()
+{
+	local file=$1
+	local xpath=$2
+
+	file=${file%.xml}.xml
+	xpathReader --count $file $xpath
+}
+
+# Make sure a variable was assigned after reading the parameter file
+#  usage: xml_read_failed variable
+#  example: xml_read_failed $ok && echo "Unknown parameter 'ok'."
+xml_read_failed()
+{
+	[ -z "$1" ] || [ "$1" == "(null)" ]
+}
+
+# Read script parameter from the parameter file for current session (high level)
+# A single parameter can have different names in different versions of the script, which can all be tested
+#  usage: read_script_parameter [-s script_name] [-a alternative_script_name] file name1 [name2...]
+# By default, read parameter for currently running script. Alternatively, parameters for a different script
+# can be read using -s and -a options if necessary.
+read_script_parameter()
+{
+	local xpath
+	local name
+	local value
+	local script=$program
+	local alt_script=$alt_program
+
+	# Process options
+	while true
+	do
+		case "$1" in
+			-s)
+				script=$2
+				shift 2
+				;;
+			-a)
+				alt_script=$2
+				shift 2
+				;;
+			*)
+				break
+				;;
+		esac
+	done
+
+	local file=$1
+	file=${file%.xml}.xml
+	shift
+
+	# Try using name of current script
+	for name in $*
+	do
+		xpath="//program/name[.='$script']/../parameters/parameter/name[.='$name']/../value"
+		value=$(xml_read $file $xpath)
+		xml_read_failed $value || break
+	done
+	# Failed? try using former (legacy) name of current script
+	if xml_read_failed $value && [ ! -z "$alt_script" ]
+	then
+		for name in $*
+		do
+			xpath="//program/name[.='$alt_script']/../parameters/parameter/name[.='$name']/../value"
+			value=$(xml_read $file $xpath)
+			xml_read_failed $value || break
+		done
+	fi
+	# Failed? try reading from 'general' parameters
+	if xml_read_failed $value
+	then
+		for name in $*
+		do
+			xpath="//program/name[.='general']/../parameters/parameter/name[.='$name']/../value"
+			value=$(xml_read $file $xpath)
+			xml_read_failed $value || break
+		done
+	fi
+	echo $value
+}
+
+# Make sure a variable was assigned after reading the parameter file
+#  usage: check_mandatory_variable variable description
+#  note: if the variable is unassigned, this EXITS the script!
+check_mandatory_variable()
+{
+	local n=$#
+	local description=${!n}
+
+	# if the variable is unassigned, we receive only one parameter (the description of the variable)
+	if [ $n -eq 1 ] || xml_read_failed $1
+	then
+		echo_error "$description (check parameter file)."
+		exit $GENERAL_ERROR
+	fi
+}
+
+# Make sure a variable was assigned after reading the parameter file
+#  usage: check_optional_variable variable
+#  example: check_optional_variable $ok || echo "Unknown variable 'ok'."
+check_optional_variable()
+{
+	! xml_read_failed $1
+}
+
+# Make sure all variables are empty after reading the parameter file
+#  usage: check_empty_variables variable1 variable2...
+#  example: check_empty_variables $var1 $var2 && echo "No action requested, skipping." && return
+check_empty_variables()
+{
+	for var in $*
+	do
+		xml_read_failed $var || return 1
+	done
+	return 0
+}
+
+#////////////////////////////////////////////////////////////////////////////
+#//  General data file processing helpers
+#////////////////////////////////////////////////////////////////////////////
+
+# Round to integer
+#  usage: round number
+round()
+{
+	echo $1 | awk '{printf "%d",$1}'
+}
+
+# Test absolute time difference (between two streams)
+#  usage: test_time_delta time max_time
+#  example: test_time_delta $delta 3 && echo "delta is more than 3 seconds"
+test_time_delta()
+{
+	local dt=$1
+	local max=$2
+
+	echo ""|awk "{if ($dt<$max&&$dt>-$max) exit $GENERAL_ERROR}"
+}
+
+# Split directory name into meaningful parts: prefix-date[-description]-suffix
+# Possible parts include: prefix, date, description, suffix. See manpage for ndm_start for file naming
+# conventions.
+#  usage: dirname_part -s suffix part filename
+#  usage: dirname_part -n part filename
+#  usage: dirname_part part filename
+# Because the limit between description and suffix is arbitrary, and in addition the suffix is optional,
+# in general it cannot be guessed from the filename. There are three ways to deal with this:
+#  1) explicitly supply the suffix using option -s
+#  2) indicate that there is no suffix, using option -n
+#  3) use the last '-' as a separator between description and suffix (no option)
+dirname_part()
+{
+	local suffix
+	local no_suffix=false
+
+	if [ "$1" == "-s" ]
+	then
+		suffix=$2
+		shift 2
+	elif [ "$1" == "-n" ]
+	then
+		no_suffix=true
+		shift
+	fi
+
+	local part=$1
+	local dirname=$2
+
+	[ -z "$part" ] || [ -z "$dirname" ] && return
+
+	local date prefix end description
+
+	# Start with the 'easy' ones
+	date=$(filename_date $dirname)
+	[ -z "$date" ] && return
+	prefix=$(echo $dirname|sed -r '/(.*)-'$date'.*/!d;s//\1/')
+
+	# Deal with the 'hard' end of the filename
+	description=${dirname#$prefix-$date}
+	if [ -z "$suffix" ] && ! $no_suffix
+	then
+		suffix=$(echo $description|sed -r '/.*-(.*)/!d;s//\1/')
+	fi
+	description=${description%$suffix}
+	description=${description%-}
+	description=${description#-}
+
+	if [ $part == 'all' ]
+	then
+		# For debugging purposes only!
+		echo -e "prefix =\t$prefix"
+		echo -e "date =\t$date"
+		echo -e "description =\t$description"
+		echo -e "suffix =\t$suffix"
+	elif [ $part == 'base' ]
+	then
+		echo $prefix-$date
+	else
+		echo ${!1}
+	fi
+}
+
+# Split file name into meaningful parts: prefix-date-nn-description-suffix[-NNN][.evt].extension
+# Possible parts include: prefix, date, nn (session number), description, suffix, NNN (Neuralynx channel
+# or video subsession), event type, extension. See manpage for ndm_start for file naming conventions.
+#  usage: filename_part -s suffix part filename
+#  usage: filename_part -n part filename
+#  usage: filename_part part filename
+# Because the limit between description and suffix is arbitrary, and in addition the suffix is optional,
+# in general it cannot be guessed from the filename. There are three ways to deal with this:
+#  1) explicitly supply the suffix using option -s
+#  2) indicate that there is no suffix, using option -n
+#  3) use the last '-' as a separator between description and suffix (no option)
+filename_part()
+{
+	local suffix
+	local no_suffix=false
+
+	if [ "$1" == "-s" ]
+	then
+		suffix=$2
+		shift 2
+	elif [ "$1" == "-n" ]
+	then
+		no_suffix=true
+		shift
+	fi
+
+	local part=$1
+	local filename=$2
+
+	[ -z "$part" ] || [ -z "$filename" ] && return
+
+	local date prefix nn extension p_extension evt p_evt end NNN description
+
+	# Extract parts from filename:
+	# 1) prefix-date-nn-description[-suffix][-NNN].extension
+
+	# Start with the 'easy' ones
+	date=$(filename_date $filename)
+	[ -z "$date" ] && return
+	prefix=$(echo $filename|sed -r '/(.*)-'$date'.*/!d;s//\1/')
+	nn=$(echo $filename|sed -r '/'$prefix'-'$date'-([0-9]{2})-.*/!d;s//\1/')
+	extension=$(echo $filename|sed -r '/.*[.](.*)/!d;s//\1/')
+	[ ! -z "$extension" ] && p_extension=.$extension
+
+	# Special case: evt files end in .ccc.evt where 'c' is any character
+	if [ "$extension" == "evt" ]
+	then
+		evt=$(echo $filename|sed -r '/.*[.](.{3})[.]'$extension'/!d;s//\1/')
+		[ ! -z "$evt" ] && p_evt=.$evt
+	fi
+
+	# Deal with the 'hard' end of the filename
+	end=$(echo $filename|sed -r '/'$prefix'-'$date'-'$nn'-(.*)'$p_evt$p_extension'/!d;s//\1/')
+	NNN=$(echo $end|sed -r '/.*-([0-9]+).*/!d;s//\1/')
+	description=${end%-$NNN}
+	description=${description%$p_evt}
+	if [ -z "$suffix" ] && ! $no_suffix
+	then
+		suffix=$(echo $description|sed -r '/.*-(.*)/!d;s//\1/')
+	fi
+	description=${description%-$suffix}
+
+	if [ $part == 'all' ]
+	then
+		# For debugging purposes only!
+		echo -e "prefix =\t$prefix"
+		echo -e "date =\t$date"
+		echo -e "nn =\t$nn"
+		echo -e "description =\t$description"
+		echo -e "suffix =\t$suffix"
+		echo -e "NNN =\t$NNN"
+		echo -e "evt =\t$evt"
+		echo -e "extension =\t$extension"
+	elif [ $part == 'base' ]
+	then
+		echo $prefix-$date-$nn-$description
+	else
+		echo ${!1}
+	fi
+}
+
+# Get date from file name
+#  usage: filename_date filename
+filename_date()
+{
+	local d
+	local filename=$1
+
+	# Case 1: date is specified as YYYYMMDD in the file name
+	d=$(echo $filename | sed -r '/.*([0-9]{8}).*/!d;s//\1/')
+	# Case 2: date is specified as YYYY-MM-DD in the file name
+	[ -z "$d" ] && d=$(echo $filename | sed -r '/.*([0-9]{4}-[0-9]{2}-[0-9]{2}).*/!d; s//\1/')
+
+	echo $d
+}
+
+# Format date for XML <date> tag
+#  usage: format_date YYYYMMDD
+#  usage: format_date YYYY-MM-DD
+#  outputs: YYYY-MM-DD
+format_date()
+{
+	local d
+
+	# Case 1: date is specified as YYYYMMDD in the file name
+	d=$(echo $1 | sed -r '/.*([0-9]{4})([0-9]{2})([0-9]{2}).*/!d;s//\1-\2-\3/')
+	# Case 2: date is specified as YYYY-MM-DD in the file name
+	[ -z "$d" ] && d=$(echo $1 | sed -r '/.*([0-9]{4}-[0-9]{2}-[0-9]{2}).*/!d; s//\1/')
+
+	echo $d
+}
+
+# Test if current session includes files with a given extension (= format)
+#  usage: extension_exists extension directory session suffixes
+extension_exists()
+{
+	local extension=$1
+	local directory=$2
+	local session=$3
+	shift 3
+	local suffixes=("$@")
+	local files n suffix
+
+	n=$(get_n_suffixes ${suffixes[*]})
+	for (( i=0;i<$n;i++ ))
+	do
+		suffix=$(get_suffix $i ${suffixes[*]})
+		files=$(ls ../$directory-$suffix/$session*.$extension 2>/dev/null)
+		[ ! -z "$files" ] && return 0
+	done
+	return 1
+}
+
+# Determine the common prefix for a list of files/directories
+# common_prefix dir1 dir2...
+common_prefix()
+{
+	local common=$1
+	local this
+	shift
+
+	for this in $*
+	do
+		for ((i=1;i<${#common}&&i<${#this};i++))
+		do
+			[ "${this:0:$i}" != "${common:0:$i}" ] && break
+		done
+		common=${common:0:$i-1}
+	done
+	echo $common
+}
+
+# Does the file prefix contain a date?
+# prefix_has_date prefix
+prefix_has_date()
+{
+	local date
+
+	date=$(dirname_part date $1)
+	[ ! -z "$date" ]
+}
+
+# List suffixes (useful when not explicitly provided)
+# list_suffixes dir1 dir2...
+list_suffixes()
+{
+	local common=$(common_prefix $*)
+	echo $* | sed -s 's/^'$common'-//;s/ '$common'-/ /g'
+}
+
+# Get number of suffixes
+#  usage: get_n_suffixes suffixes
+get_n_suffixes()
+{
+	local suffixes=("$@")
+
+	echo ${#suffixes[*]}
+}
+
+# Get nth suffix (counted from zero)
+#  usage: get_suffix n suffixes
+get_suffix()
+{
+	local i=$1
+	shift
+	local suffixes=("$@")
+	local suffix n
+
+	suffix=${suffixes[$i]}
+	n=${#suffix}
+	[ "${suffix:0:1}" == "-" ] && suffix=${suffix:1:n-1}
+	echo $suffix
+}
+
+# Get list of sessions for a group
+#  usage: list_sessions directory suffixes
+list_sessions()
+{
+	local directory=$1
+	shift
+	local suffixes=("$@")
+
+	local suffix n file_list
+
+	# Generate a list of all files starting with prefix-date
+	n=$(get_n_suffixes ${suffixes[*]})
+	for (( i=0;i<$n;i++ ))
+	do
+		suffix=$(get_suffix $i ${suffixes[*]})
+		file_list="$file_list $(ls ../$directory-$suffix|cut -d/ -f 3|sed -r 's/(.*)-'$suffix'.*/\1/g')"
+	done
+
+	# List all sessions
+
+	echo -e $(echo $file_list | sed 's/ /\\n/g') | sort | uniq
+}
+

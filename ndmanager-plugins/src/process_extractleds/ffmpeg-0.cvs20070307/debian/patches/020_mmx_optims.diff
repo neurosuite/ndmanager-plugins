@@ -1,0 +1,12 @@
+Index: ffmpeg-0.cvs20060724/libavcodec/Makefile
+===================================================================
+--- ffmpeg-0.cvs20060724.orig/libavcodec/Makefile	2006-07-24 17:11:20.000000000 +0200
++++ ffmpeg-0.cvs20060724/libavcodec/Makefile	2006-07-24 17:22:05.000000000 +0200
+@@ -285,6 +285,7 @@
+         i386/fft_3dn.o \
+         i386/fft_3dn2.o \
+ 
++i386/dsputil_mmx.o: CFLAGS+= -O3 # "-O2" isn't enough, nor is "-O2 -finline-functions -frename-registers" (so long for gcc documentation)
+ OBJS-$(CONFIG_GPL)                     += i386/idct_mmx.o
+ OBJS-$(CONFIG_CAVS_DECODER)            += i386/cavsdsp_mmx.o
+ OBJS-$(CONFIG_SNOW_DECODER)            += i386/snowdsp_mmx.o

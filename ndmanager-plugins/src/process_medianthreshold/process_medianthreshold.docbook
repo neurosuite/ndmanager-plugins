@@ -1,0 +1,115 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+          "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="process_medianthreshold">
+
+	<refmeta>
+		<refentrytitle>process_medianthreshold</refentrytitle>
+		<manvolnum>1</manvolnum>
+	</refmeta>
+
+	<refnamediv>
+		<refname>process_medianthreshold</refname><refpurpose>compute a spike detection threshold.</refpurpose>
+	</refnamediv>
+
+	<refsynopsisdiv>
+		<cmdsynopsis>
+		<command>process_medianthreshold</command>
+		<group choice="req">
+			<arg choice="plain">
+				<option>-f</option> <replaceable>input</replaceable>
+			</arg>
+			<arg choice="plain">
+				<option>-s</option> <replaceable>size</replaceable>
+			</arg>
+		</group>
+		<arg choice="plain">
+			<option>-n</option> <replaceable>nChannels</replaceable>
+		</arg>
+		<arg choice="plain">
+			<option>-c</option> <replaceable>channels</replaceable>
+		</arg>
+		<arg>
+			<option>-d</option> <replaceable>output</replaceable>
+		</arg>
+		<arg>
+			<option>-v</option>
+		</arg>
+		</cmdsynopsis>
+	</refsynopsisdiv>
+
+	<refsect1>
+		<title>Description</title>
+		<para>
+			<command>process_medianthreshold</command> computes a spike detection threshold for a given high-pass filtered multiplexed binary data file using a median-based algorithm.
+		</para>
+	</refsect1>
+
+	<refsect1>
+		<title>Options</title>
+		<variablelist>
+			<varlistentry>
+				<term><option>-f</option> <replaceable>input</replaceable></term>
+				<listitem>
+					<para>
+						input file
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-s</option> <replaceable>size</replaceable></term>
+				<listitem>
+					<para>
+						file size - must be provided when the input is read from stdin
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-n</option> <replaceable>nChannels</replaceable></term>
+				<listitem>
+					<para>
+						number of channels in the file
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-c</option> <replaceable>channels</replaceable></term>
+				<listitem>
+					<para>
+						grouped channel list (e.g. 0,1,2:4,5,7 for 2 groups of 3 channels each)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-v</option></term>
+				<listitem>
+					<para>
+						verbose mode, displays progress information
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</refsect1>
+
+	<refsect1>
+		<title>Author</title>
+		<para>
+			<author>
+				<firstname>Nicolas</firstname>
+				<othername role="mi">B</othername>
+				<surname>Lebas</surname>
+				<contrib>Original author</contrib>
+			</author>
+		</para>
+		<para>
+			<email>nicolas.lebas@college-de-france.fr</email>.
+			<author>
+				<firstname>Michael</firstname>
+				<othername role="mi">B</othername>
+				<surname>Zugaro</surname>
+				<contrib>Bug corrections</contrib>
+			</author>
+			<email>michael.zugaro@college-de-france.fr</email>.
+		</para>
+	</refsect1>
+
+</refentry>

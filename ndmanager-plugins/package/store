@@ -1,0 +1,25 @@
+#!/bin/bash
+
+source ./version
+
+BASE=/home/install/CMBN
+PACKAGES=$BASE/packages
+SOURCES=$BASE/sources
+OLD_BASE=$BASE/old
+OLD_PACKAGES=$OLD_BASE/packages
+OLD_SOURCES=$OLD_BASE/sources
+
+# Store new tarball, and move old version to 'archive'
+if [ -f $tarball  ]
+then
+	sudo mv -v $SOURCES/${name}*gz $OLD_SOURCES
+	sudo mv -v $tarball $SOURCES
+fi
+
+# Store new package, and move old version to 'archive'
+if [ -f $package ]
+then
+	sudo mv -v $PACKAGES/${name}*$arch*deb $OLD_PACKAGES
+	sudo mv -v $package $PACKAGES
+fi
+

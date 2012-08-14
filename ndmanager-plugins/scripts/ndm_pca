@@ -1,0 +1,118 @@
+#!/bin/bash
+
+#////////////////////////////////////////////////////////////////////////////
+#//
+#//   Compute principal component analysis (PCA)
+#//
+#//   copyright       (C) 2004 by Lynn Hazan,
+#//                   (C) 2007-2011 by Michaël Zugaro
+#//   email           lynn.hazan@myrealbox.com
+#//                   michael.zugaro@college-de-france.fr
+#//
+#//   This program is free software; you can redistribute it and/or modify
+#//   it under the terms of the GNU General Public License as published by
+#//   the Free Software Foundation; either version 3 of the License, or
+#//   (at your option) any later version.
+#//
+#////////////////////////////////////////////////////////////////////////////
+
+# Source helper functions
+source ndm_functions
+
+# Parse command-line
+program=$(basename $0)
+if [ $# -eq 0 ] || [ $# -gt 2 ]
+then
+	echo_error "usage: $program xml-file [electrodeGroup]"
+	exit $GENERAL_ERROR
+fi
+session=${1%.xml}
+directory=$(basename "$(pwd)")
+electrodeGroup=$2
+
+# Print a header to indicate current processing step
+print_header "$session - Computing PCA for spike sorting"
+
+# Check required programs
+check_commands_installed xpathReader process_pca
+
+once()
+{
+	local electrodeGroup=$1
+
+	# Check input files
+	inputs_missing $session.xml $session.spk.$electrodeGroup && exit $INPUTS_MISSING
+
+	# Check output file
+	outputs_exist $session.fet.$electrodeGroup && exit $OUTPUTS_EXIST
+
+	# ////////////////////////////////////////////////////////////////////////////////////////////////
+	# // Read Parameters
+	# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+	nElectrodeGroups=$(xml_count $session "//spikeDetection/channelGroups/group")
+	check_mandatory_variable $nElectrodeGroups "missing electrode groups"
+	if [ $electrodeGroup -gt $nElectrodeGroups ]
+	then
+		echo_error "the spike group $electrodeGroup is undefined."
+		exit $GENERAL_ERROR
+	fi
+
+	electrodes=($(xml_read $session "//spikeDetection/channelGroups/group[$electrodeGroup]/channels/channel"))
+	nElectrodes=${#electrodes[*]}
+	electrodeList=$(for ((i=0;i<$nElectrodes;i++)); do echo -n ${electrodes[${i}]}","; done)
+	electrodeList=${electrodeList:0:${#electrodeList}-1}
+
+	waveformLength=$(xml_read $session "//spikeDetection/channelGroups/group[$electrodeGroup]/nSamples")
+	nFeatures=$(xml_read $session "//spikeDetection/channelGroups/group[$electrodeGroup]/nFeatures")
+
+	check_mandatory_variable $waveformLength "missing number of samples per waveform"
+	check_mandatory_variable $nFeatures "missing number of features"
+
+	# PCA on partial waveform?
+	peak=$(xml_read $session "//spikeDetection/channelGroups/group[$electrodeGroup]/peakSampleIndex")
+	check_optional_variable $peak && options="$options -p $peak"
+	before=($(read_script_parameter $session before))
+	[ ${#before[*]} -eq 1 ] && before=${before[0]} || before=${before[$electrodeGroup-1]}
+	check_optional_variable $before && options="$options -b $before"
+	after=($(read_script_parameter $session after))
+	[ ${#after[*]} -eq 1 ] && after=${after[0]} || after=${after[$electrodeGroup-1]}
+	check_optional_variable $after && options="$options -a $after"
+
+	# Extra features?
+	extra=$(read_script_parameter $session extra)
+	check_optional_variable $extra || extra=false
+	$extra && options="$options -x"
+
+	# ////////////////////////////////////////////////////////////////////////////////////////////////
+	# // Process
+	# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+	# Perform PCA
+	process_pca -f $session.fet.$electrodeGroup.tmp -n $nElectrodes -w $waveformLength -d $nFeatures $options $session.spk.$electrodeGroup
+	check_command_status process_pca
+
+	# Paste timestamps as last column (and update total number of features)
+	totalFeatures=$(($(tail -n 1 $session.fet.$electrodeGroup.tmp|wc -w)+1))
+	cat <(echo $totalFeatures) <(paste -d " " <(tail -n +2 $session.fet.$electrodeGroup.tmp) $session.res.$electrodeGroup) > $session.fet.$electrodeGroup
+	rm $session.fet.$electrodeGroup.tmp
+}
+
+if [ -z "$electrodeGroup" ]
+then
+	nGroups=$(xml_count $session "//spikeDetection/channelGroups/group")
+	if [ $nGroups -eq 0 ]
+	then
+		echo_error "missing spike groups"
+		exit $GENERAL_ERROR
+	fi
+	for ((i=1;i<=$nGroups;i++))
+	do
+		(once $i)
+	done
+	exit $NO_ERROR
+else
+	once $electrodeGroup
+	exit $NO_ERROR
+fi
+

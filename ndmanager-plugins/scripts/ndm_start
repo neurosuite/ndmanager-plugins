@@ -1,0 +1,279 @@
+#!/bin/bash
+
+#////////////////////////////////////////////////////////////////////////////
+#//
+#//   Preprocess session files
+#//
+#//   copyright       (C) 2007-2011 by Michaël Zugaro
+#//   email           michael.zugaro@college-de-france.fr
+#//
+#//   This program is free software; you can redistribute it and/or modify
+#//   it under the terms of the GNU General Public License as published by
+#//   the Free Software Foundation; either version 3 of the License, or
+#//   (at your option) any later version.
+#//
+#////////////////////////////////////////////////////////////////////////////
+
+# Source helper functions
+source ndm_functions
+
+# Parse command-line
+program=$(basename $0)
+if [ $# -lt 1 ]
+then
+	echo_error "usage: $program xml-template [directories]"
+	exit $GENERAL_ERROR
+fi
+if [ $1 == '-h' ] ||  [ $1 == "--help" ]
+then
+	echo ""
+	echo "usage: $program xml-template [directories]"
+	echo ""
+	echo " Process all data present in all subdirectories of the current directory, using the"
+	echo " parameters provided in a template XML parameter file. Alternatively, an explicit list"
+	echo " of directories to process can be provided."
+	echo ""
+	echo " Type 'man $program' for details on directory/file naming conventions."
+	echo ""
+	exit $NO_ERROR
+fi
+
+template=${1%.xml}
+shift
+
+# Check required files
+inputs_missing $template.xml && exit $INPUTS_MISSING
+
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+# // Read Parameters
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+# Suffixes
+suffixes=($(read_script_parameter $template suffixes))
+check_mandatory_variable ${suffixes[0]} "missing suffixes"
+# check_optional_variable ${suffixes[0]} || suffixes=($(list_suffixes $))
+
+# Brain signals, video and events
+wideband=$(read_script_parameter $template wideband)
+check_optional_variable $wideband || wideband=true
+video=$(read_script_parameter $template video)
+check_optional_variable $video || video=true
+events=$(read_script_parameter $template events)
+check_optional_variable $events || events=true
+
+# Concatenation, spikes and LFPs
+concatenation=$(read_script_parameter $template concatenation)
+check_optional_variable $concatenation || concatenation=true
+spikes=$(read_script_parameter $template spikes)
+check_optional_variable $spikes || spikes=true
+lfp=$(read_script_parameter $template lfp)
+check_optional_variable $lfp || lfp=true
+
+# Cleaning of intermediate files
+clean=$(read_script_parameter $template clean)
+check_optional_variable $clean || clean=false
+
+# Logging
+log=$(read_script_parameter $template log)
+check_optional_variable $log || log=false
+
+# Make sure spike groups have been defined
+if $spikes
+then
+	nGroups=$(xml_count $template "//spikeDetection/channelGroups/group")
+	if [ $nGroups -eq 0 ]
+	then
+		echo_error "missing spike groups"
+		exit $GENERAL_ERROR
+	fi
+fi
+
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+# // Process
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+do_wideband()
+{
+	$wideband || return
+
+	print_header "$session - Processing wideband signal files (convert, resample, merge, extract, reorder)"
+
+	# Check if final output file is already present; if so, skip
+	outputs_exist $session.dat && return
+	# Convert wideband data -> .dat
+	if $(extension_exists "smr" $directory $session ${suffixes[*]})
+	then
+		ndm_smr2dat $session.xml
+		step_completed ndm_smr2dat || return # subsequent steps cannot be performed if conversion failed
+	elif $(extension_exists "ncs" $directory $session ${suffixes[*]})
+	then
+		ndm_ncs2dat $session.xml
+		step_completed ndm_ncs2dat || return
+	fi
+
+	# Resample files
+	ndm_resample $session.xml
+	step_completed ndm_resample || return
+
+	# Merge files
+	ndm_mergedat $session.xml
+	step_completed ndm_mergedat || return
+
+	# Extract channels
+	ndm_extractchannels $session.xml
+	step_completed ndm_extractchannels || return
+
+	# Reoder channels
+	ndm_reorderchannels $session.xml
+	step_completed ndm_reorderchannels || return
+}
+
+do_events()
+{
+	$events || return
+
+	if $(extension_exists "smr" $directory $session ${suffixes[*]})
+	then
+		ndm_smr2evt $session.xml
+		step_completed ndm_smr2evt || return
+	elif $(extension_exists "nev" $directory $session ${suffixes[*]})
+	then
+		ndm_nev2evt $session.xml
+		step_completed ndm_nev2evt || return
+	fi
+}
+
+do_video()
+{
+	$video || return
+
+	# Convert video files
+	ndm_transcodevideo $session.xml
+	step_completed ndm_transcodevideo || return
+
+	# Extract LEDs
+	ndm_extractleds $session.xml
+	step_completed ndm_extractleds || return
+}
+
+do_sessions()
+{
+	local xml d
+	# Process each set of session files
+	for session in $(list_sessions $directory ${suffixes[*]})
+	do
+		# Copy XML template
+		if [ -f $session.xml ]
+		then
+			if ! diff -q $directory.xml $session.xml >/dev/null
+			then
+				echo_warning "'$session.xml' was modified since last batch processing"
+				cp -i $directory.xml $session.xml
+			fi
+		else
+			cp $directory.xml $session.xml
+		fi
+		# Process
+		do_wideband
+		do_events
+		do_video
+	done
+}
+
+do_concatenation()
+{
+ 	# $concatenation || return
+
+	# Print a header to indicate current processing step
+	print_header "$directory - Concatenating data files"
+
+	ndm_concatenate $directory
+	step_completed ndm_concatenate || return
+}
+
+do_spikes()
+{
+	$spikes || return
+
+	local i
+
+	ndm_hipass $directory
+	step_completed ndm_hipass || return
+	ndm_extractspikes $directory
+	step_completed ndm_extractspikes || return
+	ndm_pca $directory
+	step_completed ndm_pca || return
+}
+
+do_lfp()
+{
+	$lfp || return
+
+	ndm_lfp $directory
+	step_completed ndm_lfp || return
+}
+
+do_clean()
+{
+	$clean || return
+
+	ndm_clean $directory
+	step_completed ndm_clean || return
+}
+
+# ---------------- Start here ----------------
+
+# List of directories
+suffix=$(get_suffix 0 ${suffixes[*]})
+explicit_list=false
+if [ $# -eq 0 ]
+then
+	directories=$(ls -d *$suffix|sed 's/-'$suffix'//'|sort|uniq)
+else
+	directories=$*
+	explicit_list=true
+fi
+
+# Loop over directories
+for directory in $directories
+do
+	if $log
+	then
+		# Redirect outputs to log file
+		NDM_LOG=$directory-$(date +%Y-%m-%d-%H:%M:%S).log
+		exec 1> >(tee -a $NDM_LOG) 2>&1
+	fi
+	print_header "$directory" "*" "$BOLD_BLACK"
+	if [ -f $directory ]
+	then
+		# Skip files
+		echo_warning "'$directory' is a file: skipping..."
+	else
+		# Create target directory, copy template and cd there
+		[ ! -d $directory ] && mkdir $directory
+		cp $template.xml $directory/$template.xml
+		cd $directory
+		# Update date field
+		d=$(format_date $(dirname_part date $directory))
+		if [ -z "$d" ]
+		then
+			echo_warning "directory name '$directory' does not seem to contain a date"
+		else
+			sed -i 's/<date>.*<\/date>/<date>'$d'<\/date>/' $template.xml
+		fi
+		if [ -f $directory.xml ] && ! diff -I '<date>' -q $template.xml $directory.xml >/dev/null
+		then
+			echo_warning "'$directory.xml' was modified since last batch processing"
+			mv -i $template.xml $directory.xml
+		else
+			mv $template.xml $directory.xml
+		fi
+		# Process
+		do_sessions
+		do_concatenation
+		do_spikes
+		do_lfp
+		do_clean
+		cd ..
+	fi
+done

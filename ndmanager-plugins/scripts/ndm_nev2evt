@@ -1,0 +1,98 @@
+#!/bin/bash
+
+#////////////////////////////////////////////////////////////////////////////
+#//
+#//   Convert from .nev (Neuralynx files) to event format .evt
+#//
+#//   copyright       (C) 2009-2011 by Michaël Zugaro
+#//   email           michael.zugaro@college-de-france.fr
+#//
+#//   This program is free software; you can redistribute it and/or modify
+#//   it under the terms of the GNU General Public License as published by
+#//   the Free Software Foundation; either version 3 of the License, or
+#//   (at your option) any later version.
+#//
+#////////////////////////////////////////////////////////////////////////////
+
+# Source helper functions
+source ndm_functions
+
+# Parse command-line
+program=$(basename $0)
+if [ $# -ne 1 ]
+then
+	echo_error "usage: $program xml-file"
+	exit $GENERAL_ERROR
+fi
+session=${1%.xml}
+directory=$(basename "$(pwd)")
+
+# Print a header to indicate current processing step
+print_header "$session - Converting NEV files -> evt"
+
+# Check required programs
+check_commands_installed xpathReader process_nlxconvert
+
+# Check input files
+inputs_missing $session.xml && exit $INPUTS_MISSING
+
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+# // Read Parameters
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+options="-e"
+
+suffixes=($(read_script_parameter $session suffixes))
+gap=$(read_script_parameter $session gap)
+
+check_mandatory_variable ${suffixes[0]} "missing suffixes"
+if check_optional_variable $gap
+then
+	options="$options -g $gap"
+fi
+
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+# // Process
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+outputs_exist=false
+# Convert selected files
+n=$(get_n_suffixes ${suffixes[*]})
+for ((i=0;i<$n;i++))
+do
+	current_options=$options
+	# Make sure output file does not already exist
+	suffix=$(get_suffix $i ${suffixes[*]})
+	if outputs_exist $session-$suffix.nlx.evt
+	then
+		outputs_exist=true
+		continue
+	fi
+	# Is there already a .restart file available? (if not, generate one)
+	restart_file=$(ls $session-$suffix.restart 2>/dev/null)
+	[ -z "$restart_file" ] && current_options="$current_options -a"
+	# Is there a sync file available (or .ncs files) to synchronize events?
+	sync_file=$(ls $session-$suffix.sync 2>/dev/null)
+	ncs_files=""
+	if [ -z "$sync_file" ]
+	then
+		ncs_files=$(ls ../$directory-$suffix/$session-$suffix*ncs 2>/dev/null)
+		# Create the .sync file if it does not exist
+		if [ -z "$ncs_files" ]
+		then
+			echo_warning "missing .ncs and .sync files, events cannot be synchronized with wideband signals."
+		else
+			current_options="$current_options -s"
+		fi
+	fi
+	# Convert nev file
+	nev_file=../$directory-$suffix/$session-$suffix.nev
+	[ ! -f "$nev_file" ] && echo_warning "'$nev_file' not found" && continue
+	process_nlxconvert $current_options -o $session-$suffix.nlx.evt $nev_file $restart_file $ncs_files $sync_file
+	check_command_status process_nlxconvert
+done
+
+if $outputs_exist
+then
+	exit $OUTPUTS_EXIST
+fi

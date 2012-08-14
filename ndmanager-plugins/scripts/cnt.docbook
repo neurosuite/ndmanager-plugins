@@ -1,0 +1,43 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+          "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="cnt">
+
+	<refmeta>
+		<refentrytitle>cnt</refentrytitle>
+		<manvolnum>1</manvolnum>
+	</refmeta>
+
+	<refnamediv>
+		<refname>cnt</refname><refpurpose>count unique existing files (or directories) among listed names.</refpurpose>
+	</refnamediv>
+
+	<refsynopsisdiv>
+		<cmdsynopsis>
+		<command>cnt</command>
+		<arg>
+			<replaceable>file1</replaceable> <option><replaceable>file2</replaceable>...</option>
+		</arg>
+		</cmdsynopsis>
+	</refsynopsisdiv>
+
+	<refsect1>
+		<title>Description</title>
+		<para>
+			<command>cnt</command> count unique existing files (or directories) among listed names.
+		</para>
+	</refsect1>
+
+	<refsect1>
+		<title>Author</title>
+		<para>
+		<author>
+			<firstname>Michael</firstname>
+			<othername role="mi">B</othername>
+			<surname>Zugaro</surname>
+			<contrib>Original author</contrib>
+		</author>,&nbsp;
+		<email>michael.zugaro@college-de-france.fr</email>.
+		</para>
+	</refsect1>
+
+</refentry>

@@ -1,0 +1,68 @@
+#!/bin/bash
+
+# Source version
+name=ndmanager-plugins
+version=1.4.4
+
+# Package versions
+release_ubuntu=ubuntu0
+release_oneiric=oneiric0
+release_fedora=0.fc15
+release_opensuse=0.suse114
+
+# Website
+source=http://ndmanager.sourceforge.net
+
+# Tarball name
+tarball=${name}_$version.tar.gz
+
+# Architecture names and full package names (all current versions)
+
+# Architecture names
+if [ -z "$(uname -a | grep x86_64)" ]
+then
+	arch_ubuntu=i386
+	arch_fedora=i686
+	arch_opensuse=i586
+else
+	arch_ubuntu=amd64
+	arch_fedora=x86_64
+	arch_opensuse=x86_64
+fi
+
+# Distribution
+distribution=$(lsb_release -si)
+release=$(lsb_release -sr)
+
+case "$distribution" in
+	Ubuntu)
+		release=${release:0:2}${release:3:2}
+# 		if [ "$release" -ge 1110 ]
+# 		then
+# 			release=$release_oneiric
+# 		else
+			release=$release_ubuntu
+# 		fi
+		output=-D
+		requires=libsamplerate0,ffmpeg,mencoder,libgsl0ldbl,python-qt4
+		install_cmd="dpkg --force-overwrite -i $package"
+		arch=$arch_ubuntu
+		package=${name}_$version-${release}_$arch.deb
+		;;
+	Fedora)
+		output=-R
+		requires=
+		release=$release_fedora
+		arch=$arch_fedora
+		package=${name}-$version-${release}.$arch.rpm
+		install_cmd="rpm -i $package"
+		;;
+	openSUSE)
+		output=-R
+		requires=
+		release=$release_opensuse
+		arch=$arch_opensuse
+		package=${name}-$version-${release}.$arch.rpm
+		install_cmd="rpm -i $package"
+		;;
+esac

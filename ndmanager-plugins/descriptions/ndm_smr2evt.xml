@@ -1,0 +1,30 @@
+<?xml version='1.0'?>
+<parameter>
+ <program>
+  <name>ndm_smr2evt</name>
+  <parameters>
+   <parameter>
+    <name>suffixes</name>
+    <value></value>
+    <status>Optional</status>
+   </parameter>
+   <parameter>
+    <name>rename</name>
+    <value/>
+    <status>Optional</status>
+   </parameter>
+  </parameters>
+  <help>Convert from .smr (CED files) to .evt format.
+
+PARAMETERS
+
+# suffixes
+
+List of suffixes for the individual files to convert
+
+# rename
+
+Optional name of a script used to automatically rename events and event files
+</help>
+ </program>
+</parameter>

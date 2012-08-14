@@ -1,0 +1,30 @@
+Index: ffmpeg-0.cvs20060724/libavcodec/i386/dsputil_mmx.c
+===================================================================
+--- ffmpeg-0.cvs20060724.orig/libavcodec/i386/dsputil_mmx.c	2006-07-24 17:22:05.000000000 +0200
++++ ffmpeg-0.cvs20060724/libavcodec/i386/dsputil_mmx.c	2006-07-24 17:22:11.000000000 +0200
+@@ -3095,7 +3095,7 @@
+             c->avg_h264_chroma_pixels_tab[1]= avg_h264_chroma_mc4_3dnow;
+         }
+ 
+-#ifdef CONFIG_SNOW_DECODER
++#if defined(CONFIG_SNOW_DECODER) && (defined(ARCH_X86_64) || !defined(PIC))
+         if(mm_flags & MM_SSE2){
+             c->horizontal_compose97i = ff_snow_horizontal_compose97i_sse2;
+             c->vertical_compose97i = ff_snow_vertical_compose97i_sse2;
+Index: ffmpeg-0.cvs20060724/libavcodec/i386/snowdsp_mmx.c
+===================================================================
+--- ffmpeg-0.cvs20060724.orig/libavcodec/i386/snowdsp_mmx.c	2006-07-24 17:11:17.000000000 +0200
++++ ffmpeg-0.cvs20060724/libavcodec/i386/snowdsp_mmx.c	2006-07-24 17:22:11.000000000 +0200
+@@ -21,6 +21,7 @@
+ #include "../snow.h"
+ #include "x86_cpu.h"
+ 
++#if defined(ARCH_X86_64) || !defined(PIC)
+ void ff_snow_horizontal_compose97i_sse2(DWTELEM *b, int width){
+     const int w2= (width+1)>>1;
+     // SSE2 code runs faster with pointers aligned on a 32-byte boundary.
+@@ -915,3 +916,4 @@
+     else
+         ff_snow_inner_add_yblock(obmc, obmc_stride, block, b_w, b_h, src_x,src_y, src_stride, sb, add, dst8);
+ }
++#endif

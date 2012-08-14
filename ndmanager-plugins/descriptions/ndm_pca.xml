@@ -1,0 +1,42 @@
+<?xml version='1.0'?>
+<parameter>
+ <program>
+  <name>ndm_pca</name>
+  <parameters>
+   <parameter>
+    <name>before</name>
+    <value></value>
+    <status>Optional</status>
+   </parameter>
+   <parameter>
+    <name>after</name>
+    <value></value>
+    <status>Optional</status>
+   </parameter>
+   <parameter>
+    <name>extra</name>
+    <value>true</value>
+    <status>Optional</status>
+   </parameter>
+  </parameters>
+  <help>Compute principal component analysis (PCA).
+
+PARAMETERS
+
+All mandatory parameters are defined in the 'Acquisition System' and 'Spike Groups' tab.
+
+OPTIONAL PARAMETERS
+
+# before
+
+Number of samples before the peak to use for the PCA. This can be either a space-separated list of numbers (one per electrode group), or a single common number for all groups.
+
+# after
+
+Number of samples after the peak to use for the PCA. This can be either a space-separated list of numbers (one per electrode group), or a single common number for all groups.
+
+# extra
+
+Whether extra features (spike peak value) should be included in the output files.</help>
+ </program>
+</parameter>

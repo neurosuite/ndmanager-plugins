@@ -1,0 +1,30 @@
+<?xml version='1.0'?>
+<parameter>
+ <program>
+  <name>ndm_extractchannels</name>
+  <parameters>
+   <parameter>
+    <name>nChannels</name>
+    <value></value>
+    <status>Mandatory</status>
+   </parameter>
+   <parameter>
+    <name>channels</name>
+    <value></value>
+    <status>Mandatory</status>
+   </parameter>
+  </parameters>
+  <help>Extract channels from .dat file (i.e. remove those channels that are not listed).
+
+PARAMETERS
+
+# nChannels
+
+Number of channels in the initial .dat file (before extraction)
+
+# channels
+
+Space-separated list of channels to extract, numbered from 0
+</help>
+ </program>
+</parameter>

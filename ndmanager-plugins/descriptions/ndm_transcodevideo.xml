@@ -1,0 +1,44 @@
+<?xml version='1.0'?>
+<parameter>
+ <program>
+  <name>ndm_transcodevideo</name>
+  <parameters>
+   <parameter>
+    <name>suffix</name>
+    <value></value>
+    <status>Mandatory</status>
+   </parameter>
+   <parameter>
+    <name>extension</name>
+    <value>avi</value>
+    <status>Mandatory</status>
+   </parameter>
+   <parameter>
+    <name>codec</name>
+    <value></value>
+    <status>Optional</status>
+   </parameter>
+  </parameters>
+  <help>Transcode video file (convert to a different codec).
+
+PARAMETERS
+
+# suffix
+
+Suffix of the directory where the video files to transcode are located
+
+# extension
+
+Extension of the original video file (e.g. avi, mpg, etc.)
+
+# codec
+
+Output file codec - possible choices include:
+
+ * x264 (MPEG-4 AVC)
+ * m1v (video-only MPEG-1)
+
+Leave empty if no transcoding is required
+</help>
+ </program>
+</parameter>

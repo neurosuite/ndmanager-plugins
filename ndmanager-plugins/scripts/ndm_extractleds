@@ -1,0 +1,96 @@
+#!/bin/bash
+
+#////////////////////////////////////////////////////////////////////////////
+#//
+#//   Extract LEDs from a video file
+#//
+#//   copyright       (C) 2008-2010 by Michaël Zugaro
+#//   email           michael.zugaro@college-de-france.fr
+#//
+#//   This program is free software; you can redistribute it and/or modify
+#//   it under the terms of the GNU General Public License as published by
+#//   the Free Software Foundation; either version 3 of the License, or
+#//   (at your option) any later version.
+#//
+#////////////////////////////////////////////////////////////////////////////
+
+# Source helper functions
+source ndm_functions
+
+# Parse command-line
+program=$(basename $0)
+if [ $# -ne 1 ]
+then
+	echo_error "usage: $program xml-file"
+	exit $GENERAL_ERROR
+fi
+session=${1%.xml}
+directory=$(basename "$(pwd)")
+
+# Print a header to indicate current processing step
+print_header "$session - Extracting LEDs"
+
+# Check input and output files
+outputs_exist $session.spots && exit $OUTPUTS_EXIST
+inputs_missing $session.xml && exit $INPUTS_MISSING
+
+# Check required programs
+check_commands_installed xpathReader process_extractleds
+
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+# // Read Parameters
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+useTrackerData=$(read_script_parameter $session useTrackerData)
+threshold=$(read_script_parameter $session threshold)
+extension=$(read_script_parameter $session extension)
+show=$(read_script_parameter $session show)
+suffix=$(read_script_parameter $session suffix)
+
+check_mandatory_variable $useTrackerData "should tracker or video data be used?"
+if ! $useTrackerData
+then
+	check_mandatory_variable $threshold "missing threshold"
+	check_mandatory_variable $extension "missing extension"
+fi
+$show || options="-hide"
+
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+# // Process
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+if $useTrackerData
+then
+	if $(extension_exists "nvt" $directory $session $suffix)
+	then
+		ndm_nvt2spots $session.xml
+	else
+		echo_warning "tracker file not found" && exit $INPUTS_MISSING
+	fi
+else
+	# Process all video files for this session (there may be more than one)
+	video_files=$(ls $session.$extension 2>/dev/null)
+	if [ -z "$video_files" ]
+	then
+		video_files=$(ls ../$directory-$suffix/$session-$suffix-[0-9]*.$extension 2>/dev/null)
+	fi
+	if [ -z "$video_files" ]
+	then
+		echo "No video files"
+	fi
+	for video_file in $video_files
+	do
+		# Make sure output file does not already exist
+		spots_file=$(basename $video_file|sed 's/'$extension'/spots/')
+		outputs_exist $spots_file && exit $OUTPUTS_EXIST
+		inputs_missing $video_file && exit $INPUTS_MISSING
+		process_extractleds -t $threshold $options $video_file
+		check_command_status process_extractleds
+	done
+	if $(extension_exists "smi" $directory $session ${suffixes[*]})
+	then
+		# Neuralynx systems: generate timestamp file
+		ndm_smi2sts $session.xml
+		step_completed ndm_smi2sts || exit $GENERAL_ERROR
+	fi
+fi

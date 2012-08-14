@@ -1,0 +1,13 @@
+Index: ffmpeg.svn/configure
+===================================================================
+--- ffmpeg.svn.orig/configure	2007-03-05 20:57:08.000000000 +0100
++++ ffmpeg.svn/configure	2007-03-05 20:57:28.000000000 +0100
+@@ -1827,6 +1827,8 @@
+     if test -n "`$cc -v 2>&1 | grep xlc`"; then
+         add_cflags  "-O5"
+         add_ldflags "-O5"
++    elif test "$cpu" = "m68k" ; then
++        add_cflags "-O2"
+     else
+         add_cflags "-O3"
+     fi

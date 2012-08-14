@@ -1,0 +1,15 @@
+Index: ffmpeg.svn/configure
+===================================================================
+--- ffmpeg.svn.orig/configure	2007-03-05 20:45:57.000000000 +0100
++++ ffmpeg.svn/configure	2007-03-05 20:49:10.000000000 +0100
+@@ -2012,6 +2012,10 @@
+   echo "#define __CPU__ 586" >> $TMPH
+ fi
+ 
++if test "$cpu" != "m68k" -a "$cpu" != "x86" ; then
++  echo "#define RUNTIME_CPUDETECT 1" >> $TMPH
++fi
++
+ if enabled sdl; then
+   echo "SDL_LIBS=`"${SDL_CONFIG}" --libs`" >> config.mak
+   echo "SDL_CFLAGS=`"${SDL_CONFIG}" --cflags`" >> config.mak

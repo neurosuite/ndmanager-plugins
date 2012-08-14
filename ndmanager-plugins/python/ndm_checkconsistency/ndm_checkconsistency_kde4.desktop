@@ -1,0 +1,10 @@
+# KDE4: /usr/share/kde4/services/ServiceMenus/
+[Desktop Entry]
+Type=Service
+ServiceTypes=KonqPopupMenu/Plugin,inode/directory
+Actions=check
+
+[Desktop Action check]
+Name=Check for NDManager
+Icon=ndmanager
+Exec=ndm_checkconsistency %U

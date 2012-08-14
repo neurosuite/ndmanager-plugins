@@ -1,0 +1,179 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+          "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="rn">
+
+	<refmeta>
+		<refentrytitle>rn</refentrytitle>
+		<manvolnum>1</manvolnum>
+	</refmeta>
+
+	<refnamediv>
+		<refname>rn</refname><refpurpose>rename a group of files as a numbered file list.</refpurpose>
+	</refnamediv>
+
+	<refsynopsisdiv>
+		<cmdsynopsis>
+		<command>rn</command>
+		<arg>
+			<option>-x</option> <replaceable>extension</replaceable>
+		</arg>
+		<arg>
+			<option>-d</option> <replaceable>N</replaceable>
+		</arg>
+		<arg>
+			<option>-f</option> <replaceable>N</replaceable>
+		</arg>
+		<arg>
+			<option>-s</option> <replaceable>N</replaceable>
+		</arg>
+		<arg>
+			<option>-r</option>
+		</arg>
+		<arg>
+			<option>-v</option>
+		</arg>
+		<arg>
+			<option>-X</option> <replaceable>file1</replaceable> [<replaceable>file2</replaceable>...]
+		</arg>
+		<arg>
+			<option>--</option>
+		</arg>
+		<arg choice="plain">
+			<replaceable>file1</replaceable>
+		</arg>
+		<arg>
+			<replaceable>file2</replaceable>...
+		</arg>
+		<arg choice="plain">
+			<replaceable>new</replaceable>
+		</arg>
+		</cmdsynopsis>
+	</refsynopsisdiv>
+
+	<refsect1>
+		<title>Description</title>
+		<para>
+			<command>rn</command> renames a group of files as a numbered file list.
+		</para>
+	</refsect1>
+
+	<refsect1>
+		<title>Options</title>
+		<variablelist>
+			<varlistentry>
+				<term><option>-x</option>,<option>--extension</option> <replaceable>extension</replaceable></term>
+				<listitem>
+					<para>
+						file extension (default = keep current, lowercase)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-d</option>,<option>--digits</option> <replaceable>N</replaceable></term>
+				<listitem>
+					<para>
+						number of digits (default = 3)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-f</option>,<option>--from</option> <replaceable>N</replaceable></term>
+				<listitem>
+					<para>
+						starting index (default = 1)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-s</option>,<option>--step</option> <replaceable>N</replaceable></term>
+				<listitem>
+					<para>
+						index step (default = 1)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-r</option>,<option>--reverse</option></term>
+				<listitem>
+					<para>
+						renumber in reverse order
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-v</option>,<option>--verbose</option></term>
+				<listitem>
+					<para>
+						verbose mode
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-X</option>,<option>--exclude</option> <replaceable>file1</replaceable> [<replaceable>file2</replaceable>...]</term>
+				<listitem>
+					<para>
+						files to exclude
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>--</option></term>
+				<listitem>
+					<para>
+						explicit end of options (see below)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><replaceable>file1</replaceable> [<replaceable>file2</replaceable>...]</term>
+				<listitem>
+					<para>
+						files to rename
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><replaceable>new</replaceable></term>
+				<listitem>
+					<para>
+						base name for the renamed files
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+
+		<para>
+			The form <command>rn</command> -X <replaceable>file1</replaceable> <replaceable>file2</replaceable> <replaceable>file3</replaceable> <replaceable>new</replaceable> generates an error since it is unclear where the list of excluded files ends and where the list of files to rename starts; use e.g.<command>rn</command> -X <replaceable>file1</replaceable> -- <replaceable>file2</replaceable> <replaceable>file3</replaceable> <replaceable>new</replaceable> instead.
+		</para>
+
+	</refsect1>
+
+	<refsect1><title>Examples</title>
+		<para>
+			To rename all JPG files as 'image-###.jpg':
+		</para>
+<programlisting>
+# rn *.JPG image-
+</programlisting>
+		<para>
+			To rename 'Picture01.PNG', 'Drawing.PNG' and 'Figure-A.png' as 'image-####.png' (starting from 5):
+		</para>
+<programlisting>
+# rn -d 4 -f 5 Picture01.PNG Drawing.PNG Figure-A.png image-
+</programlisting>
+	</refsect1>
+
+	<refsect1>
+		<title>Author</title>
+		<para>
+		<author>
+			<firstname>Michael</firstname>
+			<othername role="mi">B</othername>
+			<surname>Zugaro</surname>
+			<contrib>Original author</contrib>
+		</author>,&nbsp;
+		<email>michael.zugaro@college-de-france.fr</email>.
+		</para>
+	</refsect1>
+
+</refentry>

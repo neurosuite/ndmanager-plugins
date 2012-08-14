@@ -1,0 +1,205 @@
+#!/bin/bash
+
+#////////////////////////////////////////////////////////////////////////////
+#//
+#//   Renumber files
+#//
+#//   copyright       (C) 2008-2010 by Michaël Zugaro
+#//   email           michael.zugaro@college-de-france.fr
+#//
+#//   This program is free software; you can redistribute it and/or modify
+#//   it under the terms of the GNU General Public License as published by
+#//   the Free Software Foundation; either version 3 of the License, or
+#//   (at your option) any later version.
+#//
+#////////////////////////////////////////////////////////////////////////////
+
+# Defaults
+verbose=false
+reverse=false
+stdin=false
+extension=""
+declare -i digits=3
+declare -i from=1
+declare -i step=1
+declare -a file_list
+declare -i n_files=0
+declare -a excluded_list
+declare -i n_excluded=0
+new=$(basename $0)-$(date +%s)
+
+program=$(basename $0)
+# Parse parameters
+while [ $# -gt 0 ]
+do
+	case $1 in
+		-h|--help)
+			echo "usage: $program [options] file1 [file2...] new"
+			echo "  -x,--extension ext     file extension (default = keep current, lowercase)"
+			echo "  -d,--digits N          number of digits (default = 3)"
+			echo "  -f,--from N            starting index (default = 1)"
+			echo "  -s,--step N            index step (default = 1)"
+			echo "  -v,--verbose           verbose mode"
+			echo "  -X,--exclude files     files to exclude"
+			echo "  -r,--reverse           renumber in reverse order"
+			echo "  --                     explicit end of options (see below)"
+			echo " file1 [file2...]        files to rename; use - for standard input"
+			echo " new                     base name for the renamed files"
+			echo ""
+			echo "The form 'rn -X file1 file2 file3 new' generates an error since it"
+			echo "is unclear where the list of excluded files ends and where the list"
+			echo "of files to rename starts; use e.g. 'rn -X file1 -- file2 file3 new'"
+			echo "instead."
+			exit 0
+			;;
+		-f|--from)
+			from=$2
+			shift 2
+			;;
+		-s|--step)
+			step=$2
+			shift 2
+			;;
+		-v|--verbose)
+			verbose=true
+			shift
+			;;
+		-d|--digits)
+			digits=$2
+			shift 2
+			;;
+		-x|--extension)
+			extension=.$2
+			shift 2
+			;;
+		-X|--exclude)
+			while [ ! -z "$2" ] && [ ${2:0:1} != '-' ]
+			do
+				excluded_list[n_excluded]=$2
+				n_excluded=$n_excluded+1
+				shift
+			done
+			shift
+			;;
+		-r|--reverse)
+			reverse=true
+			shift
+			;;
+		--)
+			shift
+			;;
+		-)
+			if $stdin
+			then
+				echo "error: standard input can be used only once (type '$program -h' for help)"
+				exit 1
+			fi
+			stdin=true
+			file_list=(${file_list[*]} $(cat /dev/stdin))
+			n_files=${#file_list[*]}
+			shift
+			;;
+		*)
+			if [ ${1:0:1} != '-' ]
+			then
+				[ $# -eq 1 ] && break  # last parameter is the target base name
+				file_list=(${file_list[*]} $1)
+				n_files=${#file_list[*]}
+				shift
+			else
+				echo "error: unknown option $1 (type '$program -h' for help)"
+				exit 1
+			fi
+			;;
+	esac
+done
+
+if [ $n_files -le 0 ]
+then
+	echo "error: insufficient or ambiguous parameters (type '$program -h' for help)"
+	exit 1
+fi
+new=$1
+
+if $verbose
+then
+	if [ $n_files -eq 1 ]
+	then
+		s=" "
+		items=" (1 item)"
+	else
+		s="s"
+		items=" ($n_files items)"
+	fi
+	echo "  file$s         ${file_list[*]}$items"
+	echo "  new           $new"
+	echo "  from          $from"
+	echo "  step          $step"
+	if [ $n_excluded -eq 1 ]
+	then
+		items=" (1 item)"
+	else
+		items=" ($n_excluded items)"
+	fi
+	echo "  excluded      ${excluded_list[*]}$items"
+	echo
+fi
+
+declare -i index=$from
+declare -i length
+ext=$extension
+
+# Rename selected files
+for file in ${file_list[*]}
+do
+	# Should this file be skipped?
+	exclude=false
+	for excluded in ${excluded_list[*]}
+	do
+		if [ $file == $excluded ]
+		then
+			exclude=true
+			break
+		fi
+	done
+	if $exclude
+	then
+		if $verbose
+		then
+			echo "* $file -- excluded"
+			echo
+		fi
+		continue
+	fi
+	# Build current index string (with leading zeros)
+	if $reverse
+	then
+		n=$(($n_files-$index+1))
+	else
+		n=$index
+	fi
+	while [ ${#n} -lt $digits ]
+	do
+		n=0$n
+	done
+	# Save file extension
+	name=${file%.*}
+	if [ -z "$extension" ]
+	then
+		ext=$(echo ${file#$name}|tr [:upper:] [:lower:])
+	fi
+	# Rename (do not overwrite existing files: back them up)
+	final=$new$n$ext
+	if $verbose
+	then
+		echo "* $file -> $final"
+		echo "  name          $name"
+		echo "  extension     ${ext:1:${#ext}}"
+		echo "  i             $index"
+		echo "  index         $n"
+		echo
+	fi
+	mv -b "$file" "$final"
+	index=$index+$step
+done
+

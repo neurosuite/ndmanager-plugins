@@ -1,0 +1,7 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+	<file>images/video.png</file>
+	<file>images/binary.png</file>
+	<file>images/ndmanager.png</file>
+</qresource>
+</RCC>

@@ -1,0 +1,123 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+          "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="process_extractchannels">
+
+	<refmeta>
+		<refentrytitle>process_extractchannels</refentrytitle>
+		<manvolnum>1</manvolnum>
+	</refmeta>
+
+	<refnamediv>
+		<refname>process_extractchannels</refname><refpurpose>extract channels from multiplexed binary data file.</refpurpose>
+	</refnamediv>
+
+	<refsynopsisdiv>
+		<cmdsynopsis>
+		<command>process_extractchannels</command>
+		<arg>
+			<option>-r</option>
+		</arg>
+		<arg>
+			<option>-b</option> <replaceable>factor</replaceable>
+		</arg>
+		<arg choice="plain">
+			<replaceable>input</replaceable>
+		</arg>
+		<arg choice="plain">
+			<replaceable>output</replaceable>
+		</arg>
+		<arg choice="plain">
+			<replaceable>nChannels</replaceable>
+		</arg>
+		<arg choice="plain">
+			<replaceable>channel1</replaceable>
+		</arg>
+		<arg>
+			<replaceable>channel2...</replaceable>
+		</arg>
+		</cmdsynopsis>
+	</refsynopsisdiv>
+
+	<refsect1>
+		<title>Description</title>
+		<para>
+			<command>process_extractchannels</command> extracts channels from multiplexed binary data files.
+		</para>
+	</refsect1>
+
+	<refsect1>
+		<title>Options</title>
+		<variablelist>
+			<varlistentry>
+				<term><option>-r</option>,<option>--reverse</option></term>
+				<listitem>
+					<para>
+						reverse signals (required for some acquisition systems)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-b</option>,<option>--buffer</option> <replaceable>factor</replaceable></term>
+				<listitem>
+					<para>
+						buffer size factor (default = 8192), used to determine the input buffer size (factor * number of channels in the input file) and the output buffer size (factor * number of channels to extract) - this can be used to optimize file I/O throughput
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><replaceable>input</replaceable></term>
+				<listitem>
+					<para>
+						input file
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><replaceable>output</replaceable></term>
+				<listitem>
+					<para>
+						output file
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><replaceable>nChannels</replaceable></term>
+				<listitem>
+					<para>
+						number of channels in the input file
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><replaceable>channel1</replaceable> <replaceable>channel2...</replaceable></term>
+				<listitem>
+					<para>
+						list of channels to extract (numbered from 0)
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+
+	</refsect1>
+
+	<refsect1>
+		<title>Note</title>
+ 		<para>
+			Custom gains can be applied to one or more channels. For instance, to multiply channel 5 by a gain of 1.5, write 5*1.5 in the channel list.
+		</para>
+	</refsect1>
+
+	<refsect1>
+		<title>Author</title>
+		<para>
+			<author>
+				<firstname>Michael</firstname>
+				<othername role="mi">B</othername>
+				<surname>Zugaro</surname>
+				<contrib>Original author</contrib>
+			</author>,&nbsp;
+			<email>michael.zugaro@college-de-france.fr</email>.
+		</para>
+	</refsect1>
+
+</refentry>

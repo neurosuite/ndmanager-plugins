@@ -1,0 +1,32 @@
+<?xml version='1.0'?>
+<parameter>
+	<program>
+		<name>ndm_clean</name>
+	<help>Clean intermediate files after pre-processing is complete.
+
+OPTIONAL PARAMETERS
+
+Note: To keep the interface simpler, optional parameters have default values and are not listed in the 'Parameters' tab; to choose custom values, click the 'Add' button and manually add the required parameters (and custom values) to the list.
+
+# wideband
+
+Delete single-session wideband data files (default = true).
+
+# xml
+
+Delete single-session xml files (default = true).
+
+# spots
+
+Delete single-session spots files (default = false).
+
+# pos
+
+Delete single-session pos files (default = false).
+
+# hipass
+
+Delete the high-pass filtered data file (default = true).
+		</help>
+	</program>
+</parameter>

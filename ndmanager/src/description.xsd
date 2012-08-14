@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://dendrite.rutgers.edu/ndmanager"
+	xmlns="http://dendrite.rutgers.edu/ndmanager"
+        elementFormDefault="qualified"
+        attributeFormDefault="unqualified">
+
+<xsd:element name="parameter">
+  <xsd:complexType>
+    <xsd:sequence>
+      <xsd:element ref="program" />
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:element>
+
+<xsd:element name="program">
+<xsd:complexType>
+  <xsd:sequence>
+    <xsd:element name="name" type="xsd:string"/>
+    <xsd:element name="parameter" type="parameterDescription" minOccurs="0" maxOccurs="unbounded"/>
+    <xsd:element name="help" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+  </xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+
+<xsd:complexType name="parameterDescription">
+  <xsd:sequence>
+    <xsd:element name="name" type="xsd:string"/>
+    <xsd:element name="status" type="statusType"/>
+    <xsd:element name="value" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+  </xsd:sequence>
+</xsd:complexType>
+
+<xs:complexType name="statusType">
+ <xs:choice minOccurs="0" maxOccurs="1">
+  <xs:element name="optional" type="xsd:string"/>
+  <xs:element name="mandatory" type="xsd:string"/>
+  <xs:element name="dynamic" type="xsd:string"/>
+ </xs:choice>
+</xs:complexType>
+
+</xsd:schema>

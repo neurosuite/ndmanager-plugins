@@ -1,0 +1,23 @@
+<?xml version='1.0'?>
+<parameter>
+ <program>
+  <name>ndm_hipass</name>
+  <parameters>
+   <parameter>
+    <name>windowHalfLength</name>
+    <value>10</value>
+    <status>Mandatory</status>
+   </parameter>
+  </parameters>
+  <help>High-pass filter a .dat file (required for spike extraction).
+
+The program uses a median-based (non-linear) filter to minimize spike waveform distortion.
+
+PARAMETERS
+
+# windowHalfWidth
+
+Determines the cutoff frequency
+</help>
+ </program>
+</parameter>

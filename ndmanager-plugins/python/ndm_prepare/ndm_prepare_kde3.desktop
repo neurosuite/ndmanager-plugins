@@ -1,0 +1,9 @@
+# KDE3: /usr/share/apps/konqueror/servicemenus/
+[Desktop Entry]
+ServiceTypes=inode/directory
+Actions=prepare
+
+[Desktop Action prepare]
+Name=Prepare for NDManager
+Icon=ndmanager
+Exec=ndm_prepare %U

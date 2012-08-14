@@ -1,0 +1,60 @@
+<?xml version='1.0'?>
+<parameter>
+ <program>
+  <name>ndm_extractleds</name>
+  <parameters>
+	<parameter>
+		<name>suffix</name>
+		<value></value>
+		<status>Mandatory</status>
+	</parameter>
+   <parameter>
+    <name>useTrackerData</name>
+    <value>true</value>
+    <status>Mandatory</status>
+   </parameter>
+   <parameter>
+    <name>threshold</name>
+    <value>90</value>
+    <status>Mandatory</status>
+   </parameter>
+   <parameter>
+    <name>extension</name>
+    <value>avi</value>
+    <status>Mandatory</status>
+   </parameter>
+   <parameter>
+    <name>show</name>
+    <value>false</value>
+    <status>Mandatory</status>
+   </parameter>
+  </parameters>
+  <help>Extract LEDs (= bright spots) from a video file.
+
+For each video frame, all bright spots are detected and listed in a .spots file, one line per spot, listing on successive columns the frame number, number of pixels in the spot, x and y coordinates of the spot center, x and y sizes of the spot (defined as standard deviations of the distributions of x and y coordinates of all the pixels in the spot), and spot color (as a YCrCb triplet).
+
+PARAMETERS
+
+# suffix
+
+Suffix of the directory where the video file is located
+
+# useTrackerData
+
+Depending on the acquisition systems, the successive positions of the LEDs across time can be extracted from either the video file, or the online tracking file if such a feature is available (e.g. Neuralynx systems). Because in some configurations both video and tracking files may be recorded in parallel, it is necessary to explicitly request one of the above two methods.
+
+# threshold
+
+Bright spots consist of pixels brighter than this threshold (from 0 to 255)
+
+# extension
+
+Extension of the video file (e.g. avi, mpg, etc.)
+
+# show
+
+Whether the video should be displayed during LED extraction
+(hiding the video yields faster processing, especially over network connections)
+</help>
+ </program>
+</parameter>

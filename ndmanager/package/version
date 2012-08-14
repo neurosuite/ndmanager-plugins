@@ -1,0 +1,6 @@
+#!/bin/bash
+
+name=ndmanager
+version=1.2.3
+release=ubuntu0
+source=http://ndmanager.sourceforge.net

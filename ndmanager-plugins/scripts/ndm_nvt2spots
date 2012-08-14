@@ -1,0 +1,100 @@
+#!/bin/bash
+
+#////////////////////////////////////////////////////////////////////////////
+#//
+#//   Extract spots (and timestamps) from .nvt (Neuralynx files)
+#//
+#//   copyright       (C) 2009-2011 by Michaël Zugaro
+#//   email           michael.zugaro@college-de-france.fr
+#//
+#//   This program is free software; you can redistribute it and/or modify
+#//   it under the terms of the GNU General Public License as published by
+#//   the Free Software Foundation; either version 3 of the License, or
+#//   (at your option) any later version.
+#//
+#////////////////////////////////////////////////////////////////////////////
+
+# Source helper functions
+source ndm_functions
+
+# Parse command-line
+program=$(basename $0)
+if [ $# -ne 1 ]
+then
+	echo_error "usage: $program xml-file"
+	exit $GENERAL_ERROR
+fi
+session=${1%.xml}
+directory=$(basename "$(pwd)")
+
+# Print a header to indicate current processing step
+print_header "$session - Converting NVT files -> spots, sts"
+
+# Check required programs
+check_commands_installed xpathReader process_nlxconvert
+
+# Check input/output files
+inputs_missing $session.xml && exit $INPUTS_MISSING
+
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+# // Read Parameters
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+options="-v"
+
+suffix=$(read_script_parameter $session suffix)
+gap=$(read_script_parameter $session gap)
+ignore_events=$(read_script_parameter $session ignoreEvents)
+
+check_mandatory_variable $suffix "missing suffix"
+if check_optional_variable $gap
+then
+	options="$options -g $gap"
+fi
+check_optional_variable $ignore_events || ignore_events=false
+
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+# // Process
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+# Make sure output file does not already exist
+outputs_exist $session.spots && exit $OUTPUTS_EXIST
+# Is there a .restart file available (or a .nev) to help us find acquisition restart events?
+nev_file=""
+restart_file=""
+if $ignore_events
+then
+	echo_info "Ignoring .nev files upon user's request - will try to guess 'restart acquisition' events."
+else
+	restart_file=$(ls $session-$suffix.restart 2>/dev/null)
+	if [ -z "$restart_file" ]
+	then
+		nev_file=$(ls ../$directory-$suffix/$session-$suffix.nev 2>/dev/null)
+		# Create the .restart file if it does not exist
+		if [ -z "$nev_file" ]
+		then
+			echo_warning "missing .nev and .restart files, will try to guess 'restart acquisition' events."
+		else
+			options="$options -a"
+		fi
+	fi
+fi
+# Is there a sync file available (or .ncs files) to synchronize events?
+sync_file=$(ls $session-$suffix.sync 2>/dev/null)
+ncs_files=""
+if [ -z "$sync_file" ]
+then
+	ncs_files=$(ls ../$directory-$suffix/$session-$suffix*ncs 2>/dev/null)
+	# Create the .sync file if it does not exist
+	if [ -z "$ncs_files" ]
+	then
+		echo_warning "missing .ncs and .sync files, video cannot be synchronized with wideband signals."
+	else
+		options="$options -s"
+	fi
+fi
+# Convert nvt file
+nvt_file=../$directory-$suffix/$session-$suffix.nvt
+[ ! -f "$nvt_file" ] && echo_warning "'$nvt_file' not found" && continue
+process_nlxconvert $options -o $session $nvt_file $nev_file $restart_file $ncs_files $sync_file
+check_command_status process_nlxconvert

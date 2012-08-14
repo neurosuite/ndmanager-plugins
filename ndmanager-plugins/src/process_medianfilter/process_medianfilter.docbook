@@ -1,0 +1,112 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+          "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="process_medianfilter">
+
+	<refmeta>
+		<refentrytitle>process_medianfilter</refentrytitle>
+		<manvolnum>1</manvolnum>
+	</refmeta>
+
+	<refnamediv>
+		<refname>process_medianfilter</refname><refpurpose>hi-pass filter multiplexed binary data files.</refpurpose>
+	</refnamediv>
+
+	<refsynopsisdiv>
+		<cmdsynopsis>
+		<command>process_medianfilter</command>
+		<arg>
+			<option>-n</option> <replaceable>nChannels</replaceable>
+		</arg>
+		<arg>
+			<option>-w</option> <replaceable>nSamples</replaceable>
+		</arg>
+		<arg>
+			<option>-b</option> <replaceable>buffer</replaceable>
+		</arg>
+		<arg>
+			<option>-v</option>
+		</arg>
+		<arg choice="plain">
+			<replaceable>input</replaceable>
+		</arg>
+		<arg choice="plain">
+			<replaceable>output</replaceable>
+		</arg>
+		</cmdsynopsis>
+	</refsynopsisdiv>
+
+	<refsect1>
+		<title>Description</title>
+		<para>
+			<command>process_medianfilter</command> hi-pass filters multiplexed binary data files, using a non-linear (median based) algorithm to better preserve the waveform of the input signal.
+		</para>
+	</refsect1>
+
+	<refsect1>
+		<title>Options</title>
+		<variablelist>
+			<varlistentry>
+				<term><option>-n</option> <replaceable>nChannels</replaceable></term>
+				<listitem>
+					<para>
+						number of channels in the file (default = 1)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-w</option> <replaceable>nSamples</replaceable></term>
+				<listitem>
+					<para>
+						window half length (default = 10)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-b</option> <replaceable>buffer</replaceable></term>
+				<listitem>
+					<para>
+						buffer size (this can be used to optimize file I/O throughput)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-v</option></term>
+				<listitem>
+					<para>
+						verbose mode, displays progress information
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><replaceable>input</replaceable></term>
+				<listitem>
+					<para>
+						input file
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><replaceable>output</replaceable></term>
+				<listitem>
+					<para>
+						output file
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</refsect1>
+
+	<refsect1>
+		<title>Author</title>
+		<para>
+			<author>
+				<firstname>Michael</firstname>
+				<othername role="mi">B</othername>
+				<surname>Zugaro</surname>
+				<contrib>Original author</contrib>
+			</author>,&nbsp;
+			<email>michael.zugaro@college-de-france.fr</email>.
+		</para>
+	</refsect1>
+
+</refentry>

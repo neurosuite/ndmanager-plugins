@@ -1,0 +1,101 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+          "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="xpathReader">
+
+	<refmeta>
+		<refentrytitle>xpathReader</refentrytitle>
+		<manvolnum>1</manvolnum>
+	</refmeta>
+
+	<refnamediv>
+		<refname>xpathReader</refname><refpurpose>read information from an XML file using XPath syntax queries.</refpurpose>
+	</refnamediv>
+
+	<refsynopsisdiv>
+		<cmdsynopsis>
+		<command>xpathReader</command>
+		<arg>
+			<option>--debug</option>
+		</arg>
+		<arg>
+			<option>--count</option>
+		</arg>
+		<arg choice="plain">
+			<replaceable>xml-file</replaceable>
+		</arg>
+		<arg choice="plain">
+			<replaceable>xpath</replaceable>
+		</arg>
+		<arg>
+			<replaceable>known-ns-list</replaceable>
+		</arg>
+		</cmdsynopsis>
+	</refsynopsisdiv>
+
+	<refsect1>
+		<title>Description</title>
+		<para>
+			<command>xpathReader</command> reads information from an XML file using XPath syntax queries.
+		</para>
+	</refsect1>
+
+	<refsect1>
+		<title>Options</title>
+		<variablelist>
+			<varlistentry>
+				<term><option>--debug</option></term>
+				<listitem>
+					<para>
+						display debugging information
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>--count</option></term>
+				<listitem>
+					<para>
+						return number of tags matching the XPath query
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><replaceable>xml-file</replaceable></term>
+				<listitem>
+					<para>
+						XML input file
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><replaceable>xpath</replaceable></term>
+				<listitem>
+					<para>
+						XPath query
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><replaceable>known-ns-list</replaceable></term>
+				<listitem>
+					<para>
+						list of known namespaces
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</refsect1>
+
+	<refsect1>
+		<title>Author</title>
+		<para>
+			<author>
+				<firstname>Lynn</firstname>
+				<othername role="mi">N</othername>
+				<surname>Hazan</surname>
+				<contrib>Original author</contrib>
+			</author>,&nbsp;
+			<email>lynn.hazan@myrealbox.com</email>.
+		</para>
+	</refsect1>
+
+</refentry>

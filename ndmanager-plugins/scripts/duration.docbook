@@ -1,0 +1,217 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+          "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="duration">
+
+	<refmeta>
+		<refentrytitle>duration</refentrytitle>
+		<manvolnum>1</manvolnum>
+	</refmeta>
+
+	<refnamediv>
+		<refname>duration</refname><refpurpose>determine the duration and number of samples in one or more data files.</refpurpose>
+	</refnamediv>
+
+	<refsynopsisdiv>
+		<cmdsynopsis>
+		<command>duration</command>
+		<arg>
+			<option>-f</option> <replaceable>frequency</replaceable>
+		</arg>
+		<arg>
+			<option>-F</option> <replaceable>frequency</replaceable>
+		</arg>
+		<arg>
+			<option>-v</option> <replaceable>frequency</replaceable>
+		</arg>
+		<arg>
+			<option>-n</option> <replaceable>nChannels</replaceable>
+		</arg>
+		<arg>
+			<option>-e</option> <replaceable>nElectrodes</replaceable>
+		</arg>
+		<arg>
+			<option>-s</option> <replaceable>nSamples</replaceable>
+		</arg>
+		<arg>
+			<option>-r</option> <replaceable>resolution</replaceable>
+		</arg>
+		<arg>
+			<option>-t</option>
+		</arg>
+		<arg>
+			<option>-c</option>
+		</arg>
+		<arg>
+			<option>-H</option>
+		</arg>
+		<arg>
+			<option>-C</option>
+		</arg>
+		<arg choice="plain">
+			<replaceable>file1</replaceable>
+		</arg>
+		<arg>
+			<replaceable>file2...</replaceable>
+		</arg>
+		</cmdsynopsis>
+	</refsynopsisdiv>
+
+	<refsect1>
+		<title>Description</title>
+		<para>
+			<command>duration</command> determines the duration and number of samples in one or more data files.
+		</para>
+	</refsect1>
+
+	<refsect1>
+		<title>Options</title>
+		<variablelist>
+			<varlistentry>
+				<term><option>-f</option> <replaceable>frequency</replaceable></term>
+				<listitem>
+					<para>
+						frequency (in Hz) for low-frequency multichannel files, including <replaceable>.eeg</replaceable>, <replaceable>.lfp</replaceable> and <replaceable>.led</replaceable> files (default = 1250)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-F</option> <replaceable>frequency</replaceable></term>
+				<listitem>
+					<para>
+						frequency (in Hz) for high-frequency multichannel files, including <replaceable>.dat</replaceable>, <replaceable>.fil</replaceable> and DataMAX files (default = 20000)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-v</option> <replaceable>frequency</replaceable></term>
+				<listitem>
+					<para>
+						frequency (in Hz) for position files, including <replaceable>.spots</replaceable>, <replaceable>.pos</replaceable> and <replaceable>.whl</replaceable> files (default = 39.0625)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-n</option> <replaceable>nChannels</replaceable></term>
+				<listitem>
+					<para>
+						number of channels in multichannel files (default = 32)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-e</option> <replaceable>nElectrodes</replaceable></term>
+				<listitem>
+					<para>
+						number of electrodes in <replaceable>.spk</replaceable> files (default = 4)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-s</option> <replaceable>nSamples</replaceable></term>
+				<listitem>
+					<para>
+						number of samples per waveform in <replaceable>.spk</replaceable> files (default = 32)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-r</option> <replaceable>resolution</replaceable></term>
+				<listitem>
+					<para>
+						sampling resolution, in bytes per sample (default = 2)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-t</option></term>
+				<listitem>
+					<para>
+						print total duration for file list
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-c</option></term>
+				<listitem>
+					<para>
+						print cumulative duration for file list
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-H</option></term>
+				<listitem>
+					<para>
+						print descriptive header
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-C</option></term>
+				<listitem>
+					<para>
+						print in color
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><replaceable>file1</replaceable> <replaceable>file2...</replaceable></term>
+				<listitem>
+					<para>
+						file list
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+
+		<para>
+			It is also possible to provide information on a file-by-file basis:
+		</para>
+		<itemizedlist>
+			<listitem>
+				<para>
+					For multichannel files
+				</para>
+				<programlisting>
+<command>duration</command> <replaceable>filename:n</replaceable>       <replaceable>n</replaceable> channels
+<command>duration</command> <replaceable>filename:n,f</replaceable>     <replaceable>n</replaceable> channels, sampling frequency <replaceable>f</replaceable> (in Hz)
+				</programlisting>
+			</listitem>
+		</itemizedlist>
+		<itemizedlist>
+			<listitem>
+				<para>
+					For spike files
+				</para>
+				<programlisting>
+<command>duration</command> <replaceable>filename:e</replaceable>       <replaceable>e</replaceable> electrodes
+<command>duration</command> <replaceable>filename:e,s</replaceable>     <replaceable>e</replaceable> electrodes, <replaceable>s</replaceable> samples per waveform
+				</programlisting>
+			</listitem>
+		</itemizedlist>
+		<itemizedlist>
+			<listitem>
+				<para>
+					For position files
+				</para>
+				<programlisting>
+<command>duration</command> <replaceable>filename:f</replaceable>       sampling frequency <replaceable>f</replaceable> (in Hz)
+				</programlisting>
+			</listitem>
+		</itemizedlist>
+	</refsect1>
+
+	<refsect1>
+		<title>Author</title>
+		<para>
+		<author>
+			<firstname>Michael</firstname>
+			<othername role="mi">B</othername>
+			<surname>Zugaro</surname>
+			<contrib>Original author</contrib>
+		</author>,&nbsp;
+		<email>michael.zugaro@college-de-france.fr</email>.
+		</para>
+	</refsect1>
+
+</refentry>

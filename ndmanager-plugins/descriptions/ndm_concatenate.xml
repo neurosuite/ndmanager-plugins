@@ -1,0 +1,27 @@
+<?xml version='1.0'?>
+<parameter>
+	<program>
+		<name>ndm_concatenate</name>
+		<parameters>
+			<parameter>
+				<name>spotsSamplingRate</name>
+				<value></value>
+				<status>Optional</status>
+			</parameter>
+		</parameters>
+	<help>Concatenate all session files (.dat, .pos and .evt) recorded on the same day.
+
+OPTIONAL PARAMETERS
+
+Note: To keep the interface simpler, optional parameters have default values and are not all listed in the 'Parameters' tab; to choose custom values, click the 'Add' button and manually add the required parameters (and custom values) to the list.
+
+# spotsSamplingRate
+
+Sampling rate for .spots files, i.e. original sampling rate for video or tracker data (this parameter does not have a default value; if no custom value is provided, time shifts between wideband and video signals will not be reported, although concatenation will be performed normally).
+
+# maxShift
+
+If the duration of wideband signals and position samples differ by more than this threshold (in s, default = 3), this triggers a warning message.
+		</help>
+	</program>
+</parameter>

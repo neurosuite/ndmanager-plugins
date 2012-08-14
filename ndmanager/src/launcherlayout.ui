@@ -1,0 +1,566 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>LauncherLayout</class>
+<widget class="QWidget">
+    <property name="name">
+        <cstring>LauncherLayout</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>605</width>
+            <height>384</height>
+        </rect>
+    </property>
+    <property name="sizePolicy">
+        <sizepolicy>
+            <hsizetype>3</hsizetype>
+            <vsizetype>3</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
+    </property>
+    <property name="minimumSize">
+        <size>
+            <width>125</width>
+            <height>150</height>
+        </size>
+    </property>
+    <property name="caption">
+        <string>Form1</string>
+    </property>
+    <spacer>
+        <property name="name">
+            <cstring>spacer5</cstring>
+        </property>
+        <property name="orientation">
+            <enum>Vertical</enum>
+        </property>
+        <property name="sizeType">
+            <enum>Expanding</enum>
+        </property>
+        <property name="sizeHint">
+            <size>
+                <width>16</width>
+                <height>53</height>
+            </size>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>182</x>
+                <y>243</y>
+                <width>16</width>
+                <height>53</height>
+            </rect>
+        </property>
+    </spacer>
+    <spacer>
+        <property name="name">
+            <cstring>spacer2</cstring>
+        </property>
+        <property name="orientation">
+            <enum>Horizontal</enum>
+        </property>
+        <property name="sizeType">
+            <enum>Fixed</enum>
+        </property>
+        <property name="sizeHint">
+            <size>
+                <width>16</width>
+                <height>29</height>
+            </size>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>170</x>
+                <y>176</y>
+                <width>16</width>
+                <height>29</height>
+            </rect>
+        </property>
+    </spacer>
+    <spacer>
+        <property name="name">
+            <cstring>spacer4</cstring>
+        </property>
+        <property name="orientation">
+            <enum>Horizontal</enum>
+        </property>
+        <property name="sizeType">
+            <enum>Fixed</enum>
+        </property>
+        <property name="sizeHint">
+            <size>
+                <width>16</width>
+                <height>16</height>
+            </size>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>281</x>
+                <y>116</y>
+                <width>16</width>
+                <height>16</height>
+            </rect>
+        </property>
+    </spacer>
+    <spacer>
+        <property name="name">
+            <cstring>spacer1</cstring>
+        </property>
+        <property name="orientation">
+            <enum>Horizontal</enum>
+        </property>
+        <property name="sizeType">
+            <enum>Fixed</enum>
+        </property>
+        <property name="sizeHint">
+            <size>
+                <width>16</width>
+                <height>16</height>
+            </size>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>170</x>
+                <y>50</y>
+                <width>16</width>
+                <height>16</height>
+            </rect>
+        </property>
+    </spacer>
+    <widget class="KPushButton">
+        <property name="name">
+            <cstring>processStopPushButton</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>303</x>
+                <y>110</y>
+                <width>65</width>
+                <height>29</height>
+            </rect>
+        </property>
+        <property name="sizePolicy">
+            <sizepolicy>
+                <hsizetype>0</hsizetype>
+                <vsizetype>0</vsizetype>
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+            </sizepolicy>
+        </property>
+        <property name="text">
+            <string>Stop</string>
+        </property>
+    </widget>
+    <spacer>
+        <property name="name">
+            <cstring>spacer3</cstring>
+        </property>
+        <property name="orientation">
+            <enum>Horizontal</enum>
+        </property>
+        <property name="sizeType">
+            <enum>Fixed</enum>
+        </property>
+        <property name="sizeHint">
+            <size>
+                <width>16</width>
+                <height>16</height>
+            </size>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>170</x>
+                <y>116</y>
+                <width>16</width>
+                <height>16</height>
+            </rect>
+        </property>
+    </spacer>
+    <widget class="QLayoutWidget">
+        <property name="name">
+            <cstring>layout27</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>13</x>
+                <y>13</y>
+                <width>150</width>
+                <height>34</height>
+            </rect>
+        </property>
+        <hbox>
+            <property name="name">
+                <cstring>unnamed</cstring>
+            </property>
+            <widget class="QLabel">
+                <property name="name">
+                    <cstring>neuroscopePixmap</cstring>
+                </property>
+                <property name="sizePolicy">
+                    <sizepolicy>
+                        <hsizetype>0</hsizetype>
+                        <vsizetype>0</vsizetype>
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                    </sizepolicy>
+                </property>
+                <property name="text">
+                    <string></string>
+                </property>
+                <property name="pixmap">
+                    <pixmap>image0</pixmap>
+                </property>
+                <property name="scaledContents">
+                    <bool>true</bool>
+                </property>
+            </widget>
+            <widget class="QLabel">
+                <property name="name">
+                    <cstring>textLabel1</cstring>
+                </property>
+                <property name="text">
+                    <string>&lt;b&gt;NeuroScope&lt;/b&gt;</string>
+                </property>
+            </widget>
+        </hbox>
+    </widget>
+    <widget class="QComboBox">
+        <property name="name">
+            <cstring>neuroscopeComboBox</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>13</x>
+                <y>53</y>
+                <width>150</width>
+                <height>29</height>
+            </rect>
+        </property>
+        <property name="minimumSize">
+            <size>
+                <width>150</width>
+                <height>29</height>
+            </size>
+        </property>
+    </widget>
+    <widget class="QLayoutWidget">
+        <property name="name">
+            <cstring>layout48</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>13</x>
+                <y>88</y>
+                <width>150</width>
+                <height>37</height>
+            </rect>
+        </property>
+        <hbox>
+            <property name="name">
+                <cstring>unnamed</cstring>
+            </property>
+            <spacer>
+                <property name="name">
+                    <cstring>spacer12</cstring>
+                </property>
+                <property name="orientation">
+                    <enum>Horizontal</enum>
+                </property>
+                <property name="sizeType">
+                    <enum>Fixed</enum>
+                </property>
+                <property name="sizeHint">
+                    <size>
+                        <width>35</width>
+                        <height>20</height>
+                    </size>
+                </property>
+            </spacer>
+            <widget class="QLabel">
+                <property name="name">
+                    <cstring>textLabel1_3</cstring>
+                </property>
+                <property name="text">
+                    <string>&lt;b&gt;Scripts&lt;/b&gt;</string>
+                </property>
+            </widget>
+        </hbox>
+    </widget>
+    <widget class="QComboBox">
+        <property name="name">
+            <cstring>processComboBox</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>13</x>
+                <y>131</y>
+                <width>150</width>
+                <height>29</height>
+            </rect>
+        </property>
+        <property name="minimumSize">
+            <size>
+                <width>150</width>
+                <height>29</height>
+            </size>
+        </property>
+    </widget>
+    <widget class="QLayoutWidget">
+        <property name="name">
+            <cstring>layout26</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>13</x>
+                <y>166</y>
+                <width>150</width>
+                <height>34</height>
+            </rect>
+        </property>
+        <hbox>
+            <property name="name">
+                <cstring>unnamed</cstring>
+            </property>
+            <widget class="QLabel">
+                <property name="name">
+                    <cstring>pixmapLabel2</cstring>
+                </property>
+                <property name="sizePolicy">
+                    <sizepolicy>
+                        <hsizetype>0</hsizetype>
+                        <vsizetype>0</vsizetype>
+                        <horstretch>0</horstretch>
+                        <verstretch>0</verstretch>
+                    </sizepolicy>
+                </property>
+                <property name="pixmap">
+                    <pixmap>image1</pixmap>
+                </property>
+                <property name="scaledContents">
+                    <bool>true</bool>
+                </property>
+            </widget>
+            <widget class="QLabel">
+                <property name="name">
+                    <cstring>textLabel1_2</cstring>
+                </property>
+                <property name="text">
+                    <string>&lt;b&gt;Klusters&lt;/b&gt;</string>
+                </property>
+            </widget>
+        </hbox>
+    </widget>
+    <widget class="QComboBox">
+        <property name="name">
+            <cstring>klustersComboBox</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>13</x>
+                <y>206</y>
+                <width>150</width>
+                <height>29</height>
+            </rect>
+        </property>
+        <property name="minimumSize">
+            <size>
+                <width>150</width>
+                <height>29</height>
+            </size>
+        </property>
+    </widget>
+    <spacer>
+        <property name="name">
+            <cstring>spacer5_2_2</cstring>
+        </property>
+        <property name="orientation">
+            <enum>Vertical</enum>
+        </property>
+        <property name="sizeType">
+            <enum>Expanding</enum>
+        </property>
+        <property name="sizeHint">
+            <size>
+                <width>16</width>
+                <height>35</height>
+            </size>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>225</x>
+                <y>13</y>
+                <width>16</width>
+                <height>35</height>
+            </rect>
+        </property>
+    </spacer>
+    <spacer>
+        <property name="name">
+            <cstring>spacer5_2_2_2</cstring>
+        </property>
+        <property name="orientation">
+            <enum>Vertical</enum>
+        </property>
+        <property name="sizeType">
+            <enum>Expanding</enum>
+        </property>
+        <property name="sizeHint">
+            <size>
+                <width>16</width>
+                <height>35</height>
+            </size>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>225</x>
+                <y>89</y>
+                <width>16</width>
+                <height>35</height>
+            </rect>
+        </property>
+    </spacer>
+    <widget class="KPushButton">
+        <property name="name">
+            <cstring>processStartPushButton</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>193</x>
+                <y>130</y>
+                <width>81</width>
+                <height>29</height>
+            </rect>
+        </property>
+        <property name="sizePolicy">
+            <sizepolicy>
+                <hsizetype>0</hsizetype>
+                <vsizetype>0</vsizetype>
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+            </sizepolicy>
+        </property>
+        <property name="text">
+            <string>Launch</string>
+        </property>
+    </widget>
+    <spacer>
+        <property name="name">
+            <cstring>spacer5_2</cstring>
+        </property>
+        <property name="orientation">
+            <enum>Vertical</enum>
+        </property>
+        <property name="sizeType">
+            <enum>Expanding</enum>
+        </property>
+        <property name="sizeHint">
+            <size>
+                <width>16</width>
+                <height>35</height>
+            </size>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>225</x>
+                <y>165</y>
+                <width>16</width>
+                <height>35</height>
+            </rect>
+        </property>
+    </spacer>
+    <widget class="KPushButton">
+        <property name="name">
+            <cstring>klustersPushButton</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>193</x>
+                <y>206</y>
+                <width>81</width>
+                <height>29</height>
+            </rect>
+        </property>
+        <property name="sizePolicy">
+            <sizepolicy>
+                <hsizetype>0</hsizetype>
+                <vsizetype>0</vsizetype>
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+            </sizepolicy>
+        </property>
+        <property name="text">
+            <string>Launch</string>
+        </property>
+    </widget>
+    <widget class="KIconButton">
+        <property name="name">
+            <cstring>kIconButton1</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>281</x>
+                <y>260</y>
+                <width>72</width>
+                <height>29</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+    </widget>
+    <widget class="KPushButton">
+        <property name="name">
+            <cstring>kPushButton1</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>51</x>
+                <y>258</y>
+                <width>72</width>
+                <height>29</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+    </widget>
+    <widget class="KPushButton">
+        <property name="name">
+            <cstring>neuroscopePushButton</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>191</x>
+                <y>50</y>
+                <width>32</width>
+                <height>32</height>
+            </rect>
+        </property>
+        <property name="sizePolicy">
+            <sizepolicy>
+                <hsizetype>0</hsizetype>
+                <vsizetype>0</vsizetype>
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+            </sizepolicy>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="pixmap">
+            <pixmap>image0</pixmap>
+        </property>
+    </widget>
+</widget>
+<images>
+    <image name="image0">
+        <data format="PNG" length="1032">89504e470d0a1a0a0000000d4948445200000020000000200806000000737a7af4000003cf49444154789cedd74d685c5514c0f1df9b642609a9ad8d558cad8d9b565a5310458ccc8051a4049dc12f146bdd085db8a82062c9802ba98b09eaa6086eba0c5215454c2c59955667500a7ea09516da22a6b55a22a41f71d226933c176f864e323399e942bae98333f7bd77efbbe77fcf3de7dc33c1f4f4b41b79c56ea8f69b0068bfde0f722772a1c3b8b0ace31e52a994d48654703df305ad3a61ee402e1cc98d30898d78700bf178d4393fcf0fc73947727b526a774a7620db12485380fcb17c987933c3496436b0e329b1556be8ead0ae0b2c9ab778a5283c755af8f9b71c392ff96852f6a3acd4aa952db22240fe6c3ecca4323c80375ee68e7e82a02ccb0687e59f30e4d851f67dc945c6c6c756dc96864e983f9b0f334f67d88a579f64ddb6f2f0a04aa1a5f7614018e3be87797d90bbc8a433f233f9ead1ad01e472394a78b19fbe14730117318573388b3fca72a6fc6e4a34663660d3633cdb4b17b9d7728dd4d40748ef4f87852f0aececa1e719266391f34de11266318785b294700597f14f19ee4c07b73d4f3aa670a820bd3f5dd70a3500f9997c58d85360001bb7a33bb27a6205892f6b136843623d7df7f308853d053333333510b500a379eec4d03abab79008ea2bab968e4670016b06a3c5b4333a3adadc022313236cc69a7be9484493574ba7da778dfa12e8ba9dde3e36303131d11cc01151a2e9de1cada091a266523dfe965eeeaed18446a9781dba3aaeada25db4a7b12a092ccd052116cbed42f9be84524077373d6ad37743804e74c6a3365e05500d510fa002510d308fce209aa7650bcc225eacb5403d2b2c575e9185aaef8ab3145b0558234a2a6d93746eba6681e5db10544923801262212ef11756b7023088e328fd4e228c1c315e65810ac4f22da828ae80942ab35fa57892930cbc3d50a3ae260a868786398133a7683b1ff94125d6abc3abde73e7b2e74448f813df5d6186543ad51c20fb5236b01e9fa038417caeb1f27a20d589a9ed5fa6bfe133923b93754fc5ba67c1706e9843387c82b9ef892fae9c7ee39666c838daaf521c67ff3417c866b3f554d507c80e6583e48e247b71f420f379dae7968664b51fc45cf38f7848db558a5f73e0673e26f97efdd5d3a420593bb83634890ff0dc43ac7e9ce056816009432508e62d124e71f92bf69d662fc91792c63f1c6f5890342dc9d2bbd361e1d302bbf0d62ad66f15c4fbb5c57ac504025149b6b0f0a7c5b95ff8f537de59e020c9f792c6773556de1200e42672e14876243aeb87f004b6c5e8698f42eeef123f2e72107924197b774caabf7985dc72554cb9329e18e1b0a8f2a9befa48a69252afb45e115f37c0ff71ddf07f463701fe03875f43595ad171610000000049454e44ae426082</data>
+    </image>
+    <image name="image1">
+        <data format="PNG" length="1324">89504e470d0a1a0a0000000d4948445200000020000000200806000000737a7af4000004f349444154789ced975f6c53551cc73fe79efba75dbb3f8ca96ce0981154a6895311f7b049498c5924220fb214d8e3127998663e48969818a3314c17f5c1110b2c68c2a245635c349a4a0cd962904c0dc310030462e2c69f11feac95d26eddbdf7f870dbadd0c236a3e18593fc7aceb9bd3dbfcfef7b7ff7fc4ec5c4c404b7b369b7d5fb1d0040ff373f8a44222a1e8f5f77adaeae8e70382c16ba96986f1246a351d5ddddcde8e82846cd2aee796a2341c3f3979c565c181ec01e3f497353135d5d5d343636ce0b665e00a167d7abdf4f8db1e2f90e9a36bfc2d2a0a4c2af01391f8af8a4cbb1d363fcfcd56e2e0d7dcafab54fd2bf6fdf9c107302dc5757a7a61ed9c08bdb77b2e2ee0008811062d677ae29ef4329c5c8c8af7cf37137f72646387af4e82d216e99840d4fac567fd76fe2b1977a595a15248d461a410a482b489335052920a50469a5b1aa610d0fbfbc97b19a6768686850c964522d58818e8e0ef5d94f27b8ebd5efd9f47815d75c8d8b53109f86ab36a45db05d2f70438025a154870a03aa4c08682efb7f1923beb79de7eeb7e8efef2faa445180bebe3ef5da1bef6076fec8e2871e25ade94cba9e5e22f7e873966bca33e5022e9802f4cc14578f0f33bdf3057ade7a9df6f6f60288a2008b16552ab9ae03bdb51b51e2474801d203a018404e60373bce422847a1e257b0bf7e13e7602f131313050005391089449458f220b2a51311f0214c0126b36680306f306b769c7faf3005a2bc0cd9b809748b482452900b0500b1580cf140135af9228425c0f21c6816480ba4cfebf562e6f37a99bd5f9820fc3aa2ba0eb1ac9e582c56a076c14e38343484deb611b2d16b2608099a044df34c68208467334d8152e0ba9e29075c094a82531a405bb60a383b37008056558deed7d02cd04c903ac83c002d0f60260db209e82acfb9e38263836b0bb480c1f4e26a88cf1340fa4c0c9f40fa4037f20024c81cc40d0aa87c051caf776cb0a7c1f60932862ce6ea2600e98b18868b69816e82ae832e6fa2429efc2a2bbfe382e380a3832d612ae5205257e607505e5e8e73ee2496cc60fa7c1806187a1e449e02332ae445efe4201cb06d98d61430893a7f9a8ada8ab90142a1103f1c3f8c6127f19ba598a6f020e4ac0a321f20f708b28e5de5ed90b60db60e195c32a94b644e8dd0d8da550050f01ab6b4b43075e237d4d81ff86486121f044c085810b4a0d4825233dbe7cd8316047dd93e3b2f3115a64a3179f83b9c64826ddbb6cdbd1185c36151bbb486f8fe9d68a9387ec3a5c49a05c82d5e30cecdb3d70226f8a50313e7b9fce51eb66edd5a34078a56c3eeee6ee207bfe5eae037c84c9212c325687a8b064d2fe23203ca4c28353c9b999b1034c0afbb908a73aeef038cf8257a7b7b8b16a3a26f414b4b8bd8b279b3fae2eded94d72ea1625d88127f009fae6108d0c56c59d00025b2254081ad2926714927129c897ec25ffbf6b07bd7aea2d1c31c07925028a44e8c8eb1e6fd0f59b9613d95656594e83a9610e8ccd6a56c2124e3baa46c9b8b972f73e4a35e8ebcf72e5bc2e19b463f270078e782cfa35156b4b6b2bab3939a952ba9f0fbf14989d43434c0715d266d9bc4b56bfc393ccce11d3b3873e8103d3d3d454bf082000062b198eaeaeae2ec850bd4363753b7762dd5f5f5f82a2bc175498e8f337eec18a70e1ce0fcc8084f3737333030f0df1d4a732d1a8daa582cc6e0e0208944e2baef962f5f4e5353136d6d6df33e112f18e0ff68b7fd9fd11d807f00da03e6cafe4995490000000049454e44ae426082</data>
+    </image>
+</images>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

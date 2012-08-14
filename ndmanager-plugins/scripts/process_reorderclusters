@@ -1,0 +1,109 @@
+#!/bin/bash
+
+#////////////////////////////////////////////////////////////////////////////
+#//
+#//   Reorder clusters
+#//
+#//   copyright       (C) 2009-2010 by Michaël Zugaro
+#//   email           michael.zugaro@college-de-france.fr
+#//
+#//   This program is free software; you can redistribute it and/or modify
+#//   it under the terms of the GNU General Public License as published by
+#//   the Free Software Foundation; either version 3 of the License, or
+#//   (at your option) any later version.
+#//
+#////////////////////////////////////////////////////////////////////////////
+
+program=$(basename $0)
+if [ "$1" == '-h' ] || [ "$1" == "--help" ]
+then
+	echo ""
+	echo "Usage: $program filename cluster1 ... clusterN"
+	echo "  filename                 name of the clu file"
+	echo "  cluster1 ... clusterN    reordered list of cluster IDs (ranging from 2 to N)"
+	echo ""
+	exit 0
+fi
+
+cluFile=$1
+shift 1
+clusterIDs=($*)
+
+# Make sure clu file exists
+if [ ! -f "$cluFile" ]
+then
+	echo "error: $cluFile not found"
+	exit 1
+fi
+
+# Create backup name for clu file
+renamed=$(mktemp -p . $cluFile.XXXXXX)
+if [ $? -ne 0 ]
+then
+	echo "error: cannot create backup name for clu file"
+	exit 1
+fi
+
+# Create temporary name for renumbered clu file
+renumbered=$(mktemp -p . $cluFile.XXXXXX)
+if [ $? -ne 0 ]
+then
+	echo "error: cannot create temporary name for renumbered clu file"
+	rm -f $renamed
+	exit 1
+fi
+
+# Check number of clusters in ID list
+nClusters=$(($(head -1 $cluFile)-2))
+nClusterIDs=${#clusterIDs[*]}
+if [ $nClusterIDs -ne $nClusters ]
+then
+	echo "error: incorrect number of cluster IDs (there are $nClusterIDs IDs, but there should be $nClusters)"
+	rm -f $renamed $renumbered
+	exit 1
+fi
+
+# Check ID list (it should range from 2 to N)
+sorted=($(echo ${clusterIDs[*]}|sed 's/ /\n/g'|sort -n))
+for ((i=0;i<$nClusters-2;i++))
+do
+	if [ $(($i+2)) -ne "${sorted[$i]}" ]
+	then
+		echo "error: incorrect cluster IDs (stopped at cluster ID ${sorted[$i]}, cluster ID $(($i+2)) may be missing?)"
+		rm -f $renamed $renumbered
+		exit 1
+	fi
+done
+
+# Show renumbered IDs
+for ((i=0;i<$nClusters;i++))
+do
+	echo "${clusterIDs[$i]} -> $(($i+2))"
+done
+
+# Create sed strings
+string=$(
+for ((i=0;i<$nClusters;i++))
+do
+	echo -n "s/^${clusterIDs[$i]}/x$(($i+2))/g;"
+done
+)
+
+# Renumber
+echo -n "#" | cat - $cluFile | sed -e "$string" | sed -e 's/x//;s/#//' > $renumbered
+
+# Rename files
+mv -f $cluFile $renamed
+if [ $? -ne 0 ]
+then
+	echo "error: cannot rename original clu file - renumbered file is '$renumbered'"
+	rm -f $renamed
+	exit 1
+fi
+mv -f $renumbered $cluFile
+if [ $? -ne 0 ]
+then
+	echo "error: cannot rename temporary clu file - original '$cluFile' was renamed '$renamed', renumbered file is '$renumbered'"
+	exit 1
+fi
+echo "original '$cluFile' was renamed '$renamed', renumbered clu file is '$cluFile'"

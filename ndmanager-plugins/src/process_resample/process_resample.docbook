@@ -1,0 +1,117 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+          "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="process_resample">
+
+	<refmeta>
+		<refentrytitle>process_resample</refentrytitle>
+		<manvolnum>1</manvolnum>
+	</refmeta>
+
+	<refnamediv>
+		<refname>process_resample</refname><refpurpose>resample multiplexed binary data files.</refpurpose>
+	</refnamediv>
+
+	<refsynopsisdiv>
+		<cmdsynopsis>
+		<command>process_resample</command>
+		<arg choice="plain">
+			<option>-n</option> <replaceable>nChannels</replaceable>
+		</arg>
+		<arg>
+			<option>-c</option> <replaceable>converter</replaceable>
+		</arg>
+		<group choice="req">
+			<arg choice="plain">
+				<option>-f</option> <replaceable>f1</replaceable>,<replaceable>f2</replaceable>
+			</arg>
+			<arg choice="plain">
+				<option>-r</option> <replaceable>ratio</replaceable>
+			</arg>
+		</group>
+		<arg choice="plain">
+			<replaceable>input</replaceable>
+		</arg>
+		<arg choice="plain">
+			<replaceable>output</replaceable>
+		</arg>
+		</cmdsynopsis>
+	</refsynopsisdiv>
+
+	<refsect1>
+		<title>Description</title>
+		<para>
+			<command>process_resample</command> resamples multiplexed binary data files by interpolating.
+		</para>
+	</refsect1>
+
+	<refsect1>
+		<title>Options</title>
+		<variablelist>
+			<varlistentry>
+				<term><option>-n</option> <replaceable>nChannels</replaceable></term>
+				<listitem>
+					<para>
+						number of channels in the file
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-c</option> <replaceable>converter</replaceable></term>
+				<listitem>
+					<para>
+						converter ID, available converters include Best Sinc Interpolator (ID = 0), Medium Sinc Interpolator (ID = 1), Fastest Sinc Interpolator (ID = 2, default choice), ZOH Interpolator (ID = 3), and Linear Interpolator (ID = 4)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-f</option> <replaceable>f1</replaceable>,<replaceable>f2</replaceable></term>
+				<listitem>
+					<para>
+						frequencies for input and output files
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-r</option> <replaceable>ratio</replaceable></term>
+				<listitem>
+					<para>
+						frequency ratio (output/input)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><replaceable>input</replaceable></term>
+				<listitem>
+					<para>
+						input file
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><replaceable>output</replaceable></term>
+				<listitem>
+					<para>
+						output file
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</refsect1>
+
+	<refsect1>
+		<title>Author</title>
+		<para>
+			<command>process_resample</command> is based on Erik de Castro Lopo's libsamplerate.
+		</para>
+		<para>
+			<author>
+				<firstname>Michael</firstname>
+				<othername role="mi">B</othername>
+				<surname>Zugaro</surname>
+				<contrib>Original author</contrib>
+			</author>,&nbsp;
+			<email>michael.zugaro@college-de-france.fr</email>.
+		</para>
+	</refsect1>
+
+</refentry>

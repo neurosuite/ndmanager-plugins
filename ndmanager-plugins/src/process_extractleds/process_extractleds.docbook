@@ -1,0 +1,102 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+          "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="process_extractleds">
+
+	<refmeta>
+		<refentrytitle>process_extractleds</refentrytitle>
+		<manvolnum>1</manvolnum>
+	</refmeta>
+
+	<refnamediv>
+		<refname>process_extractleds</refname><refpurpose>extract LEDs from a video file.</refpurpose>
+	</refnamediv>
+
+	<refsynopsisdiv>
+		<cmdsynopsis>
+		<command>process_extractleds</command>
+		<arg>
+			<option>-t</option> <replaceable>threshold</replaceable>
+		</arg>
+		<arg>
+			<option>-n</option>
+		</arg>
+		<arg>
+			<option>options</option>
+		</arg>
+		<arg choice="plain">
+			<replaceable>file</replaceable>
+		</arg>
+		</cmdsynopsis>
+	</refsynopsisdiv>
+
+	<refsect1>
+		<title>Description</title>
+		<para>
+			<command>process_extractleds</command> extracts LEDs (= bright spots) from a video file. For each video frame, all bright spots are detected and listed in a .spots file, one line per spot, listing on successive columns the frame number, number of pixels in the spot, x and y coordinates of the spot center, x and y sizes of the spot (defined as standard deviations of the distributions of x and y coordinates of all the pixels in the spot), and spot color (as a YCrCb triplet).
+		</para>
+	</refsect1>
+
+	<refsect1>
+		<title>Options</title>
+		<variablelist>
+			<varlistentry>
+				<term><option>-t</option> <replaceable>threshold</replaceable></term>
+				<listitem>
+					<para>
+						bright spots consist of pixels brighter than this threshold (default = 90)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>-n</option></term>
+				<listitem>
+					<para>
+						simulate, i.e. do not write to disk
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><option>options</option></term>
+				<listitem>
+					<para>
+						ffplay options (type 'process_extractleds -h' for details)
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><replaceable>file</replaceable></term>
+				<listitem>
+					<para>
+						video file
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+	</refsect1>
+
+	<refsect1>
+		<title>Author</title>
+		<para>
+			<command>process_extractleds</command> is based on ffplay by Fabrice Bellard from the ffmpeg project.
+		</para>
+		<para>
+			<author>
+				<firstname>Michael</firstname>
+				<othername role="mi">B</othername>
+				<surname>Zugaro</surname>
+				<contrib>Original author</contrib>
+			</author>,&nbsp;
+			<email>michael.zugaro@college-de-france.fr</email>.
+		</para>
+		<para>
+			<author>
+				<firstname>Ken</firstname>
+				<othername role="mi">D</othername>
+				<surname>Harris</surname>
+				<contrib>Original author</contrib>
+			</author>,&nbsp;
+			<email>kdharris@andromeda.rutgers.edu</email>.
+		</para>
+	</refsect1>
+
+</refentry>

@@ -1,0 +1,110 @@
+#!/bin/bash
+
+#////////////////////////////////////////////////////////////////////////////
+#//
+#//   Convert from .ncs (Neuralynx files) to wideband data format .dat
+#//
+#//   copyright       (C) 2009-2011 by Michaël Zugaro
+#//   email           michael.zugaro@college-de-france.fr
+#//
+#//   This program is free software; you can redistribute it and/or modify
+#//   it under the terms of the GNU General Public License as published by
+#//   the Free Software Foundation; either version 3 of the License, or
+#//   (at your option) any later version.
+#//
+#////////////////////////////////////////////////////////////////////////////
+
+shopt -s extglob
+
+# Source helper functions
+source ndm_functions
+
+# Parse command-line
+program=$(basename $0)
+if [ $# -ne 1 ]
+then
+	echo_error "usage: $program xml-file"
+	exit $GENERAL_ERROR
+fi
+session=${1%.xml}
+directory=$(basename "$(pwd)")
+
+# Print a header to indicate current processing step
+print_header "$session - Converting NCS files -> dat"
+
+# Check required programs
+check_commands_installed xpathReader process_nlxconvert
+
+# Check input files
+inputs_missing $session.xml && exit $INPUTS_MISSING
+
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+# // Read Parameters
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+# Convert ncs files and create .sync file
+# (this will later be necessary to synchronize video and event files)
+options="-w -s"
+
+suffixes=($(read_script_parameter $session suffixes))
+reverse=$(read_script_parameter $session reverse)
+gap=$(read_script_parameter $session gap)
+ignore_events=$(read_script_parameter $session ignoreEvents)
+
+check_mandatory_variable ${suffixes[0]} "missing suffixes"
+check_mandatory_variable $reverse "should wideband signals be reversed?"
+if check_optional_variable $gap
+then
+	options="$options -g $gap"
+fi
+$reverse && options="$options -r"
+check_optional_variable $ignore_events || ignore_events=false
+
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+# // Process
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+outputs_exist=false
+# Convert selected files
+n=$(get_n_suffixes ${suffixes[*]})
+for ((i=0;i<$n;i++))
+do
+	current_options=$options
+	# Make sure output file does not already exist
+	suffix=$(get_suffix $i ${suffixes[*]})
+	if outputs_exist $session-$suffix.dat
+	then
+		outputs_exist=true
+		continue
+	fi
+	# Is there a .restart file available (or a .nev) to help us find acquisition restart events?
+	nev_file=""
+	restart_file=""
+	if $ignore_events
+	then
+		echo_info "Ignoring .nev files upon user's request - will try to guess 'restart acquisition' events."
+	else
+		restart_file=$(ls $session-$suffix.restart 2>/dev/null)
+		if [ -z "$restart_file" ]
+		then
+			nev_file=$(ls ../$directory-$suffix/$session-$suffix.nev 2>/dev/null)
+			# Create the .restart file if it does not exist
+			if [ -z "$nev_file" ]
+			then
+				echo_warning "missing .nev and .restart files, will try to guess 'restart acquisition' events."
+			else
+				current_options="$current_options -a"
+			fi
+		fi
+	fi
+	# Convert all ncs files
+	ncs_files=$(ls ../$directory-$suffix/$session-$suffix*ncs 2>/dev/null)
+	[ -z "$ncs_files" ] && echo_warning "no .ncs files found" && exit $INPUTS_MISSING
+	process_nlxconvert $current_options -o $session-$suffix $ncs_files $nev_file $restart_file
+	check_command_status process_nlxconvert
+done
+
+if $outputs_exist
+then
+	exit $OUTPUTS_EXIST
+fi

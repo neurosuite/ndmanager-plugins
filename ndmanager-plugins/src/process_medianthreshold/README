@@ -1,0 +1,40 @@
+Process_median_threshold
+-------------------------------
+16/05/2008
+author : nicolas.lebas@college-de-france.fr
+
+1) USAGE :
+-------------
+process_median_threshold [options] [input]
+
+ -f input_file		input file
+ -s size				input size in bytes (ex : 32000000)
+ -n nb					Total number of channels (ex : 10)
+ -c list					List of channels for each group (ex : 0,1,2:4,5,7 (2 groups with 3 channels))
+ -v						verbose mode
+ -d data_file		data file in text format (output)
+ -h						show this message
+
+All the options are not mandatory except the total channel number (-n) and the list of channels (-c).
+The size (-s) is mandatory only if no input file (-f) is given.
+If no I/O file are given, default input and output are respectively stdin and stdout.
+
+Example :
+------------
+>> process_median_threshold -f SPWR-01-20060621-012.fil -n 20 -c 17,18,19
+
+326.168,314.307,320.237
+
+
+2) OUTPUTS :
+----------------
+
+List of threshold for each given channels, separated with a comma between electrode of the same group and
+double-point for a new group as channels list input (see previous).
+
+Example :
+------------
+>> process_median_threshold -f SPWR-01-20060621-012.fil -n 20 -c 0,1,2,3:17,18,19
+
+403.262,409.192,421.053,415.122:326.168,314.307,320.237
+

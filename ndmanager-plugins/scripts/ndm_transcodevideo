@@ -1,0 +1,88 @@
+#!/bin/bash
+
+#////////////////////////////////////////////////////////////////////////////
+#//
+#//   Convert videos
+#//
+#//   copyright       (C) 2007-2010 by Michaël Zugaro
+#//   email           michael.zugaro@college-de-france.fr
+#//
+#//   This program is free software; you can redistribute it and/or modify
+#//   it under the terms of the GNU General Public License as published by
+#//   the Free Software Foundation; either version 3 of the License, or
+#//   (at your option) any later version.
+#//
+#////////////////////////////////////////////////////////////////////////////
+
+# Source helper functions
+source ndm_functions
+
+# Parse command-line
+program=$(basename $0)
+if [ $# -ne 1 ]
+then
+	echo_error "usage: $program xml-file"
+	exit $GENERAL_ERROR
+fi
+session=${1%.xml}
+directory=$(basename "$(pwd)")
+
+# Print a header to indicate current processing step
+print_header "$session - Converting video"
+
+# Check parameter file
+inputs_missing $session.xml && exit $INPUTS_MISSING
+
+# Check required programs
+check_commands_installed xpathReader mencoder
+
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+# // Read Parameters
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+extension=$(read_script_parameter $session extension)
+output_codec=$(read_script_parameter $session codec)
+suffix=$(read_script_parameter $session suffix)
+
+check_optional_variable $output_codec || { echo_info "No transcoding requested" ; exit $NO_ERROR ; }
+check_mandatory_variable $extension "missing extension"
+check_mandatory_variable $suffix "missing suffix"
+
+# Check input file
+video_file=../$directory-$suffix/$session-$suffix.$extension
+inputs_missing $video_file && exit $INPUTS_MISSING
+
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+# // Process
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+input_codec=$(ffmpeg -i $video_file 2>&1|grep "Video:"|sed -r 's/.*Video: ([0-9A-Za-z]{4}).*/\1/')
+if [ "$input_codec" == "IV50" ] && [ "$(uname -m)" == "x86_64" ]
+then
+	# Intel Indeo V5.0 (IV50) is a proprietary codec used by Spike2, that can be decoded only by the 32bit version
+	# of mencoder. Therefore, on 64bit platforms, we need to run mencoder32 for this codec (this has to be painfully
+	# installed separately)
+	menc="mencoder32"
+else
+	menc="mencoder"
+fi
+
+case $output_codec in
+	m1v)
+		outputs_exist $session.m1v && exit $OUTPUTS_EXIST
+		eval $menc $video_file -ovc lavc -lavcopts vcodec=mpeg1video -of rawvideo -o $session-tmp.m1v
+		error=$?
+		check_command_status mencoder $error
+		mv $session-tmp.m1v $session.m1v
+		;;
+	x264)
+		# If target file already exists, skip conversion (note that testing for the existence of a file with the target
+		# name is not reliable, because 'avi' is a very common extension, so the source and target files could have the
+		# same name; therefore, if we find a file with the target name, we also have to test its codec)
+		[ -f $session.avi ] && ffmpeg -i $session.avi 2>&1 | grep 'Video.*h264' >/dev/null && outputs_exist $session.avi && exit $OUTPUTS_EXIST
+		eval $menc $video_file -noskip -ovc x264 -x264encopts qp=20 -nosound -o $session-tmp.avi
+		error=$?
+		check_command_status mencoder $error
+		mv $session-tmp.avi $session.avi
+		;;
+esac

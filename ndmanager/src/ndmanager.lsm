@@ -1,0 +1,16 @@
+Begin3
+Title:          NDManager -- Some description
+Version:        1.2
+Entered-date:   
+Description:    
+Keywords:       KDE Qt
+Author:         Lynn Hazan <lynn.hazan@myrealbox.com>
+Maintained-by:  Lynn Hazan <lynn.hazan@myrealbox.com>
+Home-page:      
+Alternate-site: 
+Primary-site:   ftp://ftp.kde.org/pub/kde/unstable/apps/utils
+                xxxxxx  ndmanager-1.2.tar.gz
+                xxx     ndmanager-1.2.lsm
+Platform:       Linux. Needs KDE
+Copying-policy: GPL
+End

@@ -1,0 +1,41 @@
+Notes for the Debian ffmpeg packages
+====================================
+
+ The license for the whole work is the GPL, not the LGPL, because GPL-only
+parts of ffmpeg were activated. If you need LGPL versions of the libraries,
+please contact me.
+
+
+Summary of the patent issues with ffmpeg
+========================================
+
+   The only patents related to ffmpeg which seem to be enforced against open
+source software cover the following codec technologies and file formats:
+
+   * MP3 encoding
+   * AAC decoding and encoding
+   * the ASF file format
+
+   I did not activate MP3 encoding (through LAME) in libavcodec, nor AAC
+support (through FAAC/FAAD). However, since I have found no real enforcement
+of the mysterious ASF file format patents, I did not deactivate ASF support in
+libavformat. See more details in the patents.txt file.
+
+
+Differences with unofficial ffmpeg packages
+===========================================
+
+   There are popular unofficial ffmpeg packages at the following URL:
+
+     ftp://ftp.nerim.net/debian-marillat/index.html
+
+   I have nothing to do with these packages and it would be very tedious
+for me to track their changes. Given that my official packages use a
+Debian-specific naming scheme for libraries, you should be able to
+install at least the shared library packages together.
+
+   Before submitting a bug report, please make sure it is related to the
+Debian packages and not those unofficial packages.
+
+
+ -- Sam Hocevar <sam@zoy.org>  Thu, 30 Mar 2006 10:23:16 +0200

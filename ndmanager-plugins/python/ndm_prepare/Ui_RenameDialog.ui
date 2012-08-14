@@ -1,0 +1,90 @@
+<ui version="4.0" >
+ <class>RenameDialog</class>
+ <widget class="QDialog" name="RenameDialog" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Renaming Files</string>
+  </property>
+  <property name="windowIcon" >
+   <iconset resource="ressources.qrc" >
+    <normaloff>:/images/ndmanager.png</normaloff>:/images/ndmanager.png</iconset>
+  </property>
+  <layout class="QGridLayout" name="gridLayout" >
+   <item row="5" column="0" >
+    <widget class="QDialogButtonBox" name="buttonBox" >
+     <property name="orientation" >
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons" >
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" >
+    <layout class="QGridLayout" name="gridLayout_2" >
+     <item row="0" column="2" >
+      <widget class="QTableWidget" name="names" >
+       <property name="showGrid" >
+        <bool>false</bool>
+       </property>
+       <column>
+        <property name="text" >
+         <string>Original</string>
+        </property>
+       </column>
+       <column>
+        <property name="text" >
+         <string>Renamed</string>
+        </property>
+       </column>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="ressources.qrc" />
+ </resources>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>RenameDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>RenameDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel" >
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel" >
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

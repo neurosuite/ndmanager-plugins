@@ -1,0 +1,115 @@
+#!/bin/bash
+
+#////////////////////////////////////////////////////////////////////////////
+#//
+#//   Detect and extract spikes
+#//
+#//   copyright       (C) 2007-2010 by Michaël Zugaro
+#//   email           michael.zugaro@college-de-france.fr
+#//
+#//   This program is free software; you can redistribute it and/or modify
+#//   it under the terms of the GNU General Public License as published by
+#//   the Free Software Foundation; either version 3 of the License, or
+#//   (at your option) any later version.
+#//
+#////////////////////////////////////////////////////////////////////////////
+
+# Source helper functions
+source ndm_functions
+
+# Parse command-line
+program=$(basename $0)
+if [ $# -ne 1 ]
+then
+	echo_error "usage: $program xml-file"
+	exit $GENERAL_ERROR
+fi
+session=${1%.xml}
+directory=$(basename "$(pwd)")
+
+# Print a header to indicate current processing step
+print_header "$session - Detecting/extracting spikes"
+
+# Check required programs
+check_commands_installed xpathReader process_medianthreshold process_extractspikes
+
+# Check required files
+inputs_missing $session.xml $session.fil && exit $INPUTS_MISSING
+
+secondsToBytes()
+{
+	unset LANG && echo $1 $samplingRate $nChannels $resolution | awk '{printf "%d",int($1*$2/8)*$3*$4}'
+}
+
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+# // Read Parameters
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+nChannels=$(xml_read $session "//acquisitionSystem/nChannels")
+resolution=$(xml_read $session "//acquisitionSystem/nBits")
+samplingRate=$(xml_read $session "//acquisitionSystem/samplingRate")
+nElectrodeGroups=$(xml_count $session "//spikeDetection/channelGroups/group")
+
+# Check output files
+outputs=$(echo $session.spk.$(seq $nElectrodeGroups)|sed 's/ / '$session'.spk./g')
+outputs_exist $outputs && exit $OUTPUTS_EXIST
+
+check_mandatory_variable $nChannels "missing number of channels"
+check_mandatory_variable $resolution "missing resolution (in bits)"
+check_mandatory_variable $samplingRate "missing sampling rate"
+if [ $nElectrodeGroups -eq 0 ]
+then
+  echo_error "missing spike groups"
+  exit $GENERAL_ERROR
+fi
+for ((electrodeGroup=1;electrodeGroup<=$nElectrodeGroups;electrodeGroup++))
+do
+	electrodes=$(xml_read $session "//spikeDetection/channelGroups/group[$electrodeGroup]/channels/channel")
+	check_mandatory_variable $electrodes "missing electrode list"
+	electrodes=$(echo $electrodes | sed 's/ /,/g') # replace spaces with commas
+	electrodeList="$electrodeList:$electrodes"
+	samplesInWaveform=$(xml_read $session "//spikeDetection/channelGroups/group[$electrodeGroup]/nSamples")
+	peakSample=$(xml_read $session "//spikeDetection/channelGroups/group[$electrodeGroup]/peakSampleIndex")
+	check_mandatory_variable $samplesInWaveform "missing number of samples in waveform for electrode group $electrodeGroup"
+	check_mandatory_variable $peakSample "missing peak sample for electrode group $electrodeGroup"
+done
+n=$((${#electrodeList}-1))
+electrodeList=${electrodeList:1:$n} # remove leading ':'
+
+thresholdFactor=$(read_script_parameter $session thresholdFactor)
+refractoryPeriod=$(read_script_parameter $session refractoryPeriod)
+peakSearchLength=$(read_script_parameter $session peakSearchLength)
+start=$(read_script_parameter $session start)
+duration=$(read_script_parameter $session duration)
+
+check_mandatory_variable $thresholdFactor "missing threshold factor"
+check_mandatory_variable $refractoryPeriod "missing refractory period"
+check_mandatory_variable $peakSearchLength "missing peak search window length"
+check_mandatory_variable $start "missing starting point for threshold computation"
+check_mandatory_variable $duration "missing duration for threshold computation"
+
+startInBytes=$(secondsToBytes $start)
+durationInBytes=$(secondsToBytes $duration)
+
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+# // Detect spikes (create .res.# file)
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+echo_info "Processing channels $electrodeList"
+echo_info " 1. Computing thresholds"
+echo_info "    starting at $start s (= $startInBytes bytes)"
+echo_info "    duration is $duration s (= $durationInBytes bytes)"
+
+# Compute detection threshold
+baseline=$(tail -c +$(($startInBytes+1)) $session.fil | head -c $durationInBytes | process_medianthreshold -s $durationInBytes -n $nChannels -c $electrodeList)
+check_command_status process_medianthreshold
+baseline=$(unset LANG && echo $baseline | awk 'BEGIN{RS=":";FS=","};{for (i=1;i<=NF;i++){printf "%f,",$i*'$thresholdFactor'};printf ":"}' | sed 's/,:/:/g;s/:$//')
+echo_info "    threshold $baseline"
+
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+# // Extract waveforms (create .spk.# file)
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+echo_info -e "2. Extracting spike waveforms (creating .res and .spk files)"
+process_extractspikes -n $nChannels -c $electrodeList -w $samplesInWaveform -p $peakSample -t $baseline -l $peakSearchLength -r $refractoryPeriod $session
+check_command_status process_extractspikes

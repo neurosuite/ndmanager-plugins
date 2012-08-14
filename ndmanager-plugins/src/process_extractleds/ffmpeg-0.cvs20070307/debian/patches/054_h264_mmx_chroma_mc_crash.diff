@@ -1,0 +1,15 @@
+Index: ffmpeg-0.cvs20060823/libavcodec/h264.c
+===================================================================
+--- ffmpeg-0.cvs20060823.orig/libavcodec/h264.c	2007-03-26 14:33:03.000000000 +0200
++++ ffmpeg-0.cvs20060823/libavcodec/h264.c	2007-03-26 14:33:12.000000000 +0200
+@@ -2890,8 +2890,8 @@
+ 
+     if(   full_mx < 0-extra_width
+        || full_my < 0-extra_height
+-       || full_mx + 16/*FIXME*/ > pic_width + extra_width
+-       || full_my + 16/*FIXME*/ > pic_height + extra_height){
++       || full_mx + 18/*FIXME*/ > pic_width + extra_width
++       || full_my + 18/*FIXME*/ > pic_height + extra_height){
+         ff_emulated_edge_mc(s->edge_emu_buffer, src_y - 2 - 2*h->mb_linesize, h->mb_linesize, 16+5, 16+5/*FIXME*/, full_mx-2, full_my-2, pic_width, pic_height);
+             src_y= s->edge_emu_buffer + 2 + 2*h->mb_linesize;
+         emu=1;

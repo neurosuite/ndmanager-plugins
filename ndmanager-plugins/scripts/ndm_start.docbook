@@ -1,0 +1,288 @@
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN"
+          "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+<refentry id="ndm_start">
+
+	<refmeta>
+		<refentrytitle>ndm_start</refentrytitle>
+		<manvolnum>1</manvolnum>
+	</refmeta>
+
+	<refnamediv>
+		<refname>ndm_start</refname><refpurpose>start batch processing.</refpurpose>
+	</refnamediv>
+
+	<refsynopsisdiv>
+		<cmdsynopsis>
+		<command>ndm_start</command>
+		<arg choice="plain">
+			<replaceable>template</replaceable>
+		</arg>
+		<arg>
+			<replaceable>base1</replaceable>
+		</arg>
+		<arg>
+			<replaceable>base2...</replaceable>
+		</arg>
+		</cmdsynopsis>
+	</refsynopsisdiv>
+
+	<refsect1><title>Description</title>
+
+		<para>
+			<command>ndm_start</command> processes all data present in all subdirectories of the current directory, using the parameters provided in a template XML parameter file. Alternatively, an explicit list of directories to process can be provided.
+		</para>
+
+		<variablelist>
+			<varlistentry>
+				<term><replaceable>template</replaceable></term>
+				<listitem>
+					<para>
+						template XML parameter file
+					</para>
+				</listitem>
+			</varlistentry>
+			<varlistentry>
+				<term><replaceable>base1</replaceable> <replaceable>base2...</replaceable></term>
+				<listitem>
+					<para>
+						optional list of data directories to process (directory names without suffix)
+					</para>
+				</listitem>
+			</varlistentry>
+		</variablelist>
+
+		<para>
+			Refer to the Help tab for <command>ndm_start</command> in <command>NDManager</command> for more details.
+		</para>
+		<para>
+			For an introduction on how to use <application>NDManager</application> plugins, see the manual page for <command>ndm</command>.
+		</para>
+
+	</refsect1>
+
+	<refsect1><title>Example</title>
+
+		<para>
+			In this hypothetical experiment, rats are trained to perform a spatial memory task on three consecutive days; each day, recording sessions include baseline, maze training, and then sleep; an acquisition system records all wideband signals, and a second system simultaneously records band-pass filtered signals from a subset of channels:
+		</para>
+
+		<programlisting>
+# ls
+RadialMaze-Rat-15-20090718-filtered/
+RadialMaze-Rat-15-20090718-wideband/
+RadialMaze-Rat-15-20090719-filtered/
+RadialMaze-Rat-15-20090719-wideband/
+RadialMaze-Rat-15-20090720-filtered/
+RadialMaze-Rat-15-20090720-wideband/
+RadialMaze.xml
+
+# ls RadialMaze-Rat-15-20090718-wideband
+RadialMaze-Rat-15-20090718-01-baseline-wideband.avi
+RadialMaze-Rat-15-20090718-01-baseline-wideband.smr
+RadialMaze-Rat-15-20090718-02-maze-wideband.avi
+RadialMaze-Rat-15-20090718-02-maze-wideband.smr
+RadialMaze-Rat-15-20090718-03-sleep-wideband.avi
+RadialMaze-Rat-15-20090718-03-sleep-wideband.smr
+
+# ls RadialMaze-Rat-15-20090718-filtered
+RadialMaze-Rat-15-20090718-01-baseline-filtered.smr
+RadialMaze-Rat-15-20090718-02-maze-filtered.smr
+RadialMaze-Rat-15-20090718-03-sleep-filtered.smr
+		</programlisting>
+
+		<para>
+			To process all the data:
+		</para>
+		<programlisting>
+# ndm_start RadialMaze.xml
+		</programlisting>
+
+		<para>
+			To process only the data recorded on July 18 and 19, 2009:
+		</para>
+		<programlisting>
+# ndm_start RadialMaze.xml RadialMaze-Rat-15-20090718 RadialMaze-Rat-15-20090719
+		</programlisting>
+	</refsect1>
+
+	<refsect1><title>File and Directory Layout and Naming Conventions</title>
+		<para>
+			This section describes in details how files and directories should be named and organized so that <command>ndm_start</command> can recognize and process them. This should be viewed as reference documentation, as you should *not* have to manually rename your files. You should instead use the graphical application <command>ndm_prepare</command>, which will automatically handle this for you.
+		</para>
+		<refsect2><title>Helper Applications</title>
+			<para>
+				Two simple graphical applications are available to help you rename data files so that they conform to the naming scheme described below: <command>ndm_prepare</command> and <command>ndm_checkconsistency</command>. Please refer to their respective manual pages for details.
+			</para>
+		</refsect2>
+
+		<refsect2><title>Template XML parameter file</title>
+			<para>
+				The template XML parameter file can have any arbitrary name.
+			</para>
+		</refsect2>
+
+		<refsect2><title>Data directories</title>
+			<para>
+				Experiments typically consist of one or more recording sessions. For each experiment, there must be one directory per acquisition system used in parallel. All directories corresponding to a single experiment must have the same name, except for a differentiating suffix, and contain data files referring to the same recording sessions, i.e. named in a coherent manner (see example above).
+			</para>
+			<para>
+				Data directories must be named <replaceable>prefix-YYYYMMDD-[description-]suffix</replaceable>
+			</para>
+			<variablelist>
+				<varlistentry>
+					<term><replaceable>prefix</replaceable></term>
+					<listitem>
+						<para>
+							any string, typically describing the experiment and animal
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term><replaceable>YYYYMMDD</replaceable></term>
+					<listitem>
+						<para>
+							an 8 digit year-month-day string (used to set the date information in the XML parameter files automatically generated for each individual session)
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term><replaceable>description</replaceable></term>
+					<listitem>
+						<para>
+							(optional) any string, describing additional details of the session files in the directory
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term><replaceable>suffix</replaceable></term>
+					<listitem>
+						<para>
+							any string; when multiple directories contain data recorded in parallel that require merging, they must have the same name, except for the suffix which is used to differentiate them (suffixes are listed in various places in the XML template)
+						</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+			<para>
+				Example: RadialMaze-Rat-15-20090718-wideband
+			</para>
+			<programlisting>
+<replaceable>prefix</replaceable>           RadialMaze-Rat-15
+<replaceable>YYYYMMDD</replaceable>         20090718
+<replaceable>description</replaceable>      (none)
+<replaceable>suffix</replaceable>           wideband
+			</programlisting>
+		</refsect2>
+
+		<refsect2><title>Session files</title>
+			<para>
+				Session files recorded on multiple acquisition systems in parallel must be located in their respective directories and have coherent names (see example above).
+			</para>
+			<para>
+				Session files must be named <replaceable>prefix-YYYYMMDD-nn-description-suffix[-NNN].extension</replaceable>
+			</para>
+			<variablelist>
+				<varlistentry>
+					<term><replaceable>prefix</replaceable>, <replaceable>YYYYMMDD</replaceable></term>
+					<listitem>
+						<para>
+							must be identical to the data directory
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term><replaceable>nn</replaceable></term>
+					<listitem>
+						<para>
+							a two-digit number used to sort successive sessions
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term><replaceable>description</replaceable></term>
+					<listitem>
+						<para>
+							any string, typically describing the recording session; it is usually different for each session (and in particular, bears no relation to the optional <replaceable>description</replaceable> of the data directory)
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term><replaceable>NNN</replaceable></term>
+					<listitem>
+						<para>
+							a number used e.g. by Neuralynx NCS, MPEG and SMI files
+						</para>
+					</listitem>
+				</varlistentry>
+				<varlistentry>
+					<term><replaceable>extension</replaceable></term>
+					<listitem>
+						<para>
+							file extension (e.g. 'smr', 'nvt' or 'spots')
+						</para>
+					</listitem>
+				</varlistentry>
+			</variablelist>
+
+		<para>
+			Example 1: RadialMaze-Rat-15-20090718-01-baseline-wideband.smr
+		</para>
+		<programlisting>
+<replaceable>prefix</replaceable>           RadialMaze-Rat-15
+<replaceable>YYYYMMDD</replaceable>         20090718
+<replaceable>nn</replaceable>               01
+<replaceable>description</replaceable>      baseline
+<replaceable>suffix</replaceable>           wideband
+<replaceable>NNN</replaceable>              (none)
+<replaceable>extension</replaceable>        smr
+		</programlisting>
+
+		<para>
+			Example 2: Exploration-Rat04-20090718-05-maze2-nlx-025.ncs
+		</para>
+		<programlisting>
+<replaceable>prefix</replaceable>           Exploration-Rat04
+<replaceable>YYYYMMDD</replaceable>         20090718
+<replaceable>nn</replaceable>               05
+<replaceable>description</replaceable>      maze2
+<replaceable>suffix</replaceable>           nlx
+<replaceable>NNN</replaceable>              025
+<replaceable>extension</replaceable>        ncs
+		</programlisting>
+
+		<para>
+			Example 3: Exploration-Rat04-20090718-05-maze2-nlx-01.smi
+		</para>
+		<programlisting>
+<replaceable>prefix</replaceable>           Exploration-Rat04
+<replaceable>YYYYMMDD</replaceable>         20090718
+<replaceable>nn</replaceable>               05
+<replaceable>description</replaceable>      maze2
+<replaceable>suffix</replaceable>           nlx
+<replaceable>NNN</replaceable>              01
+<replaceable>extension</replaceable>        smi
+		</programlisting>
+
+		</refsect2>
+	</refsect1>
+
+	<refsect1>
+		<title>Note</title>
+ 		<para>
+			The <replaceable>NNN</replaceable> number identifies channel numbers for NCS files. It is also used by Neuralynx systems when acquisition is stopped and later restarted during a single session: the video (MPEG and SMI) is then split into multiple files. These will thus be numbered '-00', '-01', etc. (as in Example 3 above).
+		</para>
+	</refsect1>
+
+	<refsect1>
+		<title>Author</title>
+		<para>
+			<author>
+				<firstname>Michael</firstname>
+				<othername role="mi">B</othername>
+				<surname>Zugaro</surname>
+				<contrib>Original author</contrib>
+			</author>,&nbsp;
+			<email>michael.zugaro@college-de-france.fr</email>.
+		</para>
+	</refsect1>
+
+</refentry>
