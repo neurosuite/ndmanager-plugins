@@ -19,6 +19,7 @@
  ***************************************************************************/
 
 // include files for KDE
+#include "config-ndmanager.h"
 #include <kapplication.h>
 #include <dcopclient.h>
 #include <kaboutdata.h>

@@ -43,3 +43,5 @@ void EditorManager::remove(KTextEditor::Document* pDoc)
 	removePart(pDoc);
 	delete pDoc;
 }
+
+#include "editormanager.moc"

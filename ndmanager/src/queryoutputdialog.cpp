@@ -78,3 +78,5 @@ void QueryOutputDialog::slotUser2()
 	}
 	else KMessageBox::error(this,i18n("Could not save the report. This may be due to incorrect write permissions."));
 }
+
+#include "queryoutputdialog.moc"

@@ -76,3 +76,5 @@ void QueryInputDialog::pathChanged(const QString & newPath){
 		enableButtonOK (false);
 	}
 }
+
+#include "queryinputdialog.moc"
