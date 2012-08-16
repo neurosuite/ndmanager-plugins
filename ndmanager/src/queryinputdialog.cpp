@@ -48,10 +48,9 @@ KDialogBase(parent,"Query",true,caption,Ok|Cancel,Ok,true)
 	QLabel *label2 = new QLabel(i18n("Path"),page,"path_label");
 	layout->addWidget(label2);
 
-	path = new KURLRequester(page,"path");
-	path->setMode(KFile::Directory);
+    path = new QLineEdit(page,"path");
 	path->setMinimumWidth(fontMetrics().maxWidth()*20);
-	path->setURL(urltext);
+    path->setText(urltext);
 	layout->addWidget(path);
 
 	layout->addStretch(10);

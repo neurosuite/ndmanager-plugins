@@ -28,7 +28,6 @@
 #include <kiconloader.h>
 #include <kdeversion.h>
 #include <kstatusbar.h>
-#include <kkeydialog.h>
 #include <kaccel.h>
 #include <kio/netaccess.h>
 #include <kprocess.h>
@@ -100,7 +99,6 @@ void ndManager::setupActions()
  KStdAction::quit(this, SLOT(close()), actionCollection());
  viewMainToolBar = KStdAction::showToolbar(this, SLOT(slotViewMainToolBar()), actionCollection());
  viewStatusBar = KStdAction::showStatusbar(this, SLOT(slotViewStatusBar()), actionCollection());
- KStdAction::keyBindings(this, SLOT(slotKeyBindings()), actionCollection());
 // KStdAction::preferences(this,SLOT(executePreferencesDlg()), actionCollection());
 
   //Custom actions and menus
@@ -187,11 +185,6 @@ void ndManager::slotViewStatusBar()
   slotStatusMsg(i18n("Ready."));
 }
 
-void ndManager::slotKeyBindings(){
-  slotStatusMsg(i18n("Changing the key bindings..."));
-  KKeyDialog::configure(actionCollection());
-  slotStatusMsg(i18n("Ready."));
-}
 
 void ndManager::slotFileOpen()
 {

@@ -25,7 +25,6 @@
 #include "qlabel.h"
 #include "qlineedit.h"
 #include "kdialogbase.h"
-#include "kurlrequester.h"
 
 /**
 Dialog used to get information for query.
@@ -38,8 +37,8 @@ class QueryInputDialog : public KDialogBase
 	public:
 		QueryInputDialog(QWidget *parent = 0,const QString& caption = "Query",const QString& urltext = "");
 		virtual ~QueryInputDialog();
-		inline QString getQuery() { return query->text(); };
-		inline QString getPath() { return path->url(); };
+        inline QString getQuery() { return query->text(); }
+        inline QString getPath() { return path->text(); }
 			
 
 	private slots:
@@ -47,7 +46,7 @@ class QueryInputDialog : public KDialogBase
 		
 	private:		
 		QWidget			*page;
-		KURLRequester	*path;
+        QLineEdit	*path;
 		QLineEdit		*query;
 		QVBoxLayout		*layout;
 };

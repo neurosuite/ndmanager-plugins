@@ -201,8 +201,6 @@ private slots:
    */
   void slotStatusMsg(const QString &text);
 
-  /**Display the configure key bindings dialog.*/
-  void slotKeyBindings();
 
   /** Executes the preferences dialog.*/
   void executePreferencesDlg();
