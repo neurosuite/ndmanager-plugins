@@ -22,7 +22,7 @@
 
 // include files for KDE
 
-#include <kio/netaccess.h>
+
 
 //include files for QT
 #include <qfile.h> 

@@ -33,7 +33,6 @@
 #include <kdeversion.h>
 #include <kstatusbar.h>
 #include <kaccel.h>
-#include <kio/netaccess.h>
 #include <kprocess.h>
 #include <kfiledialog.h>
 #include <kconfig.h>

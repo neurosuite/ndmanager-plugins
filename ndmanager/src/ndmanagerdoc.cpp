@@ -24,7 +24,7 @@
 // include files for KDE
 
 #include <kio/job.h>
-#include <kio/netaccess.h>
+
 #include <kstandarddirs.h>
 #include <kglobal.h>
 
