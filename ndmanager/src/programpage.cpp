@@ -31,7 +31,7 @@
 #include <qtextstream.h>
 #include <qapplication.h>
 #include <qregexp.h>
-
+#include <qtextedit.h>
 // include files for KDE
 #include <klocale.h>        // for i18n()
 #include <kiconloader.h>    // for KIconLoader
@@ -57,7 +57,7 @@ ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const char* name)
 
  tabWidget = new QTabWidget(this);
 // script = new KTextEdit(tabWidget);
- help = new KTextEdit(tabWidget);
+ help = new QTextEdit(tabWidget);
  if(!expertMode) help->setReadOnly(true);
  parameters = new ParameterPage(expertMode,tabWidget);
  tabWidget->addTab(parameters,i18n("Parameters"));

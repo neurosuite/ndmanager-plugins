@@ -35,7 +35,7 @@
 //forward declaration
 class QTabWidget;
 class QPushButton;
-class KTextEdit;
+class QTextEdit;
 
 //General C++ include files
 #include <iostream>
@@ -141,12 +141,12 @@ private:
  QPushButton* saveScriptButton; 
  QPushButton* saveParametersButton;      
  ParameterPage* parameters;
- KTextEdit* script; 
+ QTextEdit* script; 
  bool sciptIsModified;
  bool isInit;
  QString programName;
  KURL descriptionUrl;
- KTextEdit* help;
+ QTextEdit* help;
  bool helpIsModified;
  EditorManager* editorMgr;
  KTextEditor::Document* scriptDoc;
