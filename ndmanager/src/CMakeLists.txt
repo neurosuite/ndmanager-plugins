@@ -20,7 +20,7 @@ qt4_wrap_ui(ndmanager_SRCS ${ndmanager_UI})
 
 add_executable(ndmanager ${ndmanager_SRCS} )
 
-target_link_libraries(ndmanager ${QT_LIBRARIES} kdeui kdecore kio kdefx kparts ktexteditor ${LIBXML2_LIBRARIES})
+target_link_libraries(ndmanager ${QT_LIBRARIES} ${LIBXML2_LIBRARIES})
 
 install(PROGRAMS ndmanager DESTINATION bin)
 add_subdirectory(icons)
