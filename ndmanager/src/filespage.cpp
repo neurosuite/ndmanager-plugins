@@ -26,7 +26,6 @@
 #include <qpushbutton.h> 
 
 // include files for KDE
-#include <klocale.h>        // for tr()
 #include <kiconloader.h>    // for KIconLoader
 
 //General C++ include files

@@ -37,7 +37,6 @@
 
 // include files for KDE
 #include <kfiledialog.h>
-#include <klocale.h>
 
 //General C++ include files
 #include <iostream>

@@ -20,8 +20,6 @@
 // application specific includes
 #include "queryinputdialog.h"
 
-// include files for KDE
-#include <klocale.h>
 
 //General C++ include files
 #include <iostream>

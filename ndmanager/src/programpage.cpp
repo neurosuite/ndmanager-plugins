@@ -33,7 +33,6 @@
 #include <qregexp.h>
 #include <qtextedit.h>
 // include files for KDE
-#include <klocale.h>        // for tr()
 #include <kiconloader.h>    // for KIconLoader
 #include <ktextedit.h>
 #include <kstandarddirs.h>

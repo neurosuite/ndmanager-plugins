@@ -24,7 +24,6 @@
 
 // include files for KDE
 #include <kglobal.h>
-#include <klocale.h>
 #include <kiconloader.h>
 #include <kdeversion.h>
 #include <kstatusbar.h>

@@ -21,7 +21,6 @@
 #include "acquisitionsystempage.h"
 
 // include files for KDE
-#include <klocale.h>        // for tr()
 #include <kglobal.h>        // for KGlobal
 #include <kmessagebox.h>    // for KMessageBox
 

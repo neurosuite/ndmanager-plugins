@@ -29,7 +29,6 @@
 #include <qtable.h> 
 
 // include files for KDE
-#include <klocale.h>        // for tr()
 
 //General C++ include files
 #include <iostream>

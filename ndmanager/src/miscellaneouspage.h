@@ -31,7 +31,6 @@
 
 // include files for KDE
 #include <kfiledialog.h>
-#include <klocale.h>
 
 
 /**

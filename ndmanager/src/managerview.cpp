@@ -21,7 +21,6 @@
 
 //Include files for KDE
 #include <kglobal.h>
-#include <klocale.h> 
 #include <kmessagebox.h>
 
 // include files for Qt

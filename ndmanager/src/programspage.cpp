@@ -28,7 +28,6 @@
 #include <qregexp.h> 
 
 // include files for KDE
-#include <klocale.h>        // for tr()
 #include <kiconloader.h>    // for KIconLoader
 #include <kfiledialog.h>
 #include <ktextedit.h> 

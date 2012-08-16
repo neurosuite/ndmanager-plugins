@@ -22,7 +22,6 @@
 //Include files for KDE
 #include <kde_terminal_interface.h> // Should be available in KDE > 3.2, but works only with 3.4
 #include <klibloader.h> 
-#include <klocale.h>
 #include <kurl.h>
 
 // include files for Qt

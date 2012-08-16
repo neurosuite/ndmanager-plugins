@@ -23,7 +23,6 @@
 // include files for KDE
 #include <kapplication.h>       // for 'kapp'
 #include <kconfig.h>            // for KConfig
-#include <klocale.h>            // for i18n()
 
 
 Configuration::Configuration(){

@@ -22,7 +22,6 @@
 #include <qvaluelist.h>
 
 // include files for KDE
-#include <klocale.h>
 #include <kmessagebox.h>
 #include <kio/job.h>
 #include <kio/netaccess.h>
