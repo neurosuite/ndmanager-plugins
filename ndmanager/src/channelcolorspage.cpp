@@ -25,9 +25,7 @@
 #include <qvaluelist.h>
 #include <qcolor.h>
 #include <qcolor.h>
-
-// include files for KDE
-#include <kcolordialog.h>
+#include <qcolordialog.h>
 
 //General C++ include files
 #include <iostream>
@@ -81,9 +79,9 @@ void ChannelColorsPage::chooseColor(int row,int column,int button){
   //Get the color associated with the item
   QColor color(colorTable->text(row,column));
  
-  int result = KColorDialog::getColor(color,0);
-  if (result == KColorDialog::Accepted) {
-   colorTable->setText(row,column,color.name());
+  QColor result = QColorDialog::getColor(color,0);
+  if (result.isValid()) {
+   colorTable->setText(row,column,result.name());
    modified = true;
   }
  }
