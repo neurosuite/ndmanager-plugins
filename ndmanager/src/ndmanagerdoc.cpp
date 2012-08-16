@@ -22,7 +22,7 @@
 #include <q3valuelist.h>
 
 // include files for KDE
-#include <kmessagebox.h>
+
 #include <kio/job.h>
 #include <kio/netaccess.h>
 #include <kstandarddirs.h>

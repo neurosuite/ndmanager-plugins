@@ -21,7 +21,7 @@
 #include "pref.h"
 
 // include files for KDE
-#include <kmessagebox.h>
+
 
 // include files for QT
 #include <qlayout.h>

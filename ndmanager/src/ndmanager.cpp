@@ -38,7 +38,7 @@
 #include <kfiledialog.h>
 #include <kconfig.h>
 #include <kurl.h>
-#include <kmessagebox.h>
+
 #include <kstandarddirs.h>
 
 // application specific includes

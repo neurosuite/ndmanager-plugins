@@ -22,7 +22,7 @@
 
 // include files for KDE
 #include <kglobal.h>        // for KGlobal
-#include <kmessagebox.h>    // for KMessageBox
+    // for KMessageBox
 
 //General C++ include files
 #include <iostream>

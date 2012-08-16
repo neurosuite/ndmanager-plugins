@@ -38,7 +38,7 @@
 #include <kfiledialog.h>
 #include <ktextedit.h> 
 #include <kurl.h> 
-#include <kmessagebox.h>
+
 
 //General C++ include files
 #include <iostream>

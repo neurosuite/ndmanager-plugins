@@ -21,7 +21,7 @@
 //Added by qt3to4:
 #include <Q3TextStream>
 #include <kfiledialog.h>
-#include <kmessagebox.h>
+
 #include <QWebSettings>
 QueryOutputDialog::QueryOutputDialog(QString htmlText,QString queryResult,QWidget *parent,const QString& caption,const QString& urltext) :
 KDialogBase(parent,"Query Results",true,caption,Ok|User1|User2,Ok,true,KGuiItem(tr("Save As Text")),KGuiItem(tr("Save As HTML"))),

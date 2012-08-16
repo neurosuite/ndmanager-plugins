@@ -41,7 +41,7 @@
 #include <kiconloader.h>    // for KIconLoader
 #include <ktextedit.h>
 #include <kstandarddirs.h>
-#include <kmessagebox.h>
+
 #include <kfiledialog.h>
 
 #include <ktexteditor/document.h>

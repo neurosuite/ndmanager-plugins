@@ -37,7 +37,7 @@
 #include <Q3VBoxLayout>
 
 // include files for KDE
-#include <kmessagebox.h>
+
 #include <kiconloader.h>    // for KIconLoader
 #include <kglobal.h>        // for KGlobal
 #include <kstandarddirs.h>

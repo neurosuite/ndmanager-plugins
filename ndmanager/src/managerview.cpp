@@ -21,7 +21,7 @@
 
 //Include files for KDE
 #include <kglobal.h>
-#include <kmessagebox.h>
+
 
 // include files for Qt
 #include <q3textedit.h> 
