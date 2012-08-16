@@ -25,7 +25,9 @@
 #include <qlineedit.h>
 #include <kdialogbase.h>
 #include <qvbox.h>
-#include <khtml_part.h>
+#if KDAB_REENABLE_QT4
+#include <QWebView>
+#endif
 
 /**
 Dialog used to display result from query.
@@ -44,7 +46,9 @@ class QueryOutputDialog : public KDialogBase
 			
 	private:
 		QVBox			*vbox;
-		KHTMLPart	*html;
+#if KDAB_REENABLE_QT4		
+		QWebView        *html;
+#endif
 		QString		htmlText;
 		QString		queryResult;
 };

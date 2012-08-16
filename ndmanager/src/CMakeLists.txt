@@ -22,5 +22,5 @@ KDE3_ADD_UI_FILES(ndmanager_SRCS ${ndmanager_UI})
 
 add_executable(ndmanager ${ndmanager_SRCS} )
 
-target_link_libraries(ndmanager ${QT_LIBRARIES} kdeui kdecore kio kdeprint kdefx kparts khtml ktexteditor ${LIBXML2_LIBRARIES})
+target_link_libraries(ndmanager ${QT_LIBRARIES} kdeui kdecore kio kdeprint kdefx kparts ktexteditor ${LIBXML2_LIBRARIES})
 

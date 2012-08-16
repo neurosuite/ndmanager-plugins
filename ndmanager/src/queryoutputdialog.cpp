@@ -21,7 +21,9 @@
 #include <klocale.h>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
-
+#if KDAB_REENABLE_QT4
+#include <QWebSettings>
+#endif
 QueryOutputDialog::QueryOutputDialog(QString htmlText,QString queryResult,QWidget *parent,const QString& caption,const QString& urltext) :
 KDialogBase(parent,"Query Results",true,caption,Ok|User1|User2,Ok,true,KGuiItem(i18n("Save As Text")),KGuiItem(i18n("Save As HTML"))),
 htmlText(htmlText),
@@ -29,17 +31,16 @@ queryResult(queryResult)
 {
 	vbox = new QVBox(this);
 	setMainWidget(vbox);
-	
-	html = new KHTMLPart(vbox);
-	html->begin();
-	html->write(htmlText);
-	html->end();
-	html->setJScriptEnabled(false);
-	html->setJavaEnabled(false);
-	html->setMetaRefreshEnabled(false);
-	html->setPluginsEnabled(false);
-	html->setOnlyLocalReferences(true);
-	
+#if KDAB_REENABLE_QT4	
+	html = new QWebView(vbox);
+	html->setHtml(htmlText);
+	html->reload();
+	html->settings()->setAttribute(QWebSettings::JavascriptEnabled, false);
+        html->settings()->setAttribute(QWebSettings::JavaEnabled,false);
+	html->settings()->setAttribute(QWebSettings::PluginsEnabled,false);
+	html->settings()->setAttribute(QWebSettings::LocalContentCanAccessFileUrls, true);
+	html->settings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls,false);
+#endif
 	resize(800,600);
 	
 // 	connect(this,SIGNAL()),this,SLOT(slotQueryResult(KProcess*,char*,int)));
