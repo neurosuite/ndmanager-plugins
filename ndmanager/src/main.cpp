@@ -67,7 +67,7 @@ int main(int argc, char **argv)
      if(args->count()){
        QString file = args->arg(0);
        if(file.left(1) != "/"){
-        KURL url = KURL();
+        QString url = QString();
         url.setPath((QDir::currentDirPath()).append("/"));
         url.setFileName(file);
         manager->openDocumentFile(url);

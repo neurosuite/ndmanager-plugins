@@ -52,7 +52,7 @@ public:
   * @param url url of the file to write to.
   * @return true if the parameter file could be write to disk, false otherwise.
   */
-  bool writeTofile(const KURL& url);
+  bool writeTofile(const QString& url);
  
  /** Creates the element containing all the general information.
   * @param generalInformation reference to ageneralInformation a GeneralInformation containing all the information.

@@ -48,7 +48,7 @@ DescriptionWriter::DescriptionWriter():doc(){
 
 DescriptionWriter::~DescriptionWriter(){}
 
-bool DescriptionWriter::writeTofile(const KURL& url){ 
+bool DescriptionWriter::writeTofile(const QString& url){ 
  QFile descriptionFile(url.path());
  bool status = descriptionFile.open(QIODevice::WriteOnly);
  if(!status) return status;

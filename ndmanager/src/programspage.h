@@ -50,7 +50,7 @@ public:
 
 signals:
  void addNewProgram();
- void programToLoad(KURL programUrl);
+ void programToLoad(QString programUrl);
   
 public slots:
  inline void addProgram(){emit addNewProgram();};

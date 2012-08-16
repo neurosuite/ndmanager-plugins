@@ -58,7 +58,7 @@ public:
   * @param scriptNames list containing the script names.
   * @return message indicating if the konsole could be added.
   */
-  returnMessage addKonsole(const KURL url,int nbSpikeGroups,Q3ValueList<QString> fileExtensions,
+  returnMessage addKonsole(const QString url,int nbSpikeGroups,Q3ValueList<QString> fileExtensions,
                           const Q3ValueList<QString>& scriptNames); 
 
   /** Updates the dropdown list containing the spike groups used to launch Klusters.
@@ -79,13 +79,13 @@ public:
   /** Updates the parameter file url.
   * @param url url of the currently open parameter file.
   */  
-  void updateDocUrl(const KURL url);
+  void updateDocUrl(const QString url);
 
   /** Updates the parameter file information.
   * @param url url of the currently open parameter file.
   * @param isUptoDate true if the parameter file is up to date, false if there are unsaved changes.
   */
-  void updateDocumentInformation(const KURL url,bool isUptoDate);
+  void updateDocumentInformation(const QString url,bool isUptoDate);
 
 signals:
   void beingDestroyed();
@@ -121,7 +121,7 @@ private:
  QComboBox* neuroscopeComboBox;
  QComboBox* klustersComboBox;
  QComboBox* scriptsComboBox;
- KURL parameterUrl;
+ QString parameterUrl;
  bool isUptoDate;
 };
 

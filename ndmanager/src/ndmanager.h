@@ -77,7 +77,7 @@ public:
   /**Opens a file, only one document at the time is allowed.
   * Asking for a new one will open a new instance of the application with it.
   */
-  void openDocumentFile(const KURL& url=0);
+  void openDocumentFile(const QString& url=0);
 
   /**Creates a ParameterView.
   * @param anatomicalGroups map given the composition of the anatomical groups. The trash group is not included, channels which are not part of
@@ -172,7 +172,7 @@ private slots:
   /**Opens a file from the recent files menu. 
   * @param url url of the file to open.
   */
-  void slotFileOpenRecent(const KURL& url);
+  void slotFileOpenRecent(const QString& url);
     
   /**Imports a file to be used to create a new parameter file.*/ 
   void slotImport();
@@ -285,7 +285,7 @@ private:
   ManagerView* managerView;
   
   /**If the current file has been imported, this variable stores the original URL.*/
-  KURL importedFileUrl;
+  QString importedFileUrl;
   
   /**Query result buffer*/
   QString queryResult;

@@ -58,7 +58,7 @@ public slots:
  * @param url url of the currently open parameter file.
  * @return message indicating if the konsole could be added.
  */
- int loadConsoleIfNeeded(const KURL url);
+ int loadConsoleIfNeeded(const QString url);
      
 signals:
  void beingDestroyed();

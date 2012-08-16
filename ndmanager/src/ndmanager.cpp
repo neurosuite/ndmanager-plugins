@@ -95,7 +95,7 @@ void ndManager::setupActions()
 
  KStdAction::open(this, SLOT(slotFileOpen()), actionCollection());
  KStdAction::openNew(this, SLOT(slotNewFile()), actionCollection());
- fileOpenRecent = KStdAction::openRecent(this, SLOT(slotFileOpenRecent(const KURL&)), actionCollection());
+ fileOpenRecent = KStdAction::openRecent(this, SLOT(slotFileOpenRecent(const QString&)), actionCollection());
  new KAction(tr("&Close"), "fileclose",0,this, SLOT(slotFileClose()),actionCollection(), "file_close");
  KStdAction::save(this, SLOT(slotSave()), actionCollection());
  KStdAction::saveAs(this, SLOT(slotSaveAs()), actionCollection());
@@ -153,7 +153,7 @@ void ndManager::readProperties(KConfig *config)
   this->config->setGroup("General");
   expertMode->setChecked(this->config->readBoolEntry("expertMode"));
 
-  KURL url;
+  QString url;
   url.setPath(filePath);
   openDocumentFile(url);
 }
@@ -194,14 +194,14 @@ void ndManager::slotFileOpen()
 {
   slotStatusMsg(tr("Opening file..."));
 
-  KURL url=KFileDialog::getOpenURL(QString::null,
+  QString url=KFileDialog::getOpenURL(QString::null,
       tr("*.xml|Parameter File (*.xml)\n*|All files"), this, tr("Open File..."));
   if(!url.isEmpty()) openDocumentFile(url);
 
   slotStatusMsg(tr("Ready."));
 }
 
-void ndManager::slotFileOpenRecent(const KURL& url){
+void ndManager::slotFileOpenRecent(const QString& url){
   slotStatusMsg(tr("Opening file..."));
 
   openDocumentFile(url);
@@ -224,7 +224,7 @@ void ndManager::slotNewFile(){
    return;
   }
 
-  KURL url = KURL();
+  QString url = QString();
   url.setPath(QDir::currentDirPath());
   url.setFileName("Untitled");
   doc->rename(url);
@@ -247,7 +247,7 @@ void ndManager::slotNewFile(){
  slotStatusMsg(tr("Ready."));
 }
 
-void ndManager::openDocumentFile(const KURL& url)
+void ndManager::openDocumentFile(const QString& url)
 {
   slotStatusMsg(tr("Opening file..."));
 
@@ -260,7 +260,7 @@ void ndManager::openDocumentFile(const KURL& url)
     title.append(filePath);
     int answer = KMessageBox::questionYesNo(this,tr("The selected file no longer exists. Do you want to remove it from the list of recent opened files ?"), tr(title));
     if(answer == KMessageBox::Yes){
-     KURL* urlB = new KURL();
+     QString* urlB = new QString();
      urlB->setPath(url.url());
      fileOpenRecent->removeURL(url);
     }
@@ -438,11 +438,11 @@ void ndManager::slotImport(){
  slotStatusMsg(tr("importing file as model..."));
  importedFile = true;
 
- KURL url = KFileDialog::getOpenURL(QString::null,
+ QString url = KFileDialog::getOpenURL(QString::null,
      tr("*.xml|Parameter File (*.xml)\n*|All files"), this, tr("Import file as model..."));
  if(!url.isEmpty()) openDocumentFile(url);
 
- importedFileUrl = KURL(url);
+ importedFileUrl = QString(url);
 
  url.setFileName("Untitled");
  doc->rename(url);
@@ -603,12 +603,12 @@ void ndManager::slotSave(){
   QString initialPath;
   if(newFile) initialPath = QDir::currentDirPath();
   else{
-   KURL currentUrl =  doc->url();
+   QString currentUrl =  doc->url();
    currentUrl.setFileName("");
    initialPath = currentUrl.path();
   }
 
-  KURL url=KFileDialog::getSaveURL(initialPath,tr("*.xml|Xml Files\n*|All Files"), this, tr("Save as..."));
+  QString url=KFileDialog::getSaveURL(initialPath,tr("*.xml|Xml Files\n*|All Files"), this, tr("Save as..."));
   if(!url.isEmpty()){
    QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
    int saveStatus = doc->saveAs(url);
@@ -640,7 +640,7 @@ void ndManager::slotSaveAs(){
  slotStatusMsg(tr("Saving as..."));
 
  //Save the parameter file
- KURL url=KFileDialog::getSaveURL(doc->url().path(),tr("*|All files"), this, tr("Save as..."));
+ QString url=KFileDialog::getSaveURL(doc->url().path(),tr("*|All files"), this, tr("Save as..."));
  if(!url.isEmpty()){
   int saveStatus = doc->saveAs(url);
   if(saveStatus == ndManagerDoc::SAVE_ERROR){
@@ -722,7 +722,7 @@ void ndManager::slotReload(){
 
 	//Reopen the document
 
-	KURL url = KURL(filePath);
+    QString url = QString(filePath);
 
 	QFileInfo file(filePath);
 
@@ -845,7 +845,7 @@ void ndManager::slotExpertMode(){
 
  if(isNewFile && filePath.contains("Untitled")) slotNewFile();
  else if(isImportedFile && filePath.contains("Untitled")){
-  KURL url = KURL(importedFileUrl);
+  QString url = QString(importedFileUrl);
   openDocumentFile(url);
   url.setFileName("Untitled");
   doc->rename(url);
@@ -853,7 +853,7 @@ void ndManager::slotExpertMode(){
   setCaption(url.path());
  }
  else{
-  KURL url;
+  QString url;
   url.setPath(filePath);
   openDocumentFile(url);
  }

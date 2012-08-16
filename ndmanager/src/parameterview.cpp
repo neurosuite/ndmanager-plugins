@@ -175,7 +175,7 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
  //set connections
  connect(acquisitionSystem,SIGNAL(nbChannelsModified(int)),this,SLOT(nbChannelsModified(int)));
  connect(programs,SIGNAL(addNewProgram()),this,SLOT(addNewProgram()));
- connect(programs,SIGNAL(programToLoad(KURL)),this,SLOT(loadProgram(KURL)));
+ connect(programs,SIGNAL(programToLoad(QString)),this,SLOT(loadProgram(QString)));
  connect(this,SIGNAL(aboutToShowPage(QWidget *)),this,SLOT(pageWillBeShown(QWidget *)));
  connect(spike,SIGNAL(nbGroupsModified(int)),this,SLOT(nbSpikeGroupsModified(int)));
  connect(files,SIGNAL(fileModification(Q3ValueList<QString>)),this,SLOT(fileModification(Q3ValueList<QString>)));
@@ -459,7 +459,7 @@ void ParameterView::initialize(QMap<int, Q3ValueList<int> >& anatomicalGroups,QM
  }
 }
 
-void ParameterView::loadProgram(KURL programUrl){
+void ParameterView::loadProgram(QString programUrl){
  QString programDecriptionName = programUrl.fileName();
  counter++;
  programId++;

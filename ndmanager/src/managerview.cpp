@@ -51,9 +51,9 @@ ManagerView::ManagerView(QWidget *parent, const char *name)
 ManagerView::~ManagerView(){
 }
 
-ManagerView::returnMessage ManagerView::addKonsole(const KURL url,int nbSpikeGroups,Q3ValueList<QString> fileExtensions,const Q3ValueList<QString>& scriptNames){
+ManagerView::returnMessage ManagerView::addKonsole(const QString url,int nbSpikeGroups,Q3ValueList<QString> fileExtensions,const Q3ValueList<QString>& scriptNames){
  if(konsole == 0L){ 
-  parameterUrl = KURL(url);
+  parameterUrl = QString(url);
 
   konsole = new NdKonsole(this,"NdKonsole");
   frameLayout->addWidget(konsole);
@@ -261,12 +261,12 @@ void ManagerView::stopScript(){
 }
 
 
-void ManagerView::updateDocUrl(const KURL url){
- parameterUrl = KURL(url);
+void ManagerView::updateDocUrl(const QString url){
+ parameterUrl = QString(url);
 }
 
-void ManagerView::updateDocumentInformation(const KURL url,bool isUptoDate){
- parameterUrl = KURL(url);
+void ManagerView::updateDocumentInformation(const QString url,bool isUptoDate){
+ parameterUrl = QString(url);
  this->isUptoDate = isUptoDate;
 }
 

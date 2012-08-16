@@ -35,7 +35,7 @@ class ndManagerDoc{
 
  private: 
   /**The url of the document .*/
-  KURL docUrl;
+  QString docUrl;
     
 public:
  /**Constructor.
@@ -55,10 +55,10 @@ public:
   * @param url url of the file to open (dat file or eeg file).
   * @return an opensavecreatereturnmessage enum giving the open status.
   */
-  OpenSaveCreateReturnMessage openDocument(const KURL& url);
+  OpenSaveCreateReturnMessage openDocument(const QString& url);
        
- /**Returns the KURL of the document. */
- inline const KURL& url() const{return docUrl;};
+ /**Returns the QString of the document. */
+ inline const QString& url() const{return docUrl;};
                          
   /**Loads information in order to create a new the document .
   * @return an opensavecreatereturnmessage enum giving the initialization status.
@@ -74,13 +74,13 @@ public:
  * @param url url of the file where to save the parameter information.
  * @return an OpenSaveCreateReturnMessage enum giving the saving status.
  */    
- OpenSaveCreateReturnMessage save(KURL url);
+ OpenSaveCreateReturnMessage save(QString url);
  
  /**Saves the parameter file.
  * @param newUrl new url where to write the parameter fil to.
  * @return an OpenSaveCreateReturnMessage enum giving the saving status.
  */
- inline OpenSaveCreateReturnMessage saveAs(KURL newUrl){
+ inline OpenSaveCreateReturnMessage saveAs(QString newUrl){
   docUrl = newUrl;
   return save(docUrl);  
  }; 
@@ -97,7 +97,7 @@ public:
  /**Renames the parameter file.
  * @param newUrl new url where to write the parameter fil to.
  */
- inline void rename(KURL newUrl){
+ inline void rename(QString newUrl){
   docUrl = newUrl; 
  }; 
  

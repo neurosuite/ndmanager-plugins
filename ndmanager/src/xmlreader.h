@@ -56,7 +56,7 @@ public:
   * @param url url of the file to open.
   * @return true if the file was correctly parse, false othewise.
   */
-  bool parseFile(const KURL& url);
+  bool parseFile(const QString& url);
 
  /**Closes the currently open file.*/
   void closeFile();

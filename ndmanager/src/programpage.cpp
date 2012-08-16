@@ -155,7 +155,7 @@ bool ProgramPage::saveProgramScript(){
  QString path = KStandardDirs::findExe(name,getenv("PATH"),true);
  QString message = "";
  QString title = "";
- KURL scriptUrl;
+ QString scriptUrl;
 
  if(!path.isNull()) scriptUrl = KFileDialog::getSaveURL(path,tr("*"), this, tr("Save as..."));
  else scriptUrl = KFileDialog::getSaveURL(QString::null,tr("*"), this, tr("Save as..."));
@@ -194,7 +194,7 @@ void ProgramPage::saveProgramParameters(){
  //Always ask the user where to save the information. If as save has already be done, set the save location as the default location
  //for the new save
  if(descriptionUrl.isEmpty()){
-  KURL descriptionUrlTmp;
+  QString descriptionUrlTmp;
   descriptionUrlTmp.setPath(QDir::currentDirPath());
   QString name = parameters->getProgramName();
   name.append(".xml");

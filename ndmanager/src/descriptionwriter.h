@@ -43,7 +43,7 @@ public:
   * @param url url of the file to write to.
   * @return true if the description file could be write to disk, false otherwise.
   */
-  bool writeTofile(const KURL& url);
+  bool writeTofile(const QString& url);
   
 /** Creates the elements containing the information for a program used to process the data link to the current parameter file.
  * @param programInformation a ProgramInformation containing the program parameter description.

@@ -39,7 +39,7 @@ public:
   * @param parent the parent QWidget.
   * @param name name of the widget (can be used for introspection).
   */
-  LauncherPage(const KURL url,QWidget* parent = 0,const char* name = 0);
+  LauncherPage(const QString url,QWidget* parent = 0,const char* name = 0);
   ~LauncherPage();
 
 };

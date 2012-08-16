@@ -54,7 +54,7 @@ XmlWriter::XmlWriter():doc(){
 
 XmlWriter::~XmlWriter(){}
 
-bool XmlWriter::writeTofile(const KURL& url){ 
+bool XmlWriter::writeTofile(const QString& url){ 
  QFile parameterFile(url.path());
  bool status = parameterFile.open(QIODevice::WriteOnly);
  if(!status) return status;

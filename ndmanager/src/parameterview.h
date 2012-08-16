@@ -58,7 +58,7 @@
 
 class ndManager;
 class ndManagerDoc;
-class KURL;
+class QString;
 
 /**
  * This is the main view class for ndManager.  Most of the non-menu,
@@ -223,7 +223,7 @@ public slots:
   /**Loads a program to the subtree under the node Program.
   * @param programUrl url of the file describing the program to load.
   */
-  void loadProgram(KURL programUrl);
+  void loadProgram(QString programUrl);
  
  /**Removes a program from the subtree under the node Program.
   * @param programPage the ProgramPage to remove.

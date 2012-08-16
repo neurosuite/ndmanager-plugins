@@ -55,10 +55,10 @@ ndManagerDoc::~ndManagerDoc(){
 }
 
 void ndManagerDoc::closeDocument(){
- docUrl = KURL();
+ docUrl = QString();
 }
 
-ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::openDocument(const KURL& url){
+ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::openDocument(const QString& url){
  docUrl = url;
  // Get the information from the file
  XmlReader reader = XmlReader();
@@ -146,13 +146,13 @@ ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::newDocument(){
  //If the user has no local version of the file the system default is used
  QString path = locate("appdata","ndManagerDefault.xml");
 
- KURL url = KURL();
+ QString url = QString();
  url.setPath(path);
  return openDocument(url);
 }
 
 
-ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::save(KURL url){
+ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::save(QString url){
  //first gather the information
  QMap<int, Q3ValueList<int> > anatomicalGroups;
  QMap<QString, QMap<int,QString> > attributes;
@@ -212,7 +212,7 @@ ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::save(KURL url){
  ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::saveDefault(){
   //The file is save in the user local directory (.kde))
   QString path = locateLocal("appdata","ndManagerDefault.xml");
-  KURL url;
+  QString url;
   url.setPath(path);
 
   return save(url);

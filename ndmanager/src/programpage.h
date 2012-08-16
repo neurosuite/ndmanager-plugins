@@ -145,7 +145,7 @@ private:
  bool sciptIsModified;
  bool isInit;
  QString programName;
- KURL descriptionUrl;
+ QString descriptionUrl;
  Q3TextEdit* help;
  bool helpIsModified;
  EditorManager* editorMgr;

@@ -46,7 +46,7 @@ NdKonsole::NdKonsole(QWidget *parent, const char *name)
 NdKonsole::~NdKonsole(){
 }
 
- int NdKonsole::loadConsoleIfNeeded(const KURL url){
+ int NdKonsole::loadConsoleIfNeeded(const QString url){
   if(isPart)  return OK;
   
   directory = url.directory();
@@ -75,7 +75,7 @@ part = static_cast<KParts::ReadOnlyPart*>( factory->create( this, "libkonsolepar
   //if(!part->inherits("TerminalInterface")){
 //      cout<<"!terminal "<<endl;
   
-     KURL directoryToOpen = KURL(directory);
+     QString directoryToOpen = QString(directory);
      
 //      cout<<"directory "<<directory<<" directoryToOpen "<<directoryToOpen.path()<<endl;
      
@@ -107,7 +107,7 @@ part = static_cast<KParts::ReadOnlyPart*>( factory->create( this, "libkonsolepar
 }  
  
 void NdKonsole::showEvent(QShowEvent *){
-  if(!part) loadConsoleIfNeeded(KURL(directory));
+  if(!part) loadConsoleIfNeeded(QString(directory));
 } 
 
 bool NdKonsole::runCommand(QString command) const{

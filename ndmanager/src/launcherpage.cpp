@@ -29,7 +29,7 @@
 
 using namespace std;
 
-LauncherPage::LauncherPage(const KURL url,QWidget* parent,const char* name)
+LauncherPage::LauncherPage(const QString url,QWidget* parent,const char* name)
  : LauncherLayout(parent, name){
   QDir dir(url.path());
   cout<<"currentDirPath "<<url.path()<<endl;

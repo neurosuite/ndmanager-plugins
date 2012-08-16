@@ -39,7 +39,7 @@ using namespace ndmanager;
 XmlReader::XmlReader():readVersion(""){}
 XmlReader::~XmlReader(){}
 
-bool XmlReader::parseFile(const KURL& url){  
+bool XmlReader::parseFile(const QString& url){  
 
  // Init libxml
  xmlInitParser();
