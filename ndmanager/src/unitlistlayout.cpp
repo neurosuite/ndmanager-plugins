@@ -1,5 +1,4 @@
 #include <kdialog.h>
-#include <klocale.h>
 /****************************************************************************
 ** Form implementation generated from reading ui file '/home/lynn/CMBN/NDManager/ndmanager/src/unitlistlayout.ui'
 **
