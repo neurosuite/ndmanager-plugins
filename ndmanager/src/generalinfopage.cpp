@@ -27,7 +27,7 @@ GeneralInfoPage::GeneralInfoPage(QWidget *parent, const char *name)
  connect(experimentersLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
  connect(descriptionTextEdit,SIGNAL(textChanged()),this,SLOT(propertyModified())); 
  connect(notesTextEdit,SIGNAL(textChanged()),this,SLOT(propertyModified()));
- connect(kDatePicker,SIGNAL(dateChanged(QDate)),this,SLOT(propertyModified()));   
+ connect(kDatePicker,SIGNAL(clicked(QDate)),this,SLOT(propertyModified()));
 }
 
 

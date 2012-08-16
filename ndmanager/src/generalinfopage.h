@@ -27,10 +27,8 @@
 #include <qwidget.h>
 #include <qdatetime.h>
 #include <qlineedit.h>
+#include <QCalendarWidget>
 
-// include files for KDE
-#include <kdatepicker.h>
-#include <ktextedit.h> 
 
 /**
 @author Lynn Hazan
@@ -44,47 +42,47 @@ public:
     
     /**Sets the date.*/
     inline void setDate(QDate date){
-     kDatePicker->setDate(date);
-    };
+     kDatePicker->setSelectedDate(date);
+    }
     
     /**Sets the experimenters.*/
     inline void setExperimenters(QString experimenters){
      experimentersLineEdit->setText(experimenters);
-    };
+    }
     
    /**SSets the description.*/
     inline void setDescription(QString description){
      descriptionTextEdit->setText(description);
-    };
+    }
     
    /**Sets the notes.*/
     inline void setNotes(QString notes){
      notesTextEdit->setText(notes);
-    };
+    }
     
     
     /**Gets the date.*/
     inline QDate getDate(){
-     return kDatePicker->date();
-    };
+     return kDatePicker->selectedDate();
+    }
     
     /**Gets the experimenters.*/
     inline QString getExperimenters(){
      return experimentersLineEdit->text();
-    };
+    }
     
    /**Gets the description.*/
     inline QString getDescription(){
      return descriptionTextEdit->text();
-    };
+    }
     
    /**Gets the notes.*/
     inline QString getNotes(){
      return notesTextEdit->text();
-    };
+    }
     
    /**True if at least one property has been modified, false otherwise.*/
-   inline bool isModified()const{return modified;};
+   inline bool isModified()const{return modified;}
     
   /**Indicates that the initialisation is finished.*/
   inline void initialisationOver(){isInit = false;}
@@ -92,10 +90,10 @@ public:
 public slots:
  
  /** Will be called when any properties is modified.*/
- inline void propertyModified(){if(!isInit) modified = true;};
+ inline void propertyModified(){if(!isInit) modified = true;}
 
  /**Resets the internal modification status to false.*/
- inline void resetModificationStatus(){modified = false;};
+ inline void resetModificationStatus(){modified = false;}
  
 private:
   bool modified;

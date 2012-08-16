@@ -134,7 +134,7 @@
                         </size>
                     </property>
                 </widget>
-                <widget class="KDatePicker" row="0" column="2">
+                <widget class="QCalendarWidget" row="0" column="2">
                     <property name="name">
                         <cstring>kDatePicker</cstring>
                     </property>
@@ -208,8 +208,4 @@
 <customwidgets>
 </customwidgets>
 <layoutdefaults spacing="6" margin="11"/>
-<includehints>
-    <includehint>klineedit.h</includehint>
-    <includehint>kdatetbl.h</includehint>
-</includehints>
 </UI>
