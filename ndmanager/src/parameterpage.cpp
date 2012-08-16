@@ -29,7 +29,7 @@
 ParameterPage::ParameterPage(bool expertMode,QWidget *parent, const char *name)
  : ParameterLayout(parent, name),valueModified(false),descriptionModified(false){
  
- status<<i18n("Mandatory")<<i18n("Optional")<<i18n("Dynamic");
+ status<<tr("Mandatory")<<tr("Optional")<<tr("Dynamic");
   
  for(int i = 0;i<parameterTable->numCols();++i) parameterTable->setColumnStretchable(i,true);
 

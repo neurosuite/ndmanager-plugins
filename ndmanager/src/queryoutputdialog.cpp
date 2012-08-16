@@ -25,7 +25,7 @@
 #include <QWebSettings>
 #endif
 QueryOutputDialog::QueryOutputDialog(QString htmlText,QString queryResult,QWidget *parent,const QString& caption,const QString& urltext) :
-KDialogBase(parent,"Query Results",true,caption,Ok|User1|User2,Ok,true,KGuiItem(i18n("Save As Text")),KGuiItem(i18n("Save As HTML"))),
+KDialogBase(parent,"Query Results",true,caption,Ok|User1|User2,Ok,true,KGuiItem(tr("Save As Text")),KGuiItem(tr("Save As HTML"))),
 htmlText(htmlText),
 queryResult(queryResult)
 {
@@ -53,31 +53,31 @@ QueryOutputDialog::~QueryOutputDialog()
 void QueryOutputDialog::slotUser1()
 {
 	QString filename = KFileDialog::getSaveFileName(QString::null,"*",this,"saveQuery");
-	if(QFile::exists(filename) && KMessageBox::warningYesNo(this,i18n("File already exists. Overwrite?")) == KMessageBox::No) return;
+    if(QFile::exists(filename) && KMessageBox::warningYesNo(this,tr("File already exists. Overwrite?")) == KMessageBox::No) return;
 	QFile textFile(filename);
 	if(textFile.open(IO_WriteOnly))
 	{
 		QTextStream stream(&textFile);
 		stream << queryResult;
 		textFile.close();
-		if(stream.device()->status() == IO_WriteError ) KMessageBox::error(this,i18n("Could not save the report. This may be due to incorrect write permissions."));
+        if(stream.device()->status() == IO_WriteError ) KMessageBox::error(this,tr("Could not save the report. This may be due to incorrect write permissions."));
 	}
-	else KMessageBox::error(this,i18n("Could not save the report. This may be due to incorrect write permissions."));
+    else KMessageBox::error(this,tr("Could not save the report. This may be due to incorrect write permissions."));
 }
 
 void QueryOutputDialog::slotUser2()
 {
 	QString filename = KFileDialog::getSaveFileName(QString::null,"*.html",this,"saveQuery");
-	if(QFile::exists(filename) && KMessageBox::warningYesNo(this,i18n("File already exists. Overwrite?")) == KMessageBox::No) return;
+    if(QFile::exists(filename) && KMessageBox::warningYesNo(this,tr("File already exists. Overwrite?")) == KMessageBox::No) return;
 	QFile htmlFile(filename);
 	if(htmlFile.open(IO_WriteOnly))
 	{
 		QTextStream stream(&htmlFile);
 		stream << htmlText;
 		htmlFile.close();
-		if(stream.device()->status() == IO_WriteError ) KMessageBox::error(this,i18n("Could not save the report. This may be due to incorrect write permissions."));
+        if(stream.device()->status() == IO_WriteError ) KMessageBox::error(this,tr("Could not save the report. This may be due to incorrect write permissions."));
 	}
-	else KMessageBox::error(this,i18n("Could not save the report. This may be due to incorrect write permissions."));
+    else KMessageBox::error(this,tr("Could not save the report. This may be due to incorrect write permissions."));
 }
 
 #include "queryoutputdialog.moc"

@@ -21,7 +21,7 @@
 #include "acquisitionsystempage.h"
 
 // include files for KDE
-#include <klocale.h>        // for i18n()
+#include <klocale.h>        // for tr()
 #include <kglobal.h>        // for KGlobal
 #include <kmessagebox.h>    // for KMessageBox
 
@@ -80,9 +80,9 @@ void AcquisitionSystemPage::nbChannelsChanged(){
  //the return key has been press or the save action has been asked, the message box has triggered an lostFocusEvent
  if(isLostFocus && isReturnPressed || isLostFocus && isCheckAsked) return;
  if(newNbChannels != nbChannels && !isInit && !reset){
-  if(KMessageBox::warningContinueCancel(this, i18n("Changing the number of channels "
-      "will rest all the groups. Do you wish to continue?"), i18n("Change the number of channels?"),
-      i18n("Continue"))==KMessageBox::Cancel){
+  if(KMessageBox::warningContinueCancel(this, tr("Changing the number of channels "
+      "will rest all the groups. Do you wish to continue?"), tr("Change the number of channels?"),
+      tr("Continue"))==KMessageBox::Cancel){
    reset = true;   
    nbChannelsLineEdit->setText(QString("%1").arg(nbChannels));
    reset = false;

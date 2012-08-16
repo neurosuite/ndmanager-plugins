@@ -58,7 +58,7 @@ ManagerView::returnMessage ManagerView::addKonsole(const KURL url,int nbSpikeGro
   toolbar = new KToolBar(this);
   
 
-  toolbar->insertButton("neuroscope-22",1,SIGNAL(clicked(int)),this,SLOT(launchNeuroscope()),true,i18n("NeuroScope"));
+  toolbar->insertButton("neuroscope-22",1,SIGNAL(clicked(int)),this,SLOT(launchNeuroscope()),true,tr("NeuroScope"));
 
    cout<<"url.path() "<<url.directory()<<" url.fileName() "<<url.fileName()<<" parameterUrl.fileName() "<<parameterUrl.fileName()<<endl;
   
@@ -87,7 +87,7 @@ ManagerView::returnMessage ManagerView::addKonsole(const KURL url,int nbSpikeGro
   toolbar->insertSeparator();
   toolbar->insertSeparator();
   
-  toolbar->insertButton("scripts",2,SIGNAL(clicked(int)),this,SLOT(launchScript()),true,i18n("Start"));
+  toolbar->insertButton("scripts",2,SIGNAL(clicked(int)),this,SLOT(launchScript()),true,tr("Start"));
   scriptsComboBox = new QComboBox(toolbar);
   scriptsComboBox->setGeometry(QRect(13,53,150,20));
   scriptsComboBox->setMinimumSize(QSize(90,20));
@@ -100,7 +100,7 @@ ManagerView::returnMessage ManagerView::addKonsole(const KURL url,int nbSpikeGro
   }
   scriptsComboBox->insertStringList(scripts);
   toolbar->insertWidget(-1,scriptsComboBox->sizeHint().width(),scriptsComboBox);
-  toolbar->insertButton("stop",3,SIGNAL(clicked(int)),this,SLOT(stopScript()),true,i18n("Stop"));
+  toolbar->insertButton("stop",3,SIGNAL(clicked(int)),this,SLOT(stopScript()),true,tr("Stop"));
   
   toolbar->insertSeparator();
   toolbar->insertSeparator();
@@ -109,7 +109,7 @@ ManagerView::returnMessage ManagerView::addKonsole(const KURL url,int nbSpikeGro
   toolbar->insertSeparator();
   toolbar->insertSeparator();
   
-  toolbar->insertButton("klusters-22",4,SIGNAL(clicked(int)),this,SLOT(launchKlusters()),true,i18n("Klusters"));
+  toolbar->insertButton("klusters-22",4,SIGNAL(clicked(int)),this,SLOT(launchKlusters()),true,tr("Klusters"));
   klustersComboBox = new QComboBox(toolbar);
   klustersComboBox->setGeometry(QRect(13,53,150,20));
   klustersComboBox->setMinimumSize(QSize(90,20));
@@ -178,12 +178,12 @@ void ManagerView::launchNeuroscope(){
  emit checkBeforeLaunchingPrograms();
  //The parameter file is new or has been imported from an existing file.
  if(parameterUrl.fileName() == "Untitled"){
-  KMessageBox::error (this,i18n("In order to launch NeuroScope, the parameter file has to be saved first."), i18n("Unsaved file!"));
+  KMessageBox::error (this,tr("In order to launch NeuroScope, the parameter file has to be saved first."), tr("Unsaved file!"));
   return;
  }
  else{
   if(!isUptoDate){
-   KMessageBox::error (this,i18n("The parameter file contains unsaved data, please save before launching NeuroScope."), i18n("Unsaved file!"));
+   KMessageBox::error (this,tr("The parameter file contains unsaved data, please save before launching NeuroScope."), tr("Unsaved file!"));
    return;   
   }
   //Launch NeuroScope.
@@ -201,19 +201,19 @@ void ManagerView::launchNeuroscope(){
 
 void ManagerView::launchKlusters(){
  if(klustersComboBox->count() == 0){
-  KMessageBox::error (this,i18n("No spike groups have been defined, please define at least one spike group before launching Klusters."), i18n("Undefined spike groups"));
+  KMessageBox::error (this,tr("No spike groups have been defined, please define at least one spike group before launching Klusters."), tr("Undefined spike groups"));
   return;  
  }
 
  emit checkBeforeLaunchingPrograms();
  //The parameter file is new or has been imported from an existing file.
  if(parameterUrl.fileName() == "Untitled"){
-  KMessageBox::error (this,i18n("In order to launch Klusters, the parameter file has to be saved first."), i18n("Unsaved file!"));
+  KMessageBox::error (this,tr("In order to launch Klusters, the parameter file has to be saved first."), tr("Unsaved file!"));
   return;
  }
  else{
   if(!isUptoDate){
-   KMessageBox::error (this,i18n("The parameter file contains unsaved data, please save before launching Klusters."), i18n("Unsaved file!"));
+   KMessageBox::error (this,tr("The parameter file contains unsaved data, please save before launching Klusters."), tr("Unsaved file!"));
    return;   
   }
   //Launch Klusters.
@@ -235,13 +235,13 @@ void ManagerView::launchScript(){
  //The parameter file is new or has been imported from an existing file.
  if(parameterUrl.fileName() == "Untitled"){
   QString message = QString("In order to launch %1, the parameter file has to be saved first.").arg(script);
-  KMessageBox::error (this,i18n(message), i18n("Unsaved file!"));
+  KMessageBox::error (this,tr(message), tr("Unsaved file!"));
   return;
  }
  else{
   if(!isUptoDate){
    QString message = QString("The parameter file contains unsaved data or script, please save before launching %1.").arg(script);
-   KMessageBox::error (this,i18n(message), i18n("Unsaved data!"));
+   KMessageBox::error (this,tr(message), tr("Unsaved data!"));
    return;   
   }
   //Launch the script.

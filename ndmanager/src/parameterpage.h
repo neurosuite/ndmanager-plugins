@@ -29,7 +29,7 @@
 #include <qtable.h> 
 
 // include files for KDE
-#include <klocale.h>        // for i18n()
+#include <klocale.h>        // for tr()
 
 //General C++ include files
 #include <iostream>
@@ -88,7 +88,7 @@ public slots:
  /**Handles the change of the program's name.*/
  inline void changeCaption(){ 
   QString name = nameLineEdit->text();  
-  if(name == "" && !name.contains("New Script-")) emit nameChanged(i18n("Unknown"));
+  if(name == "" && !name.contains("New Script-")) emit nameChanged(tr("Unknown"));
   else emit nameChanged(name);
  };
  

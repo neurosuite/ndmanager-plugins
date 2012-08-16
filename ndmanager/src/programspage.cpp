@@ -28,7 +28,7 @@
 #include <qregexp.h> 
 
 // include files for KDE
-#include <klocale.h>        // for i18n()
+#include <klocale.h>        // for tr()
 #include <kiconloader.h>    // for KIconLoader
 #include <kfiledialog.h>
 #include <ktextedit.h> 
@@ -58,13 +58,13 @@ ProgramsPage::ProgramsPage(bool expertMode,QWidget *parent, const char *name)
  frameLayout->addWidget(buttons); 
  
  if(expertMode){
-  addButton = new QPushButton(i18n("Add"),buttons);
+  addButton = new QPushButton(tr("Add"),buttons);
   addButton->setSizePolicy(QSizePolicy((QSizePolicy::SizeType)0,(QSizePolicy::SizeType)0,0,0,addButton->sizePolicy().hasHeightForWidth()));
   addButton->setMinimumSize(QSize(104,0));
   addButton->setMaximumSize(QSize(104,32767));
   gridLayout->addWidget(addButton,0,1); 
  
-  loadButton = new QPushButton(i18n("Load..."),buttons);
+  loadButton = new QPushButton(tr("Load..."),buttons);
   loadButton->setSizePolicy(QSizePolicy((QSizePolicy::SizeType)0,(QSizePolicy::SizeType)0,0,0,loadButton->sizePolicy().hasHeightForWidth()));
   loadButton->setMinimumSize(QSize(104,0));
   loadButton->setMaximumSize(QSize(104,32767));
@@ -80,7 +80,7 @@ ProgramsPage::ProgramsPage(bool expertMode,QWidget *parent, const char *name)
   connect(addButton,SIGNAL(clicked()),this,SLOT(addProgram()));
  }
  else{
-  loadButton = new QPushButton(i18n("Load..."),buttons);
+  loadButton = new QPushButton(tr("Load..."),buttons);
   loadButton->setSizePolicy(QSizePolicy((QSizePolicy::SizeType)0,(QSizePolicy::SizeType)0,0,0,loadButton->sizePolicy().hasHeightForWidth()));
   loadButton->setMinimumSize(QSize(104,0));
   loadButton->setMaximumSize(QSize(104,32767));
@@ -106,7 +106,7 @@ ProgramsPage::~ProgramsPage(){}
 void ProgramsPage::loadProgram(){
 
  KURL::List programUrls=KFileDialog::getOpenURLs(QString::null,
-       QString::null, this, i18n("Select the Script(s) to load..."));
+       QString::null, this, tr("Select the Script(s) to load..."));
  if(programUrls.size() != 0){
    QValueList<KURL>::iterator iterator;
   for(iterator = programUrls.begin();iterator != programUrls.end();++iterator){
@@ -116,7 +116,7 @@ void ProgramsPage::loadProgram(){
  
    //Check if the file exists
    if(!fileInfo.exists()){
-    KMessageBox::error (this,i18n("The  file %1 does not exist.").arg(filePath), i18n("Error!"));
+    KMessageBox::error (this,tr("The  file %1 does not exist.").arg(filePath), tr("Error!"));
     return;
    }         
 
@@ -124,7 +124,7 @@ void ProgramsPage::loadProgram(){
    QFile file(filePath);
    if(!file.open(IO_ReadOnly)){
     QString message = QString("The file %1 is not readable.").arg(filePath);
-    KMessageBox::error (this,i18n(message), i18n("IO Error!"));
+    KMessageBox::error (this,tr(message), tr("IO Error!"));
    }
    else{
     QTextStream stream(&file);
@@ -133,7 +133,7 @@ void ProgramsPage::loadProgram(){
     file.close();
     if(i == -1){
     QString message = QString("The file %1 is not an xml file.").arg(filePath);
-    KMessageBox::error (this,i18n(message), i18n("IO Error!"));
+    KMessageBox::error (this,tr(message), tr("IO Error!"));
     return;
     }        
    }               

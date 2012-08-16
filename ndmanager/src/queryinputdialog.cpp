@@ -37,7 +37,7 @@ KDialogBase(parent,"Query",true,caption,Ok|Cancel,Ok,true)
 	setMainWidget(page);
 	layout = new QVBoxLayout(page,0,spacingHint());
 
-	QLabel *label1 = new QLabel(i18n("Query"),page,"query_label");
+    QLabel *label1 = new QLabel(tr("Query"),page,"query_label");
 	layout->addWidget(label1);
 
 	query = new QLineEdit(page,"query");
@@ -45,7 +45,7 @@ KDialogBase(parent,"Query",true,caption,Ok|Cancel,Ok,true)
 	query->setFocus();
 	layout->addWidget(query);
 
-	QLabel *label2 = new QLabel(i18n("Path"),page,"path_label");
+    QLabel *label2 = new QLabel(tr("Path"),page,"path_label");
 	layout->addWidget(label2);
 
     path = new QLineEdit(page,"path");

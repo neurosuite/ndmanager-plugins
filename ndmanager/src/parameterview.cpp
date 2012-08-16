@@ -32,7 +32,7 @@
 
 // include files for KDE
 #include <kmessagebox.h>
-#include <klocale.h>        // for i18n()
+#include <klocale.h>        // for tr()
 #include <kiconloader.h>    // for KIconLoader
 #include <kglobal.h>        // for KGlobal
 #include <kstandarddirs.h>
@@ -54,34 +54,34 @@ using namespace ndmanager;
 
 const QString ParameterView::DEFAULT_COLOR = "#0080ff";
 
-ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const char*, bool expertMode): KJanusWidget(parent, i18n("Parameter View"),TreeList),doc(doc),counter(0),programsModified(false),programId(0),expertMode(expertMode){
+ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const char*, bool expertMode): KJanusWidget(parent, tr("Parameter View"),TreeList),doc(doc),counter(0),programsModified(false),programId(0),expertMode(expertMode){
 
  //Showw the icones next to the name in the list
  setShowIconsInTreeList(true);
 
  //adding page "General information"
- QFrame* frame = addPage(i18n("General"), i18n("General information"),
+ QFrame* frame = addPage(tr("General"), tr("General information"),
      KGlobal::iconLoader()->loadIcon("kfm",KIcon::Panel,0,false) );
  QVBoxLayout* frameLayout = new QVBoxLayout(frame,0,0);
  generalInfo = new GeneralInfoPage(frame);
  frameLayout->addWidget(generalInfo);
 
  //adding page "Acquisition System"
- frame = addPage(i18n("Acquisition System"), i18n("Acquisition System"),
+ frame = addPage(tr("Acquisition System"), tr("Acquisition System"),
      KGlobal::iconLoader()->loadIcon("acquisition",KIcon::User,0,false) );
  frameLayout = new QVBoxLayout(frame,0,0);
  acquisitionSystem = new AcquisitionSystemPage(frame);
  frameLayout->addWidget(acquisitionSystem);
 
  //adding page "Video"
- frame = addPage(i18n("Video"), i18n("Video"),
+ frame = addPage(tr("Video"), tr("Video"),
      KGlobal::iconLoader()->loadIcon("video",KIcon::User,0,false) );
  frameLayout = new QVBoxLayout(frame,0,0);
  video = new VideoPage(frame);
  frameLayout->addWidget(video);
 
 //adding page "Local Field Potentials "
- frame = addPage(i18n("Local Field Potentials"), i18n("Local Field Potentials"),
+ frame = addPage(tr("Local Field Potentials"), tr("Local Field Potentials"),
      KGlobal::iconLoader()->loadIcon("lfp",KIcon::User,0,false) );
  frameLayout = new QVBoxLayout(frame,0,0);
  lfp = new LfpPage(frame);
@@ -91,7 +91,7 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
   //adding page "Files"
   //This page is added only if the expert mode is set. The page is always created to keep track of the file information
  if(expertMode){
-  frame = addPage(i18n("Files"), i18n("Other Files"),
+  frame = addPage(tr("Files"), tr("Other Files"),
      KGlobal::iconLoader()->loadIcon("files",KIcon::User,0,false));
   frameLayout = new QVBoxLayout(frame,0,0);
   files = new FilesPage(frame);
@@ -104,7 +104,7 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
   //adding page "Anatomical Groups"
  //This page is added only if the expert mode is set. The page is always created to keep track of the file information
  if(expertMode){
-  frame = addPage(i18n("Anatomical Groups"), i18n("Anatomical Groups"),
+  frame = addPage(tr("Anatomical Groups"), tr("Anatomical Groups"),
       KGlobal::iconLoader()->loadIcon("anatomy",KIcon::User,0,false) );
   frameLayout = new QVBoxLayout(frame,0,0);
   anatomy = new AnatomyPage(frame);
@@ -117,7 +117,7 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
   //adding page "Spike Groups"
   //This page is added only if the expert mode is set. The page is always created to keep track of the file information
   if(expertMode){
-   frame = addPage(i18n("Spike Groups"), i18n("Spike Groups"),
+   frame = addPage(tr("Spike Groups"), tr("Spike Groups"),
        KGlobal::iconLoader()->loadIcon("spikes",KIcon::User,0,false) );
    frameLayout = new QVBoxLayout(frame,0,0);
    spike = new SpikePage(frame);
@@ -128,14 +128,14 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
  }
 
   //adding page "Unit List"
-  frame = addPage(i18n("Units"), i18n("Units"),
+  frame = addPage(tr("Units"), tr("Units"),
       KGlobal::iconLoader()->loadIcon("units",KIcon::User,0,false) );
   frameLayout = new QVBoxLayout(frame,0,0);
   unitList = new UnitListPage(frame);
   frameLayout->addWidget(unitList);
 
  //adding page "Neuroscope"
- frame = addPage(i18n("Neuroscope"), i18n("Neuroscope"),
+ frame = addPage(tr("Neuroscope"), tr("Neuroscope"),
      KGlobal::iconLoader()->loadIcon("neuroscope",KIcon::User,0,false) );
  frameLayout = new QVBoxLayout(frame,0,0);
 
@@ -143,25 +143,25 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
  frameLayout->addWidget(tabWidget);
  //adding "Miscellaneous" tab
  miscellaneous = new MiscellaneousPage();
- tabWidget->addTab(miscellaneous,i18n("Miscellaneous"));
+ tabWidget->addTab(miscellaneous,tr("Miscellaneous"));
  //adding "Video" tab
  neuroscopeVideo = new NeuroscopeVideoPage();
- tabWidget->addTab(neuroscopeVideo,i18n("Video"));
+ tabWidget->addTab(neuroscopeVideo,tr("Video"));
  //adding "Clusters" tab
  clusters = new ClustersPage();
- tabWidget->addTab(clusters,i18n("Clusters"));
+ tabWidget->addTab(clusters,tr("Clusters"));
 
   //adding "Channel color" tab
   channelColors = new ChannelColorsPage();
   //This tab is added only if the expert mode is set. The page is always created to keep track of the file information
-  if(expertMode) tabWidget->addTab(channelColors,i18n("Channel Colors"));
+  if(expertMode) tabWidget->addTab(channelColors,tr("Channel Colors"));
   //adding "Channel offeset" tab
   channelDefaultOffsets = new ChannelOffsetsPage();
   //This tab is added only if the expert mode is set. The page is always created to keep track of the file information
-  if(expertMode)tabWidget->addTab(channelDefaultOffsets,i18n("Channel Offsets"));
+  if(expertMode)tabWidget->addTab(channelDefaultOffsets,tr("Channel Offsets"));
 
  //adding page "Programs"
- programsFrame = addPage(i18n("Scripts"), i18n("Scripts"),
+ programsFrame = addPage(tr("Scripts"), tr("Scripts"),
      KGlobal::iconLoader()->loadIcon("programs",KIcon::User,0,false) );
  frameLayout = new QVBoxLayout(programsFrame,0,0);
  programs = new ProgramsPage(expertMode,programsFrame);
@@ -254,7 +254,7 @@ void ParameterView::changeProgramName(ProgramPage* programPage,const QString& ne
   programPage->nameChanged(oldName);
 
   QString currentMessage =  QString("There is already a script with the name %1.").arg(newName);
-  KMessageBox::error (this,i18n(currentMessage), i18n("script name conflict"));
+  KMessageBox::error (this,tr(currentMessage), tr("script name conflict"));
 
   return;
  }
@@ -300,7 +300,7 @@ void ParameterView::changeProgramName(ProgramPage* programPage,const QString& ne
  showPage(pageIndex(programFrame));
 
  //If the message if not empty show a message box with it
- if(message !="") KMessageBox::error (this,i18n(message), i18n(title));
+ if(message !="") KMessageBox::error (this,tr(message), tr(title));
 
  emit scriptListHasBeenModified(programNames);
 }
@@ -428,11 +428,10 @@ void ParameterView::initialize(QMap<int, QValueList<int> >& anatomicalGroups,QMa
    //find the file corresponding to the program name
    QString path = KStandardDirs::findExe(name,getenv("PATH"),true);
    if(!path.isNull()){
-    QFileInfo fileInfo(path);
     QFile file(path);
     if(!file.open(IO_ReadOnly)){
-     QString message = QString("The file %1 is not readable.").arg(name);
-     KMessageBox::error (this,i18n(message), i18n("IO Error!"));
+     QString message = tr("The file %1 is not readable.").arg(name);
+     KMessageBox::error (this,message,tr("IO Error!"));
     }
     else{
      QTextStream stream(&file);
@@ -445,8 +444,8 @@ void ParameterView::initialize(QMap<int, QValueList<int> >& anatomicalGroups,QMa
       programPage->initialisationOver();
      }
      else{
-      QString message =  QString("The file %1  does not appear to be a script file (a script file should begin with #!).").arg(name);
-      KMessageBox::error (this,i18n(message), i18n("IO Error!"));
+      QString message =  tr("The file %1  does not appear to be a script file (a script file should begin with #!).").arg(name);
+      KMessageBox::error (this,message, tr("IO Error!"));
       scriptView->getDoc()->text();
      }
     }
@@ -471,8 +470,8 @@ void ParameterView::loadProgram(KURL programUrl){
  if(name=="") name = QString("Untitled-%1").arg(programId);
 
  if(programNames.contains(name)){
-  QString message =  QString("The selected script %1 is already loaded. Do you want to reload it?").arg(name);
-  int answer = KMessageBox::questionYesNo(this,i18n(message), i18n("Script already loaded"));
+  QString message =  tr("The selected script %1 is already loaded. Do you want to reload it?").arg(name);
+  int answer = KMessageBox::questionYesNo(this,message, tr("Script already loaded"));
   if(answer == KMessageBox::No){
    counter--;
    return;
@@ -507,7 +506,7 @@ void ParameterView::loadProgram(KURL programUrl){
    QFile file(path);
    if(!file.open(IO_ReadOnly)){
     QString message = QString("The file %1 is not readable.").arg(name);
-    KMessageBox::error (this,i18n(message), i18n("IO Error!"));
+    KMessageBox::error (this,tr(message), tr("IO Error!"));
    }
    else{
     QTextStream stream(&file);
@@ -519,8 +518,8 @@ void ParameterView::loadProgram(KURL programUrl){
      file.close();
     }
     else{
-     QString message =  QString("The file %1  does not appear to be a script file (a script file should begin with #!).").arg(name);
-     KMessageBox::error (this,i18n(message), i18n("IO Error!"));
+     QString message =  tr("The file %1  does not appear to be a script file (a script file should begin with #!).").arg(name);
+     KMessageBox::error (this,message, tr("IO Error!"));
      scriptView->getDoc()->text();
     }
    }

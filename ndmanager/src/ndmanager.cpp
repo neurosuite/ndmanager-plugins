@@ -92,7 +92,7 @@ void ndManager::setupActions()
  KStdAction::open(this, SLOT(slotFileOpen()), actionCollection());
  KStdAction::openNew(this, SLOT(slotNewFile()), actionCollection());
  fileOpenRecent = KStdAction::openRecent(this, SLOT(slotFileOpenRecent(const KURL&)), actionCollection());
- new KAction(i18n("&Close"), "fileclose",0,this, SLOT(slotFileClose()),actionCollection(), "file_close");
+ new KAction(tr("&Close"), "fileclose",0,this, SLOT(slotFileClose()),actionCollection(), "file_close");
  KStdAction::save(this, SLOT(slotSave()), actionCollection());
  KStdAction::saveAs(this, SLOT(slotSaveAs()), actionCollection());
 
@@ -103,18 +103,18 @@ void ndManager::setupActions()
 
   //Custom actions and menus
  //File menu
- new KAction(i18n("Use &Template..."),0,this,SLOT(slotImport()),actionCollection(),"import");
- new KAction(i18n("&Reload"),"F5",this,SLOT(slotReload()),actionCollection(),"reload");
- new KAction(i18n("Save as &Default"),0,this,SLOT(slotSaveDefault()),actionCollection(),"save_as_default");
+ new KAction(tr("Use &Template..."),0,this,SLOT(slotImport()),actionCollection(),"import");
+ new KAction(tr("&Reload"),"F5",this,SLOT(slotReload()),actionCollection(),"reload");
+ new KAction(tr("Save as &Default"),0,this,SLOT(slotSaveDefault()),actionCollection(),"save_as_default");
 
  //the Query menu
- new KAction(i18n("&Query"),0,this,SLOT(slotQuery()),actionCollection(),"query");
+ new KAction(tr("&Query"),0,this,SLOT(slotQuery()),actionCollection(),"query");
 
  //Processing menu
- new KAction(i18n("Show Processing Manager"),0,this,SLOT(createManagerView()),actionCollection(),"processingManager");
+ new KAction(tr("Show Processing Manager"),0,this,SLOT(createManagerView()),actionCollection(),"processingManager");
 
  //Settings
- expertMode = new KToggleAction(i18n("&Expert Mode"),0,this,SLOT(slotExpertMode()),actionCollection(),"expert");
+ expertMode = new KToggleAction(tr("&Expert Mode"),0,this,SLOT(slotExpertMode()),actionCollection(),"expert");
  config->setGroup("General");
  expertMode->setChecked(config->readBoolEntry("expertMode"));
 
@@ -125,7 +125,7 @@ void ndManager::setupActions()
 
 void ndManager::initStatusBar()
 {
-  statusBar()->insertItem(i18n("Ready."),1);
+  statusBar()->insertItem(tr("Ready."),1);
 }
 
 void ndManager::saveProperties(KConfig* config)
@@ -164,49 +164,49 @@ void ndManager::slotStatusMsg(const QString &text)
 
 void ndManager::slotViewMainToolBar()
 {
-  slotStatusMsg(i18n("Toggle the main toolbar..."));
+  slotStatusMsg(tr("Toggle the main toolbar..."));
 
   // turn Toolbar on or off
   if(!viewMainToolBar->isChecked()) toolBar("mainToolBar")->hide();
   else toolBar("mainToolBar")->show();
 
-  slotStatusMsg(i18n("Ready."));
+  slotStatusMsg(tr("Ready."));
 }
 
 
 void ndManager::slotViewStatusBar()
 {
-  slotStatusMsg(i18n("Toggle the statusbar..."));
+  slotStatusMsg(tr("Toggle the statusbar..."));
   ///////////////////////////////////////////////////////////////////
   //turn Statusbar on or off
   if(!viewStatusBar->isChecked()) statusBar()->hide();
   else statusBar()->show();
 
-  slotStatusMsg(i18n("Ready."));
+  slotStatusMsg(tr("Ready."));
 }
 
 
 void ndManager::slotFileOpen()
 {
-  slotStatusMsg(i18n("Opening file..."));
+  slotStatusMsg(tr("Opening file..."));
 
   KURL url=KFileDialog::getOpenURL(QString::null,
-      i18n("*.xml|Parameter File (*.xml)\n*|All files"), this, i18n("Open File..."));
+      tr("*.xml|Parameter File (*.xml)\n*|All files"), this, tr("Open File..."));
   if(!url.isEmpty()) openDocumentFile(url);
 
-  slotStatusMsg(i18n("Ready."));
+  slotStatusMsg(tr("Ready."));
 }
 
 void ndManager::slotFileOpenRecent(const KURL& url){
-  slotStatusMsg(i18n("Opening file..."));
+  slotStatusMsg(tr("Opening file..."));
 
   openDocumentFile(url);
 
-  slotStatusMsg(i18n("Ready."));
+  slotStatusMsg(tr("Ready."));
 }
 
 void ndManager::slotNewFile(){
- slotStatusMsg(i18n("Initializing new file..."));
+ slotStatusMsg(tr("Initializing new file..."));
  QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
 
  //If no document is open already, create a new parameter file.
@@ -215,7 +215,7 @@ void ndManager::slotNewFile(){
   int returnStatus = doc->newDocument();
   if(returnStatus == ndManagerDoc::PARSE_ERROR){
    QApplication::restoreOverrideCursor();
-   KMessageBox::error (this,i18n("The new parameter file could not be initialize due to parsing error."), i18n("Error!"));
+   KMessageBox::error (this,tr("The new parameter file could not be initialize due to parsing error."), tr("Error!"));
    resetState();
    return;
   }
@@ -240,12 +240,12 @@ void ndManager::slotNewFile(){
   delete childproc;
  }
  QApplication::restoreOverrideCursor();
- slotStatusMsg(i18n("Ready."));
+ slotStatusMsg(tr("Ready."));
 }
 
 void ndManager::openDocumentFile(const KURL& url)
 {
-  slotStatusMsg(i18n("Opening file..."));
+  slotStatusMsg(tr("Opening file..."));
 
   filePath = url.path();
 
@@ -254,7 +254,7 @@ void ndManager::openDocumentFile(const KURL& url)
    if((fileOpenRecent->items().contains(url.prettyURL())) && !file.exists()){
     QString title = "File not found: ";
     title.append(filePath);
-    int answer = KMessageBox::questionYesNo(this,i18n("The selected file no longer exists. Do you want to remove it from the list of recent opened files ?"), i18n(title));
+    int answer = KMessageBox::questionYesNo(this,tr("The selected file no longer exists. Do you want to remove it from the list of recent opened files ?"), tr(title));
     if(answer == KMessageBox::Yes){
      KURL* urlB = new KURL();
      urlB->setPath(url.url());
@@ -268,14 +268,14 @@ void ndManager::openDocumentFile(const KURL& url)
   }
   //Do not handle remote files
   else{
-   KMessageBox::sorry(this,i18n("Sorry, NDManager does not handle remote files."),i18n("Remote file handling"));
+   KMessageBox::sorry(this,tr("Sorry, NDManager does not handle remote files."),tr("Remote file handling"));
    fileOpenRecent->addURL(url); //hack, unselect the item
    return;
   }
 
   //Check if the file exists
   if(!KStandardDirs::exists(url.path())){
-   KMessageBox::error (this,i18n("The selected file does not exist."), i18n("Error!"));
+   KMessageBox::error (this,tr("The selected file does not exist."), tr("Error!"));
    fileOpenRecent->removeURL(url);
    return;
   }
@@ -290,7 +290,7 @@ void ndManager::openDocumentFile(const KURL& url)
    int returnStatus = doc->openDocument(url);
    if(returnStatus == ndManagerDoc::PARSE_ERROR){
      QApplication::restoreOverrideCursor();
-     KMessageBox::error (this,i18n("The selected parameter file could not be initialize due to parsing error."), i18n("Error!"));
+     KMessageBox::error (this,tr("The selected parameter file could not be initialize due to parsing error."), tr("Error!"));
      //close the document
      doc->closeDocument();
      resetState();
@@ -334,7 +334,7 @@ void ndManager::openDocumentFile(const KURL& url)
    }
   }
 
-  slotStatusMsg(i18n("Ready."));
+  slotStatusMsg(tr("Ready."));
 }
 
 void ndManager::createParameterView(QMap<int, QValueList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes,
@@ -345,10 +345,10 @@ void ndManager::createParameterView(QMap<int, QValueList<int> >& anatomicalGroup
                            double lfpRate,float screenGain,int nbSamples,int peakSampleIndex,QString traceBackgroundImage){
 
  //Create the mainDock (parameter view)
-  mainDock = createDockWidget( "1", QPixmap(), 0L, i18n("Parameters"), i18n("Parameters"));
+  mainDock = createDockWidget( "1", QPixmap(), 0L, tr("Parameters"), tr("Parameters"));
   mainDock->setDockWindowTransient(this,true);
 
-  parameterView = new ParameterView(this,*doc,mainDock,i18n("ParameterView"),expertMode->isChecked());
+  parameterView = new ParameterView(this,*doc,mainDock,tr("ParameterView"),expertMode->isChecked());
 
   connect(parameterView,SIGNAL(partShown(Kate::View*)),this,SLOT(updateGUI(Kate::View*)));
   connect(parameterView,SIGNAL(partHidden()),this,SLOT(updateGUI()));
@@ -386,11 +386,11 @@ void ndManager::createManagerView(){
   int returnStatus =  managerView->addKonsole(doc->url(),parameterView->getNbGroups(),parameterView->getFileExtensions(),
    parameterView->getFileScriptNames());
   if(returnStatus == ManagerView::NO_KPART){
-   KMessageBox::error (this,i18n("The Konsole part does not exist, no terminal can be created."), i18n("IO Error!"));
+   KMessageBox::error (this,tr("The Konsole part does not exist, no terminal can be created."), tr("IO Error!"));
    return;
   }
   if(returnStatus == ManagerView::PART_LOADING_ERROR){
-   KMessageBox::error (this,i18n("The Konsole part could not be loaded."), i18n("IO Error!"));
+   KMessageBox::error (this,tr("The Konsole part could not be loaded."), tr("IO Error!"));
    return;
   }
 
@@ -431,11 +431,11 @@ void ndManager::konsoleDockBeingClosed(){
 
 
 void ndManager::slotImport(){
- slotStatusMsg(i18n("importing file as model..."));
+ slotStatusMsg(tr("importing file as model..."));
  importedFile = true;
 
  KURL url = KFileDialog::getOpenURL(QString::null,
-     i18n("*.xml|Parameter File (*.xml)\n*|All files"), this, i18n("Import file as model..."));
+     tr("*.xml|Parameter File (*.xml)\n*|All files"), this, tr("Import file as model..."));
  if(!url.isEmpty()) openDocumentFile(url);
 
  importedFileUrl = KURL(url);
@@ -445,7 +445,7 @@ void ndManager::slotImport(){
  filePath = url.path();
  setCaption(url.path());
 
- slotStatusMsg(i18n("Ready."));
+ slotStatusMsg(tr("Ready."));
 }
 
 void ndManager::slotFileClose(){
@@ -458,7 +458,7 @@ void ndManager::slotFileClose(){
    QValueList<QString>::iterator iterator;
    for(iterator = scriptModified.begin(); iterator != scriptModified.end(); ++iterator){
     QString name = *iterator;
-    switch(KMessageBox::warningYesNoCancel(0,i18n("The script " + name + " has been modified, do you want to save the it?"),i18n("Script modification"),KGuiItem("Save"),KGuiItem("Discard"))){
+    switch(KMessageBox::warningYesNoCancel(0,tr("The script " + name + " has been modified, do you want to save the it?"),tr("Script modification"),KGuiItem("Save"),KGuiItem("Discard"))){
      case KMessageBox::Yes://<=> Save
       parameterView->saveScript(name);
       break;
@@ -477,7 +477,7 @@ void ndManager::slotFileClose(){
    QValueList<QString>::iterator iterator;
    for(iterator = programModified.begin(); iterator != programModified.end(); ++iterator){
     QString name = *iterator;
-    switch(KMessageBox::warningYesNoCancel(0,i18n("The description of the program " + name + " has been modified, do you want to save the it?"),i18n("Program description modification"),KGuiItem("Save"),KGuiItem("Discard"))){
+    switch(KMessageBox::warningYesNoCancel(0,tr("The description of the program " + name + " has been modified, do you want to save the it?"),tr("Program description modification"),KGuiItem("Save"),KGuiItem("Discard"))){
      case KMessageBox::Yes://<=> Save
       parameterView->saveProgramDescription(name);
       break;
@@ -493,7 +493,7 @@ void ndManager::slotFileClose(){
   if(!hasBeenCancel){
    //if at least one parameter has been modified, prompt the user to save the information
    if(parameterView->isModified()){
-     switch(KMessageBox::warningYesNoCancel(0,i18n("Some parameters have changed, do you want to save the parameter file?"),i18n("Parameters modification"),KGuiItem("Save"),KGuiItem("Discard"))){
+     switch(KMessageBox::warningYesNoCancel(0,tr("Some parameters have changed, do you want to save the parameter file?"),tr("Parameters modification"),KGuiItem("Save"),KGuiItem("Discard"))){
       case KMessageBox::Yes://<=> Save
        slotSave();
        break;
@@ -540,7 +540,7 @@ bool ndManager::queryClose()
     QValueList<QString>::iterator iterator;
     for(iterator = scriptModified.begin(); iterator != scriptModified.end(); ++iterator){
      QString name = *iterator;
-     switch(KMessageBox::warningYesNoCancel(0,i18n("The script " + name + " has been modified, do you want to save the it?"),i18n("Script modification"),KGuiItem("Save"),KGuiItem("Discard"))){
+     switch(KMessageBox::warningYesNoCancel(0,tr("The script " + name + " has been modified, do you want to save the it?"),tr("Script modification"),KGuiItem("Save"),KGuiItem("Discard"))){
       case KMessageBox::Yes://<=> Save
        parameterView->saveScript(name);
        break;
@@ -559,7 +559,7 @@ bool ndManager::queryClose()
    QValueList<QString>::iterator iterator;
    for(iterator = programModified.begin(); iterator != programModified.end(); ++iterator){
     QString name = *iterator;
-    switch(KMessageBox::warningYesNoCancel(0,i18n("The description of the program " + name + " has been modified, do you want to save the it?"),i18n("Program description modification"),KGuiItem("Save"),KGuiItem("Discard"))){
+    switch(KMessageBox::warningYesNoCancel(0,tr("The description of the program " + name + " has been modified, do you want to save the it?"),tr("Program description modification"),KGuiItem("Save"),KGuiItem("Discard"))){
      case KMessageBox::Yes://<=> Save
       parameterView->saveProgramDescription(name);
       break;
@@ -574,7 +574,7 @@ bool ndManager::queryClose()
 
    //if at least one parameter has been modified, prompt the user to save the information
    if(parameterView->isModified()){
-    switch(KMessageBox::warningYesNoCancel(0,i18n("Some parameters have changed, do you want to save the parameter file?"),i18n("Parameters modification"),KGuiItem("Save"),KGuiItem("Discard"))){
+    switch(KMessageBox::warningYesNoCancel(0,tr("Some parameters have changed, do you want to save the parameter file?"),tr("Parameters modification"),KGuiItem("Save"),KGuiItem("Discard"))){
      case KMessageBox::Yes://<=> Save
       slotSave();
       break;
@@ -593,7 +593,7 @@ bool ndManager::queryClose()
  }
 
 void ndManager::slotSave(){
- slotStatusMsg(i18n("Saving..."));
+ slotStatusMsg(tr("Saving..."));
  //if  the current file is new or was initially imported, it has to be saved under a new name
  if(importedFile || newFile){
   QString initialPath;
@@ -604,13 +604,13 @@ void ndManager::slotSave(){
    initialPath = currentUrl.path();
   }
 
-  KURL url=KFileDialog::getSaveURL(initialPath,i18n("*.xml|Xml Files\n*|All Files"), this, i18n("Save as..."));
+  KURL url=KFileDialog::getSaveURL(initialPath,tr("*.xml|Xml Files\n*|All Files"), this, tr("Save as..."));
   if(!url.isEmpty()){
    QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
    int saveStatus = doc->saveAs(url);
    if(saveStatus == ndManagerDoc::SAVE_ERROR){
-    KMessageBox::error(0,i18n("The current file could not be saved possibly because of insufficient file access permissions."
-    " You may consider saving your session file to another location."), i18n("I/O Error !"));
+    KMessageBox::error(0,tr("The current file could not be saved possibly because of insufficient file access permissions."
+    " You may consider saving your session file to another location."), tr("I/O Error !"));
    }
    if(importedFile || newFile){
     filePath = url.path();
@@ -625,22 +625,22 @@ void ndManager::slotSave(){
  //Save the parameter file
  int saveStatus = doc->save();
   if(saveStatus == ndManagerDoc::SAVE_ERROR){
-   KMessageBox::error(0,i18n("The current file could not be saved possibly because of insufficient file access permissions."
-   " You may consider saving your session file to another location using the Save As entry in the File menu."), i18n("I/O Error !"));
+   KMessageBox::error(0,tr("The current file could not be saved possibly because of insufficient file access permissions."
+   " You may consider saving your session file to another location using the Save As entry in the File menu."), tr("I/O Error !"));
   }
  }
- slotStatusMsg(i18n("Ready."));
+ slotStatusMsg(tr("Ready."));
 }
 
 void ndManager::slotSaveAs(){
- slotStatusMsg(i18n("Saving as..."));
+ slotStatusMsg(tr("Saving as..."));
 
  //Save the parameter file
- KURL url=KFileDialog::getSaveURL(doc->url().path(),i18n("*|All files"), this, i18n("Save as..."));
+ KURL url=KFileDialog::getSaveURL(doc->url().path(),tr("*|All files"), this, tr("Save as..."));
  if(!url.isEmpty()){
   int saveStatus = doc->saveAs(url);
   if(saveStatus == ndManagerDoc::SAVE_ERROR){
-   KMessageBox::error(0,i18n("The current file could not be saved possibly because of insufficient file access permissions."), i18n("I/O Error !"));
+   KMessageBox::error(0,tr("The current file could not be saved possibly because of insufficient file access permissions."), tr("I/O Error !"));
   }
   filePath = url.path();
   setCaption(url.path());
@@ -648,7 +648,7 @@ void ndManager::slotSaveAs(){
   importedFile = false;
   newFile = false;
  }
- slotStatusMsg(i18n("Ready."));
+ slotStatusMsg(tr("Ready."));
 }
 void ndManager::resetState(){
   //Disable some actions when no document is open (see the klustersui.rc file)
@@ -683,16 +683,16 @@ void ndManager::applyPreferences() {
 }
 
 void ndManager::slotSaveDefault(){
-	slotStatusMsg(i18n("Saving as default..."));
+    slotStatusMsg(tr("Saving as default..."));
 	int saveStatus = doc->saveDefault();
 	if(saveStatus == ndManagerDoc::SAVE_ERROR){
-		KMessageBox::error(0,i18n("The current file could not be saved as the default parameter file."), i18n("I/O Error !"));
+        KMessageBox::error(0,tr("The current file could not be saved as the default parameter file."), tr("I/O Error !"));
 	}
-	slotStatusMsg(i18n("Ready."));
+    slotStatusMsg(tr("Ready."));
 }
 
 void ndManager::slotReload(){
-	slotStatusMsg(i18n("reloading..."));
+    slotStatusMsg(tr("reloading..."));
 
 	//Get the current active page index
 	int activePageIndex = parameterView->activePageIndex();
@@ -723,8 +723,8 @@ void ndManager::slotReload(){
 	QFileInfo file(filePath);
 
 	if(!file.exists()){
-		KMessageBox::sorry (this,i18n("The selected parameter file could not be reloaded as it appears to have been removed from disk."), i18n("Sorry!"));
-		slotStatusMsg(i18n("Ready."));
+        KMessageBox::sorry (this,tr("The selected parameter file could not be reloaded as it appears to have been removed from disk."), tr("Sorry!"));
+        slotStatusMsg(tr("Ready."));
 		return;
 	}
 
@@ -732,11 +732,11 @@ void ndManager::slotReload(){
 	int returnStatus = doc->openDocument(url);
 	if(returnStatus == ndManagerDoc::PARSE_ERROR){
 		QApplication::restoreOverrideCursor();
-		KMessageBox::error (this,i18n("The selected parameter file could not be initialize due to parsing error."), i18n("Error!"));
+        KMessageBox::error (this,tr("The selected parameter file could not be initialize due to parsing error."), tr("Error!"));
      //close the document
 		doc->closeDocument();
 		resetState();
-		slotStatusMsg(i18n("Ready."));
+        slotStatusMsg(tr("Ready."));
 		return;
 	}
 
@@ -746,11 +746,11 @@ void ndManager::slotReload(){
 	//Raise the previously active page
 	parameterView->showPage(activePageIndex);
 
-	slotStatusMsg(i18n("Ready."));
+    slotStatusMsg(tr("Ready."));
 }
 
 void ndManager::slotQuery(){
-	slotStatusMsg(i18n("Processing query..."));
+    slotStatusMsg(tr("Processing query..."));
 	queryResult = "";
 	QueryInputDialog *queryInputDialog = new QueryInputDialog();
 	if(queryInputDialog->exec() == QDialog::Accepted)
@@ -787,7 +787,7 @@ void ndManager::slotQuery(){
 		delete queryOutputDialog;
 	}
 	delete queryInputDialog;
-	slotStatusMsg(i18n("Ready."));
+    slotStatusMsg(tr("Ready."));
 }
 
 void ndManager::slotQueryResult(QString message){

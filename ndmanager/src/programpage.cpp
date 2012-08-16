@@ -33,7 +33,7 @@
 #include <qregexp.h>
 #include <qtextedit.h>
 // include files for KDE
-#include <klocale.h>        // for i18n()
+#include <klocale.h>        // for tr()
 #include <kiconloader.h>    // for KIconLoader
 #include <ktextedit.h>
 #include <kstandarddirs.h>
@@ -60,9 +60,9 @@ ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const char* name)
  help = new QTextEdit(tabWidget);
  if(!expertMode) help->setReadOnly(true);
  parameters = new ParameterPage(expertMode,tabWidget);
- tabWidget->addTab(parameters,i18n("Parameters"));
+ tabWidget->addTab(parameters,tr("Parameters"));
 
- tabWidget->addTab(help,i18n("Help"));
+ tabWidget->addTab(help,tr("Help"));
  connect(tabWidget, SIGNAL(currentChanged(QWidget*)), this, SLOT(tabChange(QWidget*)));
 
  if(expertMode){
@@ -71,7 +71,7 @@ ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const char* name)
   scriptDoc = editorMgr->add();
   if(scriptDoc != NULL){
    scriptView = static_cast<Kate::View*>(scriptDoc->createView(tabWidget));
-   tabWidget->addTab(scriptView,i18n("Script"));
+   tabWidget->addTab(scriptView,tr("Script"));
   }
  }
 
@@ -83,21 +83,21 @@ ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const char* name)
  frameLayout->addWidget(buttons);
 
  if(expertMode){
-  saveParametersButton = new QPushButton(i18n("Save Script Description As ..."),buttons);
+  saveParametersButton = new QPushButton(tr("Save Script Description As ..."),buttons);
   saveParametersButton->setSizePolicy(
    QSizePolicy((QSizePolicy::SizeType)0,(QSizePolicy::SizeType)0,0,0,saveParametersButton->sizePolicy().hasHeightForWidth()));
   saveParametersButton->setMinimumSize(QSize(200,0));
   saveParametersButton->setMaximumSize(QSize(300,32767));
   gridLayout->addWidget(saveParametersButton,0,1);
 
-  saveScriptButton = new QPushButton(i18n("Save Script As ..."),buttons);
+  saveScriptButton = new QPushButton(tr("Save Script As ..."),buttons);
   saveScriptButton->setSizePolicy(
     QSizePolicy((QSizePolicy::SizeType)0,(QSizePolicy::SizeType)0,0,0,saveScriptButton->sizePolicy().hasHeightForWidth()));
   saveScriptButton->setMinimumSize(QSize(124,0));
   saveScriptButton->setMaximumSize(QSize(130,32767));
   gridLayout->addWidget(saveScriptButton,0,3);
 
-  removeButton = new QPushButton(i18n("Remove Script"),buttons);
+  removeButton = new QPushButton(tr("Remove Script"),buttons);
   removeButton->setSizePolicy(QSizePolicy((QSizePolicy::SizeType)0,(QSizePolicy::SizeType)0,0,0,removeButton->sizePolicy().hasHeightForWidth()));
   removeButton->setMinimumSize(QSize(124,0));
   removeButton->setMaximumSize(QSize(124,32767));
@@ -118,7 +118,7 @@ ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const char* name)
   connect(help,SIGNAL(textChanged()),this,SLOT(helpModified()));
  }
  else{
-  removeButton = new QPushButton(i18n("Remove Script"),buttons);
+  removeButton = new QPushButton(tr("Remove Script"),buttons);
   removeButton->setSizePolicy(QSizePolicy((QSizePolicy::SizeType)0,(QSizePolicy::SizeType)0,0,0,removeButton->sizePolicy().hasHeightForWidth()));
   removeButton->setMinimumSize(QSize(124,0));
   removeButton->setMaximumSize(QSize(124,32767));
@@ -153,8 +153,8 @@ bool ProgramPage::saveProgramScript(){
  QString title = "";
  KURL scriptUrl;
 
- if(!path.isNull()) scriptUrl = KFileDialog::getSaveURL(path,i18n("*"), this, i18n("Save as..."));
- else scriptUrl = KFileDialog::getSaveURL(QString::null,i18n("*"), this, i18n("Save as..."));
+ if(!path.isNull()) scriptUrl = KFileDialog::getSaveURL(path,tr("*"), this, tr("Save as..."));
+ else scriptUrl = KFileDialog::getSaveURL(QString::null,tr("*"), this, tr("Save as..."));
 
  if(!scriptUrl.isEmpty()){
   path = scriptUrl.path();
@@ -175,7 +175,7 @@ bool ProgramPage::saveProgramScript(){
  //If the change in the programName lineedit has not yet been validated, a call to nameChanged will be done after this call. Therefore
  //programName has to be updated so no message will be display in that call (otherwise there will be conflict in the events)
  if(programName != parameters->getProgramName()) programName = parameters->getProgramName();
- if(title != "") KMessageBox::error (this,i18n(message), i18n(title));
+ if(title != "") KMessageBox::error (this,tr(message), tr(title));
  if(recall) return saveProgramScript();
  else{
   if(title != "") return false;
@@ -195,10 +195,10 @@ void ProgramPage::saveProgramParameters(){
   QString name = parameters->getProgramName();
   name.append(".xml");
   descriptionUrlTmp.setFileName(name);
-  descriptionUrl = KFileDialog::getSaveURL(descriptionUrlTmp.path(),i18n("*.xml|Xml Files"), this, i18n("Save as..."));
+  descriptionUrl = KFileDialog::getSaveURL(descriptionUrlTmp.path(),tr("*.xml|Xml Files"), this, tr("Save as..."));
  }
  else{
-  descriptionUrl = KFileDialog::getSaveURL(descriptionUrl.path(),i18n("*.xml|Xml Files"), this, i18n("Save as..."));
+  descriptionUrl = KFileDialog::getSaveURL(descriptionUrl.path(),tr("*.xml|Xml Files"), this, tr("Save as..."));
  }
  //a location has been chosen
  if(!descriptionUrl.isEmpty()){
@@ -214,7 +214,7 @@ void ProgramPage::saveProgramParameters(){
   bool status = descriptionWriter.writeTofile(descriptionUrl);
   if(!status){
    QString message = QString("The file %1 could not be saved possibly because of insufficient file access permissions.").arg(descriptionUrl.fileName());
-   KMessageBox::error (this,i18n(message), i18n("IO Error!"));
+   KMessageBox::error (this,tr(message), tr("IO Error!"));
   }
   descriptionNotSaved = false;
  }

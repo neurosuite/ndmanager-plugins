@@ -29,16 +29,16 @@
 #include <qlabel.h>
 
 ndManagerPreferences::ndManagerPreferences(QWidget* parent,const char* name, WFlags f)
-    : KDialogBase(TreeList, i18n("ndManager Preferences"),
+    : KDialogBase(TreeList, tr("ndManager Preferences"),
                   Help|Default|Ok|Apply|Cancel,Ok, parent, name, f)
 {
   setHelp("settings","ndManager");
  
   QFrame *frame;
-  frame = addPage(i18n("First Page"), i18n("Page One Options"));
+  frame = addPage(tr("First Page"), tr("Page One Options"));
   m_pageOne = new ndManagerPrefPageOne(frame);
 
-  frame = addPage(i18n("Second Page"), i18n("Page Two Options"));
+  frame = addPage(tr("Second Page"), tr("Page Two Options"));
   m_pageTwo = new ndManagerPrefPageTwo(frame);
   
   // connect interactive widgets and selfmade signals to the enableApply slotDefault
@@ -65,9 +65,9 @@ void ndManagerPreferences::updateConfiguration(){
 
 
 void ndManagerPreferences::slotDefault() {
-  if(KMessageBox::warningContinueCancel(this, i18n("This will set the default options "
-      "in ALL pages of the preferences dialog! Do you wish to continue?"), i18n("Set default options?"),
-      i18n("Set defaults"))==KMessageBox::Continue){
+  if(KMessageBox::warningContinueCancel(this, tr("This will set the default options "
+      "in ALL pages of the preferences dialog! Do you wish to continue?"), tr("Set default options?"),
+      tr("Set defaults"))==KMessageBox::Continue){
         
    
    enableApply();   // enable apply button
@@ -97,7 +97,7 @@ ndManagerPrefPageOne::ndManagerPrefPageOne(QWidget *parent)
     QHBoxLayout *layout = new QHBoxLayout(this);
     layout->setAutoAdd(true);
 
-    new QLabel(i18n("Add something here"), this);
+    new QLabel(tr("Add something here"), this);
 }
 
 ndManagerPrefPageTwo::ndManagerPrefPageTwo(QWidget *parent)
@@ -106,6 +106,6 @@ ndManagerPrefPageTwo::ndManagerPrefPageTwo(QWidget *parent)
     QHBoxLayout *layout = new QHBoxLayout(this);
     layout->setAutoAdd(true);
 
-    new QLabel(i18n("Add something here"), this);
+    new QLabel(tr("Add something here"), this);
 }
 #include "pref.moc"

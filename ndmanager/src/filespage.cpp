@@ -26,7 +26,7 @@
 #include <qpushbutton.h> 
 
 // include files for KDE
-#include <klocale.h>        // for i18n()
+#include <klocale.h>        // for tr()
 #include <kiconloader.h>    // for KIconLoader
 
 //General C++ include files
@@ -45,13 +45,13 @@ FilesPage::FilesPage(QWidget* parent, const char *name)
  QGridLayout* gridLayout = new QGridLayout(buttons,1,1,0,6); 
  frameLayout->addWidget(buttons); 
  
- addButton = new QPushButton(i18n("Add File"),buttons);
+ addButton = new QPushButton(tr("Add File"),buttons);
  addButton->setSizePolicy(QSizePolicy((QSizePolicy::SizeType)0,(QSizePolicy::SizeType)0,0,0,addButton->sizePolicy().hasHeightForWidth()));
  addButton->setMinimumSize(QSize(124,0));
  addButton->setMaximumSize(QSize(124,32767));
  gridLayout->addWidget(addButton,0,1);
  
- removeButton = new QPushButton(i18n("Remove File"),buttons);
+ removeButton = new QPushButton(tr("Remove File"),buttons);
  removeButton->setSizePolicy(QSizePolicy((QSizePolicy::SizeType)0,(QSizePolicy::SizeType)0,0,0,removeButton->sizePolicy().hasHeightForWidth()));
  removeButton->setMinimumSize(QSize(124,0));
  removeButton->setMaximumSize(QSize(124,32767));
@@ -72,7 +72,7 @@ FilesPage::~FilesPage(){}
 
 void FilesPage::addNewFile(){
  FilePage* filePage = new FilePage();
- tabWidget->addTab(filePage,i18n("New File"));
+ tabWidget->addTab(filePage,tr("New File"));
  
  //set the connection
  connect(filePage,SIGNAL(extensionChanged(const QString&,FilePage*)),this,SLOT(changeCaption(const QString&,FilePage*)));
