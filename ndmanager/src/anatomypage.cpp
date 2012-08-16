@@ -96,7 +96,7 @@ void AnatomyPage::getAttributes(QMap<QString, QMap<int,QString> >& attributesMap
  for(int i =0; i<attributesTable->numCols();++i){
   QMap<int,QString> values;
   for(int j = 0;j<nbChannels;++j){  
-   QString attribut = attributesTable->text(j,i).simplifyWhiteSpace();   
+   QString attribut = attributesTable->text(j,i).simplified();   
    if(attribut != " ") values.insert(j,attribut);
   } 
   attributesMap.insert(header->label(i),values);
@@ -133,7 +133,7 @@ void AnatomyPage::getGroups(QMap<int, Q3ValueList<int> >& groups)const{
  for(int i =0; i<groupTable->numRows();++i){
   Q3ValueList<int> channels;
   QString item = groupTable->text(i,0);
-  QString channelList = item.simplifyWhiteSpace();
+  QString channelList = item.simplified();
   if(channelList == " ") continue;
   QStringList channelParts = QStringList::split(" ", channelList);
   for(uint j = 0;j < channelParts.count(); ++j)

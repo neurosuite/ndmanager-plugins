@@ -225,7 +225,7 @@ void ndManager::slotNewFile(){
   }
 
   QString url = QString();
-  url.setPath(QDir::currentDirPath());
+  url.setPath(QDir::currentPath());
   url.setFileName("Untitled");
   doc->rename(url);
   filePath = url.path();
@@ -601,7 +601,7 @@ void ndManager::slotSave(){
  //if  the current file is new or was initially imported, it has to be saved under a new name
  if(importedFile || newFile){
   QString initialPath;
-  if(newFile) initialPath = QDir::currentDirPath();
+  if(newFile) initialPath = QDir::currentPath();
   else{
    QString currentUrl =  doc->url();
    currentUrl.setFileName("");

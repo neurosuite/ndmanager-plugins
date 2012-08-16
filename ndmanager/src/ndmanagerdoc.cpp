@@ -85,7 +85,7 @@ ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::openDocument(const QStri
 
   reader.getGeneralInformation(generalInformation);
   //if the experimenters are not defined use the current user
-  QString experimenter = generalInformation.getExperimenters().simplifyWhiteSpace();
+  QString experimenter = generalInformation.getExperimenters().simplified();
   if(experimenter == "" || experimenter == " ") generalInformation.setExperimenters(getenv("USER"));
 
   reader.getAcquisitionSystemInfo(acquisitionSystemInfo);

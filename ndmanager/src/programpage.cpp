@@ -195,7 +195,7 @@ void ProgramPage::saveProgramParameters(){
  //for the new save
  if(descriptionUrl.isEmpty()){
   QString descriptionUrlTmp;
-  descriptionUrlTmp.setPath(QDir::currentDirPath());
+  descriptionUrlTmp.setPath(QDir::currentPath());
   QString name = parameters->getProgramName();
   name.append(".xml");
   descriptionUrlTmp.setFileName(name);

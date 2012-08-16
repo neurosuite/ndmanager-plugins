@@ -112,7 +112,7 @@ void UnitListPage::getUnits(QMap<int, Q3ValueList<QString> >& units)const
 		for(int j = 0;j < unitTable->numCols(); ++j)
 		{
 			QString text = unitTable->text(i,j);
-			info.append(text.simplifyWhiteSpace());
+			info.append(text.simplified());
 		}
 		units.insert(unitId,info);
 		unitId++;

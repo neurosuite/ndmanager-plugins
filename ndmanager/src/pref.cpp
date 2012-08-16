@@ -30,7 +30,7 @@
 #include <Q3Frame>
 #include <Q3HBoxLayout>
 
-ndManagerPreferences::ndManagerPreferences(QWidget* parent,const char* name, WFlags f)
+ndManagerPreferences::ndManagerPreferences(QWidget* parent,const char* name, Qt::WFlags f)
     : KDialogBase(TreeList, tr("ndManager Preferences"),
                   Help|Default|Ok|Apply|Cancel,Ok, parent, name, f)
 {

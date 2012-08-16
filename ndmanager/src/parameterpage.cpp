@@ -90,7 +90,7 @@ QMap<int, Q3ValueList<QString> > ParameterPage::getParameterInformation(){
  for(int i =0; i<parameterTable->numRows();++i){
   Q3ValueList<QString> information;
   QString item = parameterTable->text(i,0);
-  QString name = item.simplifyWhiteSpace();
+  QString name = item.simplified();
   if(name == " ") continue;
   information.append(name);
   for(int j = 1;j < parameterTable->numCols(); ++j){
@@ -98,7 +98,7 @@ QMap<int, Q3ValueList<QString> > ParameterPage::getParameterInformation(){
    QString text;
    if(ddList.contains(j)) text = static_cast<Q3ComboTableItem*>(item)->currentText();
    else text = parameterTable->text(i,j);
-   information.append(text.simplifyWhiteSpace());
+   information.append(text.simplified());
   }
    
   parameterInformation.insert(paramNb,information);

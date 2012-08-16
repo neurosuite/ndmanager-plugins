@@ -31,7 +31,7 @@ class ndManagerPreferences : public KDialogBase
 {
     Q_OBJECT
 public:
-  ndManagerPreferences(QWidget* parent,const char* name=0, WFlags f=0);
+  ndManagerPreferences(QWidget* parent,const char* name=0, Qt::WFlags f=0);
   
   /** Transfers the settings from the configuration object to the dialog.*/
   void updateDialog();

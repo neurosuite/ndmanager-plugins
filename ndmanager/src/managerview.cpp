@@ -70,7 +70,7 @@ ManagerView::returnMessage ManagerView::addKonsole(const QString url,int nbSpike
   
   Q3ValueList<QString>::iterator iterator;
   for(iterator = fileExtensions.begin(); iterator != fileExtensions.end(); ++iterator){
-   neuroscopeFiles<<QString(".%1").arg(static_cast<QString>(*iterator));   
+   neuroscopeFiles<<QString(".%1").arg(*iterator);   
   }
 
   neuroscopeComboBox = new QComboBox(toolbar);
@@ -237,14 +237,14 @@ void ManagerView::launchScript(){
  QString script = scriptsComboBox->currentText();
  //The parameter file is new or has been imported from an existing file.
  if(parameterUrl.fileName() == "Untitled"){
-  QString message = QString("In order to launch %1, the parameter file has to be saved first.").arg(script);
-  KMessageBox::error (this,tr(message), tr("Unsaved file!"));
+  QString message = tr("In order to launch %1, the parameter file has to be saved first.").arg(script);
+  KMessageBox::error (this,message, tr("Unsaved file!"));
   return;
  }
  else{
   if(!isUptoDate){
-   QString message = QString("The parameter file contains unsaved data or script, please save before launching %1.").arg(script);
-   KMessageBox::error (this,tr(message), tr("Unsaved data!"));
+   QString message = tr"The parameter file contains unsaved data or script, please save before launching %1.").arg(script);
+   KMessageBox::error (this,message, tr("Unsaved data!"));
    return;   
   }
   //Launch the script.

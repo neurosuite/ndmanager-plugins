@@ -149,7 +149,7 @@ QMap<int, Q3ValueList<int> > FilePage::getChannelMapping()const{
  for(int i =0; i<mappingTable->numRows();++i){
   Q3ValueList<int> channels;
   QString item = mappingTable->text(i,0);
-  QString channelList = item.simplifyWhiteSpace();
+  QString channelList = item.simplified();
   if(channelList == " " || channelList == "") continue;
   QStringList channelParts = QStringList::split(" ", channelList);
   for(uint j = 0;j < channelParts.count(); ++j)

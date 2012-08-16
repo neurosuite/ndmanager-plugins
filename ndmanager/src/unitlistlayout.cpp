@@ -28,7 +28,7 @@
  *  Constructs a UnitListLayout as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-UnitListLayout::UnitListLayout( QWidget* parent, const char* name, WFlags fl )
+UnitListLayout::UnitListLayout( QWidget* parent, const char* name, Qt::WFlags fl )
     : QWidget( parent, name, fl )
 {
     if ( !name )

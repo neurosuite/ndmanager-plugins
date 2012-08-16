@@ -138,7 +138,7 @@ void SpikePage::getGroups(QMap<int, Q3ValueList<int> >& groups)const{
  for(int i =0; i<groupTable->numRows();++i){
   Q3ValueList<int> channels;
   QString item = groupTable->text(i,0);
-  QString channelList = item.simplifyWhiteSpace();
+  QString channelList = item.simplified();
   if(channelList == " ") continue;
   QStringList channelParts = QStringList::split(" ", channelList);
   for(uint j = 0;j < channelParts.count(); ++j)
@@ -154,11 +154,11 @@ void SpikePage::getGroupInformation(QMap<int,  QMap<QString,QString> >& groupInf
  for(int i =0; i<groupTable->numRows();++i){
   QMap<QString,QString> information;
   QString item = groupTable->text(i,0);
-  QString channelList = item.simplifyWhiteSpace();
+  QString channelList = item.simplified();
   if(channelList == " ") continue;
    //The positions of the information in the table are hard coded
   for(int j = 1;j <= groupTable->numCols(); ++j){
-   QString infoItem = groupTable->text(i,j).simplifyWhiteSpace();
+   QString infoItem = groupTable->text(i,j).simplified();
    if(infoItem == " ") continue;
    if(j == 1)information.insert(NB_SAMPLES,infoItem);
    else if(j == 2)information.insert(PEAK_SAMPLE_INDEX,infoItem);
