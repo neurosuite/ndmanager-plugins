@@ -27,7 +27,6 @@
 #include <klocale.h>
 #include <kiconloader.h>
 #include <kdeversion.h>
-#include <kmenubar.h>
 #include <kstatusbar.h>
 #include <kkeydialog.h>
 #include <kaccel.h>
