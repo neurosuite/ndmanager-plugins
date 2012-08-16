@@ -24,7 +24,7 @@
 #include <qstring.h>
 
 // include files for KDE
-#include <kurl.h>
+
 
 //include files for the application
 

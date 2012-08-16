@@ -29,7 +29,7 @@
 #include <q3frame.h>
 
 //include files for KDE
-#include <kurl.h> 
+
 #include <kate/view.h>
 
 //forward declaration

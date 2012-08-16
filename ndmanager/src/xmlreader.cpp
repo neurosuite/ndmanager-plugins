@@ -21,7 +21,7 @@
 #include "xmlreader.h"
 
 // include files for KDE
-#include <kurl.h>
+
 #include <kio/netaccess.h>
 
 //include files for QT

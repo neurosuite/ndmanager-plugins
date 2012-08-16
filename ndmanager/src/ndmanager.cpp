@@ -37,7 +37,7 @@
 #include <kprocess.h>
 #include <kfiledialog.h>
 #include <kconfig.h>
-#include <kurl.h>
+
 
 #include <kstandarddirs.h>
 

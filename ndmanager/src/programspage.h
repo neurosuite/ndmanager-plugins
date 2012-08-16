@@ -28,7 +28,7 @@
 
 
 // include files for KDE
-#include <kurl.h> 
+ 
 
 //forward declaration
 class QPushButton;

@@ -33,7 +33,7 @@
 
 // include files for KDE
 #include <kjanuswidget.h> 
-#include <kurl.h> 
+ 
 
 //include files for the application
 #include "acquisitionsystempage.h"

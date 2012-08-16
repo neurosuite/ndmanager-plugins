@@ -24,7 +24,7 @@
 #include <launcherlayout.h>
 
 //Include files for KDE
-#include <kurl.h>
+
 
 /**
 @author Lynn Hazan

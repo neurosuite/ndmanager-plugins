@@ -21,7 +21,7 @@
 #define XMLWRITER_H
 
 // include files for KDE
-#include <kurl.h>
+
 
 //include files for the application
 #include "generalinformation.h"

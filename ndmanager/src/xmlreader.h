@@ -30,7 +30,7 @@
 #include "programinformation.h"
 
 // include files for KDE
-#include <kurl.h>
+
 
 //include files for QT
 #include <q3valuelist.h> 

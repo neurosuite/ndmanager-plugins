@@ -37,7 +37,7 @@
 #include <kiconloader.h>    // for KIconLoader
 #include <kfiledialog.h>
 #include <ktextedit.h> 
-#include <kurl.h> 
+
 
 
 //General C++ include files

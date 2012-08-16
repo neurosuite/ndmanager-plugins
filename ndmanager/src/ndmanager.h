@@ -35,7 +35,7 @@
 #include <kdockwidget.h>
 #include <kaction.h>
 #include <kstdaction.h>
-#include <kurl.h>
+
 #include <kprocess.h>
 #include <kate/view.h>
 
