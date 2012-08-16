@@ -25,6 +25,9 @@
 //General C++ include files
 #include <iostream>
 #include <fstream>
+//Added by qt3to4:
+#include <Q3TextStream>
+#include <Q3ValueList>
 using namespace std;
 
 //include files for QT
@@ -47,13 +50,13 @@ DescriptionWriter::~DescriptionWriter(){}
 
 bool DescriptionWriter::writeTofile(const KURL& url){ 
  QFile descriptionFile(url.path());
- bool status = descriptionFile.open(IO_WriteOnly);
+ bool status = descriptionFile.open(QIODevice::WriteOnly);
  if(!status) return status;
 
  root.appendChild(program);
  QString xmlDocument = doc.toString();
  
- QTextStream stream(&descriptionFile);
+ Q3TextStream stream(&descriptionFile);
  stream<< xmlDocument;
  descriptionFile.close();
  
@@ -63,7 +66,7 @@ bool DescriptionWriter::writeTofile(const KURL& url){
 void DescriptionWriter::setProgramInformation(ProgramInformation& programInformation){
  //Get the program information 
  QString name = programInformation.getProgramName();
- QMap<int, QValueList<QString> > parametersInfo = programInformation.getParameterInformation();  
+ QMap<int, Q3ValueList<QString> > parametersInfo = programInformation.getParameterInformation();  
  QString help = programInformation.getHelp();
  
  program = doc.createElement(PROGRAM);;
@@ -75,11 +78,11 @@ void DescriptionWriter::setProgramInformation(ProgramInformation& programInforma
 
  //Take care of the parameters
  QDomElement parameters = doc.createElement(PARAMETERS);
- QMap<int,QValueList<QString> >::Iterator parameterIterator;
+ QMap<int,Q3ValueList<QString> >::Iterator parameterIterator;
  //The iterator gives the keys sorted.
  for(parameterIterator = parametersInfo.begin(); parameterIterator != parametersInfo.end(); ++parameterIterator){
   QDomElement parameter = doc.createElement(PARAMETER);
-  QValueList<QString> parameterInfo = parameterIterator.data();
+  Q3ValueList<QString> parameterInfo = parameterIterator.data();
   
   for(uint i = 0; i< parameterInfo.count();++i){
    //the info are NAME, VALUE and STATUS   

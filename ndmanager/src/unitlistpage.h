@@ -29,13 +29,16 @@
 
 // include files for QT
 #include <qwidget.h>
-#include <qtable.h>
+#include <q3table.h>
 #include <qpushbutton.h>
 #include <qmap.h>
 #include <qregexp.h>
-#include <qheader.h> 
-#include <qmemarray.h> 
+#include <q3header.h> 
+#include <q3memarray.h> 
 #include <qlineedit.h>
+//Added by qt3to4:
+#include <QEvent>
+#include <Q3ValueList>
 
 // include files for KDE
 
@@ -61,11 +64,11 @@ class UnitListPage : public UnitListLayout
 		/** Initializes the unit table.
 		* @param units map containing the info for each unit.
 		*/
-		void setUnits(const QMap<int, QValueList<QString> >& units);
+		void setUnits(const QMap<int, Q3ValueList<QString> >& units);
 		/**Returns the composition of the unit table.
 		* @param units map containing the info for each unit.
 		*/ 
-		void getUnits(QMap<int, QValueList<QString> >& units)const;
+		void getUnits(QMap<int, Q3ValueList<QString> >& units)const;
 		/**Initializes the number of units classified.
 		* @param nbUnits number of units.
 		*/
@@ -96,7 +99,7 @@ class UnitListPage : public UnitListLayout
 			//Use of the the 3 parameter constructor to be qt 3.1 compatible
 			for(int i=0;i<unitTable->numCols();++i)
 			{
-				UnitTableItem* item = new UnitTableItem(unitTable,QTableItem::WhenCurrent,"");
+				UnitTableItem* item = new UnitTableItem(unitTable,Q3TableItem::WhenCurrent,"");
 				item->setWordWrap(true);
 				unitTable->setItem(unitTable->numRows() - 1,i,item);
 			}

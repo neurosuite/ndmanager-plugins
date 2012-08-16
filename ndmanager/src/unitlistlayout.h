@@ -12,10 +12,15 @@
 
 #include <qvariant.h>
 #include <qwidget.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <QLabel>
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
 
-class QVBoxLayout;
-class QHBoxLayout;
-class QGridLayout;
+class Q3VBoxLayout;
+class Q3HBoxLayout;
+class Q3GridLayout;
 class QSpacerItem;
 class QPushButton;
 class UnitTable;
@@ -35,13 +40,13 @@ public:
     QLabel* textLabel4_2_2_4_2_2_2;
 
 protected:
-    QGridLayout* UnitListLayoutLayout;
-    QGridLayout* layout21;
+    Q3GridLayout* UnitListLayoutLayout;
+    Q3GridLayout* layout21;
     QSpacerItem* spacer10_2_3_3;
-    QGridLayout* layout20;
+    Q3GridLayout* layout20;
     QSpacerItem* spacer10_2_3_2;
     QSpacerItem* spacer96;
-    QGridLayout* layout19;
+    Q3GridLayout* layout19;
     QSpacerItem* spacer10_2_2;
     QSpacerItem* spacer10_2_2_2;
     QSpacerItem* spacer10_2_3;

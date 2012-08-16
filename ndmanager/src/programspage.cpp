@@ -26,6 +26,12 @@
 #include <qpushbutton.h> 
 #include <qlabel.h>
 #include <qregexp.h> 
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3TextStream>
+#include <Q3VBoxLayout>
+#include <Q3ValueList>
+#include <Q3Frame>
 
 // include files for KDE
 #include <kiconloader.h>    // for KIconLoader
@@ -40,9 +46,9 @@ using namespace std;
 
 
 ProgramsPage::ProgramsPage(bool expertMode,QWidget *parent, const char *name)
- : QFrame(parent, name),expertMode(expertMode){
+ : Q3Frame(parent, name),expertMode(expertMode){
  
- QVBoxLayout* frameLayout = new QVBoxLayout(this,0,0);
+ Q3VBoxLayout* frameLayout = new Q3VBoxLayout(this,0,0);
    
  QString message = "Here you can add a new script description or load an existing one from disk.";
  QLabel* description = new QLabel(message,this);
@@ -53,7 +59,7 @@ ProgramsPage::ProgramsPage(bool expertMode,QWidget *parent, const char *name)
    
  //Add the buttons
  QWidget* buttons = new QWidget(this); 
- QGridLayout* gridLayout = new QGridLayout(buttons,1,1,0,6); 
+ Q3GridLayout* gridLayout = new Q3GridLayout(buttons,1,1,0,6); 
  frameLayout->addWidget(buttons); 
  
  if(expertMode){
@@ -93,7 +99,7 @@ ProgramsPage::ProgramsPage(bool expertMode,QWidget *parent, const char *name)
  
  //Set an icon on the load button
  KIconLoader* loader = KGlobal::iconLoader();
- loadButton->setIconSet(QIconSet(loader->loadIcon("fileopen", KIcon::Small)));
+ loadButton->setIconSet(QIcon(loader->loadIcon("fileopen", KIcon::Small)));
  
  connect(loadButton,SIGNAL(clicked()),this,SLOT(loadProgram()));
 }
@@ -107,7 +113,7 @@ void ProgramsPage::loadProgram(){
  KURL::List programUrls=KFileDialog::getOpenURLs(QString::null,
        QString::null, this, tr("Select the Script(s) to load..."));
  if(programUrls.size() != 0){
-   QValueList<KURL>::iterator iterator;
+   Q3ValueList<KURL>::iterator iterator;
   for(iterator = programUrls.begin();iterator != programUrls.end();++iterator){
    KURL programUrl = static_cast<KURL>(*iterator);
    QString filePath = programUrl.path();
@@ -121,12 +127,12 @@ void ProgramsPage::loadProgram(){
 
    //Check if the file is an XML file <=> conains the xml declaration
    QFile file(filePath);
-   if(!file.open(IO_ReadOnly)){
+   if(!file.open(QIODevice::ReadOnly)){
     QString message = QString("The file %1 is not readable.").arg(filePath);
     KMessageBox::error (this,tr(message), tr("IO Error!"));
    }
    else{
-    QTextStream stream(&file);
+    Q3TextStream stream(&file);
     QString firstLine = stream.readLine();
     int i = firstLine.find(QRegExp("^<\\?xml version"));
     file.close();

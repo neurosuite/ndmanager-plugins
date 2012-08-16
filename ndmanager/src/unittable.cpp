@@ -19,9 +19,9 @@
  ***************************************************************************/
 #include "unittable.h"
 
-UnitTable::UnitTable(QWidget * parent, const char * name): QTable(parent,name){}
+UnitTable::UnitTable(QWidget * parent, const char * name): Q3Table(parent,name){}
 
-UnitTable::UnitTable( int numRows, int numCols, QWidget * parent, const char * name): QTable(numRows,numCols,parent,name){}
+UnitTable::UnitTable( int numRows, int numCols, QWidget * parent, const char * name): Q3Table(numRows,numCols,parent,name){}
 	
 UnitTable::~UnitTable()
 {

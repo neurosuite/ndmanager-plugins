@@ -21,6 +21,11 @@
 // include files for QT
 #include <qcursor.h>
 #include <qevent.h>
+//Added by qt3to4:
+#include <Q3TextStream>
+#include <Q3ValueList>
+#include <Q3PtrList>
+#include <QPixmap>
 
 // include files for KDE
 #include <kglobal.h>
@@ -336,11 +341,11 @@ void ndManager::openDocumentFile(const KURL& url)
   slotStatusMsg(tr("Ready."));
 }
 
-void ndManager::createParameterView(QMap<int, QValueList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes,
-                          QMap<int, QValueList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& spikeGroupsInformation,QMap<int, QValueList<QString> >& units,
+void ndManager::createParameterView(QMap<int, Q3ValueList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes,
+                          QMap<int, Q3ValueList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& spikeGroupsInformation,QMap<int, Q3ValueList<QString> >& units,
                           GeneralInformation& generalInformation,QMap<QString,double>& acquisitionSystemInfo,QMap<QString,double>& videoInformation,
-                          QValueList<FileInformation>& files,QValueList<ChannelColors>& channelColors,QMap<int,int>& channelOffsets,
-                          NeuroscopeVideoInfo& neuroscopeVideoInfo,QValueList<ProgramInformation>& programs,
+                          Q3ValueList<FileInformation>& files,Q3ValueList<ChannelColors>& channelColors,QMap<int,int>& channelOffsets,
+                          NeuroscopeVideoInfo& neuroscopeVideoInfo,Q3ValueList<ProgramInformation>& programs,
                            double lfpRate,float screenGain,int nbSamples,int peakSampleIndex,QString traceBackgroundImage){
 
  //Create the mainDock (parameter view)
@@ -352,8 +357,8 @@ void ndManager::createParameterView(QMap<int, QValueList<int> >& anatomicalGroup
   connect(parameterView,SIGNAL(partShown(Kate::View*)),this,SLOT(updateGUI(Kate::View*)));
   connect(parameterView,SIGNAL(partHidden()),this,SLOT(updateGUI()));
   connect(parameterView,SIGNAL(nbSpikeGroupsHasBeenModified(int)),this,SLOT(nbSpikeGroupsModified(int)));
-  connect(parameterView,SIGNAL(fileHasBeenModified(QValueList<QString>)),this,SLOT(fileModification(QValueList<QString>)));
-  connect(parameterView,SIGNAL(scriptListHasBeenModified(const QValueList<QString>&)),this,SLOT(scriptModification(const QValueList<QString>&)));
+  connect(parameterView,SIGNAL(fileHasBeenModified(Q3ValueList<QString>)),this,SLOT(fileModification(Q3ValueList<QString>)));
+  connect(parameterView,SIGNAL(scriptListHasBeenModified(const Q3ValueList<QString>&)),this,SLOT(scriptModification(const Q3ValueList<QString>&)));
 
 
 
@@ -452,9 +457,9 @@ void ndManager::slotFileClose(){
   bool hasBeenCancel = false;
 
   //check first if some scripts have been modified
-  QValueList<QString> scriptModified = parameterView->modifiedScripts();
+  Q3ValueList<QString> scriptModified = parameterView->modifiedScripts();
   if(scriptModified.size() != 0){
-   QValueList<QString>::iterator iterator;
+   Q3ValueList<QString>::iterator iterator;
    for(iterator = scriptModified.begin(); iterator != scriptModified.end(); ++iterator){
     QString name = *iterator;
     switch(KMessageBox::warningYesNoCancel(0,tr("The script " + name + " has been modified, do you want to save the it?"),tr("Script modification"),KGuiItem("Save"),KGuiItem("Discard"))){
@@ -471,9 +476,9 @@ void ndManager::slotFileClose(){
   }
 
   //check if some descriptions have been modified
-  QValueList<QString> programModified = parameterView->modifiedProgramDescription();
+  Q3ValueList<QString> programModified = parameterView->modifiedProgramDescription();
   if(programModified.size() != 0){
-   QValueList<QString>::iterator iterator;
+   Q3ValueList<QString>::iterator iterator;
    for(iterator = programModified.begin(); iterator != programModified.end(); ++iterator){
     QString name = *iterator;
     switch(KMessageBox::warningYesNoCancel(0,tr("The description of the program " + name + " has been modified, do you want to save the it?"),tr("Program description modification"),KGuiItem("Save"),KGuiItem("Discard"))){
@@ -534,9 +539,9 @@ bool ndManager::queryClose()
   if(doc == 0 || mainDock == 0L) return true;
   else{
    //check first if some scripts have been modified
-   QValueList<QString> scriptModified = parameterView->modifiedScripts();
+   Q3ValueList<QString> scriptModified = parameterView->modifiedScripts();
    if(scriptModified.size() != 0){
-    QValueList<QString>::iterator iterator;
+    Q3ValueList<QString>::iterator iterator;
     for(iterator = scriptModified.begin(); iterator != scriptModified.end(); ++iterator){
      QString name = *iterator;
      switch(KMessageBox::warningYesNoCancel(0,tr("The script " + name + " has been modified, do you want to save the it?"),tr("Script modification"),KGuiItem("Save"),KGuiItem("Discard"))){
@@ -553,9 +558,9 @@ bool ndManager::queryClose()
    }
 
   //check if some descriptions have been modified
-  QValueList<QString> programModified = parameterView->modifiedProgramDescription();
+  Q3ValueList<QString> programModified = parameterView->modifiedProgramDescription();
   if(programModified.size() != 0){
-   QValueList<QString>::iterator iterator;
+   Q3ValueList<QString>::iterator iterator;
    for(iterator = programModified.begin(); iterator != programModified.end(); ++iterator){
     QString name = *iterator;
     switch(KMessageBox::warningYesNoCancel(0,tr("The description of the program " + name + " has been modified, do you want to save the it?"),tr("Program description modification"),KGuiItem("Save"),KGuiItem("Discard"))){
@@ -766,9 +771,9 @@ void ndManager::slotQuery(){
 		// Read HTML footer from file
 		KStandardDirs d;
 		QFile htmlFile(d.findResource("data","ndmanager/queryreport.html"));
-		if(htmlFile.open(IO_ReadOnly))
+		if(htmlFile.open(QIODevice::ReadOnly))
 		{
-			QTextStream stream(&htmlFile);
+			Q3TextStream stream(&htmlFile);
 			html = stream.read();
 			htmlFile.close();
 		}
@@ -794,7 +799,7 @@ void ndManager::slotQueryResult(QString message){
 }
 
 void ndManager::updateGUI(Kate::View* view){
- QPtrList<KXMLGUIClient> clients = guiFactory()->clients();
+ Q3PtrList<KXMLGUIClient> clients = guiFactory()->clients();
 
  //A part has already be added, remove it to add the current one
  if(clients.count() > 1){
@@ -807,7 +812,7 @@ void ndManager::updateGUI(Kate::View* view){
   QString path = locate("appdata","ndmanager_katepartui.rc");
   QFile file(path);
 
-  if(!file.open(IO_ReadOnly)) return;
+  if(!file.open(QIODevice::ReadOnly)) return;
   //actually load the file in a tree in  memory
   if(!kateXmlDocument.setContent(&file)){
    file.close();
@@ -823,7 +828,7 @@ void ndManager::updateGUI(Kate::View* view){
 }
 
 void ndManager::updateGUI(){
- QPtrList<KXMLGUIClient> clients = guiFactory()->clients();
+ Q3PtrList<KXMLGUIClient> clients = guiFactory()->clients();
 
  //A part has already be added, remove
  if(clients.count() > 1){
@@ -860,13 +865,13 @@ void ndManager::nbSpikeGroupsModified(int nbGroups){
  }
 }
 
-void ndManager::fileModification(QValueList<QString> extensions){
+void ndManager::fileModification(Q3ValueList<QString> extensions){
  if(managerView != 0L){
   managerView->updateFileList(extensions);
  }
 }
 
-void ndManager::scriptModification(const QValueList<QString>& scriptNames){
+void ndManager::scriptModification(const Q3ValueList<QString>& scriptNames){
  if(managerView != 0L){
   managerView->updateScriptList(scriptNames);
  }
@@ -878,7 +883,7 @@ void ndManager::checkBeforeLaunchingPrograms(){
   else{
    if(parameterView->isModified()) managerView->updateDocumentInformation(doc->url(),false);
    else{
-    QValueList<QString> programModified = parameterView->modifiedProgramDescription();
+    Q3ValueList<QString> programModified = parameterView->modifiedProgramDescription();
     if(programModified.size()!= 0) managerView->updateDocumentInformation(doc->url(),false);
     else managerView->updateDocumentInformation(doc->url(),true);
    }
@@ -892,10 +897,10 @@ void ndManager::checkBeforeLaunchingScripts(){
   else{
    if(parameterView->isModified()) managerView->updateDocumentInformation(doc->url(),false);
    else{
-    QValueList<QString> programModified = parameterView->modifiedProgramDescription();
+    Q3ValueList<QString> programModified = parameterView->modifiedProgramDescription();
     if(programModified.size()!= 0) managerView->updateDocumentInformation(doc->url(),false);
     else{
-     QValueList<QString> scriptModified = parameterView->modifiedScripts();
+     Q3ValueList<QString> scriptModified = parameterView->modifiedScripts();
      if(scriptModified.size()!= 0) managerView->updateDocumentInformation(doc->url(),false);
      else managerView->updateDocumentInformation(doc->url(),true);
     }

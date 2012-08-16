@@ -21,8 +21,11 @@
 #include "anatomypage.h"
 
 // include files for QT
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <qstringlist.h>
+//Added by qt3to4:
+#include <QEvent>
+#include <Q3MemArray>
 
 AnatomyPage::AnatomyPage(QWidget* parent, const char *name)
  : AnatomyLayout(parent, name),nbChannels(0),isIncorrectRow(false),incorrectRow(0),modified(false){
@@ -60,7 +63,7 @@ bool AnatomyPage::eventFilter(QObject* object,QEvent* event){
    int column = groupTable->currentColumn();
    QWidget* widget = groupTable->cellWidget(row,column);
    if(widget != 0 && widget->isA("QLineEdit")){
-    QTableItem* item = groupTable->item(row,column);
+    Q3TableItem* item = groupTable->item(row,column);
     item->setContentFromEditor(widget);
     return true;
    }
@@ -72,13 +75,13 @@ bool AnatomyPage::eventFilter(QObject* object,QEvent* event){
 }
 
 void AnatomyPage::setAttributes(const QMap<QString, QMap<int,QString> >& attributes){
- QHeader* header = attributesTable->horizontalHeader();
+ Q3Header* header = attributesTable->horizontalHeader();
  for(int i =0; i<attributesTable->numCols();++i){
   QMap<int,QString> values = attributes[header->label(i)];//the headers have been set in the ui file and the corresponding entries in the map in the xmlreader
   //insert the values in the table and set the line headers
   for(int j = 0;j<nbChannels;++j){
   
-   QTableItem* item = new QTableItem(attributesTable,QTableItem::WhenCurrent,values[j]);
+   Q3TableItem* item = new Q3TableItem(attributesTable,Q3TableItem::WhenCurrent,values[j]);
    item->setWordWrap(true);
    attributesTable->setItem(j,i,item);
    attributesTable->verticalHeader()->setLabel(j,QString("%1").arg(j));
@@ -89,7 +92,7 @@ void AnatomyPage::setAttributes(const QMap<QString, QMap<int,QString> >& attribu
 
 void AnatomyPage::getAttributes(QMap<QString, QMap<int,QString> >& attributesMap)const{
   
- QHeader* header = attributesTable->horizontalHeader();
+ Q3Header* header = attributesTable->horizontalHeader();
  for(int i =0; i<attributesTable->numCols();++i){
   QMap<int,QString> values;
   for(int j = 0;j<nbChannels;++j){  
@@ -100,15 +103,15 @@ void AnatomyPage::getAttributes(QMap<QString, QMap<int,QString> >& attributesMap
  }
 }
 
-void AnatomyPage::setGroups(const QMap<int, QValueList<int> >& groups){
+void AnatomyPage::setGroups(const QMap<int, Q3ValueList<int> >& groups){
  for(int i =0; i<groupTable->numRows();++i) groupTable->removeRow(i);
  groupTable->setNumRows(groups.count());
   
- QMap<int,QValueList<int> >::const_iterator iterator;
+ QMap<int,Q3ValueList<int> >::const_iterator iterator;
  //The iterator gives the keys sorted.
  for(iterator = groups.begin(); iterator != groups.end(); ++iterator){
-  QValueList<int> channelIds = iterator.data();
-  QValueList<int>::iterator channelIterator;
+  Q3ValueList<int> channelIds = iterator.data();
+  Q3ValueList<int>::iterator channelIterator;
   
   //create the string containing the channel ids
   QString group;
@@ -117,18 +120,18 @@ void AnatomyPage::setGroups(const QMap<int, QValueList<int> >& groups){
    group.append(" ");
   }
   
-  QTableItem* item = new QTableItem(groupTable,QTableItem::WhenCurrent,group);
+  Q3TableItem* item = new Q3TableItem(groupTable,Q3TableItem::WhenCurrent,group);
   item->setWordWrap(true);
   groupTable->setItem(iterator.key() - 1,0,item);
   groupTable->adjustRow(iterator.key() - 1);
  }//end of groups loop
 }
 
-void AnatomyPage::getGroups(QMap<int, QValueList<int> >& groups)const{
+void AnatomyPage::getGroups(QMap<int, Q3ValueList<int> >& groups)const{
  
  int groupId = 1;
  for(int i =0; i<groupTable->numRows();++i){
-  QValueList<int> channels;
+  Q3ValueList<int> channels;
   QString item = groupTable->text(i,0);
   QString channelList = item.simplifyWhiteSpace();
   if(channelList == " ") continue;
@@ -146,14 +149,14 @@ void AnatomyPage::getGroups(QMap<int, QValueList<int> >& groups)const{
   int nbSelections = groupTable->numSelections();
     
   if(nbSelections > 0){
-   QValueList< QMemArray<int> > rowsToRemove;
+   Q3ValueList< Q3MemArray<int> > rowsToRemove;
    //Look up the rows to be removed
    for(int j = 0; j < nbSelections;++j){
-    QTableSelection selection = groupTable->selection(j);
+    Q3TableSelection selection = groupTable->selection(j);
     bool active = selection.isActive();
     if(active){
      int nbRows = selection.bottomRow() - selection.topRow() + 1;
-     QMemArray<int> rows(nbRows);
+     Q3MemArray<int> rows(nbRows);
      for(int i = 0; i < nbRows;++i){
        rows[i] = selection.topRow() + i;
      }
@@ -161,7 +164,7 @@ void AnatomyPage::getGroups(QMap<int, QValueList<int> >& groups)const{
     }
    }
    //Actually remove the rows
-   QValueList< QMemArray<int> >::iterator iterator;
+   Q3ValueList< Q3MemArray<int> >::iterator iterator;
    for(iterator = rowsToRemove.begin(); iterator != rowsToRemove.end(); ++iterator) groupTable->removeRows(*iterator);
   }  
  }

@@ -22,7 +22,7 @@
 
 // include files for QT
 #include <qwidget.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 
 // include files for KDE
 
@@ -53,7 +53,7 @@ void ChannelOffsetsPage::getOffsets(QMap<int,int>& offsets){
   for(iterator = offsets.begin(); iterator != offsets.end(); ++iterator){
    int channelId = iterator.key();
    offsetTable->verticalHeader()->setLabel(channelId,QString("%1").arg(channelId));   
-   QTableItem* item = new QTableItem(offsetTable,QTableItem::OnTyping,QString("%1").arg(iterator.data()));
+   Q3TableItem* item = new Q3TableItem(offsetTable,Q3TableItem::OnTyping,QString("%1").arg(iterator.data()));
    item->setWordWrap(true);
    offsetTable->setItem(channelId,0,item);
   }

@@ -24,10 +24,12 @@
 // include files for QT
 #include <qwidget.h>
 #include <qvalidator.h>
-#include <qlistview.h>
-#include <qdict.h>
+#include <q3listview.h>
+#include <q3dict.h>
 #include <qwidget.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
+//Added by qt3to4:
+#include <Q3Frame>
 
 // include files for KDE
 #include <kjanuswidget.h> 
@@ -108,11 +110,11 @@ public:
   * @param peakSampleIndex the sample index corresponding to the peak of the spike; value use dby NeuroScope.
   * @param traceBackgroundImage background image for the trace view in NeuroScope.   
   */
-  void initialize(QMap<int, QValueList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes,
-                          QMap<int, QValueList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& spikeGroupsInformation,QMap<int, QValueList<QString> >& units,
+  void initialize(QMap<int, Q3ValueList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes,
+                          QMap<int, Q3ValueList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& spikeGroupsInformation,QMap<int, Q3ValueList<QString> >& units,
                           GeneralInformation& generalInformation,QMap<QString,double>& acquisitionSystemInfo,QMap<QString,double>& videoInformation,
-                          QValueList<FileInformation>& files,QValueList<ChannelColors>& channelColors,QMap<int,int>& channelDefaultOffsets,
-                          NeuroscopeVideoInfo& neuroscopeVideoInfo,QValueList<ProgramInformation>& programs,
+                          Q3ValueList<FileInformation>& files,Q3ValueList<ChannelColors>& channelColors,QMap<int,int>& channelDefaultOffsets,
+                          NeuroscopeVideoInfo& neuroscopeVideoInfo,Q3ValueList<ProgramInformation>& programs,
                            double lfpRate,float screenGain,int nbSamples,int peakSampleIndex,QString traceBackgroundImage);
   
   /**Gets the information from the parameter pages.
@@ -137,11 +139,11 @@ public:
   * @param peakSampleIndex the sample index corresponding to the peak of the spike; value use dby NeuroScope
   * @param traceBackgroundImage background image for the trace view in NeuroScope     
   */
-  void getInformation(QMap<int, QValueList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes,
-                          QMap<int, QValueList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& spikeGroupsInformation,QMap<int, QValueList<QString> >& units,
+  void getInformation(QMap<int, Q3ValueList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes,
+                          QMap<int, Q3ValueList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& spikeGroupsInformation,QMap<int, Q3ValueList<QString> >& units,
                           GeneralInformation& generalInformation,QMap<QString,double>& acquisitionSystemInfo,QMap<QString,double>& videoInformation,
-                          QValueList<FileInformation>& files,QValueList<ChannelColors>& channelColors,QMap<int,int>& channelDefaultOffsets,
-                          NeuroscopeVideoInfo& neuroscopeVideoInfo,QValueList<ProgramInformation>& programs,
+                          Q3ValueList<FileInformation>& files,Q3ValueList<ChannelColors>& channelColors,QMap<int,int>& channelDefaultOffsets,
+                          NeuroscopeVideoInfo& neuroscopeVideoInfo,Q3ValueList<ProgramInformation>& programs,
                            double& lfpRate,float& screenGain,int& nbSamples,int& peakSampleIndex,QString& traceBackgroundImage);
                             
  /**True if at least one parameter has been modified, false otherwise.*/
@@ -150,14 +152,14 @@ public:
  /**Returns the list of the names of the programs for which the script is currently modified.
  * @return list of the names of the programs having their script modified.
  */
- QValueList<QString> modifiedScripts();
+ Q3ValueList<QString> modifiedScripts();
  
 /**Returns the list of the names of the programs for which the program description is currently modified.
  * The program description includes the program name, the number of parameters, their name and status, 
  * and the help.
  * @return list of the names of the programs having their description modified.
  */
- QValueList<QString> modifiedProgramDescription();
+ Q3ValueList<QString> modifiedProgramDescription();
  
                            
  /**Warns all the pages that the current state has been saved.*/
@@ -181,12 +183,12 @@ public:
  /**Returns a list containing all the extensions of the specific files.
  * @return extension list.
  */
- inline QValueList<QString> getFileExtensions()const{return files->getFileExtensions();}
+ inline Q3ValueList<QString> getFileExtensions()const{return files->getFileExtensions();}
 
  /**Returns a list containing all the script names.
  * @return script name list.
  */
- inline const QValueList<QString>& getFileScriptNames()const{return programNames;};
+ inline const Q3ValueList<QString>& getFileScriptNames()const{return programNames;};
  
 signals:
   /**
@@ -207,10 +209,10 @@ signals:
   void nbSpikeGroupsHasBeenModified(int nbGroups);
 
   /**This signal is used to update of the dropdown list containing the file extensions in the managerView.*/
-  void fileHasBeenModified(QValueList<QString> extensions);
+  void fileHasBeenModified(Q3ValueList<QString> extensions);
 
   /**This signal is used to update of the dropdown list containing the script names in the managerView.*/
-  void scriptListHasBeenModified(const QValueList<QString>& scriptNames);
+  void scriptListHasBeenModified(const Q3ValueList<QString>& scriptNames);
    
 public slots:
   
@@ -249,7 +251,7 @@ public slots:
   /**Triggers the update of the dropdown list containing the file extensions in the managerView.
   * @param extensions list containing the extensions of all the specific files.
   */
-  inline void fileModification(QValueList<QString> extensions){emit fileHasBeenModified(extensions);};
+  inline void fileModification(Q3ValueList<QString> extensions){emit fileHasBeenModified(extensions);};
 
 private slots:
 
@@ -318,13 +320,13 @@ private:
   ProgramsPage* programs;
   
   /**Pointer on the frame containing the page with the information for the programs.*/
-  QFrame* programsFrame;
+  Q3Frame* programsFrame;
   
   /**Dictionary containing all the programs.*/
-  QDict<ProgramPage> programDict;
+  Q3Dict<ProgramPage> programDict;
   
   /**List containg all the program names.*/
-  QValueList<QString> programNames;
+  Q3ValueList<QString> programNames;
   
   /**Counter given the number existing programs. */
   int counter;

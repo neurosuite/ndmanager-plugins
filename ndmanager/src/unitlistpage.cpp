@@ -24,8 +24,11 @@
 
 
 // include files for QT
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <qstringlist.h>
+//Added by qt3to4:
+#include <QEvent>
+#include <Q3MemArray>
 
 UnitListPage::UnitListPage(QWidget* parent, const char *name) :
 UnitListLayout(parent,name),nbUnits(0),isIncorrect(false),incorrectRow(0),modified(false)
@@ -69,7 +72,7 @@ bool UnitListPage::eventFilter(QObject* object,QEvent* event)
 			QWidget* widget = unitTable->cellWidget(row,column);
 			if(widget != 0 && widget->isA("QLineEdit"))
 			{				
-				QTableItem* item = unitTable->item(row,column);				
+				Q3TableItem* item = unitTable->item(row,column);				
 				if(!static_cast<QLineEdit*>(widget)->text().isEmpty())
 				item->setContentFromEditor(widget);
 				return true;
@@ -81,31 +84,31 @@ bool UnitListPage::eventFilter(QObject* object,QEvent* event)
 	else return QWidget::eventFilter(object,event); 
 }
 	
-void UnitListPage::setUnits(const QMap<int, QValueList<QString> >& units)
+void UnitListPage::setUnits(const QMap<int, Q3ValueList<QString> >& units)
 {
 	for (int i =0; i<unitTable->numRows();++i) unitTable->removeRow(i);
 	unitTable->setNumRows(units.count());
 	
-	QMap<int,QValueList<QString> >::const_iterator iterator;
+	QMap<int,Q3ValueList<QString> >::const_iterator iterator;
 	//The iterator gives the keys sorted.
 	for (iterator = units.begin(); iterator != units.end(); ++iterator)
 	{
-		QValueList<QString> info = iterator.data();
+		Q3ValueList<QString> info = iterator.data();
 		for (uint i=0;i<info.count();++i)
 		{ 
-			UnitTableItem* item = new UnitTableItem(unitTable,QTableItem::OnTyping,info[i]);
+			UnitTableItem* item = new UnitTableItem(unitTable,Q3TableItem::OnTyping,info[i]);
 			item->setWordWrap(true);
 			unitTable->setItem(iterator.key(),i,item); 
 		}
 	}//end of units loop
 }
 
-void UnitListPage::getUnits(QMap<int, QValueList<QString> >& units)const
+void UnitListPage::getUnits(QMap<int, Q3ValueList<QString> >& units)const
 { 
 	int unitId = 1;
 	for(int i =0; i<unitTable->numRows();++i)
 	{
-		QValueList<QString> info;
+		Q3ValueList<QString> info;
 		for(int j = 0;j < unitTable->numCols(); ++j)
 		{
 			QString text = unitTable->text(i,j);
@@ -124,22 +127,22 @@ void UnitListPage::removeUnit()
 		
 	if (nbSelections > 0)
 	{
-		QValueList< QMemArray<int> > rowsToRemove;
+		Q3ValueList< Q3MemArray<int> > rowsToRemove;
 		//Look up the rows to be removed
 		for (int j = 0; j < nbSelections;++j)
 		{
-			QTableSelection selection = unitTable->selection(j);
+			Q3TableSelection selection = unitTable->selection(j);
 			bool active = selection.isActive();
 			if (active)
 			{
 				int nbRows = selection.bottomRow() - selection.topRow() + 1;
-				QMemArray<int> rows(nbRows);
+				Q3MemArray<int> rows(nbRows);
 				for(int i = 0; i < nbRows;++i) rows[i] = selection.topRow() + i;
 				rowsToRemove.append(rows);
 			}
 		}
 		//Actually remove the rows
-		QValueList< QMemArray<int> >::iterator iterator;
+		Q3ValueList< Q3MemArray<int> >::iterator iterator;
 		for (iterator = rowsToRemove.begin(); iterator != rowsToRemove.end(); ++iterator) unitTable->removeRows(*iterator);
 	}  
 }

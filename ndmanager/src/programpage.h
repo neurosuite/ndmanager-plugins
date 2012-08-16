@@ -26,7 +26,7 @@
 
 // include files for QT
 #include <qwidget.h>
-#include <qframe.h>
+#include <q3frame.h>
 
 //include files for KDE
 #include <kurl.h> 
@@ -35,7 +35,7 @@
 //forward declaration
 class QTabWidget;
 class QPushButton;
-class QTextEdit;
+class Q3TextEdit;
 
 //General C++ include files
 #include <iostream>
@@ -44,7 +44,7 @@ using namespace std;
 /**
 @author Lynn Hazan
 */
-class ProgramPage : public QFrame
+class ProgramPage : public Q3Frame
 {
 Q_OBJECT
 public:
@@ -141,12 +141,12 @@ private:
  QPushButton* saveScriptButton; 
  QPushButton* saveParametersButton;      
  ParameterPage* parameters;
- QTextEdit* script; 
+ Q3TextEdit* script; 
  bool sciptIsModified;
  bool isInit;
  QString programName;
  KURL descriptionUrl;
- QTextEdit* help;
+ Q3TextEdit* help;
  bool helpIsModified;
  EditorManager* editorMgr;
  KTextEditor::Document* scriptDoc;

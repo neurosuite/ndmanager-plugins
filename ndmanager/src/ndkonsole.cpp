@@ -27,6 +27,10 @@
 // include files for Qt
 #include <qdir.h> 
 #include <qlayout.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
+#include <QShowEvent>
+#include <Q3CString>
 
 //General C++ include files
 #include <iostream>
@@ -34,7 +38,7 @@ using namespace std;
  
 NdKonsole::NdKonsole(QWidget *parent, const char *name)
  : QWidget(parent, name),part(0L),isPart(false),directory(""){
- layout = new QVBoxLayout(this);
+ layout = new Q3VBoxLayout(this);
  
 }
 
@@ -107,7 +111,7 @@ void NdKonsole::showEvent(QShowEvent *){
 } 
 
 bool NdKonsole::runCommand(QString command) const{
-	return part->writeStream(QCString(command));
+	return part->writeStream(Q3CString(command));
 }
 
 

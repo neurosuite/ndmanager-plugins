@@ -25,6 +25,10 @@
 #include <qstring.h>
 #include <qcombobox.h>
 #include <qspinbox.h> 
+//Added by qt3to4:
+#include <Q3VBoxLayout>
+#include <Q3Frame>
+#include <Q3ValueList>
 
 //Include for the application
 #include "launcherpage.h"
@@ -37,7 +41,7 @@
 /**
 @author Lynn Hazan
 */
-class ManagerView : public QFrame/*QSplitter*/
+class ManagerView : public Q3Frame/*QSplitter*/
 {
 Q_OBJECT
 public:
@@ -54,8 +58,8 @@ public:
   * @param scriptNames list containing the script names.
   * @return message indicating if the konsole could be added.
   */
-  returnMessage addKonsole(const KURL url,int nbSpikeGroups,QValueList<QString> fileExtensions,
-                          const QValueList<QString>& scriptNames); 
+  returnMessage addKonsole(const KURL url,int nbSpikeGroups,Q3ValueList<QString> fileExtensions,
+                          const Q3ValueList<QString>& scriptNames); 
 
   /** Updates the dropdown list containing the spike groups used to launch Klusters.
   * @param nbGroups the new number of spike groups.
@@ -65,12 +69,12 @@ public:
   /**Triggers the update of the dropdown list containing the file extensions.
   * @param extensions list containing the extensions of all the specific files.
   */
-  void updateFileList(QValueList<QString> extensions);
+  void updateFileList(Q3ValueList<QString> extensions);
 
   /**Triggers the update of the dropdown list containing the script names.
   * @param scriptNames list containing the script names.
   */
-  void updateScriptList(const QValueList<QString>& scriptNames);
+  void updateScriptList(const Q3ValueList<QString>& scriptNames);
 
   /** Updates the parameter file url.
   * @param url url of the currently open parameter file.
@@ -113,7 +117,7 @@ private:
  NdKonsole* konsole;  
  LauncherPage* launcherpage;
  KToolBar* toolbar;
- QVBoxLayout* frameLayout;
+ Q3VBoxLayout* frameLayout;
  QComboBox* neuroscopeComboBox;
  QComboBox* klustersComboBox;
  QComboBox* scriptsComboBox;

@@ -25,13 +25,16 @@
 
 // include files for QT
 #include <qwidget.h>
-#include <qtable.h>
+#include <q3table.h>
 #include <qpushbutton.h>
 #include <qmap.h>
 #include <qregexp.h>
-#include <qheader.h> 
-#include <qmemarray.h> 
+#include <q3header.h> 
+#include <q3memarray.h> 
 #include <qlineedit.h>
+//Added by qt3to4:
+#include <QEvent>
+#include <Q3ValueList>
 
 // include files for KDE
 
@@ -67,12 +70,12 @@ public:
  /** Initializes the group table.
  * @param groups map containing the list of channels for each group except the trash group.
  */
- void setGroups(const QMap<int, QValueList<int> >& groups);
+ void setGroups(const QMap<int, Q3ValueList<int> >& groups);
  
  /**Returns the composition of the anatomical groups.
  * @param groups map containing the list of channels for each group except trash group.
  */ 
- void getGroups(QMap<int, QValueList<int> >& groups)const;
+ void getGroups(QMap<int, Q3ValueList<int> >& groups)const;
  
  /**Initializes the number of channels used.
  * @param nbChannels number of channels.
@@ -100,7 +103,7 @@ public slots:
   modified = true;
   groupTable->insertRows(groupTable->numRows());
   //Use of the the 3 parameter constructor to be qt 3.1 compatible
-  QTableItem* item = new QTableItem(groupTable,QTableItem::WhenCurrent,"");
+  Q3TableItem* item = new Q3TableItem(groupTable,Q3TableItem::WhenCurrent,"");
   item->setWordWrap(true);
   groupTable->setItem(groupTable->numRows() - 1,0,item);
  };
@@ -151,7 +154,7 @@ public slots:
  inline void attributeChanged(int row,int column){
   modified = true;
   //hard coded that the skip attribut is an int, later it can be made more dynamic
-  QHeader* header = attributesTable->horizontalHeader();
+  Q3Header* header = attributesTable->horizontalHeader();
   QString attributName = header->label(column);
   if(attributName == "Skip"){
    bool ok;

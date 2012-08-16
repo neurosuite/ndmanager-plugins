@@ -23,6 +23,10 @@
 
 // include files for QT
 #include <qlabel.h> 
+//Added by qt3to4:
+#include <QEvent>
+#include <Q3MemArray>
+#include <Q3ValueList>
 
 //General C++ include files
 #include <iostream>
@@ -64,9 +68,9 @@ bool SpikePage::eventFilter(QObject* object,QEvent* event){
    int column = groupTable->currentColumn();
    QWidget* widget = groupTable->cellWidget(row,column);
    if(widget != 0 && widget->isA("QLineEdit")){
-    QTableItem* item = groupTable->item(row,column);
+    Q3TableItem* item = groupTable->item(row,column);
      if(item == NULL){
-     item = new QTableItem(groupTable,QTableItem::WhenCurrent,static_cast<QLineEdit*>(widget)->text());
+     item = new Q3TableItem(groupTable,Q3TableItem::WhenCurrent,static_cast<QLineEdit*>(widget)->text());
      item->setWordWrap(true);
      groupTable->setItem(row,column,item);
     }
@@ -80,16 +84,16 @@ bool SpikePage::eventFilter(QObject* object,QEvent* event){
  else return QWidget::eventFilter(object,event); 
 }
 
-void SpikePage::setGroups(const QMap<int, QValueList<int> >& groups,const QMap<int, QMap<QString,QString> >& information){
+void SpikePage::setGroups(const QMap<int, Q3ValueList<int> >& groups,const QMap<int, QMap<QString,QString> >& information){
  //Clean the groupTable, just in case, before creating empty rows.
  for(int i =0; i<groupTable->numRows();++i) groupTable->removeRow(i);
  groupTable->setNumRows(groups.count());
   
- QMap<int,QValueList<int> >::const_iterator iterator;
+ QMap<int,Q3ValueList<int> >::const_iterator iterator;
  //The iterator gives the keys sorted.
  for(iterator = groups.begin(); iterator != groups.end(); ++iterator){
-  QValueList<int> channelIds = iterator.data();
-  QValueList<int>::iterator channelIterator;
+  Q3ValueList<int> channelIds = iterator.data();
+  Q3ValueList<int>::iterator channelIterator;
   
   //create the string containing the channel ids
   QString group;
@@ -98,7 +102,7 @@ void SpikePage::setGroups(const QMap<int, QValueList<int> >& groups,const QMap<i
    group.append(" ");
   }
     
-  QTableItem* item = new QTableItem(groupTable,QTableItem::WhenCurrent,group);
+  Q3TableItem* item = new Q3TableItem(groupTable,Q3TableItem::WhenCurrent,group);
   item->setWordWrap(true);
   groupTable->setItem(iterator.key() - 1,0,item);
 
@@ -107,17 +111,17 @@ void SpikePage::setGroups(const QMap<int, QValueList<int> >& groups,const QMap<i
   //The positions of the information in the table are hard coded (for the moment :0) )
   for(iterator2 = groupInformation.begin(); iterator2 != groupInformation.end(); ++iterator2){
    if(iterator2.key() == NB_SAMPLES){
-    QTableItem* item = new QTableItem(groupTable,QTableItem::WhenCurrent,iterator2.data());
+    Q3TableItem* item = new Q3TableItem(groupTable,Q3TableItem::WhenCurrent,iterator2.data());
     item->setWordWrap(true);
     groupTable->setItem(iterator.key() - 1,1,item);
    } 
    if(iterator2.key() == PEAK_SAMPLE_INDEX){
-    QTableItem* item = new QTableItem(groupTable,QTableItem::WhenCurrent,iterator2.data());
+    Q3TableItem* item = new Q3TableItem(groupTable,Q3TableItem::WhenCurrent,iterator2.data());
     item->setWordWrap(true);
     groupTable->setItem(iterator.key() - 1,2,item);    
    } 
    if(iterator2.key() == NB_FEATURES){
-    QTableItem* item = new QTableItem(groupTable,QTableItem::WhenCurrent,iterator2.data());
+    Q3TableItem* item = new Q3TableItem(groupTable,Q3TableItem::WhenCurrent,iterator2.data());
     item->setWordWrap(true);
     groupTable->setItem(iterator.key() - 1,3,item);
    } 
@@ -128,11 +132,11 @@ void SpikePage::setGroups(const QMap<int, QValueList<int> >& groups,const QMap<i
 
 
 
-void SpikePage::getGroups(QMap<int, QValueList<int> >& groups)const{
+void SpikePage::getGroups(QMap<int, Q3ValueList<int> >& groups)const{
  
  int groupId = 1;
  for(int i =0; i<groupTable->numRows();++i){
-  QValueList<int> channels;
+  Q3ValueList<int> channels;
   QString item = groupTable->text(i,0);
   QString channelList = item.simplifyWhiteSpace();
   if(channelList == " ") continue;
@@ -170,14 +174,14 @@ void SpikePage::removeGroup(){
   modified = true;
   int nbSelections = groupTable->numSelections();
   if(nbSelections > 0){
-   QValueList< QMemArray<int> > rowsToRemove;
+   Q3ValueList< Q3MemArray<int> > rowsToRemove;
    //Look up the rows to be removed
    for(int j = 0; j < nbSelections;++j){
-    QTableSelection selection = groupTable->selection(j);
+    Q3TableSelection selection = groupTable->selection(j);
     bool active = selection.isActive();
     if(active){
      int nbRows = selection.bottomRow() - selection.topRow() + 1;
-     QMemArray<int> rows(nbRows);
+     Q3MemArray<int> rows(nbRows);
      for(int i = 0; i < nbRows;++i){
        rows[i] = selection.topRow() + i;
      }
@@ -185,7 +189,7 @@ void SpikePage::removeGroup(){
     }
    }
    //Actually remove the rows
-   QValueList< QMemArray<int> >::iterator iterator;
+   Q3ValueList< Q3MemArray<int> >::iterator iterator;
    for(iterator = rowsToRemove.begin(); iterator != rowsToRemove.end(); ++iterator) groupTable->removeRows(*iterator);
   }  
   emit nbGroupsModified(groupTable->numRows());

@@ -27,6 +27,8 @@
 //include files for QT
 #include <qfile.h> 
 #include <qstring.h> 
+//Added by qt3to4:
+#include <Q3ValueList>
 
 //General C++ include files
 #include <iostream>
@@ -136,10 +138,10 @@ void XmlReader::getAcquisitionSystemInfo(QMap<QString,double>& acquisitionSystem
  xmlXPathFreeObject(result);
 }
 
-void XmlReader::getAnatomicalDescription(int nbChannels,QMap<int, QValueList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes){
+void XmlReader::getAnatomicalDescription(int nbChannels,QMap<int, Q3ValueList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes){
  //First, everything is put in the trash group with a skip status at false (this correspond to no anatomical group).
  //Then reading for the file, the right information is set.
- QValueList<int> trashList;
+ Q3ValueList<int> trashList;
  //the attributes names are hard coded. For the moment therei is only one (skip)
  QMap<int,QString> skipStatus;
  for(int i = 0; i < nbChannels; ++i){
@@ -158,7 +160,7 @@ void XmlReader::getAnatomicalDescription(int nbChannels,QMap<int, QValueList<int
    //loop on all the GROUP.
    int nbGroups = nodeset->nodeNr;
    for(int i = 0; i < nbGroups; ++i){
-    QValueList<int> channelList;
+    Q3ValueList<int> channelList;
     xmlNodePtr child;
     for(child = nodeset->nodeTab[i]->children;child != NULL;child = child->next){
      //skip the carriage return (text node named text and containing /n)
@@ -193,13 +195,13 @@ void XmlReader::getAnatomicalDescription(int nbChannels,QMap<int, QValueList<int
 }
 
 
-void XmlReader::getSpikeDescription(int nbChannels,QMap<int, QValueList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& information){
+void XmlReader::getSpikeDescription(int nbChannels,QMap<int, Q3ValueList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& information){
  //Anatomical goups and spike groups share the trash group. the spikeChannelsGroups already contains the trash group, if any, set after retrieving the anatomical groups information.
  //At first, if a channel is not in the trash group it is put in the undefined group, the -1 (this correspond to no spike group).
  //Then reading for the file, the right information is set.
- QValueList<int> trashList;
+ Q3ValueList<int> trashList;
  if(spikeGroups.contains(0)) trashList = spikeGroups[0];
- QValueList<int> spikeTrashList;
+ Q3ValueList<int> spikeTrashList;
  for(int i = 0; i < nbChannels; ++i){
   if(!trashList.contains(i)) spikeTrashList.append(i);
  }
@@ -224,7 +226,7 @@ void XmlReader::getSpikeDescription(int nbChannels,QMap<int, QValueList<int> >& 
      if(QString((char*)child->name) == CHANNELS){
       //loop on the channels
       xmlNodePtr channels;
-      QValueList<int> channelList;
+      Q3ValueList<int> channelList;
       for(channels = child->children;channels != NULL;channels = channels->next){
        //skip the carriage return (text node named text and containing /n)
        if(channels->type == XML_TEXT_NODE) continue;
@@ -272,7 +274,7 @@ void XmlReader::getSpikeDescription(int nbChannels,QMap<int, QValueList<int> >& 
  xmlXPathFreeObject(result); 
 }
 
-void XmlReader::getUnits(QMap<int, QValueList<QString> >& units) const{
+void XmlReader::getUnits(QMap<int, Q3ValueList<QString> >& units) const{
  
  xmlXPathObjectPtr result;
  xmlChar* searchPath = xmlCharStrdup("//" + UNITS + "/" + UNIT);
@@ -286,7 +288,7 @@ void XmlReader::getUnits(QMap<int, QValueList<QString> >& units) const{
    int nbUnits = nodeset->nodeNr;
 
    for(int i = 0; i < nbUnits; ++i){
-    QValueList<QString> unitInfo;
+    Q3ValueList<QString> unitInfo;
     xmlNodePtr child;
     for(child = nodeset->nodeTab[i]->children;child != NULL;child = child->next){
      //skip the carriage return (text node named text and containing /n)
@@ -351,7 +353,7 @@ void XmlReader::getUnits(QMap<int, QValueList<QString> >& units) const{
  xmlXPathFreeObject(result);
 }
 
-void XmlReader::getChannelColors(QValueList<ChannelColors>& list)const{
+void XmlReader::getChannelColors(Q3ValueList<ChannelColors>& list)const{
  xmlXPathObjectPtr result;
  xmlChar* searchPath = xmlCharStrdup("//" + CHANNELS + "/" + CHANNEL_COLORS);
 
@@ -689,7 +691,7 @@ QString XmlReader::getTraceBackgroundImage() const{
  xmlXPathFreeObject(result); 
  }
  
- void XmlReader::getFilesInformation(QValueList<FileInformation>& files)const{
+ void XmlReader::getFilesInformation(Q3ValueList<FileInformation>& files)const{
   xmlXPathObjectPtr result;
   xmlChar* searchPath = xmlCharStrdup("//" + FILES + "/" + ndmanager::FILE);
 
@@ -720,7 +722,7 @@ QString XmlReader::getTraceBackgroundImage() const{
        fileInformation.setSamplingRate(samplingRate);
       }
       if(QString((char*)child->name) == CHANNEL_MAPPING){
-       QMap<int, QValueList<int> > mapping;
+       QMap<int, Q3ValueList<int> > mapping;
        //loop on the ORIGINAL_CHANNELS which contain a list of channels
        xmlNodePtr originalChannels;
        int channelId = 0;
@@ -729,7 +731,7 @@ QString XmlReader::getTraceBackgroundImage() const{
         if(originalChannels->type == XML_TEXT_NODE) continue;
        
         if(QString((char*)originalChannels->name) == ORIGINAL_CHANNELS){
-         QValueList<int> channelList;
+         Q3ValueList<int> channelList;
          xmlNodePtr channels;
          for(channels = originalChannels->children;channels != NULL;channels = channels->next){
           //skip the carriage return (text node named text and containing /n)
@@ -758,7 +760,7 @@ QString XmlReader::getTraceBackgroundImage() const{
   xmlXPathFreeObject(result); 
  }
   
- void XmlReader::getProgramsInformation(QValueList<ProgramInformation>& programs) const{
+ void XmlReader::getProgramsInformation(Q3ValueList<ProgramInformation>& programs) const{
   xmlXPathObjectPtr result;
   xmlChar* searchPath = xmlCharStrdup("//" + PROGRAMS + "/" + PROGRAM);
 
@@ -772,7 +774,7 @@ QString XmlReader::getTraceBackgroundImage() const{
     for(int i = 0; i < nbPrograms; ++i){
      xmlNodePtr child;
      ProgramInformation programInformation;
-     QMap<int, QValueList<QString> > parameters;
+     QMap<int, Q3ValueList<QString> > parameters;
      int parameterId = 0;
      for(child = nodeset->nodeTab[i]->children;child != NULL;child = child->next){
       //skip the carriage return (text node named text and containing /n)
@@ -800,7 +802,7 @@ QString XmlReader::getTraceBackgroundImage() const{
         if(child->type == XML_TEXT_NODE) continue;
       
         if(QString((char*)parametersNode->name) == PARAMETER){
-         QValueList<QString> parameterInfo;
+         Q3ValueList<QString> parameterInfo;
          //loop on the children of the parameter tag: name, status and value
          xmlNodePtr parameter;
          for(parameter = parametersNode->children;parameter != NULL;parameter = parameter->next){
@@ -827,7 +829,7 @@ QString XmlReader::getTraceBackgroundImage() const{
            xmlFree(sValue);
            if(parameterInfo.size() == 1) parameterInfo.append(value);
            else{
-            QValueList<QString>::iterator it = parameterInfo.begin();
+            Q3ValueList<QString>::iterator it = parameterInfo.begin();
             parameterInfo.insert(++it,value);
            }
           }
@@ -858,7 +860,7 @@ void XmlReader::getProgramInformation(ProgramInformation& programInformation) co
   if(result != NULL){
    xmlNodeSetPtr nodeset = result->nodesetval;
    if(!xmlXPathNodeSetIsEmpty(nodeset)){   
-    QMap<int, QValueList<QString> > parameters;
+    QMap<int, Q3ValueList<QString> > parameters;
     int parameterId = 0;
     xmlNodePtr child;
     //There should be only one child, so take the first one.
@@ -888,7 +890,7 @@ void XmlReader::getProgramInformation(ProgramInformation& programInformation) co
        if(child->type == XML_TEXT_NODE) continue;
      
        if(QString((char*)parametersNode->name) == PARAMETER){
-        QValueList<QString> parameterInfo;
+        Q3ValueList<QString> parameterInfo;
         //loop on the children of the parameter tag: name, status and value
         xmlNodePtr parameter;
         for(parameter = parametersNode->children;parameter != NULL;parameter = parameter->next){
@@ -915,7 +917,7 @@ void XmlReader::getProgramInformation(ProgramInformation& programInformation) co
           xmlFree(sValue);
           if(parameterInfo.size() == 1) parameterInfo.append(value);
           else{
-           QValueList<QString>::iterator it = parameterInfo.begin();
+           Q3ValueList<QString>::iterator it = parameterInfo.begin();
            parameterInfo.insert(++it,value);
           }
          }       

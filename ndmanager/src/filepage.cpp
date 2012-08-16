@@ -22,6 +22,10 @@
 
 // include files for QT
 #include <qpushbutton.h>
+//Added by qt3to4:
+#include <QEvent>
+#include <Q3MemArray>
+#include <Q3ValueList>
 
 FilePage::FilePage(QWidget *parent, const char *name)
  : FileLayout(parent, name),isIncorrectRow(false),modified(false),isInit(true),extension(""){
@@ -65,7 +69,7 @@ bool FilePage::eventFilter(QObject* object,QEvent* event){
    int column = mappingTable->currentColumn();
    QWidget* widget = mappingTable->cellWidget(row,column);
    if(widget != 0 && widget->isA("QLineEdit")){
-    QTableItem* item = mappingTable->item(row,column);
+    Q3TableItem* item = mappingTable->item(row,column);
     item->setContentFromEditor(widget);
     return true;
    }
@@ -81,7 +85,7 @@ void FilePage::addChannel(){
  modified = true;
  mappingTable->insertRows(mappingTable->numRows());
  //Use of the the 3 parameter constructor to be qt 3.1 compatible 
- QTableItem* item = new QTableItem(mappingTable,QTableItem::WhenCurrent,"");
+ Q3TableItem* item = new Q3TableItem(mappingTable,Q3TableItem::WhenCurrent,"");
  item->setWordWrap(true);
  int rowId = mappingTable->numRows() - 1;
  mappingTable->setItem(rowId,0,item); 
@@ -93,14 +97,14 @@ void FilePage::removeChannel(){
  modified = true;
  int nbSelections = mappingTable->numSelections();
  if(nbSelections > 0){
-  QValueList< QMemArray<int> > rowsToRemove;
+  Q3ValueList< Q3MemArray<int> > rowsToRemove;
   //Look up the rows to be removed
   for(int j = 0; j < nbSelections;++j){
-   QTableSelection selection = mappingTable->selection(j);
+   Q3TableSelection selection = mappingTable->selection(j);
    bool active = selection.isActive();
    if(active){
     int nbRows = selection.bottomRow() - selection.topRow() + 1;
-    QMemArray<int> rows(nbRows);
+    Q3MemArray<int> rows(nbRows);
     for(int i = 0; i < nbRows;++i){
       rows[i] = selection.topRow() + i;
     }
@@ -108,20 +112,20 @@ void FilePage::removeChannel(){
    }
   }
   //Actually remove the rows
-  QValueList< QMemArray<int> >::iterator iterator;
+  Q3ValueList< Q3MemArray<int> >::iterator iterator;
   for(iterator = rowsToRemove.begin(); iterator != rowsToRemove.end(); ++iterator) mappingTable->removeRows(*iterator);
  }  
 }
 
-void FilePage::setChannelMapping(const QMap<int, QValueList<int> >& channels){
+void FilePage::setChannelMapping(const QMap<int, Q3ValueList<int> >& channels){
  for(int i =0; i<mappingTable->numRows();++i) mappingTable->removeRow(i);
  mappingTable->setNumRows(channels.count());
  
- QMap<int,QValueList<int> >::const_iterator iterator;
+ QMap<int,Q3ValueList<int> >::const_iterator iterator;
  //The iterator gives the keys sorted.
  for(iterator = channels.begin(); iterator != channels.end(); ++iterator){
-  QValueList<int> channelIds = iterator.data();
-  QValueList<int>::iterator channelIterator;
+  Q3ValueList<int> channelIds = iterator.data();
+  Q3ValueList<int>::iterator channelIterator;
   
   //create the string containing the channel ids
   QString newChannel;
@@ -130,7 +134,7 @@ void FilePage::setChannelMapping(const QMap<int, QValueList<int> >& channels){
    newChannel.append(" ");
   }
     
-  QTableItem* item = new QTableItem(mappingTable,QTableItem::WhenCurrent,newChannel);
+  Q3TableItem* item = new Q3TableItem(mappingTable,Q3TableItem::WhenCurrent,newChannel);
   item->setWordWrap(true);
   mappingTable->setItem(iterator.key() - 1,0,item);  
   
@@ -138,12 +142,12 @@ void FilePage::setChannelMapping(const QMap<int, QValueList<int> >& channels){
  }//end of groups loop
 }
 
-QMap<int, QValueList<int> > FilePage::getChannelMapping()const{
- QMap<int, QValueList<int> > channelMapping;
+QMap<int, Q3ValueList<int> > FilePage::getChannelMapping()const{
+ QMap<int, Q3ValueList<int> > channelMapping;
  
  int channelId = 1;
  for(int i =0; i<mappingTable->numRows();++i){
-  QValueList<int> channels;
+  Q3ValueList<int> channels;
   QString item = mappingTable->text(i,0);
   QString channelList = item.simplifyWhiteSpace();
   if(channelList == " " || channelList == "") continue;

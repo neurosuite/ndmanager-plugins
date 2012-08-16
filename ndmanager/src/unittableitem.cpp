@@ -18,17 +18,19 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "unittableitem.h"
+//Added by qt3to4:
+#include <QPixmap>
 
 
-UnitTableItem::UnitTableItem ( QTable * table, EditType et ): QTableItem(table,et)
+UnitTableItem::UnitTableItem ( Q3Table * table, EditType et ): Q3TableItem(table,et)
 {
 }
 
-UnitTableItem::UnitTableItem ( QTable * table, EditType et, const QString & text ): QTableItem(table,et,text)
+UnitTableItem::UnitTableItem ( Q3Table * table, EditType et, const QString & text ): Q3TableItem(table,et,text)
 {
 }
 
-UnitTableItem::UnitTableItem ( QTable * table, EditType et, const QString & text, const QPixmap & p ): QTableItem(table,et,text,p)
+UnitTableItem::UnitTableItem ( Q3Table * table, EditType et, const QString & text, const QPixmap & p ): Q3TableItem(table,et,text,p)
 {
 }
 		

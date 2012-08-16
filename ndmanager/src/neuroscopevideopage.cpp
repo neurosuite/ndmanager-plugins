@@ -21,7 +21,9 @@
 #include "neuroscopevideopage.h"
 
 //QT includes
-#include <qiconset.h>
+#include <qicon.h>
+//Added by qt3to4:
+#include <QPixmap>
 
 // include files for KDE
 #include <kiconloader.h>
@@ -42,7 +44,7 @@ NeuroscopeVideoPage::NeuroscopeVideoPage(QWidget* parent, const char *name)
 
   //Set an icon on the backgroundButton button
  KIconLoader* loader = KGlobal::iconLoader();
- backgroundButton->setIconSet(QIconSet(loader->loadIcon("fileopen", KIcon::Small)));
+ backgroundButton->setIconSet(QIcon(loader->loadIcon("fileopen", KIcon::Small)));
 }
 
 

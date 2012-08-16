@@ -20,17 +20,19 @@
 #ifndef UNITTABLEITEM_H
 #define UNITTABLEITEM_H
 
-#include <qtable.h>
+#include <q3table.h>
+//Added by qt3to4:
+#include <QPixmap>
 
 /**
 	@author Lynn Hazan <lynn.hazan@myrealbox.com>
 */
-class UnitTableItem : public QTableItem
+class UnitTableItem : public Q3TableItem
 {
 public:
-	UnitTableItem ( QTable * table, EditType et );
-	UnitTableItem ( QTable * table, EditType et, const QString & text );
-	UnitTableItem ( QTable * table, EditType et, const QString & text, const QPixmap & p );
+	UnitTableItem ( Q3Table * table, EditType et );
+	UnitTableItem ( Q3Table * table, EditType et, const QString & text );
+	UnitTableItem ( Q3Table * table, EditType et, const QString & text, const QPixmap & p );
 
 	QString key () const;
 			

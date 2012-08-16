@@ -26,6 +26,9 @@
 //General C++ include files
 #include <iostream>
 #include <fstream>
+//Added by qt3to4:
+#include <Q3TextStream>
+#include <Q3ValueList>
 using namespace std;
 
 //include files for QT
@@ -53,7 +56,7 @@ XmlWriter::~XmlWriter(){}
 
 bool XmlWriter::writeTofile(const KURL& url){ 
  QFile parameterFile(url.path());
- bool status = parameterFile.open(IO_WriteOnly);
+ bool status = parameterFile.open(QIODevice::WriteOnly);
  if(!status) return status;
 
  QDomElement neuroscope = doc.createElement(NEUROSCOPE);
@@ -77,8 +80,8 @@ bool XmlWriter::writeTofile(const KURL& url){
 
  QString xmlDocument = doc.toString();
  
- QTextStream stream(&parameterFile);
- stream.setEncoding(QTextStream::UnicodeUTF8);
+ Q3TextStream stream(&parameterFile);
+ stream.setEncoding(Q3TextStream::UnicodeUTF8);
  stream<< xmlDocument;
  parameterFile.close();
  
@@ -180,15 +183,15 @@ void XmlWriter::setLfpInformation(double lfpSamplingRate){
  lfp.appendChild(lfpElement);
 }
 
-void XmlWriter::setFilesInformation(QValueList<FileInformation>& fileList){
+void XmlWriter::setFilesInformation(Q3ValueList<FileInformation>& fileList){
  files = doc.createElement(FILES);
  
- QValueList<FileInformation>::iterator iterator;
+ Q3ValueList<FileInformation>::iterator iterator;
  for(iterator = fileList.begin(); iterator != fileList.end(); ++iterator){
   //Get the file information 
   double samplingRate = static_cast<FileInformation>(*iterator).getSamplingRate();    
   QString extension = static_cast<FileInformation>(*iterator).getExtension();
-  QMap<int, QValueList<int> > mapping = static_cast<FileInformation>(*iterator).getChannelMapping();
+  QMap<int, Q3ValueList<int> > mapping = static_cast<FileInformation>(*iterator).getChannelMapping();
   
   QDomElement fileElement = doc.createElement(ndmanager::FILE);
   
@@ -204,13 +207,13 @@ void XmlWriter::setFilesInformation(QValueList<FileInformation>& fileList){
 
   //Take care of the channel mapping
   QDomElement channelMapping = doc.createElement(CHANNEL_MAPPING);
-  QMap<int,QValueList<int> >::Iterator mappingIterator;
+  QMap<int,Q3ValueList<int> >::Iterator mappingIterator;
   //The iterator gives the keys sorted.
   for(mappingIterator = mapping.begin(); mappingIterator != mapping.end(); ++mappingIterator){
    QDomElement originalChannels = doc.createElement(ORIGINAL_CHANNELS);
-   QValueList<int> channelIds = mappingIterator.data();
+   Q3ValueList<int> channelIds = mappingIterator.data();
    
-   QValueList<int>::iterator channelIterator;
+   Q3ValueList<int>::iterator channelIterator;
    for(channelIterator = channelIds.begin(); channelIterator != channelIds.end(); ++channelIterator){
     QDomElement idElement = doc.createElement(CHANNEL);
     QDomText idValue = doc.createTextNode(QString("%1").arg(*channelIterator));
@@ -226,16 +229,16 @@ void XmlWriter::setFilesInformation(QValueList<FileInformation>& fileList){
 }
 
 
-void XmlWriter::setAnatomicalDescription(QMap<int, QValueList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes){
+void XmlWriter::setAnatomicalDescription(QMap<int, Q3ValueList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes){
  anatomicalDescription = doc.createElement(ANATOMY);
  QDomElement channelGroupsElement = doc.createElement(CHANNEL_GROUPS);
 
  //Create the anatomical groups
- QMap<int,QValueList<int> >::Iterator iterator;
+ QMap<int,Q3ValueList<int> >::Iterator iterator;
  //The iterator gives the keys sorted.
  for(iterator = anatomicalGroups.begin(); iterator != anatomicalGroups.end(); ++iterator){
-  QValueList<int> channelIds = iterator.data();
-  QValueList<int>::iterator channelIterator;
+  Q3ValueList<int> channelIds = iterator.data();
+  Q3ValueList<int>::iterator channelIterator;
 
   QDomElement groupElement = doc.createElement(GROUP);
   
@@ -255,16 +258,16 @@ void XmlWriter::setAnatomicalDescription(QMap<int, QValueList<int> >& anatomical
 
 }
 
-void  XmlWriter::setSpikeDetectionInformation(QMap<int, QValueList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& information){
+void  XmlWriter::setSpikeDetectionInformation(QMap<int, Q3ValueList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& information){
  spikeDetection = doc.createElement(SPIKE);
  QDomElement channelGroupsElement = doc.createElement(CHANNEL_GROUPS);
 
  //Create the spike groups
- QMap<int,QValueList<int> >::Iterator iterator;
+ QMap<int,Q3ValueList<int> >::Iterator iterator;
  //The iterator gives the keys sorted.
  for(iterator = spikeGroups.begin(); iterator != spikeGroups.end(); ++iterator){
-  QValueList<int> channelIds = iterator.data();
-  QValueList<int>::iterator channelIterator;
+  Q3ValueList<int> channelIds = iterator.data();
+  Q3ValueList<int>::iterator channelIterator;
 
   QDomElement groupElement = doc.createElement(GROUP);
   QDomElement channelListElement = doc.createElement(CHANNELS);
@@ -364,10 +367,10 @@ void XmlWriter::setNeuroscopeSpikeInformation(int nbSamples,int peakSampleIndex)
  spikes.appendChild(peakElement);
 }
 
-void XmlWriter::setChannelDisplayInformation(QValueList<ChannelColors>& colorList,QMap<int,int>& channelDefaultOffsets){
+void XmlWriter::setChannelDisplayInformation(Q3ValueList<ChannelColors>& colorList,QMap<int,int>& channelDefaultOffsets){
  channels = doc.createElement(CHANNELS);
  
- QValueList<ChannelColors>::iterator iterator;
+ Q3ValueList<ChannelColors>::iterator iterator;
  for(iterator = colorList.begin(); iterator != colorList.end(); ++iterator){
   //Get the channel information (id and colors)
   int channelId = static_cast<ChannelColors>(*iterator).getId();
@@ -416,14 +419,14 @@ void XmlWriter::setChannelDisplayInformation(QValueList<ChannelColors>& colorLis
 }
 
 
-void XmlWriter::setProgramsInformation(QValueList<ProgramInformation>& programList){
+void XmlWriter::setProgramsInformation(Q3ValueList<ProgramInformation>& programList){
  programs = doc.createElement(PROGRAMS);
  
- QValueList<ProgramInformation>::iterator iterator;
+ Q3ValueList<ProgramInformation>::iterator iterator;
  for(iterator = programList.begin(); iterator != programList.end(); ++iterator){
   //Get the program information 
   QString name = static_cast<ProgramInformation>(*iterator).getProgramName();
-  QMap<int, QValueList<QString> > parametersInfo = static_cast<ProgramInformation>(*iterator).getParameterInformation();  
+  QMap<int, Q3ValueList<QString> > parametersInfo = static_cast<ProgramInformation>(*iterator).getParameterInformation();  
   QString help = static_cast<ProgramInformation>(*iterator).getHelp();
   
   QDomElement programElement = doc.createElement(PROGRAM);
@@ -435,11 +438,11 @@ void XmlWriter::setProgramsInformation(QValueList<ProgramInformation>& programLi
 
   //Take care of the parameters
   QDomElement parameters = doc.createElement(PARAMETERS);
-  QMap<int,QValueList<QString> >::Iterator parameterIterator;
+  QMap<int,Q3ValueList<QString> >::Iterator parameterIterator;
   //The iterator gives the keys sorted.
   for(parameterIterator = parametersInfo.begin(); parameterIterator != parametersInfo.end(); ++parameterIterator){
    QDomElement parameter = doc.createElement(PARAMETER);
-   QValueList<QString> parameterInfo = parameterIterator.data();
+   Q3ValueList<QString> parameterInfo = parameterIterator.data();
    
    for(uint i = 0; i< parameterInfo.count();++i){
     //the info are NAME, VALUE and STATUS   
@@ -482,16 +485,16 @@ void XmlWriter::setProgramsInformation(QValueList<ProgramInformation>& programLi
 
 
 
-void  XmlWriter::setUnitsInformation(QMap<int, QValueList<QString> >& units){
+void  XmlWriter::setUnitsInformation(QMap<int, Q3ValueList<QString> >& units){
  this->units = doc.createElement(UNITS);
 
  //Create the unit elements
- QMap<int,QValueList<QString> >::Iterator iterator;
+ QMap<int,Q3ValueList<QString> >::Iterator iterator;
 
  //The iterator gives the keys sorted.
  for(iterator = units.begin(); iterator != units.end(); ++iterator){
-  QValueList<QString> unit = iterator.data();
-  QValueList<QString>::iterator unitIterator;
+  Q3ValueList<QString> unit = iterator.data();
+  Q3ValueList<QString>::iterator unitIterator;
 
   QDomElement unitElement = doc.createElement(UNIT);
 

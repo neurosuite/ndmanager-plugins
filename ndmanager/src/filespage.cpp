@@ -24,6 +24,12 @@
 #include <qlayout.h>
 #include <qtabwidget.h> 
 #include <qpushbutton.h> 
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3VBoxLayout>
+#include <Q3ValueList>
+#include <Q3Frame>
+#include <Q3PtrList>
 
 // include files for KDE
 #include <kiconloader.h>    // for KIconLoader
@@ -33,15 +39,15 @@
 using namespace std;
 
 FilesPage::FilesPage(QWidget* parent, const char *name)
- : QFrame(parent, name){
+ : Q3Frame(parent, name){
  
- QVBoxLayout* frameLayout = new QVBoxLayout(this,0,0);
+ Q3VBoxLayout* frameLayout = new Q3VBoxLayout(this,0,0);
  tabWidget = new QTabWidget(this);
  frameLayout->addWidget(tabWidget);
  
  //Add the buttons
  QWidget* buttons = new QWidget(this); 
- QGridLayout* gridLayout = new QGridLayout(buttons,1,1,0,6); 
+ Q3GridLayout* gridLayout = new Q3GridLayout(buttons,1,1,0,6); 
  frameLayout->addWidget(buttons); 
  
  addButton = new QPushButton(tr("Add File"),buttons);
@@ -104,7 +110,7 @@ void FilesPage::changeCaption(const QString& caption,FilePage* filePage){
  emit fileModification(getFileExtensions());
 }
 
-void FilesPage::getFilePages(QPtrList<FilePage>& fileList){
+void FilesPage::getFilePages(Q3PtrList<FilePage>& fileList){
  for(int i = 0; i<tabWidget->count();++i) fileList.append(static_cast<FilePage*>(tabWidget->page(i)));
 }
 
@@ -124,8 +130,8 @@ void FilesPage::resetModificationStatus(){
  }
 }
 
-QValueList<QString> FilesPage::getFileExtensions(){
- QValueList<QString> extensionList;
+Q3ValueList<QString> FilesPage::getFileExtensions(){
+ Q3ValueList<QString> extensionList;
 
  for(int i = 0; i<tabWidget->count();++i) extensionList.append(static_cast<FilePage*>(tabWidget->page(i))->getExtension());
 

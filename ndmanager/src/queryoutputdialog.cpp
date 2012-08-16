@@ -18,6 +18,8 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "queryoutputdialog.h"
+//Added by qt3to4:
+#include <Q3TextStream>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
 #include <QWebSettings>
@@ -26,7 +28,7 @@ KDialogBase(parent,"Query Results",true,caption,Ok|User1|User2,Ok,true,KGuiItem(
 htmlText(htmlText),
 queryResult(queryResult)
 {
-	vbox = new QVBox(this);
+	vbox = new Q3VBox(this);
 	setMainWidget(vbox);
 	html = new QWebView(vbox);
 	html->setHtml(htmlText);
@@ -50,9 +52,9 @@ void QueryOutputDialog::slotUser1()
 	QString filename = KFileDialog::getSaveFileName(QString::null,"*",this,"saveQuery");
     if(QFile::exists(filename) && KMessageBox::warningYesNo(this,tr("File already exists. Overwrite?")) == KMessageBox::No) return;
 	QFile textFile(filename);
-	if(textFile.open(IO_WriteOnly))
+	if(textFile.open(QIODevice::WriteOnly))
 	{
-		QTextStream stream(&textFile);
+		Q3TextStream stream(&textFile);
 		stream << queryResult;
 		textFile.close();
         if(stream.device()->status() == IO_WriteError ) KMessageBox::error(this,tr("Could not save the report. This may be due to incorrect write permissions."));
@@ -65,9 +67,9 @@ void QueryOutputDialog::slotUser2()
 	QString filename = KFileDialog::getSaveFileName(QString::null,"*.html",this,"saveQuery");
     if(QFile::exists(filename) && KMessageBox::warningYesNo(this,tr("File already exists. Overwrite?")) == KMessageBox::No) return;
 	QFile htmlFile(filename);
-	if(htmlFile.open(IO_WriteOnly))
+	if(htmlFile.open(QIODevice::WriteOnly))
 	{
-		QTextStream stream(&htmlFile);
+		Q3TextStream stream(&htmlFile);
 		stream << htmlText;
 		htmlFile.close();
         if(stream.device()->status() == IO_WriteError ) KMessageBox::error(this,tr("Could not save the report. This may be due to incorrect write permissions."));

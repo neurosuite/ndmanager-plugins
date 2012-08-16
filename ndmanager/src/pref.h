@@ -22,7 +22,7 @@
 #define _NDMANAGERPREF_H_
 
 #include <kdialogbase.h>
-#include <qframe.h>
+#include <q3frame.h>
 
 class ndManagerPrefPageOne;
 class ndManagerPrefPageTwo;
@@ -60,14 +60,14 @@ private:
   bool applyEnable;
 };
 
-class ndManagerPrefPageOne : public QFrame
+class ndManagerPrefPageOne : public Q3Frame
 {
     Q_OBJECT
 public:
     ndManagerPrefPageOne(QWidget *parent = 0);
 };
 
-class ndManagerPrefPageTwo : public QFrame
+class ndManagerPrefPageTwo : public Q3Frame
 {
     Q_OBJECT
 public:

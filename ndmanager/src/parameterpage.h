@@ -26,7 +26,10 @@
 // include files for QT
 #include <qstringlist.h> 
 #include <qlineedit.h> 
-#include <qtable.h> 
+#include <q3table.h> 
+//Added by qt3to4:
+#include <QEvent>
+#include <Q3ValueList>
 
 // include files for KDE
 
@@ -67,12 +70,12 @@ public:
  * @param parameters map containing the list of parameters. 
  Each entry contains the name of the parameter, its value and its status (optional, mandatory or dynamic).
  */
- void setParameterInformation(QMap<int, QValueList<QString> >& parameters);
+ void setParameterInformation(QMap<int, Q3ValueList<QString> >& parameters);
  
  /**Returns the information for each parameter.
  * @return map containing the list of parameters. Each entry contains the name of the parameter, its value and its status (optional, mandatory or dynamic).
  */
- QMap<int, QValueList<QString> > getParameterInformation();
+ QMap<int, Q3ValueList<QString> > getParameterInformation();
  
  /**True if at least one of the description property has been modified, false otherwise.*/
  inline bool isDescriptionModified()const{return descriptionModified;};
@@ -117,7 +120,7 @@ protected:
 private:
  QStringList status; 
  /**Stores the list of column containing drop down list.*/
- QValueList<int> ddList;
+ Q3ValueList<int> ddList;
  bool valueModified;
  bool descriptionModified;
 };

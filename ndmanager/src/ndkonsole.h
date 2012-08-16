@@ -23,6 +23,10 @@
 // include files for Qt
 #include <qwidget.h>
 #include <qlayout.h>
+//Added by qt3to4:
+#include <QFocusEvent>
+#include <Q3VBoxLayout>
+#include <QShowEvent>
  
 //Include files for KDE
 #include <kparts/part.h> 
@@ -65,7 +69,7 @@ protected:
   
  private:
   KParts::ReadOnlyPart* part;
-  QVBoxLayout* layout; 
+  Q3VBoxLayout* layout; 
   bool isPart;
   QString directory;
    

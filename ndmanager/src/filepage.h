@@ -26,9 +26,12 @@
 
 // include files for QT
 #include <qwidget.h>
-#include <qtable.h>
+#include <q3table.h>
 #include <qlineedit.h>
 #include <qregexp.h>
+//Added by qt3to4:
+#include <QEvent>
+#include <Q3ValueList>
 
 // include files for KDE
 
@@ -64,12 +67,12 @@ inline void setExtension(QString extension){
 /** Initializes the channel mapping table.
 * @param channels map containing the list of original channels for each new channel.
 */
-void setChannelMapping(const QMap<int, QValueList<int> >& channels);
+void setChannelMapping(const QMap<int, Q3ValueList<int> >& channels);
 
 /**Returns the channel mapping.
 * @return map containing the list of original channels for each new channel.
 */ 
-QMap<int, QValueList<int> > getChannelMapping()const;
+QMap<int, Q3ValueList<int> > getChannelMapping()const;
 
 /**Returns the sampling rate.*/
 inline double getSamplingRate() const{return samplingRateLineEdit->text().toDouble();};

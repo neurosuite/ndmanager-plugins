@@ -13,13 +13,15 @@
 
 #include <qvariant.h>
 #include <qpushbutton.h>
-#include <qtable.h>
+#include <q3table.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qtooltip.h>
-#include <qwhatsthis.h>
+#include <q3whatsthis.h>
 #include <qimage.h>
 #include <qpixmap.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
 
 
 /*
@@ -31,15 +33,15 @@ UnitListLayout::UnitListLayout( QWidget* parent, const char* name, WFlags fl )
 {
     if ( !name )
 	setName( "UnitListLayout" );
-    UnitListLayoutLayout = new QGridLayout( this, 1, 1, 11, 6, "UnitListLayoutLayout"); 
+    UnitListLayoutLayout = new Q3GridLayout( this, 1, 1, 11, 6, "UnitListLayoutLayout"); 
 
-    layout21 = new QGridLayout( 0, 1, 1, 0, 6, "layout21"); 
+    layout21 = new Q3GridLayout( 0, 1, 1, 0, 6, "layout21"); 
 
-    layout20 = new QGridLayout( 0, 1, 1, 0, 6, "layout20"); 
+    layout20 = new Q3GridLayout( 0, 1, 1, 0, 6, "layout20"); 
     spacer10_2_3_2 = new QSpacerItem( 354, 16, QSizePolicy::Expanding, QSizePolicy::Minimum );
     layout20->addItem( spacer10_2_3_2, 0, 1 );
 
-    layout19 = new QGridLayout( 0, 1, 1, 0, 6, "layout19"); 
+    layout19 = new Q3GridLayout( 0, 1, 1, 0, 6, "layout19"); 
     spacer10_2_2 = new QSpacerItem( 20, 16, QSizePolicy::Fixed, QSizePolicy::Minimum );
     layout19->addItem( spacer10_2_2, 0, 0 );
     spacer10_2_2_2 = new QSpacerItem( 20, 16, QSizePolicy::Fixed, QSizePolicy::Minimum );
@@ -80,10 +82,10 @@ UnitListLayout::UnitListLayout( QWidget* parent, const char* name, WFlags fl )
     unitTable->horizontalHeader()->setLabel( unitTable->numCols() - 1, tr2i18n( "Notes" ) );
     unitTable->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)7, (QSizePolicy::SizeType)7, 0, 0, unitTable->sizePolicy().hasHeightForWidth() ) );
     unitTable->setMinimumSize( QSize( 200, 100 ) );
-    unitTable->setVScrollBarMode( QTable::Auto );
+    unitTable->setVScrollBarMode( Q3Table::Auto );
     unitTable->setNumRows( 0 );
     unitTable->setNumCols( 7 );
-    unitTable->setSelectionMode( QTable::Multi );
+    unitTable->setSelectionMode( Q3Table::Multi );
 
     layout20->addMultiCellWidget( unitTable, 1, 1, 0, 1 );
 

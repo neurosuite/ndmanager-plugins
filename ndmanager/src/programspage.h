@@ -24,7 +24,7 @@
 
 // include files for QT
 #include <qwidget.h>
-#include <qframe.h>
+#include <q3frame.h>
 
 
 // include files for KDE
@@ -36,7 +36,7 @@ class QPushButton;
 /**
 @author Lynn Hazan
 */
-class ProgramsPage : public QFrame
+class ProgramsPage : public Q3Frame
 {
 Q_OBJECT
 public:
@@ -59,7 +59,7 @@ public slots:
 private:
  QPushButton* addButton;
  QPushButton* loadButton;
- QFrame* descriptionFrame;
+ Q3Frame* descriptionFrame;
  
  /**True if the file is opened in expert mode, false otherwise*/
  bool expertMode; 

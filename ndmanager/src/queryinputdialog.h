@@ -24,6 +24,8 @@
 #include "qlayout.h"
 #include "qlabel.h"
 #include "qlineedit.h"
+//Added by qt3to4:
+#include <Q3VBoxLayout>
 #include "kdialogbase.h"
 
 /**
@@ -48,7 +50,7 @@ class QueryInputDialog : public KDialogBase
 		QWidget			*page;
         QLineEdit	*path;
 		QLineEdit		*query;
-		QVBoxLayout		*layout;
+		Q3VBoxLayout		*layout;
 };
 
 #endif

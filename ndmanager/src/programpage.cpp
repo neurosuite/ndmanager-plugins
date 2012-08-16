@@ -28,10 +28,15 @@
 #include <qtabwidget.h>
 #include <qpushbutton.h>
 #include <qfileinfo.h>
-#include <qtextstream.h>
+#include <q3textstream.h>
 #include <qapplication.h>
 #include <qregexp.h>
-#include <qtextedit.h>
+#include <q3textedit.h>
+//Added by qt3to4:
+#include <Q3GridLayout>
+#include <Q3Frame>
+#include <Q3ValueList>
+#include <Q3VBoxLayout>
 // include files for KDE
 #include <kiconloader.h>    // for KIconLoader
 #include <ktextedit.h>
@@ -48,15 +53,15 @@
 using namespace std;
 
 ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const char* name)
- : QFrame(parent, name),sciptIsModified(false),isInit(true),programName(name),helpIsModified(false),descriptionNotSaved(true),expertMode(expertMode){
- QVBoxLayout* frameLayout = new QVBoxLayout(this,0,0);
+ : Q3Frame(parent, name),sciptIsModified(false),isInit(true),programName(name),helpIsModified(false),descriptionNotSaved(true),expertMode(expertMode){
+ Q3VBoxLayout* frameLayout = new Q3VBoxLayout(this,0,0);
 
  //Creat the upper part containing a tabWidget with 3 tabs, one with the parameters (ParameterPage), one with the script and one with the help.
  //In expert mode, the script tab does not exist.
 
  tabWidget = new QTabWidget(this);
 // script = new KTextEdit(tabWidget);
- help = new QTextEdit(tabWidget);
+ help = new Q3TextEdit(tabWidget);
  if(!expertMode) help->setReadOnly(true);
  parameters = new ParameterPage(expertMode,tabWidget);
  tabWidget->addTab(parameters,tr("Parameters"));
@@ -78,7 +83,7 @@ ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const char* name)
 
  //Add the buttons
  QWidget* buttons = new QWidget(this);
- QGridLayout* gridLayout = new QGridLayout(buttons,1,1,0,6);
+ Q3GridLayout* gridLayout = new Q3GridLayout(buttons,1,1,0,6);
  frameLayout->addWidget(buttons);
 
  if(expertMode){
@@ -159,13 +164,13 @@ bool ProgramPage::saveProgramScript(){
   path = scriptUrl.path();
   QFileInfo fileInfo(path);
   QFile file(path);
-  if(!file.open(IO_WriteOnly)){
+  if(!file.open(QIODevice::WriteOnly)){
    message = QString("The file %1 could not be saved possibly because of insufficient file access permissions.").arg(name);
    title = "IO Error!";
    recall = true;
   }
   else{
-   QTextStream stream(&file);
+   Q3TextStream stream(&file);
    stream<<scriptView->getDoc()->text();
    file.close();
   }
@@ -205,7 +210,7 @@ void ProgramPage::saveProgramParameters(){
   ProgramInformation programInformation;
   programInformation.setProgramName(parameters->getProgramName());
   programInformation.setHelp(help->text());
-  QMap<int, QValueList<QString> > parameterInformation = parameters->getParameterInformation();
+  QMap<int, Q3ValueList<QString> > parameterInformation = parameters->getParameterInformation();
   programInformation.setParameterInformation(parameterInformation);
   //Create the writer and save the data to disk
   DescriptionWriter descriptionWriter;
@@ -250,14 +255,14 @@ void ProgramPage::nameChanged(const QString& name){
    if(!path.isNull()){
     QFileInfo fileInfo(path);
     QFile file(path);
-    if(!file.open(IO_ReadOnly)){
+    if(!file.open(QIODevice::ReadOnly)){
      message = QString("The file %1 is not readable.").arg(name);
      title = "IO Error!";
      scriptDoc->closeURL();
      scriptView->getDoc()->setText("");
     }
     else{
-     QTextStream stream(&file);
+     Q3TextStream stream(&file);
      QString firstLine = stream.readLine();
      int i = firstLine.find(QRegExp("^#!"));
      if(i != -1){

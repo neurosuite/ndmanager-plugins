@@ -25,8 +25,10 @@
 
 // include files for QT
 #include <qwidget.h>
-#include <qframe.h>
-#include <qptrlist.h>
+#include <q3frame.h>
+#include <q3ptrlist.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 
 // include files for KDE
 
@@ -38,7 +40,7 @@ class QPushButton;
 * Container used to group the new files created out of the raw data contained in the .dat file.
 * @author Lynn Hazan
 */
-class FilesPage : public QFrame
+class FilesPage : public Q3Frame
 {
 Q_OBJECT
 public:
@@ -54,12 +56,12 @@ public:
  /**Fills the list @p fileList with pointers to the FilePage.
  * @param fileList list to be filled with the current FilePage.
  */
- void getFilePages(QPtrList<FilePage>& fileList);
+ void getFilePages(Q3PtrList<FilePage>& fileList);
 
  /**Returns a list containing the extensions of the all specific files.
  * @return extension list.
  */
- QValueList<QString> getFileExtensions();
+ Q3ValueList<QString> getFileExtensions();
  
  /**True if at least one the FilePage has been modified, false otherwise.*/
  bool isModified()const;
@@ -84,7 +86,7 @@ signals:
  /** This signal is used to update the dropdown list containing the file extensions in the managerView.
  * @param extensions list containing the extensions of all the specific files.
  */
- void fileModification(QValueList<QString> extensions);
+ void fileModification(Q3ValueList<QString> extensions);
 
 private:
  QTabWidget* tabWidget;

@@ -24,7 +24,7 @@
 #include <qlabel.h>
 #include <qlineedit.h>
 #include <kdialogbase.h>
-#include <qvbox.h>
+#include <q3vbox.h>
 #if KDAB_REENABLE_QT4
 #include <QWebView>
 #endif
@@ -45,7 +45,7 @@ class QueryOutputDialog : public KDialogBase
 		virtual void slotUser2();
 			
 	private:
-		QVBox			*vbox;
+		Q3VBox			*vbox;
 #if KDAB_REENABLE_QT4		
 		QWebView        *html;
 #endif

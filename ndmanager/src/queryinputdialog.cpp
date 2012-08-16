@@ -19,6 +19,9 @@
  ***************************************************************************/
 // application specific includes
 #include "queryinputdialog.h"
+//Added by qt3to4:
+#include <Q3VBoxLayout>
+#include <QLabel>
 
 
 //General C++ include files
@@ -33,7 +36,7 @@ KDialogBase(parent,"Query",true,caption,Ok|Cancel,Ok,true)
 	
 	page = new QWidget(this);
 	setMainWidget(page);
-	layout = new QVBoxLayout(page,0,spacingHint());
+	layout = new Q3VBoxLayout(page,0,spacingHint());
 
     QLabel *label1 = new QLabel(tr("Query"),page,"query_label");
 	layout->addWidget(label1);

@@ -22,7 +22,7 @@
 
 // include files for QT
 #include <qwidget.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
 #include <qcolor.h>
 #include <qcolor.h>
 #include <qcolordialog.h>
@@ -44,7 +44,7 @@ ChannelColorsPage::ChannelColorsPage(QWidget* parent, const char *name)
 
 ChannelColorsPage::~ChannelColorsPage(){}
 
-void ChannelColorsPage::getColors(QValueList<ChannelColors>& colors){
+void ChannelColorsPage::getColors(Q3ValueList<ChannelColors>& colors){
  for(int i =0; i<nbChannels;++i){
   ChannelColors channelColors;
   channelColors.setId(i);
@@ -55,20 +55,20 @@ void ChannelColorsPage::getColors(QValueList<ChannelColors>& colors){
  }
 }
  
- void ChannelColorsPage::setColors(QValueList<ChannelColors>& colors){  
-  QValueList<ChannelColors>::iterator iterator;
+ void ChannelColorsPage::setColors(Q3ValueList<ChannelColors>& colors){  
+  Q3ValueList<ChannelColors>::iterator iterator;
   for(iterator = colors.begin(); iterator != colors.end(); ++iterator){
    int id = (*iterator).getId();
    colorTable->verticalHeader()->setLabel(id,QString("%1").arg(id));   
-   QTableItem* itemColor = new QTableItem(colorTable,QTableItem::OnTyping,(*iterator).getColor().name());
+   Q3TableItem* itemColor = new Q3TableItem(colorTable,Q3TableItem::OnTyping,(*iterator).getColor().name());
    itemColor->setWordWrap(true);
    colorTable->setItem(id,0,itemColor);
 
-   QTableItem* itemGroupColor = new QTableItem(colorTable,QTableItem::OnTyping,(*iterator).getGroupColor().name());
+   Q3TableItem* itemGroupColor = new Q3TableItem(colorTable,Q3TableItem::OnTyping,(*iterator).getGroupColor().name());
    itemGroupColor->setWordWrap(true);
    colorTable->setItem(id,1,itemGroupColor);
 
-   QTableItem* itemSpikeGroupColor = new QTableItem(colorTable,QTableItem::OnTyping,(*iterator).getSpikeGroupColor().name());
+   Q3TableItem* itemSpikeGroupColor = new Q3TableItem(colorTable,Q3TableItem::OnTyping,(*iterator).getSpikeGroupColor().name());
    itemSpikeGroupColor->setWordWrap(true);
    colorTable->setItem(id,2,itemSpikeGroupColor);
   }

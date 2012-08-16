@@ -27,6 +27,8 @@
 
 //include files for QT
 #include <qdom.h>
+//Added by qt3to4:
+#include <Q3ValueList>
 
 // include files for KDE
 #include <kapp.h>
@@ -98,11 +100,11 @@ public:
   * @param peakSampleIndex the sample index corresponding to the peak of the spike; value used dby NeuroScope
   * @param traceBackgroundImage background image for the trace view in NeuroScope  
   */
-  void createParameterView(QMap<int, QValueList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes,
-                          QMap<int, QValueList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& spikeGroupsInformation,QMap<int, QValueList<QString> >& units,
+  void createParameterView(QMap<int, Q3ValueList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes,
+                          QMap<int, Q3ValueList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& spikeGroupsInformation,QMap<int, Q3ValueList<QString> >& units,
                           GeneralInformation& generalInformation,QMap<QString,double>& acquisitionSystemInfo,QMap<QString,double>& videoInformation,
-                          QValueList<FileInformation>& files,QValueList<ChannelColors>& channelColors,QMap<int,int>& channelOffsets,
-                          NeuroscopeVideoInfo& neuroscopeVideoInfo,QValueList<ProgramInformation>& programs,
+                          Q3ValueList<FileInformation>& files,Q3ValueList<ChannelColors>& channelColors,QMap<int,int>& channelOffsets,
+                          NeuroscopeVideoInfo& neuroscopeVideoInfo,Q3ValueList<ProgramInformation>& programs,
                            double lfpRate,float screenGain,int nbSamples,int peakSampleIndex,QString traceBackgroundImage);    
 
  /**returns a pointer on the ParameterView containing the parameter information.
@@ -143,7 +145,7 @@ public slots:
   /**Triggers the update of the dropdown list containing the file extensions in the managerView.
   * @param extensions list containing the extensions of all the specific files.
   */
-  void fileModification(QValueList<QString> extensions);
+  void fileModification(Q3ValueList<QString> extensions);
 
   /**Checks that everything is ok before launching a program. This includes that the
   * modifications to the parameter file have been saved.
@@ -158,7 +160,7 @@ public slots:
   /**Triggers the update of the dropdown list containing the script names in the managerView.
   * @param scriptNames list containing the names.
   */
-  void scriptModification(const QValueList<QString>& scriptNames);
+  void scriptModification(const Q3ValueList<QString>& scriptNames);
 
 private slots:
   /**Opens a parameter file and loads it.*/

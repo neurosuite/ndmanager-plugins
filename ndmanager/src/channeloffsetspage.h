@@ -25,7 +25,7 @@
 
 // include files for QT
 #include <qwidget.h>
-#include <qtable.h>
+#include <q3table.h>
 
 /**
 @author Lynn Hazan
