@@ -28,10 +28,6 @@
 #include <qwidget.h>
 #include <q3frame.h>
 
-//include files for KDE
-
-#include <kate/view.h>
-
 //forward declaration
 class QTabWidget;
 class QPushButton;
@@ -57,13 +53,13 @@ public:
  ~ProgramPage();
  
  /**Returns the parameterPage contained in the page.*/
- inline ParameterPage* getParameterPage(){return parameters;};
+ inline ParameterPage* getParameterPage(){return parameters;}
  
  /**Returns the script document (Kate::Document, kpart) contained in the page.*/
- inline KTextEditor::Document* getScript(){return scriptDoc;}; 
+ inline KTextEditor::Document* getScript(){return scriptDoc;}
  
  /**Returns the script view(Kate::View, kpart) contained in the page.*/
- inline Kate::View* getScriptView(){return scriptView;}; 
+ inline Kate::View* getScriptView(){return scriptView;}
  
  /**Returns the content of the help.*/
  QString getHelp();
@@ -87,7 +83,7 @@ public:
  bool isDescriptionModifiedAndNotSaved()const;
  
  /**True if the script has been modified, false otherwise.*/
- inline bool isScriptModified()const{return sciptIsModified;};
+ inline bool isScriptModified()const{return sciptIsModified;}
  
  /**Indicates that the initialisation is finished.*/
  inline void initialisationOver(){isInit = false;}
@@ -117,10 +113,10 @@ public slots:
  void nameChanged(const QString& name);
     
  /** Will be called when the script is modified.*/
- inline void scriptModified(){if(!isInit) sciptIsModified = true;};
+ inline void scriptModified(){if(!isInit) sciptIsModified = true;}
  
  /** Will be called when the help is modified.*/
- inline void helpModified(){if(!isInit) helpIsModified = true;};
+ inline void helpModified(){if(!isInit) helpIsModified = true;}
  
  /**Resets the internal modification status to false.*/
  inline void resetModificationStatus(){

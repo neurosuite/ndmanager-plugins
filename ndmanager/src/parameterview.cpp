@@ -41,8 +41,6 @@
 #include <kiconloader.h>    // for KIconLoader
 #include <kglobal.h>        // for KGlobal
 #include <kstandarddirs.h>
-#include <kate/view.h>
-#include <kate/document.h>
 
 //include files for the application
 #include "parameterview.h"

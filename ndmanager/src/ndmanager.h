@@ -21,22 +21,16 @@
 #ifndef _NDMANAGER_H_
 #define _NDMANAGER_H_
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 //include files for QT
 #include <qdom.h>
 //Added by qt3to4:
 #include <Q3ValueList>
 
 // include files for KDE
-#include <kapp.h>
 #include <kdockwidget.h>
 #include <kstdaction.h>
 
 #include <kprocess.h>
-#include <kate/view.h>
 
 // application specific includes
 #include "parameterview.h"
@@ -229,7 +223,7 @@ private slots:
   void slotQueryResult(QString message);
   inline void slotQueryResult(KProcess*,char* buffer,int buflen){
 	  slotQueryResult(QString::fromLocal8Bit(buffer,buflen));
-  };	
+  }
 private:
  /**Sets up all the actions used.*/
  void setupActions();
