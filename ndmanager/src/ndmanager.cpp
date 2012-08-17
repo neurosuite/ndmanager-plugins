@@ -34,7 +34,7 @@
 #include <kdeversion.h>
 #include <kstatusbar.h>
 #include <kaccel.h>
-#include <kprocess.h>
+#include <QProcess>
 
 
 

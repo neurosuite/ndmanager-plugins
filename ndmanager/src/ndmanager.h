@@ -30,7 +30,7 @@
 #include <kdockwidget.h>
 #include <kstdaction.h>
 
-#include <kprocess.h>
+#include <QProcess>
 
 // application specific includes
 #include "parameterview.h"

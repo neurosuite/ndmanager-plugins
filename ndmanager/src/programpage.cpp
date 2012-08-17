@@ -44,10 +44,6 @@
 
 
 
-#include <ktexteditor/document.h>
-#include <ktexteditor/view.h>
-#include <kate/document.h>
-
 //General C++ include files
 #include <iostream>
 using namespace std;

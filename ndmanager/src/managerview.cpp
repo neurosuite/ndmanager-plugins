@@ -33,7 +33,7 @@
 #include <Q3VBoxLayout>
 #include <Q3ValueList>
 #include <Q3Frame>
-#include <kprocess.h>
+#include <QProcess>
 
 //General C++ include files
 #include <iostream>
