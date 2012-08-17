@@ -28,6 +28,7 @@
 #include <qlineedit.h>
 #include <qvalidator.h>
 #include <qpushbutton.h>
+#include <QFileDialog>
 
 // include files for KDE
 
