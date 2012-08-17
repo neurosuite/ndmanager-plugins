@@ -20,29 +20,15 @@
 // application specific includes
 #include "configuration.h"
 
-// include files for KDE
-#include <kapplication.h>       // for 'kapp'
-#include <kconfig.h>            // for KConfig
-
-
 Configuration::Configuration(){
     read(); // read the settings or set them to the default values
 }
 
 
 void Configuration::read() {
-//  KConfig* conf = kapp->config();
-
- //read general options
- //conf->setGroup("General");
- 
 }
 
 void Configuration::write() const {  
-//  KConfig* conf = kapp->config();
- //write general options
- //conf->setGroup("General");
- 
 }
 
 Configuration& configuration() {

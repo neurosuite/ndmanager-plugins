@@ -158,7 +158,7 @@ bool ProgramPage::saveProgramScript(){
  QString scriptUrl;
 
  if(!path.isNull()) scriptUrl = KFileDialog::getSaveURL(path,tr("*"), this, tr("Save as..."));
- else scriptUrl = KFileDialog::getSaveURL(QString::null,tr("*"), this, tr("Save as..."));
+ else scriptUrl = KFileDialog::getSaveURL(QString(),tr("*"), this, tr("Save as..."));
 
  if(!scriptUrl.isEmpty()){
   path = scriptUrl.path();

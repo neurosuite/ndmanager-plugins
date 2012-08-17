@@ -160,18 +160,19 @@ public:
   };
 
  /**True if at least one property has been modified, false otherwise.*/
- inline bool isModified()const{return modified;};
+ inline bool isModified()const{return modified;}
 
  /**Indicates that the initialisation is finished.*/
  inline void initialisationOver(){isInit = false;}
  
 private slots:
   inline void updateBackgroundImage(){
-   QString image = KFileDialog::getOpenFileName(QString::null,
-            QString::null, this, tr("Select the background image..."));
+      QString image = KFileDialog::getOpenFileName(QString(),
+                                                   QString(), this, tr("Select the background image..."));
 
-   if(image != "") setBackgroundImage(image);
-  };
+   if(image != "")
+       setBackgroundImage(image);
+  }
 
   inline void updateBackgroundImage(const QString& image){
    if(image != "")  setBackgroundImage(image);
@@ -186,10 +187,10 @@ private slots:
   void updateDisplayedImage();
   
  /** Will be called when any properties.*/
- inline void propertyModified(){if(!isInit) modified = true;};
+ inline void propertyModified(){if(!isInit) modified = true;}
    
  /**Resets the internal modification status to false.*/
- inline void resetModificationStatus(){modified = false;};
+ inline void resetModificationStatus(){modified = false;}
  
  private:
   QImage backgroungImage;  

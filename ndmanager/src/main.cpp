@@ -20,18 +20,12 @@
 
 // include files for KDE
 #include "config-ndmanager.h"
-#include <kapplication.h>
-#include <dcopclient.h>
-#include <kaboutdata.h>
-#include <kcmdlineargs.h>
-
 // include files for QT
 #include <qdir.h>
 #include <qstring.h>
 
 //Application specific include files
 #include "ndmanager.h"
-#include "kmessagebox.h"
 
 static const char description[] =
     I18N_NOOP("Neurophysiological Data Processing Manager");

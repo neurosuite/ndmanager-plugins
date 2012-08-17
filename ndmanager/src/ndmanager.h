@@ -33,7 +33,6 @@
 // include files for KDE
 #include <kapp.h>
 #include <kdockwidget.h>
-#include <kaction.h>
 #include <kstdaction.h>
 
 #include <kprocess.h>

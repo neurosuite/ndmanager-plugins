@@ -35,7 +35,7 @@
 #include <kaccel.h>
 #include <kprocess.h>
 #include <kfiledialog.h>
-#include <kconfig.h>
+
 
 
 #include <kstandarddirs.h>
@@ -122,7 +122,7 @@ void ndManager::setupActions()
  expertMode->setChecked(config->readBoolEntry("expertMode"));
 
 
- createGUI(QString::null,false);
+ createGUI(QString(),false);
 
 }
 
@@ -193,7 +193,7 @@ void ndManager::slotFileOpen()
 {
   slotStatusMsg(tr("Opening file..."));
 
-  QString url=KFileDialog::getOpenURL(QString::null,
+  QString url=KFileDialog::getOpenURL(QString(),
       tr("*.xml|Parameter File (*.xml)\n*|All files"), this, tr("Open File..."));
   if(!url.isEmpty()) openDocumentFile(url);
 
@@ -437,7 +437,7 @@ void ndManager::slotImport(){
  slotStatusMsg(tr("importing file as model..."));
  importedFile = true;
 
- QString url = KFileDialog::getOpenURL(QString::null,
+ QString url = KFileDialog::getOpenURL(QString(),
      tr("*.xml|Parameter File (*.xml)\n*|All files"), this, tr("Import file as model..."));
  if(!url.isEmpty()) openDocumentFile(url);
 

@@ -110,8 +110,8 @@ ProgramsPage::~ProgramsPage(){}
 
 void ProgramsPage::loadProgram(){
 
- QString::List programUrls=KFileDialog::getOpenURLs(QString::null,
-       QString::null, this, tr("Select the Script(s) to load..."));
+    QString::List programUrls=KFileDialog::getOpenURLs(QString(),
+                                                       QString(), this, tr("Select the Script(s) to load..."));
  if(programUrls.size() != 0){
    Q3ValueList<QString>::iterator iterator;
   for(iterator = programUrls.begin();iterator != programUrls.end();++iterator){
