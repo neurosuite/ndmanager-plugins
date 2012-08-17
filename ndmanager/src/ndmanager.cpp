@@ -26,6 +26,7 @@
 #include <Q3ValueList>
 #include <Q3PtrList>
 #include <QPixmap>
+#include <QFileDialog>
 
 // include files for KDE
 #include <kglobal.h>
@@ -193,8 +194,8 @@ void ndManager::slotFileOpen()
 {
   slotStatusMsg(tr("Opening file..."));
 
-  QString url=KFileDialog::getOpenURL(QString(),
-      tr("*.xml|Parameter File (*.xml)\n*|All files"), this, tr("Open File..."));
+  QString url=QFileDialog::getOpenFileName(this, tr("Open File..."),QString(),
+      tr("*.xml|Parameter File (*.xml)\n*|All files") );
   if(!url.isEmpty()) openDocumentFile(url);
 
   slotStatusMsg(tr("Ready."));
@@ -437,8 +438,8 @@ void ndManager::slotImport(){
  slotStatusMsg(tr("importing file as model..."));
  importedFile = true;
 
- QString url = KFileDialog::getOpenURL(QString(),
-     tr("*.xml|Parameter File (*.xml)\n*|All files"), this, tr("Import file as model..."));
+ QString url = QFileDialog::getOpenFileName(this, tr("Import file as model..."),QString(),
+     tr("*.xml|Parameter File (*.xml)\n*|All files") );
  if(!url.isEmpty()) openDocumentFile(url);
 
  importedFileUrl = QString(url);

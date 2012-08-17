@@ -162,7 +162,6 @@ bool ProgramPage::saveProgramScript(){
 
  if(!scriptUrl.isEmpty()){
   path = scriptUrl.path();
-  QFileInfo fileInfo(path);
   QFile file(path);
   if(!file.open(QIODevice::WriteOnly)){
    message = QString("The file %1 could not be saved possibly because of insufficient file access permissions.").arg(name);

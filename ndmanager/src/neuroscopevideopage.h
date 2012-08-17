@@ -34,6 +34,7 @@
 #include <qimage.h>
 #include <q3groupbox.h>
 #include <qcheckbox.h> 
+#include <QFileDialog>
 
 // include files for KDE
 

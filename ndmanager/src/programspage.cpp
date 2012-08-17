@@ -32,7 +32,7 @@
 #include <Q3VBoxLayout>
 #include <Q3ValueList>
 #include <Q3Frame>
-
+#include <QFileDialog>
 // include files for KDE
 #include <kiconloader.h>    // for KIconLoader
 
