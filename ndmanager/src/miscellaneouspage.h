@@ -30,7 +30,7 @@
 #include <qpushbutton.h>
 
 // include files for KDE
-#include <kfiledialog.h>
+
 
 
 /**

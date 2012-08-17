@@ -42,7 +42,7 @@
 #include <ktextedit.h>
 #include <kstandarddirs.h>
 
-#include <kfiledialog.h>
+
 
 #include <ktexteditor/document.h>
 #include <ktexteditor/view.h>

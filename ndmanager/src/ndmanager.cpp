@@ -34,7 +34,7 @@
 #include <kstatusbar.h>
 #include <kaccel.h>
 #include <kprocess.h>
-#include <kfiledialog.h>
+
 
 
 

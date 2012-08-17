@@ -36,7 +36,7 @@
 #include <qcheckbox.h> 
 
 // include files for KDE
-#include <kfiledialog.h>
+
 
 //General C++ include files
 #include <iostream>

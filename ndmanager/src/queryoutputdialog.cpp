@@ -20,7 +20,7 @@
 #include "queryoutputdialog.h"
 //Added by qt3to4:
 #include <Q3TextStream>
-#include <kfiledialog.h>
+
 
 #include <QWebSettings>
 QueryOutputDialog::QueryOutputDialog(QString htmlText,QString queryResult,QWidget *parent,const QString& caption,const QString& urltext) :

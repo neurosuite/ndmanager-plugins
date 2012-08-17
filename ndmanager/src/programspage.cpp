@@ -35,7 +35,7 @@
 
 // include files for KDE
 #include <kiconloader.h>    // for KIconLoader
-#include <kfiledialog.h>
+
 #include <ktextedit.h> 
 
 
@@ -110,7 +110,7 @@ ProgramsPage::~ProgramsPage(){}
 
 void ProgramsPage::loadProgram(){
 
-    QString::List programUrls=KFileDialog::getOpenURLs(QString(),
+    QStringList programUrls=KFileDialog::getOpenURLs(QString(),
                                                        QString(), this, tr("Select the Script(s) to load..."));
  if(programUrls.size() != 0){
    Q3ValueList<QString>::iterator iterator;
