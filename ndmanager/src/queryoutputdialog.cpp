@@ -40,7 +40,6 @@ queryResult(queryResult)
 	html->settings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls,false);
 	resize(800,600);
 	
-// 	connect(this,SIGNAL()),this,SLOT(slotQueryResult(KProcess*,char*,int)));
 }
 
 QueryOutputDialog::~QueryOutputDialog()

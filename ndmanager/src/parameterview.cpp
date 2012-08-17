@@ -39,7 +39,7 @@
 // include files for KDE
 
 #include <kiconloader.h>    // for KIconLoader
-#include <kglobal.h>        // for KGlobal
+        // for KGlobal
 #include <kstandarddirs.h>
 
 //include files for the application

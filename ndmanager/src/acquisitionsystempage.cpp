@@ -21,7 +21,7 @@
 #include "acquisitionsystempage.h"
 
 // include files for KDE
-#include <kglobal.h>        // for KGlobal
+        // for KGlobal
     // for KMessageBox
 
 //General C++ include files

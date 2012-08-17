@@ -26,7 +26,7 @@
 #include <kio/job.h>
 
 #include <kstandarddirs.h>
-#include <kglobal.h>
+
 
 // application specific includes
 #include <ndmanagerdoc.h>

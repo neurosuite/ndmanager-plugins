@@ -29,7 +29,7 @@
 #include <QFileDialog>
 
 // include files for KDE
-#include <kglobal.h>
+
 #include <kiconloader.h>
 #include <kdeversion.h>
 #include <kstatusbar.h>

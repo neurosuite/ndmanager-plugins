@@ -20,7 +20,7 @@
 #include "managerview.h"
 
 //Include files for KDE
-#include <kglobal.h>
+
 
 
 // include files for Qt
