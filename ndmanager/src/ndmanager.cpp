@@ -608,7 +608,7 @@ void ndManager::slotSave(){
    initialPath = currentUrl.path();
   }
 
-  QString url=KFileDialog::getSaveURL(initialPath,tr("*.xml|Xml Files\n*|All Files"), this, tr("Save as..."));
+  QString url=QFileDialog::getSaveFileName( this, tr("Save as...")initialPath,tr("*.xml|Xml Files\n*|All Files"));
   if(!url.isEmpty()){
    QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
    int saveStatus = doc->saveAs(url);
@@ -640,7 +640,7 @@ void ndManager::slotSaveAs(){
  slotStatusMsg(tr("Saving as..."));
 
  //Save the parameter file
- QString url=KFileDialog::getSaveURL(doc->url().path(),tr("*|All files"), this, tr("Save as..."));
+ QString url=QFileDialog::getSaveFileName(this, tr("Save as..."),doc->url().path(),tr("*|All files"));
  if(!url.isEmpty()){
   int saveStatus = doc->saveAs(url);
   if(saveStatus == ndManagerDoc::SAVE_ERROR){

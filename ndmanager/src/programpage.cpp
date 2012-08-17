@@ -157,8 +157,8 @@ bool ProgramPage::saveProgramScript(){
  QString title = "";
  QString scriptUrl;
 
- if(!path.isNull()) scriptUrl = KFileDialog::getSaveURL(path,tr("*"), this, tr("Save as..."));
- else scriptUrl = KFileDialog::getSaveURL(QString(),tr("*"), this, tr("Save as..."));
+ if(!path.isNull()) scriptUrl = QFileDialog::getSaveFileName( this, tr("Save as..."),path,tr("*"));
+ else scriptUrl = QFileDialog::getSaveFileName(this, tr("Save as..."),QString(),tr("*"));
 
  if(!scriptUrl.isEmpty()){
   path = scriptUrl.path();
@@ -198,10 +198,10 @@ void ProgramPage::saveProgramParameters(){
   QString name = parameters->getProgramName();
   name.append(".xml");
   descriptionUrlTmp.setFileName(name);
-  descriptionUrl = KFileDialog::getSaveURL(descriptionUrlTmp.path(),tr("*.xml|Xml Files"), this, tr("Save as..."));
+  descriptionUrl = QFileDialog::getSaveFileName(this, tr("Save as..."),descriptionUrlTmp.path(),tr("*.xml|Xml Files"));
  }
  else{
-  descriptionUrl = KFileDialog::getSaveURL(descriptionUrl.path(),tr("*.xml|Xml Files"), this, tr("Save as..."));
+  descriptionUrl = QFileDialog::getSaveFileName(this, tr("Save as..."),descriptionUrl.path(),tr("*.xml|Xml Files"));
  }
  //a location has been chosen
  if(!descriptionUrl.isEmpty()){

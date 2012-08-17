@@ -49,7 +49,7 @@ QueryOutputDialog::~QueryOutputDialog()
 
 void QueryOutputDialog::slotUser1()
 {
-    QString filename = KFileDialog::getSaveFileName(QString(),"*",this,"saveQuery");
+    QString filename = QFileDialog::getSaveFileName(this,"saveQuery",QString(),"*");
     if(QFile::exists(filename) && KMessageBox::warningYesNo(this,tr("File already exists. Overwrite?")) == KMessageBox::No) return;
 	QFile textFile(filename);
 	if(textFile.open(QIODevice::WriteOnly))
@@ -64,7 +64,7 @@ void QueryOutputDialog::slotUser1()
 
 void QueryOutputDialog::slotUser2()
 {
-    QString filename = KFileDialog::getSaveFileName(QString(),"*.html",this,"saveQuery");
+    QString filename = QFileDialog::getSaveFileName(this,"saveQuery",QString(),"*.html");
     if(QFile::exists(filename) && KMessageBox::warningYesNo(this,tr("File already exists. Overwrite?")) == KMessageBox::No) return;
 	QFile htmlFile(filename);
 	if(htmlFile.open(QIODevice::WriteOnly))
