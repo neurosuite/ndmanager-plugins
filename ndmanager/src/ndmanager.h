@@ -27,7 +27,7 @@
 #include <Q3ValueList>
 
 // include files for KDE
-#include <kdockwidget.h>
+#include <QDockWidget>
 #include <kstdaction.h>
 
 #include <QProcess>

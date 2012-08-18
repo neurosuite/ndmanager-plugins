@@ -36,7 +36,7 @@
 
 //Include files for KDE
 #include <ktoolbar.h> 
-#include <kdockwidget.h>
+#include <QDockWidget>
 
 /**
 @author Lynn Hazan
