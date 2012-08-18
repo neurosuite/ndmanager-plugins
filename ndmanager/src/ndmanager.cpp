@@ -32,7 +32,7 @@
 
 #include <kiconloader.h>
 #include <kdeversion.h>
-#include <kstatusbar.h>
+#include <QStatusBar>
 #include <kaccel.h>
 #include <QProcess>
 
