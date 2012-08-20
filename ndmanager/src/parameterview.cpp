@@ -38,8 +38,6 @@
 
 // include files for KDE
 
-#include <kiconloader.h>    // for KIconLoader
-        // for KGlobal
 #include <kstandarddirs.h>
 
 //include files for the application
@@ -71,21 +69,21 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
 
  //adding page "Acquisition System"
  frame = addPage(tr("Acquisition System"), tr("Acquisition System"),
-     KGlobal::iconLoader()->loadIcon("acquisition",KIcon::User,0,false) );
+     QIcon(":icons/acquisition") );
  frameLayout = new Q3VBoxLayout(frame,0,0);
  acquisitionSystem = new AcquisitionSystemPage(frame);
  frameLayout->addWidget(acquisitionSystem);
 
  //adding page "Video"
  frame = addPage(tr("Video"), tr("Video"),
-     KGlobal::iconLoader()->loadIcon("video",KIcon::User,0,false) );
+     QIcon(":icons/video") );
  frameLayout = new Q3VBoxLayout(frame,0,0);
  video = new VideoPage(frame);
  frameLayout->addWidget(video);
 
 //adding page "Local Field Potentials "
  frame = addPage(tr("Local Field Potentials"), tr("Local Field Potentials"),
-     KGlobal::iconLoader()->loadIcon("lfp",KIcon::User,0,false) );
+     QIcon(":icons/lfp") );
  frameLayout = new Q3VBoxLayout(frame,0,0);
  lfp = new LfpPage(frame);
  frameLayout->addWidget(lfp);
@@ -95,7 +93,7 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
   //This page is added only if the expert mode is set. The page is always created to keep track of the file information
  if(expertMode){
   frame = addPage(tr("Files"), tr("Other Files"),
-     KGlobal::iconLoader()->loadIcon("files",KIcon::User,0,false));
+     QIcon(":icons/files"));
   frameLayout = new Q3VBoxLayout(frame,0,0);
   files = new FilesPage(frame);
   frameLayout->addWidget(files);
@@ -108,7 +106,7 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
  //This page is added only if the expert mode is set. The page is always created to keep track of the file information
  if(expertMode){
   frame = addPage(tr("Anatomical Groups"), tr("Anatomical Groups"),
-      KGlobal::iconLoader()->loadIcon("anatomy",KIcon::User,0,false) );
+      QIcon(":icons/anatomy") );
   frameLayout = new Q3VBoxLayout(frame,0,0);
   anatomy = new AnatomyPage(frame);
   frameLayout->addWidget(anatomy);
@@ -121,7 +119,7 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
   //This page is added only if the expert mode is set. The page is always created to keep track of the file information
   if(expertMode){
    frame = addPage(tr("Spike Groups"), tr("Spike Groups"),
-       KGlobal::iconLoader()->loadIcon("spikes",KIcon::User,0,false) );
+       QIcon(":icons/spikes") );
    frameLayout = new Q3VBoxLayout(frame,0,0);
    spike = new SpikePage(frame);
    frameLayout->addWidget(spike);
@@ -132,14 +130,14 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
 
   //adding page "Unit List"
   frame = addPage(tr("Units"), tr("Units"),
-      KGlobal::iconLoader()->loadIcon("units",KIcon::User,0,false) );
+      QIcon(":icons/units") );
   frameLayout = new Q3VBoxLayout(frame,0,0);
   unitList = new UnitListPage(frame);
   frameLayout->addWidget(unitList);
 
  //adding page "Neuroscope"
  frame = addPage(tr("Neuroscope"), tr("Neuroscope"),
-     KGlobal::iconLoader()->loadIcon("neuroscope",KIcon::User,0,false) );
+     QIcon(":icons/neuroscope") );
  frameLayout = new Q3VBoxLayout(frame,0,0);
 
  QTabWidget* tabWidget = new QTabWidget(frame);
@@ -165,7 +163,7 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
 
  //adding page "Programs"
  programsFrame = addPage(tr("Scripts"), tr("Scripts"),
-     KGlobal::iconLoader()->loadIcon("programs",KIcon::User,0,false) );
+     QIcon(":icons/programs") );
  frameLayout = new Q3VBoxLayout(programsFrame,0,0);
  programs = new ProgramsPage(expertMode,programsFrame);
  frameLayout->addWidget(programs);
@@ -204,7 +202,7 @@ ParameterView::~ParameterView(){}
 void ParameterView::addNewProgram(){
  counter++;
  programId++;
- QString programName = QString("New Script-%1").arg(programId);
+ QString programName = QString::fromLatin1("New Script-%1").arg(programId);
  ProgramPage* program = addProgram(programName);
  program->initialisationOver();
  emit scriptListHasBeenModified(programNames);

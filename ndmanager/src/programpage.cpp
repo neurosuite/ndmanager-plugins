@@ -38,8 +38,6 @@
 #include <Q3ValueList>
 #include <Q3VBoxLayout>
 // include files for KDE
-#include <kiconloader.h>    // for KIconLoader
-#include <ktextedit.h>
 #include <kstandarddirs.h>
 
 

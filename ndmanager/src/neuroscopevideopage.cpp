@@ -26,7 +26,7 @@
 #include <QPixmap>
 
 // include files for KDE
-#include <kiconloader.h>
+
 #include <kimageeffect.h>
 
 NeuroscopeVideoPage::NeuroscopeVideoPage(QWidget* parent, const char *name)
@@ -43,8 +43,8 @@ NeuroscopeVideoPage::NeuroscopeVideoPage(QWidget* parent, const char *name)
  connect(checkBoxBackground,SIGNAL(clicked()),this,SLOT(propertyModified()));
 
   //Set an icon on the backgroundButton button
- KIconLoader* loader = KGlobal::iconLoader();
- backgroundButton->setIconSet(QIcon(":/icons/fileopen", KIcon::Small)));
+ 
+ backgroundButton->setIconSet(QIcon(":/icons/fileopen")));
 }
 
 

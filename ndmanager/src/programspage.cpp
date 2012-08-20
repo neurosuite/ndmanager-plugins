@@ -33,11 +33,6 @@
 #include <Q3ValueList>
 #include <Q3Frame>
 #include <QFileDialog>
-// include files for KDE
-#include <kiconloader.h>    // for KIconLoader
-
-#include <ktextedit.h> 
-
 
 
 //General C++ include files
@@ -98,8 +93,8 @@ ProgramsPage::ProgramsPage(bool expertMode,QWidget *parent, const char *name)
  }
  
  //Set an icon on the load button
- KIconLoader* loader = KGlobal::iconLoader();
- loadButton->setIconSet(QIcon(":/icons/fileopen", KIcon::Small)));
+ 
+ loadButton->setIconSet(QIcon(":/icons/fileopen")));
  
  connect(loadButton,SIGNAL(clicked()),this,SLOT(loadProgram()));
 }

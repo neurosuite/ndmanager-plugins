@@ -31,9 +31,6 @@
 #include <Q3Frame>
 #include <Q3PtrList>
 
-// include files for KDE
-#include <kiconloader.h>    // for KIconLoader
-
 //General C++ include files
 #include <iostream>
 using namespace std;

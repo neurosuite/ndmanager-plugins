@@ -21,7 +21,7 @@
 #include "miscellaneouspage.h"
 
 // include files for KDE
-#include <kiconloader.h>
+
 
 MiscellaneousPage::MiscellaneousPage(QWidget* parent, const char *name)
  : NeuroscopeMiscLayout(parent, name),doubleValidator(this),modified(false),isInit(true){
@@ -36,8 +36,8 @@ MiscellaneousPage::MiscellaneousPage(QWidget* parent, const char *name)
  connect(traceBackgroundLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
  
   //Set an icon on the backgroundButton button
- KIconLoader* loader = KGlobal::iconLoader();
- traceBackgroundButton->setIconSet(QIcon(":/icons/fileopen", KIcon::Small)));
+ 
+ traceBackgroundButton->setIconSet(QIcon(":/icons/fileopen")));
  
 }
 

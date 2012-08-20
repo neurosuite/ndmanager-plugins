@@ -30,7 +30,7 @@
 
 // include files for KDE
 
-#include <kiconloader.h>
+
 #include <kdeversion.h>
 #include <QStatusBar>
 #include <kaccel.h>
