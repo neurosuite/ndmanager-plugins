@@ -14,6 +14,8 @@ set(ndmanager_SRCS acquisitionsystempage.cpp
         tags.cpp unitlistlayout.cpp unitlistpage.cpp unittable.cpp unittableitem.cpp
         videopage.cpp xmlreader.cpp xmlwriter.cpp)
 
+qt4_add_resources(ndmanager_SRCS ndmanager-icons.qrc)
+
 set(ndmanager_UI acquisitionsystemlayout.ui anatomylayout.ui channelcolorslayout.ui channeloffsetslayout.ui clusterslayout.ui filelayout.ui generalinfolayout.ui launcherlayout.ui lfplayout.ui neuroscopemisclayout.ui neuroscopevideolayout.ui parameterlayout.ui spikelayout.ui videolayout.ui ) 
 
 qt4_wrap_ui(ndmanager_SRCS ${ndmanager_UI})
@@ -23,4 +25,3 @@ add_executable(ndmanager ${ndmanager_SRCS} )
 target_link_libraries(ndmanager ${QT_LIBRARIES} ${LIBXML2_LIBRARIES})
 
 install(PROGRAMS ndmanager DESTINATION bin)
-add_subdirectory(icons)
