@@ -23,6 +23,7 @@
 // include files for QT
 #include <qdir.h>
 #include <qstring.h>
+#include <QApplication>
 
 //Application specific include files
 #include "ndmanager.h"
@@ -40,6 +41,10 @@ QString version;
 
 int main(int argc, char **argv)
 {
+    QApplication::setOrganizationName("sourceforge");
+    QApplication::setOrganizationDomain("sourceforge.net");
+    QApplication::setApplicationName("ndmanager");
+
     KAboutData about("ndmanager", I18N_NOOP("NDManager"), VERSION, description,
                      KAboutData::License_GPL, "(C) 2004-2007 Lynn Hazan", 0, 0, "lynn.hazan@myrealbox.com");
     about.addAuthor( "Lynn Hazan", 0, "lynn.hazan@myrealbox.com" );
