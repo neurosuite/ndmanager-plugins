@@ -232,12 +232,12 @@ void ndManager::slotNewFile(){
  }
  //Open a new instance of the application.
  else{
-  KProcess* childproc = new KProcess();
+  QProcess* childproc = new QProcess();
   childproc->setUseShell(true);
 
   QString command = "ndmanager ";
   *childproc << command;
-  childproc->start(KProcess::DontCare);
+  childproc->start(QProcess::DontCare);
 
   childproc->detach();
   delete childproc;
@@ -322,13 +322,13 @@ void ndManager::openDocumentFile(const QString& url)
     fileOpenRecent->saveEntries(config);
     filePath = path;
 
-    KProcess* childproc = new KProcess();
+    QProcess* childproc = new QProcess();
     childproc->setUseShell(true);
 
     QString command = "ndmanager ";
     command.append(url.path());
     *childproc << command;
-    childproc->start(KProcess::DontCare);
+    childproc->start(QProcess::DontCare);
 
     childproc->detach();
     delete childproc;
@@ -759,12 +759,12 @@ void ndManager::slotQuery(){
 	if(queryInputDialog->exec() == QDialog::Accepted)
 	{
 		// Run query
-		KProcess process;
+        QProcess process;
 		process.setUseShell(true);
 		process << "find " + queryInputDialog->getPath() + " -name '*xml' -exec xpathReader --html {} \"" + queryInputDialog->getQuery() + "\" \\; | sed 'N;s/<tr>/<tr class=\"tr1\">/;s/<tr>/<tr class=\"tr2\">/'";
-		connect(&process,SIGNAL(receivedStdout(KProcess*,char*,int)),this,SLOT(slotQueryResult(KProcess*,char*,int)));
+        connect(&process,SIGNAL(receivedStdout(QProcess*,char*,int)),this,SLOT(slotQueryResult(QProcess*,char*,int)));
 		QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-		process.start(KProcess::Block,KProcess::Stdout);
+        process.start(QProcess::Block,QProcess::Stdout);
 		QApplication::restoreOverrideCursor();
 
 		// Read HTML footer from file

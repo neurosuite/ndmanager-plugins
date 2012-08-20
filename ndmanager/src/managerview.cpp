@@ -194,10 +194,10 @@ void ManagerView::launchNeuroscope(){
   QString fileName = parameterUrl.fileName();
   QString baseName = fileName.left(fileName.length()-4);
   QString fileToUse = baseName.append(neuroscopeComboBox->currentText());
-	KProcess process;
+	QProcess process;
 	process << "neuroscope";
 	process << parameterUrl.directory(false) + fileToUse;
-	process.start(KProcess::DontCare);
+	process.start(QProcess::DontCare);
   }
  }
 }
@@ -224,10 +224,10 @@ void ManagerView::launchKlusters(){
   QString fileName = parameterUrl.fileName();
   QString baseName = fileName.left(fileName.length()-4);
   QString fileToUse = baseName.append(".spk.").append(klustersComboBox->currentText());
-	KProcess process;
+	QProcess process;
 	process << "klusters";
 	process << parameterUrl.directory(false) + fileToUse;
-	process.start(KProcess::DontCare);
+	process.start(QProcess::DontCare);
   }
  }
 }
