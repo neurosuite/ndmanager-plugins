@@ -33,7 +33,6 @@
 
 #include <kdeversion.h>
 #include <QStatusBar>
-#include <kaccel.h>
 #include <QProcess>
 
 
