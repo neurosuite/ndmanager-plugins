@@ -232,15 +232,7 @@ void ndManager::slotNewFile(){
  }
  //Open a new instance of the application.
  else{
-  QProcess* childproc = new QProcess();
-  childproc->setUseShell(true);
-
-  QString command = "ndmanager ";
-  *childproc << command;
-  childproc->start(QProcess::DontCare);
-
-  childproc->detach();
-  delete childproc;
+     QProcess::startDetached("ndmanager", QStringList()<<command);
  }
  QApplication::restoreOverrideCursor();
  slotStatusMsg(tr("Ready."));
@@ -322,17 +314,7 @@ void ndManager::openDocumentFile(const QString& url)
     fileOpenRecent->saveEntries(config);
     filePath = path;
 
-    QProcess* childproc = new QProcess();
-    childproc->setUseShell(true);
-
-    QString command = "ndmanager ";
-    command.append(url.path());
-    *childproc << command;
-    childproc->start(QProcess::DontCare);
-
-    childproc->detach();
-    delete childproc;
-
+    QProcess::startDetached("ndmanager", QStringList()<<url.path());
     QApplication::restoreOverrideCursor();
    }
   }

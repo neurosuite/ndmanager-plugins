@@ -194,10 +194,7 @@ void ManagerView::launchNeuroscope(){
   QString fileName = parameterUrl.fileName();
   QString baseName = fileName.left(fileName.length()-4);
   QString fileToUse = baseName.append(neuroscopeComboBox->currentText());
-	QProcess process;
-	process << "neuroscope";
-	process << parameterUrl.directory(false) + fileToUse;
-	process.start(QProcess::DontCare);
+  QProcess::startDetached("neuroscope", QStringList()<<QString(parameterUrl.directory(false) + fileToUse));
   }
  }
 }
@@ -224,10 +221,7 @@ void ManagerView::launchKlusters(){
   QString fileName = parameterUrl.fileName();
   QString baseName = fileName.left(fileName.length()-4);
   QString fileToUse = baseName.append(".spk.").append(klustersComboBox->currentText());
-	QProcess process;
-	process << "klusters";
-	process << parameterUrl.directory(false) + fileToUse;
-	process.start(QProcess::DontCare);
+  QProcess::startDetached("klusters",QStringList()<<parameterUrl.directory(false) + fileToUse);
   }
  }
 }
@@ -243,7 +237,7 @@ void ManagerView::launchScript(){
  }
  else{
   if(!isUptoDate){
-   QString message = tr"The parameter file contains unsaved data or script, please save before launching %1.").arg(script);
+   QString message = tr("The parameter file contains unsaved data or script, please save before launching %1.").arg(script);
    KMessageBox::error (this,message, tr("Unsaved data!"));
    return;   
   }
