@@ -99,7 +99,7 @@ ProgramsPage::ProgramsPage(bool expertMode,QWidget *parent, const char *name)
  
  //Set an icon on the load button
  KIconLoader* loader = KGlobal::iconLoader();
- loadButton->setIconSet(QIcon(loader->loadIcon("fileopen", KIcon::Small)));
+ loadButton->setIconSet(QIcon(":/icons/fileopen", KIcon::Small)));
  
  connect(loadButton,SIGNAL(clicked()),this,SLOT(loadProgram()));
 }

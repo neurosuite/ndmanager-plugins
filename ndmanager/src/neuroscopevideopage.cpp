@@ -44,7 +44,7 @@ NeuroscopeVideoPage::NeuroscopeVideoPage(QWidget* parent, const char *name)
 
   //Set an icon on the backgroundButton button
  KIconLoader* loader = KGlobal::iconLoader();
- backgroundButton->setIconSet(QIcon(loader->loadIcon("fileopen", KIcon::Small)));
+ backgroundButton->setIconSet(QIcon(":/icons/fileopen", KIcon::Small)));
 }
 
 
