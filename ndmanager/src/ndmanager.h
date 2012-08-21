@@ -248,7 +248,7 @@ private:
  /** mainDock is the main DockWidget to which all other dockWidget will be dock. Inititalized in
   * initDisplay()
   */
- KDockWidget* mainDock;
+ QDockWidget* mainDock;
  
   /**The path of the currently open document.*/
  QString filePath;

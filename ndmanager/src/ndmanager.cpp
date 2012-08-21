@@ -350,11 +350,11 @@ void ndManager::createParameterView(QMap<int, Q3ValueList<int> >& anatomicalGrou
 
   mainDock->setWidget(parameterView);
   //allow dock on the Bottom side only
-  mainDock->setDockSite(KDockWidget::DockBottom);
+  mainDock->setDockSite(QDockWidget::DockBottom);
   setView(mainDock); // central widget in a KDE mainwindow <=> setMainWidget
   setMainDockWidget(mainDock);
   //disable docking abilities of mainDock itself
-  mainDock->setEnableDocking(KDockWidget::DockNone);
+  mainDock->setEnableDocking(QDockWidget::DockNone);
 
   //show all the encapsulated widgets of all controlled dockwidgets
   dockManager->activate();
@@ -367,7 +367,7 @@ void ndManager::createParameterView(QMap<int, Q3ValueList<int> >& anatomicalGrou
 void ndManager::createManagerView(){
  if(managerView == 0L){
    //Create and add the ManagerView
-  KDockWidget* manager = createDockWidget("Manager", QPixmap());
+  QDockWidget* manager = createDockWidget("Manager", QPixmap());
   managerView = new ManagerView();
 
   int returnStatus =  managerView->addKonsole(doc->url(),parameterView->getNbGroups(),parameterView->getFileExtensions(),
@@ -392,16 +392,16 @@ void ndManager::createManagerView(){
   connect(managerView, SIGNAL(checkBeforeLaunchingScripts()), this, SLOT(checkBeforeLaunchingScripts()));
 
   manager->setWidget(managerView);//assign the widget
-  manager->manualDock(mainDock,KDockWidget::DockBottom,25);
-  manager->setEnableDocking(KDockWidget::DockCorner);
-  manager->setDockSite(KDockWidget::DockCorner);
+  manager->manualDock(mainDock,QDockWidget::DockBottom,25);
+  manager->setEnableDocking(QDockWidget::DockCorner);
+  manager->setDockSite(QDockWidget::DockCorner);
  }
  else{
   managerView->addKonsole(doc->url(),parameterView->getNbGroups(),parameterView->getFileExtensions(),parameterView->getFileScriptNames());
-  KDockWidget* manager = dockManager->findWidgetParentDock(managerView);
-  manager->manualDock(mainDock,KDockWidget::DockBottom,25);
-  manager->setEnableDocking(KDockWidget::DockCorner);
-  manager->setDockSite(KDockWidget::DockCorner);
+  QDockWidget* manager = dockManager->findWidgetParentDock(managerView);
+  manager->manualDock(mainDock,QDockWidget::DockBottom,25);
+  manager->setEnableDocking(QDockWidget::DockCorner);
+  manager->setDockSite(QDockWidget::DockCorner);
  }
 
  //show all the encapsulated widgets of all controlled dockwidgets
@@ -410,7 +410,7 @@ void ndManager::createManagerView(){
 }
 
 void ndManager::konsoleDockBeingClosed(){
- KDockWidget* dock = dockManager->findWidgetParentDock(managerView);
+ QDockWidget* dock = dockManager->findWidgetParentDock(managerView);
  dock->undock();
  dock->hide();
  slotStateChanged("showManager");
@@ -498,7 +498,7 @@ void ndManager::slotFileClose(){
    delete mainDock;
    mainDock = 0L;
    if(managerView != 0L){
-    KDockWidget* dock = dockManager->findWidgetParentDock(managerView);
+    QDockWidget* dock = dockManager->findWidgetParentDock(managerView);
     dock->undock();
     dock->hide();
     delete dock;
@@ -695,7 +695,7 @@ void ndManager::slotReload(){
 	delete mainDock;
 	mainDock = 0L;
 	if(managerView != 0L){
-		KDockWidget* dock = dockManager->findWidgetParentDock(managerView);
+        QDockWidget* dock = dockManager->findWidgetParentDock(managerView);
 		dock->undock();
 		dock->hide();
 		delete dock;
