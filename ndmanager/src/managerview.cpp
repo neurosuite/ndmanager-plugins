@@ -34,6 +34,7 @@
 #include <Q3ValueList>
 #include <Q3Frame>
 #include <QProcess>
+#include <QDebug>
 
 //General C++ include files
 #include <iostream>
@@ -63,7 +64,7 @@ ManagerView::returnMessage ManagerView::addKonsole(const QString url,int nbSpike
 
   toolbar->insertButton("neuroscope-22",1,SIGNAL(clicked(int)),this,SLOT(launchNeuroscope()),true,tr("NeuroScope"));
 
-   cout<<"url.path() "<<url.directory()<<" url.fileName() "<<url.fileName()<<" parameterUrl.fileName() "<<parameterUrl.fileName()<<endl;
+   qDebug()<<"url.path() "<<url.directory()<<" url.fileName() "<<url.fileName()<<" parameterUrl.fileName() "<<parameterUrl.fileName()<<endl;
   
   QStringList neuroscopeFiles;
   neuroscopeFiles<<".dat"<<".eeg";
@@ -181,7 +182,7 @@ void ManagerView::launchNeuroscope(){
  emit checkBeforeLaunchingPrograms();
  //The parameter file is new or has been imported from an existing file.
  if(parameterUrl.fileName() == "Untitled"){
-  KMessageBox::error (this,tr("In order to launch NeuroScope, the parameter file has to be saved first."), tr("Unsaved file!"));
+  QMessageBox::critical (this,tr("Unsaved file!"),tr("In order to launch NeuroScope, the parameter file has to be saved first.") );
   return;
  }
  else{

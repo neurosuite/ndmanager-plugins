@@ -31,6 +31,7 @@
 #include <Q3VBoxLayout>
 #include <QShowEvent>
 #include <Q3CString>
+#include <QDebug>
 
 //General C++ include files
 #include <iostream>
@@ -73,11 +74,11 @@ part = static_cast<KParts::ReadOnlyPart*>( factory->create( this, "libkonsolepar
   connect (part,SIGNAL(destroyed(QObject*)),this, SLOT(slotDestroyed(QObject*)));
    
   //if(!part->inherits("TerminalInterface")){
-//      cout<<"!terminal "<<endl;
+//      qDebug()<<"!terminal "<<endl;
   
      QString directoryToOpen = QString(directory);
      
-//      cout<<"directory "<<directory<<" directoryToOpen "<<directoryToOpen.path()<<endl;
+//      qDebug()<<"directory "<<directory<<" directoryToOpen "<<directoryToOpen.path()<<endl;
      
     // This probably happens because the konsole that is installed
     // comes from before KDE 3.2 , and the TerminalInterface is not
@@ -85,7 +86,7 @@ part = static_cast<KParts::ReadOnlyPart*>( factory->create( this, "libkonsolepar
     part->openURL(directoryToOpen);
 
 
-// cout<<"result "<<result<<endl;
+// qDebug()<<"result "<<result<<endl;
 
     return OK;
  // }

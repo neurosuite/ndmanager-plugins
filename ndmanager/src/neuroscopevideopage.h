@@ -67,7 +67,7 @@ public:
    else{
     QPixmap pixmap;
     pixmap.resize(width,height);
-    pixmap.fill(black);
+    pixmap.fill(Qt::black);
     backgroundPixmap->setPixmap(pixmap); 
    }
   };
@@ -179,7 +179,7 @@ private slots:
    else{
     QPixmap pixmap;
     pixmap.resize(width,height);
-    pixmap.fill(black);
+    pixmap.fill(Qt::black);
     backgroundPixmap->setPixmap(pixmap);
    }
   };

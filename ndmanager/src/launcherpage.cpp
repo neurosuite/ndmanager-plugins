@@ -26,15 +26,16 @@
 
 //General C++ include files
 #include <iostream>
+#include <QDebug>
 
 using namespace std;
 
 LauncherPage::LauncherPage(const QString url,QWidget* parent,const char* name)
  : LauncherLayout(parent, name){
   QDir dir(url.path());
-  cout<<"currentPath "<<url.path()<<endl;
+  qDebug()<<"currentPath "<<url<<endl;
  QStringList neuroscopeFiles = dir.entryList("*.dat;*.eeg;*.fil");
-  cout<<"neuroscopeFiles.size() "<<neuroscopeFiles.size()<<endl;
+  qDebug()<<"neuroscopeFiles.size() "<<neuroscopeFiles.size()<<endl;
  neuroscopeFiles.append("");
  neuroscopeComboBox->insertStringList(neuroscopeFiles);
  QStringList klustersFiles = dir.entryList("*.fet;*.spk;*.clu");
