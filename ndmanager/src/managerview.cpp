@@ -64,7 +64,7 @@ ManagerView::returnMessage ManagerView::addKonsole(const QString url,int nbSpike
 
   toolbar->insertButton("neuroscope-22",1,SIGNAL(clicked(int)),this,SLOT(launchNeuroscope()),true,tr("NeuroScope"));
 
-   qDebug()<<"url "<<url.directory()<<" url.fileName() "<<url.fileName()<<" parameterUrl.fileName() "<<parameterUrl.fileName()<<endl;
+   //qDebug()<<"url "<<url.directory()<<" url.fileName() "<<url.fileName()<<" parameterUrl.fileName() "<<parameterUrl.fileName()<<endl;
   
   QStringList neuroscopeFiles;
   neuroscopeFiles<<".dat"<<".eeg";

@@ -131,8 +131,9 @@ void ndManager::initStatusBar()
   statusBar()->insertItem(tr("Ready."),1);
 }
 
-void ndManager::saveProperties(KConfig* config)
+void ndManager::saveProperties()
 {
+#if KDAB_PENDING
   //Save the recent file list
   fileOpenRecent->saveEntries(config);
   config->writePathEntry("openFile",filePath);
@@ -140,10 +141,12 @@ void ndManager::saveProperties(KConfig* config)
   //Save the curent mode
   this->config->setGroup("General");
   this->config->writeEntry("expertMode",expertMode->isChecked());
+#endif
 }
 
-void ndManager::readProperties(KConfig *config)
+void ndManager::readProperties()
 {
+#if KDAB_PENDING
  // initialize the recent file list
   fileOpenRecent->loadEntries(config);
   filePath = config->readPathEntry("openFile");
@@ -155,6 +158,7 @@ void ndManager::readProperties(KConfig *config)
   QString url;
   url.setPath(filePath);
   openDocumentFile(url);
+#endif
 }
 
 void ndManager::slotStatusMsg(const QString &text)
@@ -223,9 +227,7 @@ void ndManager::slotNewFile(){
    return;
   }
 
-  QString url = QString();
-  url.setPath(QDir::currentPath());
-  url.setFileName("Untitled");
+  QString url = QDir::currentPath()+QDir::separator() + "Untitled";
   doc->rename(url);
   filePath = url;
   setCaption(url);
@@ -423,9 +425,8 @@ void ndManager::slotImport(){
      tr("*.xml|Parameter File (*.xml)\n*|All files") );
  if(!url.isEmpty()) openDocumentFile(url);
 
- importedFileUrl = QString(url);
+ importedFileUrl = url + QDir::separator() + "Untitled";
 
- url.setFileName("Untitled");
  doc->rename(url);
  filePath = url;
  setCaption(url);
@@ -589,7 +590,7 @@ void ndManager::slotSave(){
    initialPath = currentUrl;
   }
 
-  QString url=QFileDialog::getSaveFileName( this, tr("Save as...")initialPath,tr("*.xml|Xml Files\n*|All Files"));
+  QString url=QFileDialog::getSaveFileName( this, tr("Save as..."),initialPath,tr("*.xml|Xml Files\n*|All Files"));
   if(!url.isEmpty()){
    QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
    int saveStatus = doc->saveAs(url);
@@ -826,7 +827,7 @@ void ndManager::slotExpertMode(){
 
  if(isNewFile && filePath.contains("Untitled")) slotNewFile();
  else if(isImportedFile && filePath.contains("Untitled")){
-  QString url = QString(importedFileUrl);
+  QString url = importedFileUrl;
   openDocumentFile(url);
   url.setFileName("Untitled");
   doc->rename(url);

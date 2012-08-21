@@ -103,21 +103,21 @@ public:
  /**returns a pointer on the ParameterView containing the parameter information.
  * @return pointer on the ParameterView.
  */                           
- inline ParameterView* getParameterView(){return parameterView;};
+ inline ParameterView* getParameterView(){return parameterView;}
  
 protected:
   /**
    * This function is called when it is time for the app to save its
    * properties for session management purposes.
    */
-  void saveProperties(KConfig *);
+  void saveProperties();
 
   /**
    * This function is called when this app is restored.  The KConfig
    * object points to the session management config file that was saved
    * with @ref saveProperties
    */
-  void readProperties(KConfig *);
+  void readProperties();
   
 public slots:
   
@@ -236,8 +236,6 @@ private:
  void initStatusBar();
  
 private:
- /** The configuration object of the application */
- KConfig *config;
 
  /** Doc represents your actual document and is created only once. It keeps
   * information such as filename and does the serialization of your files.
