@@ -27,7 +27,7 @@
 class ndManagerPrefPageOne;
 class ndManagerPrefPageTwo;
 
-class ndManagerPreferences : public KDialogBase
+class ndManagerPreferences : public QDialog
 {
     Q_OBJECT
 public:

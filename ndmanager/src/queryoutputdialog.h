@@ -34,7 +34,7 @@ Dialog used to display result from query.
 
 	@author Michaël Zugaro <michael.zugaro@college-de-france.fr>
 */
-class QueryOutputDialog : public KDialogBase
+class QueryOutputDialog : public QDialog
 {
 	Q_OBJECT
 	public:
