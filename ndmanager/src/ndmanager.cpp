@@ -227,8 +227,8 @@ void ndManager::slotNewFile(){
   url.setPath(QDir::currentPath());
   url.setFileName("Untitled");
   doc->rename(url);
-  filePath = url.path();
-  setCaption(url.path());
+  filePath = url;
+  setCaption(url);
  }
  //Open a new instance of the application.
  else{
@@ -242,7 +242,7 @@ void ndManager::openDocumentFile(const QString& url)
 {
   slotStatusMsg(tr("Opening file..."));
 
-  filePath = url.path();
+  filePath = url;
 
   if(url.protocol() == "file"){
    QFileInfo file(filePath);
@@ -269,7 +269,7 @@ void ndManager::openDocumentFile(const QString& url)
   }
 
   //Check if the file exists
-  if(!KStandardDirs::exists(url.path())){
+  if(!KStandardDirs::exists(url)){
    KMessageBox::error (this,tr("The selected file does not exist."), tr("Error!"));
    fileOpenRecent->removeURL(url);
    return;
@@ -295,14 +295,14 @@ void ndManager::openDocumentFile(const QString& url)
    //Save the recent file list
    fileOpenRecent->saveEntries(config);
 
-   setCaption(url.path());
+   setCaption(url);
    QApplication::restoreOverrideCursor();
   }
   // check, if this document is already open. If yes, do not do anything
   else{
-   QString path = doc->url().path();
+   QString path = doc->url();
 
-   if(path == url.path()){
+   if(path == url){
     fileOpenRecent->addURL(url); //hack, unselect the item
     QApplication::restoreOverrideCursor();
     return;
@@ -314,7 +314,7 @@ void ndManager::openDocumentFile(const QString& url)
     fileOpenRecent->saveEntries(config);
     filePath = path;
 
-    QProcess::startDetached("ndmanager", QStringList()<<url.path());
+    QProcess::startDetached("ndmanager", QStringList()<<url);
     QApplication::restoreOverrideCursor();
    }
   }
@@ -427,8 +427,8 @@ void ndManager::slotImport(){
 
  url.setFileName("Untitled");
  doc->rename(url);
- filePath = url.path();
- setCaption(url.path());
+ filePath = url;
+ setCaption(url);
 
  slotStatusMsg(tr("Ready."));
 }
@@ -586,7 +586,7 @@ void ndManager::slotSave(){
   else{
    QString currentUrl =  doc->url();
    currentUrl.setFileName("");
-   initialPath = currentUrl.path();
+   initialPath = currentUrl;
   }
 
   QString url=QFileDialog::getSaveFileName( this, tr("Save as...")initialPath,tr("*.xml|Xml Files\n*|All Files"));
@@ -598,8 +598,8 @@ void ndManager::slotSave(){
     " You may consider saving your session file to another location."), tr("I/O Error !"));
    }
    if(importedFile || newFile){
-    filePath = url.path();
-    setCaption(url.path());
+    filePath = url;
+    setCaption(url);
    }
    importedFile = false;
    newFile = false;
@@ -621,14 +621,14 @@ void ndManager::slotSaveAs(){
  slotStatusMsg(tr("Saving as..."));
 
  //Save the parameter file
- QString url=QFileDialog::getSaveFileName(this, tr("Save as..."),doc->url().path(),tr("*|All files"));
+ QString url=QFileDialog::getSaveFileName(this, tr("Save as..."),doc->url(),tr("*|All files"));
  if(!url.isEmpty()){
   int saveStatus = doc->saveAs(url);
   if(saveStatus == ndManagerDoc::SAVE_ERROR){
    KMessageBox::error(0,tr("The current file could not be saved possibly because of insufficient file access permissions."), tr("I/O Error !"));
   }
-  filePath = url.path();
-  setCaption(url.path());
+  filePath = url;
+  setCaption(url);
 
   importedFile = false;
   newFile = false;
@@ -830,8 +830,8 @@ void ndManager::slotExpertMode(){
   openDocumentFile(url);
   url.setFileName("Untitled");
   doc->rename(url);
-  filePath = url.path();
-  setCaption(url.path());
+  filePath = url;
+  setCaption(url);
  }
  else{
   QString url;

@@ -110,7 +110,7 @@ void ProgramsPage::loadProgram(){
    Q3ValueList<QString>::iterator iterator;
   for(iterator = programUrls.begin();iterator != programUrls.end();++iterator){
    QString programUrl = static_cast<QString>(*iterator);
-   QString filePath = programUrl.path();
+   QString filePath = programUrl;
    QFileInfo fileInfo(filePath);
  
    //Check if the file exists

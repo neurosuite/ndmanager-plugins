@@ -45,7 +45,7 @@ bool XmlReader::parseFile(const QString& url){
  xmlInitParser();
 
  // Load XML document
- doc = xmlParseFile(url.path());
+ doc = xmlParseFile(url);
  if(doc == NULL) return false;
  
  // Create xpath evaluation context

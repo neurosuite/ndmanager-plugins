@@ -155,7 +155,7 @@ bool ProgramPage::saveProgramScript(){
  else scriptUrl = QFileDialog::getSaveFileName(this, tr("Save as..."),QString(),tr("*"));
 
  if(!scriptUrl.isEmpty()){
-  path = scriptUrl.path();
+  path = scriptUrl;
   QFile file(path);
   if(!file.open(QIODevice::WriteOnly)){
    message = QString("The file %1 could not be saved possibly because of insufficient file access permissions.").arg(name);
@@ -192,10 +192,10 @@ void ProgramPage::saveProgramParameters(){
   QString name = parameters->getProgramName();
   name.append(".xml");
   descriptionUrlTmp.setFileName(name);
-  descriptionUrl = QFileDialog::getSaveFileName(this, tr("Save as..."),descriptionUrlTmp.path(),tr("*.xml|Xml Files"));
+  descriptionUrl = QFileDialog::getSaveFileName(this, tr("Save as..."),descriptionUrlTmp,tr("*.xml|Xml Files"));
  }
  else{
-  descriptionUrl = QFileDialog::getSaveFileName(this, tr("Save as..."),descriptionUrl.path(),tr("*.xml|Xml Files"));
+  descriptionUrl = QFileDialog::getSaveFileName(this, tr("Save as..."),descriptionUrl,tr("*.xml|Xml Files"));
  }
  //a location has been chosen
  if(!descriptionUrl.isEmpty()){

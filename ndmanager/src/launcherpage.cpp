@@ -32,7 +32,7 @@ using namespace std;
 
 LauncherPage::LauncherPage(const QString url,QWidget* parent,const char* name)
  : LauncherLayout(parent, name){
-  QDir dir(url.path());
+  QDir dir(url);
   qDebug()<<"currentPath "<<url<<endl;
  QStringList neuroscopeFiles = dir.entryList("*.dat;*.eeg;*.fil");
   qDebug()<<"neuroscopeFiles.size() "<<neuroscopeFiles.size()<<endl;

@@ -78,7 +78,7 @@ part = static_cast<KParts::ReadOnlyPart*>( factory->create( this, "libkonsolepar
   
      QString directoryToOpen = QString(directory);
      
-//      qDebug()<<"directory "<<directory<<" directoryToOpen "<<directoryToOpen.path()<<endl;
+//      qDebug()<<"directory "<<directory<<" directoryToOpen "<<directoryToOpen<<endl;
      
     // This probably happens because the konsole that is installed
     // comes from before KDE 3.2 , and the TerminalInterface is not
