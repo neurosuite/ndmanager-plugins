@@ -128,7 +128,7 @@ void ndManager::setupActions()
 
 void ndManager::initStatusBar()
 {
-  statusBar()->insertItem(tr("Ready."),1);
+  statusBar()->showMessage(tr("Ready."));
 }
 
 void ndManager::saveProperties()
@@ -166,7 +166,7 @@ void ndManager::slotStatusMsg(const QString &text)
   ///////////////////////////////////////////////////////////////////
   // change status message permanently
   statusBar()->clear();
-  statusBar()->changeItem(text,1);
+  statusBar()->showMessage(text);
 }
 
 void ndManager::slotViewMainToolBar()

@@ -20,9 +20,6 @@
 //include files for the application
 #include "acquisitionsystempage.h"
 
-// include files for KDE
-        // for KGlobal
-    // for KMessageBox
 
 //General C++ include files
 #include <iostream>
