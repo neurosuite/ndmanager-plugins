@@ -26,31 +26,33 @@
 #include "qlineedit.h"
 //Added by qt3to4:
 #include <Q3VBoxLayout>
-#include "kdialogbase.h"
 
+#include <QDialog>
+class QDialogButtonBox;
 /**
 Dialog used to get information for query.
 
 	@author Michaël Zugaro <michael.zugaro@college-de-france.fr>
 */
-class QueryInputDialog : public KDialogBase
+class QueryInputDialog : public QDialog
 {
-	Q_OBJECT
-	public:
-		QueryInputDialog(QWidget *parent = 0,const QString& caption = "Query",const QString& urltext = "");
-		virtual ~QueryInputDialog();
-        inline QString getQuery() { return query->text(); }
-        inline QString getPath() { return path->text(); }
-			
+    Q_OBJECT
+public:
+    QueryInputDialog(QWidget *parent = 0,const QString& caption = "Query",const QString& urltext = "");
+    virtual ~QueryInputDialog();
+    inline QString getQuery() const { return query->text(); }
+    inline QString getPath() const { return path->text(); }
 
-	private slots:
-		void pathChanged(const QString & newPath);
-		
-	private:		
-		QWidget			*page;
-        QLineEdit	*path;
-		QLineEdit		*query;
-		Q3VBoxLayout		*layout;
+
+private slots:
+    void pathChanged(const QString & newPath);
+
+private:
+    QWidget			*page;
+    QLineEdit	*path;
+    QLineEdit		*query;
+    Q3VBoxLayout		*layout;
+    QDialogButtonBox *buttonBox;
 };
 
 #endif

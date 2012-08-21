@@ -23,7 +23,7 @@
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qlineedit.h>
-#include <kdialogbase.h>
+#include <QDialog>
 #include <q3vbox.h>
 #if KDAB_REENABLE_QT4
 #include <QWebView>

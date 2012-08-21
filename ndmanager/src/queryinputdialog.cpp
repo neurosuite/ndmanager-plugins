@@ -22,6 +22,8 @@
 //Added by qt3to4:
 #include <Q3VBoxLayout>
 #include <QLabel>
+#include <QDialogButtonBox>
+#include <QPushButton>
 
 
 //General C++ include files
@@ -29,10 +31,10 @@
 using namespace std;
 
 QueryInputDialog::QueryInputDialog(QWidget *parent,const QString& caption,const QString& urltext) :
-KDialogBase(parent,"Query",true,caption,Ok|Cancel,Ok,true)
+    QDialog(parent,"Query",true,caption,Ok|Cancel,Ok,true)
 {
-	//Disable the OK button
-	enableButtonOK (false);
+    setWindowTitle(caption);
+    setModal(true);
 	
 	page = new QWidget(this);
 	setMainWidget(page);
@@ -58,7 +60,12 @@ KDialogBase(parent,"Query",true,caption,Ok|Cancel,Ok,true)
 
 	//connections
 	connect(path,SIGNAL(textChanged (const QString &)),this,SLOT(pathChanged(const QString &)));
-	
+    buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok
+                                                       | QDialogButtonBox::Cancel);
+    layout->addWidget(buttonBox);
+    connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
+    connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
+    buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
 }
 
 QueryInputDialog::~QueryInputDialog()
@@ -69,11 +76,11 @@ void QueryInputDialog::pathChanged(const QString & newPath){
 	
 	if(newPath != QString("")){
 		//Enable the OK button
-		enableButtonOK (true);
+        buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
 	}
 	else if(newPath == QString("")){
 		//Disable the OK button
-		enableButtonOK (false);
+        buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
 	}
 }
 

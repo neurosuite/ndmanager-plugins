@@ -20,7 +20,7 @@
 #include "queryoutputdialog.h"
 //Added by qt3to4:
 #include <Q3TextStream>
-
+#include <QMessageBox>
 
 #include <QWebSettings>
 QueryOutputDialog::QueryOutputDialog(QString htmlText,QString queryResult,QWidget *parent,const QString& caption,const QString& urltext) :
@@ -58,7 +58,7 @@ void QueryOutputDialog::slotUser1()
 		textFile.close();
         if(stream.device()->status() == IO_WriteError ) KMessageBox::error(this,tr("Could not save the report. This may be due to incorrect write permissions."));
 	}
-    else KMessageBox::error(this,tr("Could not save the report. This may be due to incorrect write permissions."));
+    else QMessageBox::critical(this,tr("Could not save the report. This may be due to incorrect write permissions."));
 }
 
 void QueryOutputDialog::slotUser2()
@@ -73,7 +73,7 @@ void QueryOutputDialog::slotUser2()
 		htmlFile.close();
         if(stream.device()->status() == IO_WriteError ) KMessageBox::error(this,tr("Could not save the report. This may be due to incorrect write permissions."));
 	}
-    else KMessageBox::error(this,tr("Could not save the report. This may be due to incorrect write permissions."));
+    else QMessageBox::critical(this,tr("Could not save the report. This may be due to incorrect write permissions."));
 }
 
 #include "queryoutputdialog.moc"

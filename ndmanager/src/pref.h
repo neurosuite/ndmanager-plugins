@@ -21,7 +21,7 @@
 #ifndef _NDMANAGERPREF_H_
 #define _NDMANAGERPREF_H_
 
-#include <kdialogbase.h>
+#include <QDialog>
 #include <q3frame.h>
 
 class ndManagerPrefPageOne;
