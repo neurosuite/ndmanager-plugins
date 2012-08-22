@@ -473,7 +473,7 @@ void ParameterView::loadProgram(QString programUrl){
  if(programNames.contains(name)){
   QString message =  tr("The selected script %1 is already loaded. Do you want to reload it?").arg(name);
   int answer = KMessageBox::questionYesNo(this,message, tr("Script already loaded"));
-  if(answer == KMessageBox::No){
+  if(answer == QMessageBox::No){
    counter--;
    return;
   }

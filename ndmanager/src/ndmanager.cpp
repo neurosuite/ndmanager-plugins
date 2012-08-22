@@ -27,18 +27,15 @@
 #include <Q3PtrList>
 #include <QPixmap>
 #include <QFileDialog>
-
+#include <QMessageBox>
 // include files for KDE
 
 
-#include <kdeversion.h>
 #include <QStatusBar>
 #include <QProcess>
 
 
 
-
-#include <kstandarddirs.h>
 
 // application specific includes
 #include "ndmanager.h"
@@ -252,7 +249,7 @@ void ndManager::openDocumentFile(const QString& url)
     QString title = "File not found: ";
     title.append(filePath);
     int answer = KMessageBox::questionYesNo(this,tr("The selected file no longer exists. Do you want to remove it from the list of recent opened files ?"), tr(title));
-    if(answer == KMessageBox::Yes){
+    if(answer == QMessageBox::Yes){
      QString* urlB = new QString();
      urlB->setPath(url.url());
      fileOpenRecent->removeURL(url);
@@ -444,13 +441,13 @@ void ndManager::slotFileClose(){
    Q3ValueList<QString>::iterator iterator;
    for(iterator = scriptModified.begin(); iterator != scriptModified.end(); ++iterator){
     QString name = *iterator;
-    switch(KMessageBox::warningYesNoCancel(0,tr("The script " + name + " has been modified, do you want to save the it?"),tr("Script modification"),KGuiItem("Save"),KGuiItem("Discard"))){
-     case KMessageBox::Yes://<=> Save
+    switch(QMessageBox::question(0,tr("Script modification"),tr("The script %1 has been modified, do you want to save the it?").arg(name),QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
+     case QMessageBox::Save://<=> Save
       parameterView->saveScript(name);
       break;
-     case KMessageBox::No://<=> Discard
+     case QMessageBox::Discard://<=> Discard
       break;
-     case KMessageBox::Cancel:
+     case QMessageBox::Cancel:
       hasBeenCancel = true;
       break;
     }
@@ -463,13 +460,13 @@ void ndManager::slotFileClose(){
    Q3ValueList<QString>::iterator iterator;
    for(iterator = programModified.begin(); iterator != programModified.end(); ++iterator){
     QString name = *iterator;
-    switch(KMessageBox::warningYesNoCancel(0,tr("The description of the program " + name + " has been modified, do you want to save the it?"),tr("Program description modification"),KGuiItem("Save"),KGuiItem("Discard"))){
-     case KMessageBox::Yes://<=> Save
+    switch(QMessageBox::question(0,tr("Program description modification"),tr("The description of the program %1 has been modified, do you want to save the it?").arg(name),QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
+     case QMessageBox::Save://<=> Save
       parameterView->saveProgramDescription(name);
       break;
-     case KMessageBox::No://<=> Discard
+     case QMessageBox::Discard://<=> Discard
       break;
-     case KMessageBox::Cancel:
+     case QMessageBox::Cancel:
       hasBeenCancel = true;
       break;
     }
@@ -479,13 +476,13 @@ void ndManager::slotFileClose(){
   if(!hasBeenCancel){
    //if at least one parameter has been modified, prompt the user to save the information
    if(parameterView->isModified()){
-     switch(KMessageBox::warningYesNoCancel(0,tr("Some parameters have changed, do you want to save the parameter file?"),tr("Parameters modification"),KGuiItem("Save"),KGuiItem("Discard"))){
-      case KMessageBox::Yes://<=> Save
+     switch(QMessageBox::question(0,tr("Parameters modification"),tr("Some parameters have changed, do you want to save the parameter file?"),QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
+      case QMessageBox::Save://<=> Save
        slotSave();
        break;
-      case KMessageBox::No://<=> Discard
+      case QMessageBox::Discard://<=> Discard
        break;
-      case KMessageBox::Cancel:
+      case QMessageBox::Cancel:
        return;
      }
    }
@@ -526,13 +523,13 @@ bool ndManager::queryClose()
     Q3ValueList<QString>::iterator iterator;
     for(iterator = scriptModified.begin(); iterator != scriptModified.end(); ++iterator){
      QString name = *iterator;
-     switch(KMessageBox::warningYesNoCancel(0,tr("The script " + name + " has been modified, do you want to save the it?"),tr("Script modification"),KGuiItem("Save"),KGuiItem("Discard"))){
-      case KMessageBox::Yes://<=> Save
+     switch(QMessageBox::question(0,tr("Script modification"),tr("The script %1 has been modified, do you want to save the it?").arg(name),QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
+      case QMessageBox::Save://<=> Save
        parameterView->saveScript(name);
        break;
-      case KMessageBox::No://<=> Discard
+      case QMessageBox::Discard://<=> Discard
        break;
-      case KMessageBox::Cancel:
+      case QMessageBox::Cancel:
        return false;
        break;
      }
@@ -545,13 +542,13 @@ bool ndManager::queryClose()
    Q3ValueList<QString>::iterator iterator;
    for(iterator = programModified.begin(); iterator != programModified.end(); ++iterator){
     QString name = *iterator;
-    switch(KMessageBox::warningYesNoCancel(0,tr("The description of the program " + name + " has been modified, do you want to save the it?"),tr("Program description modification"),KGuiItem("Save"),KGuiItem("Discard"))){
-     case KMessageBox::Yes://<=> Save
+    switch(QMessageBox::question(0,tr("Program description modification"),tr("The description of the program %1 has been modified, do you want to save the it?").arg(name),QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
+     case QMessageBox::Save://<=> Save
       parameterView->saveProgramDescription(name);
       break;
-     case KMessageBox::No://<=> Discard
+     case QMessageBox::Discard://<=> Discard
       break;
-     case KMessageBox::Cancel:
+     case QMessageBox::Cancel:
       return false;
       break;
     }
@@ -560,13 +557,13 @@ bool ndManager::queryClose()
 
    //if at least one parameter has been modified, prompt the user to save the information
    if(parameterView->isModified()){
-    switch(KMessageBox::warningYesNoCancel(0,tr("Some parameters have changed, do you want to save the parameter file?"),tr("Parameters modification"),KGuiItem("Save"),KGuiItem("Discard"))){
-     case KMessageBox::Yes://<=> Save
+    switch(QMessageBox::question(0,tr("Parameters modification"),tr("Some parameters have changed, do you want to save the parameter file?"),QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
+     case QMessageBox::Save://<=> Save
       slotSave();
       break;
-     case KMessageBox::No://<=> Discard
+     case QMessageBox::Discard://<=> Discard
       break;
-     case KMessageBox::Cancel:
+     case QMessageBox::Cancel:
       return false;
     }
   }
