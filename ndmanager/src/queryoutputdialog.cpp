@@ -56,7 +56,7 @@ void QueryOutputDialog::slotUser1()
 		Q3TextStream stream(&textFile);
 		stream << queryResult;
 		textFile.close();
-        if(stream.device()->status() == IO_WriteError ) KMessageBox::error(this,tr("Could not save the report. This may be due to incorrect write permissions."));
+        if(stream.device()->status() == IO_WriteError ) QMessageBox::critical(this,tr("Could not save the report. This may be due to incorrect write permissions."));
 	}
     else QMessageBox::critical(this,tr("Could not save the report. This may be due to incorrect write permissions."));
 }
@@ -71,7 +71,7 @@ void QueryOutputDialog::slotUser2()
 		Q3TextStream stream(&htmlFile);
 		stream << htmlText;
 		htmlFile.close();
-        if(stream.device()->status() == IO_WriteError ) KMessageBox::error(this,tr("Could not save the report. This may be due to incorrect write permissions."));
+        if(stream.device()->status() == IO_WriteError ) QMessageBox::critical(this,tr("Could not save the report. This may be due to incorrect write permissions."));
 	}
     else QMessageBox::critical(this,tr("Could not save the report. This may be due to incorrect write permissions."));
 }

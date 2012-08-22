@@ -172,7 +172,7 @@ bool ProgramPage::saveProgramScript(){
  //If the change in the programName lineedit has not yet been validated, a call to nameChanged will be done after this call. Therefore
  //programName has to be updated so no message will be display in that call (otherwise there will be conflict in the events)
  if(programName != parameters->getProgramName()) programName = parameters->getProgramName();
- if(title != "") KMessageBox::error (this,tr(message), tr(title));
+ if(title != "") QMessageBox::critical (this, tr(title),tr(message));
  if(recall) return saveProgramScript();
  else{
   if(title != "") return false;
@@ -211,7 +211,7 @@ void ProgramPage::saveProgramParameters(){
   bool status = descriptionWriter.writeTofile(descriptionUrl);
   if(!status){
    QString message = QString("The file %1 could not be saved possibly because of insufficient file access permissions.").arg(descriptionUrl.fileName());
-   KMessageBox::error (this,tr(message), tr("IO Error!"));
+   QMessageBox::critical (this, tr("IO Error!"),tr(message));
   }
   descriptionNotSaved = false;
  }

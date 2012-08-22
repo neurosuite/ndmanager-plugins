@@ -255,7 +255,7 @@ void ParameterView::changeProgramName(ProgramPage* programPage,const QString& ne
   programPage->nameChanged(oldName);
 
   QString currentMessage =  QString("There is already a script with the name %1.").arg(newName);
-  KMessageBox::error (this,tr(currentMessage), tr("script name conflict"));
+  QMessageBox::critical (this, tr("script name conflict"),tr(currentMessage));
 
   return;
  }
@@ -301,7 +301,7 @@ void ParameterView::changeProgramName(ProgramPage* programPage,const QString& ne
  showPage(pageIndex(programFrame));
 
  //If the message if not empty show a message box with it
- if(message !="") KMessageBox::error (this,tr(message), tr(title));
+ if(message !="") QMessageBox::critical (this,tr(title),tr(message) );
 
  emit scriptListHasBeenModified(programNames);
 }
@@ -432,7 +432,7 @@ void ParameterView::initialize(QMap<int, Q3ValueList<int> >& anatomicalGroups,QM
     QFile file(path);
     if(!file.open(QIODevice::ReadOnly)){
      QString message = tr("The file %1 is not readable.").arg(name);
-     KMessageBox::error (this,message,tr("IO Error!"));
+     QMessageBox::critical (this,tr("IO Error!"),message);
     }
     else{
      Q3TextStream stream(&file);
@@ -446,7 +446,7 @@ void ParameterView::initialize(QMap<int, Q3ValueList<int> >& anatomicalGroups,QM
      }
      else{
       QString message =  tr("The file %1  does not appear to be a script file (a script file should begin with #!).").arg(name);
-      KMessageBox::error (this,message, tr("IO Error!"));
+      QMessageBox::critical (this,tr("IO Error!"),message);
       scriptView->getDoc()->text();
      }
     }
@@ -507,7 +507,7 @@ void ParameterView::loadProgram(QString programUrl){
    QFile file(path);
    if(!file.open(QIODevice::ReadOnly)){
     QString message = QString("The file %1 is not readable.").arg(name);
-    KMessageBox::error (this,tr(message), tr("IO Error!"));
+    QMessageBox::critical (this,tr(message), tr("IO Error!"));
    }
    else{
     Q3TextStream stream(&file);
@@ -520,7 +520,7 @@ void ParameterView::loadProgram(QString programUrl){
     }
     else{
      QString message =  tr("The file %1  does not appear to be a script file (a script file should begin with #!).").arg(name);
-     KMessageBox::error (this,message, tr("IO Error!"));
+     QMessageBox::critical (this,tr("IO Error!"),message);
      scriptView->getDoc()->text();
     }
    }

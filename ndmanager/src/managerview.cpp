@@ -187,7 +187,7 @@ void ManagerView::launchNeuroscope(){
  }
  else{
   if(!isUptoDate){
-   KMessageBox::error (this,tr("The parameter file contains unsaved data, please save before launching NeuroScope."), tr("Unsaved file!"));
+   QMessageBox::critical (this, tr("Unsaved file!"),tr("The parameter file contains unsaved data, please save before launching NeuroScope."));
    return;   
   }
   //Launch NeuroScope.
@@ -202,19 +202,19 @@ void ManagerView::launchNeuroscope(){
 
 void ManagerView::launchKlusters(){
  if(klustersComboBox->count() == 0){
-  KMessageBox::error (this,tr("No spike groups have been defined, please define at least one spike group before launching Klusters."), tr("Undefined spike groups"));
+  QMessageBox::critical (this, tr("Undefined spike groups"),tr("No spike groups have been defined, please define at least one spike group before launching Klusters."));
   return;  
  }
 
  emit checkBeforeLaunchingPrograms();
  //The parameter file is new or has been imported from an existing file.
  if(parameterUrl.fileName() == "Untitled"){
-  KMessageBox::error (this,tr("In order to launch Klusters, the parameter file has to be saved first."), tr("Unsaved file!"));
+  QMessageBox::critical (this, tr("Unsaved file!"),tr("In order to launch Klusters, the parameter file has to be saved first."));
   return;
  }
  else{
   if(!isUptoDate){
-   KMessageBox::error (this,tr("The parameter file contains unsaved data, please save before launching Klusters."), tr("Unsaved file!"));
+   QMessageBox::critical (this, tr("Unsaved file!"),tr("The parameter file contains unsaved data, please save before launching Klusters."));
    return;   
   }
   //Launch Klusters.
@@ -233,13 +233,13 @@ void ManagerView::launchScript(){
  //The parameter file is new or has been imported from an existing file.
  if(parameterUrl.fileName() == "Untitled"){
   QString message = tr("In order to launch %1, the parameter file has to be saved first.").arg(script);
-  KMessageBox::error (this,message, tr("Unsaved file!"));
+  QMessageBox::critical (this, tr("Unsaved file!"),message);
   return;
  }
  else{
   if(!isUptoDate){
    QString message = tr("The parameter file contains unsaved data or script, please save before launching %1.").arg(script);
-   KMessageBox::error (this,message, tr("Unsaved data!"));
+   QMessageBox::critical (this, tr("Unsaved data!"),message);
    return;   
   }
   //Launch the script.

@@ -94,7 +94,7 @@ ProgramsPage::ProgramsPage(bool expertMode,QWidget *parent, const char *name)
  
  //Set an icon on the load button
  
- loadButton->setIconSet(QIcon(":/icons/fileopen")));
+ loadButton->setIconSet(QIcon(":/icons/fileopen"));
  
  connect(loadButton,SIGNAL(clicked()),this,SLOT(loadProgram()));
 }
@@ -115,7 +115,7 @@ void ProgramsPage::loadProgram(){
  
    //Check if the file exists
    if(!fileInfo.exists()){
-    KMessageBox::error (this,tr("The  file %1 does not exist.").arg(filePath), tr("Error!"));
+    QMessageBox::critical (this, tr("Error!"),tr("The  file %1 does not exist.").arg(filePath));
     return;
    }         
 
@@ -123,7 +123,7 @@ void ProgramsPage::loadProgram(){
    QFile file(filePath);
    if(!file.open(QIODevice::ReadOnly)){
     QString message = QString("The file %1 is not readable.").arg(filePath);
-    KMessageBox::error (this,tr(message), tr("IO Error!"));
+    QMessageBox::critical (this, tr("IO Error!"),tr(message));
    }
    else{
     Q3TextStream stream(&file);
@@ -131,8 +131,8 @@ void ProgramsPage::loadProgram(){
     int i = firstLine.find(QRegExp("^<\\?xml version"));
     file.close();
     if(i == -1){
-    QString message = QString("The file %1 is not an xml file.").arg(filePath);
-    KMessageBox::error (this,tr(message), tr("IO Error!"));
+    QString message = tr("The file %1 is not an xml file.").arg(filePath);
+    QMessageBox::critical (this, tr("IO Error!"),message);
     return;
     }        
    }               

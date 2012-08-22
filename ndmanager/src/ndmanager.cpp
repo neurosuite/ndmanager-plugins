@@ -222,7 +222,7 @@ void ndManager::slotNewFile(){
   int returnStatus = doc->newDocument();
   if(returnStatus == ndManagerDoc::PARSE_ERROR){
    QApplication::restoreOverrideCursor();
-   KMessageBox::error (this,tr("The new parameter file could not be initialize due to parsing error."), tr("Error!"));
+   QMessageBox::critical (this, tr("Error!"),tr("The new parameter file could not be initialize due to parsing error."));
    resetState();
    return;
   }
@@ -272,7 +272,7 @@ void ndManager::openDocumentFile(const QString& url)
 
   //Check if the file exists
   if(!KStandardDirs::exists(url)){
-   KMessageBox::error (this,tr("The selected file does not exist."), tr("Error!"));
+   QMessageBox::critical (this, tr("Error!"),tr("The selected file does not exist."));
    fileOpenRecent->removeURL(url);
    return;
   }
@@ -287,7 +287,7 @@ void ndManager::openDocumentFile(const QString& url)
    int returnStatus = doc->openDocument(url);
    if(returnStatus == ndManagerDoc::PARSE_ERROR){
      QApplication::restoreOverrideCursor();
-     KMessageBox::error (this,tr("The selected parameter file could not be initialize due to parsing error."), tr("Error!"));
+     QMessageBox::critical (this, tr("Error!"),tr("The selected parameter file could not be initialize due to parsing error."));
      //close the document
      doc->closeDocument();
      resetState();
@@ -373,11 +373,11 @@ void ndManager::createManagerView(){
   int returnStatus =  managerView->addKonsole(doc->url(),parameterView->getNbGroups(),parameterView->getFileExtensions(),
    parameterView->getFileScriptNames());
   if(returnStatus == ManagerView::NO_KPART){
-   KMessageBox::error (this,tr("The Konsole part does not exist, no terminal can be created."), tr("IO Error!"));
+   QMessageBox::critical (this, tr("IO Error!"),tr("The Konsole part does not exist, no terminal can be created."));
    return;
   }
   if(returnStatus == ManagerView::PART_LOADING_ERROR){
-   KMessageBox::error (this,tr("The Konsole part could not be loaded."), tr("IO Error!"));
+   QMessageBox::critical (this, tr("IO Error!"),tr("The Konsole part could not be loaded."));
    return;
   }
 
@@ -595,8 +595,8 @@ void ndManager::slotSave(){
    QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
    int saveStatus = doc->saveAs(url);
    if(saveStatus == ndManagerDoc::SAVE_ERROR){
-    KMessageBox::error(0,tr("The current file could not be saved possibly because of insufficient file access permissions."
-    " You may consider saving your session file to another location."), tr("I/O Error !"));
+    QMessageBox::critical(0, tr("IO Error!"),tr("The current file could not be saved possibly because of insufficient file access permissions."
+    " You may consider saving your session file to another location."));
    }
    if(importedFile || newFile){
     filePath = url;
@@ -611,8 +611,8 @@ void ndManager::slotSave(){
  //Save the parameter file
  int saveStatus = doc->save();
   if(saveStatus == ndManagerDoc::SAVE_ERROR){
-   KMessageBox::error(0,tr("The current file could not be saved possibly because of insufficient file access permissions."
-   " You may consider saving your session file to another location using the Save As entry in the File menu."), tr("I/O Error !"));
+   QMessageBox::critical(0, tr("IO Error!"),tr("The current file could not be saved possibly because of insufficient file access permissions."
+   " You may consider saving your session file to another location using the Save As entry in the File menu."));
   }
  }
  slotStatusMsg(tr("Ready."));
@@ -626,7 +626,7 @@ void ndManager::slotSaveAs(){
  if(!url.isEmpty()){
   int saveStatus = doc->saveAs(url);
   if(saveStatus == ndManagerDoc::SAVE_ERROR){
-   KMessageBox::error(0,tr("The current file could not be saved possibly because of insufficient file access permissions."), tr("I/O Error !"));
+   QMessageBox::critical(0,tr("The current file could not be saved possibly because of insufficient file access permissions."), tr("I/O Error !"));
   }
   filePath = url;
   setCaption(url);
@@ -672,7 +672,7 @@ void ndManager::slotSaveDefault(){
     slotStatusMsg(tr("Saving as default..."));
 	int saveStatus = doc->saveDefault();
 	if(saveStatus == ndManagerDoc::SAVE_ERROR){
-        KMessageBox::error(0,tr("The current file could not be saved as the default parameter file."), tr("I/O Error !"));
+        QMessageBox::critical(0, tr("IO Error!"),tr("The current file could not be saved as the default parameter file."));
 	}
     slotStatusMsg(tr("Ready."));
 }
@@ -718,7 +718,7 @@ void ndManager::slotReload(){
 	int returnStatus = doc->openDocument(url);
 	if(returnStatus == ndManagerDoc::PARSE_ERROR){
 		QApplication::restoreOverrideCursor();
-        KMessageBox::error (this,tr("The selected parameter file could not be initialize due to parsing error."), tr("Error!"));
+        QMessageBox::critical (this, tr("IO Error!"),tr("The selected parameter file could not be initialize due to parsing error."));
      //close the document
 		doc->closeDocument();
 		resetState();
