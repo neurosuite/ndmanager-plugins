@@ -28,7 +28,6 @@
 
 // include files for KDE
 #include <QDockWidget>
-#include <kstdaction.h>
 
 #include <QProcess>
 

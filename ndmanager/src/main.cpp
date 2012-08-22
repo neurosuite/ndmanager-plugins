@@ -44,7 +44,8 @@ int main(int argc, char **argv)
     QApplication::setOrganizationName("sourceforge");
     QApplication::setOrganizationDomain("sourceforge.net");
     QApplication::setApplicationName("ndmanager");
-
+    QApplication app(argc, argv);
+#if KDAB_PENDING
     KAboutData about("ndmanager", I18N_NOOP("NDManager"), VERSION, description,
                      KAboutData::License_GPL, "(C) 2004-2007 Lynn Hazan", 0, 0, "lynn.hazan@myrealbox.com");
     about.addAuthor( "Lynn Hazan", 0, "lynn.hazan@myrealbox.com" );
@@ -77,6 +78,8 @@ int main(int argc, char **argv)
      manager->show();
     }
 
-
+#endif
+    ndManager* manager = new ndManager();
+    manager->show();
     return app.exec();
 }
