@@ -95,7 +95,7 @@ void ndManager::setupActions()
  KStdAction::open(this, SLOT(slotFileOpen()), actionCollection());
  KStdAction::openNew(this, SLOT(slotNewFile()), actionCollection());
  fileOpenRecent = KStdAction::openRecent(this, SLOT(slotFileOpenRecent(const QString&)), actionCollection());
- new KAction(tr("&Close"), "fileclose",0,this, SLOT(slotFileClose()),actionCollection(), "file_close");
+ new QAction(tr("&Close"), "fileclose",0,this, SLOT(slotFileClose()),actionCollection(), "file_close");
  KStdAction::save(this, SLOT(slotSave()), actionCollection());
  KStdAction::saveAs(this, SLOT(slotSaveAs()), actionCollection());
 
@@ -106,15 +106,15 @@ void ndManager::setupActions()
 
   //Custom actions and menus
  //File menu
- new KAction(tr("Use &Template..."),0,this,SLOT(slotImport()),actionCollection(),"import");
- new KAction(tr("&Reload"),"F5",this,SLOT(slotReload()),actionCollection(),"reload");
- new KAction(tr("Save as &Default"),0,this,SLOT(slotSaveDefault()),actionCollection(),"save_as_default");
+ new QAction(tr("Use &Template..."),0,this,SLOT(slotImport()),actionCollection(),"import");
+ new QAction(tr("&Reload"),"F5",this,SLOT(slotReload()),actionCollection(),"reload");
+ new QAction(tr("Save as &Default"),0,this,SLOT(slotSaveDefault()),actionCollection(),"save_as_default");
 
  //the Query menu
- new KAction(tr("&Query"),0,this,SLOT(slotQuery()),actionCollection(),"query");
+ new QAction(tr("&Query"),0,this,SLOT(slotQuery()),actionCollection(),"query");
 
  //Processing menu
- new KAction(tr("Show Processing Manager"),0,this,SLOT(createManagerView()),actionCollection(),"processingManager");
+ new QAction(tr("Show Processing Manager"),0,this,SLOT(createManagerView()),actionCollection(),"processingManager");
 
  //Settings
  expertMode = new KToggleAction(tr("&Expert Mode"),0,this,SLOT(slotExpertMode()),actionCollection(),"expert");

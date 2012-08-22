@@ -33,9 +33,9 @@ using namespace std;
 LauncherPage::LauncherPage(const QString url,QWidget* parent,const char* name)
  : LauncherLayout(parent, name){
   QDir dir(url);
-  qDebug()<<"currentPath "<<url<<endl;
+  qDebug()<<"currentPath "<<url;
  QStringList neuroscopeFiles = dir.entryList("*.dat;*.eeg;*.fil");
-  qDebug()<<"neuroscopeFiles.size() "<<neuroscopeFiles.size()<<endl;
+  qDebug()<<"neuroscopeFiles.size() "<<neuroscopeFiles.size();
  neuroscopeFiles.append("");
  neuroscopeComboBox->insertStringList(neuroscopeFiles);
  QStringList klustersFiles = dir.entryList("*.fet;*.spk;*.clu");

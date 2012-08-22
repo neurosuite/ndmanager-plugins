@@ -74,11 +74,11 @@ part = static_cast<KParts::ReadOnlyPart*>( factory->create( this, "libkonsolepar
   connect (part,SIGNAL(destroyed(QObject*)),this, SLOT(slotDestroyed(QObject*)));
    
   //if(!part->inherits("TerminalInterface")){
-//      qDebug()<<"!terminal "<<endl;
+//      qDebug()<<"!terminal ";
   
      QString directoryToOpen = QString(directory);
      
-//      qDebug()<<"directory "<<directory<<" directoryToOpen "<<directoryToOpen<<endl;
+//      qDebug()<<"directory "<<directory<<" directoryToOpen "<<directoryToOpen;
      
     // This probably happens because the konsole that is installed
     // comes from before KDE 3.2 , and the TerminalInterface is not
@@ -86,7 +86,7 @@ part = static_cast<KParts::ReadOnlyPart*>( factory->create( this, "libkonsolepar
     part->openURL(directoryToOpen);
 
 
-// qDebug()<<"result "<<result<<endl;
+// qDebug()<<"result "<<result;
 
     return OK;
  // }
