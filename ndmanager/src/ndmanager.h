@@ -41,7 +41,7 @@
 #include "neuroscopevideoinfo.h"
 #include "managerview.h"
 
-class KToggleAction;
+class QAction;
 
 
 /**
@@ -254,10 +254,10 @@ private:
 
  //Action and toolbar pointers
  KRecentFilesAction* fileOpenRecent;
- KToggleAction* viewMainToolBar;
- KToggleAction* viewToolBar;
- KToggleAction* viewStatusBar;
- KToggleAction* expertMode;
+ QAction* viewMainToolBar;
+ QAction* viewToolBar;
+ QAction* viewStatusBar;
+ QAction* expertMode;
 
  /**Stores if the current file has been imported and therefore needs to be saved under a new name.*/ 
  bool importedFile;
