@@ -66,10 +66,10 @@ ndManager::ndManager():KDockMainWindow(0, "NDManager"),prefDialog(0L),mainDock(0
     // Apply the saved mainwindow settings, if any, and ask the mainwindow
     // to automatically save settings if changed: window size, toolbar
     // position, icon size, etc.
-    setAutoSaveSettings();
+    //KDAB_PENDING setAutoSaveSettings();
 
     // initialize the recent file list
-    fileOpenRecent->loadEntries(config);
+    //KDAB_PENDING fileOpenRecent->loadEntries(config);
 
     //Disable some actions at startup (see the ndManager.rc file)
     slotStateChanged("initState");
@@ -254,7 +254,9 @@ void ndManager::openDocumentFile(const QString& url)
                 urlB->setPath(url.url());
                 fileOpenRecent->removeURL(url);
             }
-            else  fileOpenRecent->addURL(url); //hack, unselect the item
+            else  {
+                //KDAB_PENDING fileOpenRecent->addURL(url); //hack, unselect the item
+            }
             filePath = "";
 
             return;
@@ -263,7 +265,7 @@ void ndManager::openDocumentFile(const QString& url)
     //Do not handle remote files
     else{
         KMessageBox::sorry(this,tr("Sorry, NDManager does not handle remote files."),tr("Remote file handling"));
-        fileOpenRecent->addURL(url); //hack, unselect the item
+        //KDAB_PENDING fileOpenRecent->addURL(url); //hack, unselect the item
         return;
     }
 
@@ -278,7 +280,7 @@ void ndManager::openDocumentFile(const QString& url)
 
     //If no document is open already, open the document asked.
     if(!mainDock){
-        fileOpenRecent->addURL(url);
+        //KDAB_PENDING fileOpenRecent->addURL(url);
 
         //Open the file (that will also initialize the document)
         int returnStatus = doc->openDocument(url);
@@ -302,13 +304,13 @@ void ndManager::openDocumentFile(const QString& url)
         QString path = doc->url();
 
         if(path == url){
-            fileOpenRecent->addURL(url); //hack, unselect the item
+            //KDAB_PENDING fileOpenRecent->addURL(url); //hack, unselect the item
             QApplication::restoreOverrideCursor();
             return;
         }
         //If the document asked is not the already open. Open a new instance of the application with it.
         else{
-            fileOpenRecent->addURL(url);
+            //KDAB_PENDING fileOpenRecent->addURL(url);
             //Save the recent file list
             fileOpenRecent->saveEntries(config);
             filePath = path;
