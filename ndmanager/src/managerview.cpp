@@ -35,6 +35,7 @@
 #include <Q3Frame>
 #include <QProcess>
 #include <QDebug>
+#include <QAction>
 
 //General C++ include files
 #include <iostream>
@@ -62,7 +63,7 @@ ManagerView::returnMessage ManagerView::addKonsole(const QString url,int nbSpike
   toolbar = new QToolBar(this);
   
 
-  toolbar->insertButton("neuroscope-22",1,SIGNAL(clicked(int)),this,SLOT(launchNeuroscope()),true,tr("NeuroScope"));
+  toolbar->addAction(QIcon(":icons/neuroscope-22")),tr("NeuroScope"),this,SLOT(launchNeuroscope());
 
    //qDebug()<<"url "<<url.directory()<<" url.fileName() "<<url.fileName()<<" parameterUrl.fileName() "<<parameterUrl.fileName();
   
@@ -90,8 +91,7 @@ ManagerView::returnMessage ManagerView::addKonsole(const QString url,int nbSpike
   toolbar->insertLineSeparator();
   toolbar->addSeparator();
   toolbar->addSeparator();
-  
-  toolbar->insertButton("scripts",2,SIGNAL(clicked(int)),this,SLOT(launchScript()),true,tr("Start"));
+  toolbar->addAction(QIcon(":icon/scripts")),tr("Start"),this,SLOT(launchScript());
   scriptsComboBox = new QComboBox(toolbar);
   scriptsComboBox->setGeometry(QRect(13,53,150,20));
   scriptsComboBox->setMinimumSize(QSize(90,20));
@@ -104,8 +104,8 @@ ManagerView::returnMessage ManagerView::addKonsole(const QString url,int nbSpike
   }
   scriptsComboBox->insertStringList(scripts);
   toolbar->insertWidget(-1,scriptsComboBox->sizeHint().width(),scriptsComboBox);
-  toolbar->insertButton("stop",3,SIGNAL(clicked(int)),this,SLOT(stopScript()),true,tr("Stop"));
-  
+  toolbar->addAction(QIcon(":icon/stop")),tr("Stop"),this,SLOT(stopScript());
+
   toolbar->addSeparator();
   toolbar->addSeparator();
   toolbar->addSeparator();
@@ -113,7 +113,8 @@ ManagerView::returnMessage ManagerView::addKonsole(const QString url,int nbSpike
   toolbar->addSeparator();
   toolbar->addSeparator();
   
-  toolbar->insertButton("klusters-22",4,SIGNAL(clicked(int)),this,SLOT(launchKlusters()),true,tr("Klusters"));
+  toolbar->addAction(QIcon(":icon/klusters-22")),tr("KLusters"),this,SLOT(launchKlusters());
+
   klustersComboBox = new QComboBox(toolbar);
   klustersComboBox->setGeometry(QRect(13,53,150,20));
   klustersComboBox->setMinimumSize(QSize(90,20));
