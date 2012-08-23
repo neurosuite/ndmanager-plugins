@@ -252,7 +252,7 @@ void ndManager::openDocumentFile(const QString& url)
             if(answer == QMessageBox::Yes){
                 QString* urlB = new QString();
                 urlB->setPath(url.url());
-                fileOpenRecent->removeURL(url);
+                //KDAB_PENDING fileOpenRecent->removeURL(url);
             }
             else  {
                 //KDAB_PENDING fileOpenRecent->addURL(url); //hack, unselect the item
@@ -272,7 +272,7 @@ void ndManager::openDocumentFile(const QString& url)
     //Check if the file exists
     if(!KStandardDirs::exists(url)){
         QMessageBox::critical (this, tr("Error!"),tr("The selected file does not exist."));
-        fileOpenRecent->removeURL(url);
+        //KDAB_PENDING fileOpenRecent-> removeURL(url);
         return;
     }
 
