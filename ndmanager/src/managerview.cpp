@@ -82,7 +82,7 @@ ManagerView::returnMessage ManagerView::addKonsole(const QString url,int nbSpike
 
   neuroscopeComboBox->insertStringList(neuroscopeFiles);
   connect(neuroscopeComboBox,SIGNAL(activated(int)),this,SLOT(neuroscopeFileChange(int)));
-  toolbar->insertWidget(-1,neuroscopeComboBox->sizeHint().width(),neuroscopeComboBox);
+  toolbar->addWidget(neuroscopeComboBox);
  // toolbar->insertCombo(neuroscopeFiles,1,false,SIGNAL(activated(int)),this,SLOT(neuroscopeFileChange(int))); 
   
   toolbar->addSeparator();
@@ -103,7 +103,7 @@ ManagerView::returnMessage ManagerView::addKonsole(const QString url,int nbSpike
     scripts<<static_cast<QString>(*iterator2);  
   }
   scriptsComboBox->insertStringList(scripts);
-  toolbar->insertWidget(-1,scriptsComboBox->sizeHint().width(),scriptsComboBox);
+  toolbar->addWidget(scriptsComboBox);
   toolbar->addAction(QIcon(":icon/stop")),tr("Stop"),this,SLOT(stopScript());
 
   toolbar->addSeparator();
@@ -125,7 +125,7 @@ ManagerView::returnMessage ManagerView::addKonsole(const QString url,int nbSpike
   }
 
   klustersComboBox->insertStringList(klustersFiles);
-  toolbar->insertWidget(-1,klustersComboBox->sizeHint().width(),klustersComboBox);
+  toolbar->addWidget(klustersComboBox);
   frameLayout->addWidget(toolbar);
 
 
