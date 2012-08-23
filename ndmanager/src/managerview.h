@@ -35,7 +35,7 @@
 #include "ndkonsole.h"
 
 //Include files for KDE
-#include <ktoolbar.h> 
+#include <QToolBar>
 #include <QDockWidget>
 
 /**
@@ -116,7 +116,7 @@ private slots:
 private:
  NdKonsole* konsole;  
  LauncherPage* launcherpage;
- KToolBar* toolbar;
+ QToolBar* toolbar;
  Q3VBoxLayout* frameLayout;
  QComboBox* neuroscopeComboBox;
  QComboBox* klustersComboBox;

@@ -740,11 +740,14 @@ void ndManager::slotQuery(){
 	{
 		// Run query
         QProcess process;
+#if KDAB_PENDING
+//Not portable
 		process.setUseShell(true);
 		process << "find " + queryInputDialog->getPath() + " -name '*xml' -exec xpathReader --html {} \"" + queryInputDialog->getQuery() + "\" \\; | sed 'N;s/<tr>/<tr class=\"tr1\">/;s/<tr>/<tr class=\"tr2\">/'";
         connect(&process,SIGNAL(receivedStdout(QProcess*,char*,int)),this,SLOT(slotQueryResult(QProcess*,char*,int)));
 		QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
         process.start(QProcess::Block,QProcess::Stdout);
+#endif
 		QApplication::restoreOverrideCursor();
 
 		// Read HTML footer from file

@@ -59,7 +59,7 @@ ManagerView::returnMessage ManagerView::addKonsole(const QString url,int nbSpike
   konsole = new NdKonsole(this,"NdKonsole");
   frameLayout->addWidget(konsole);
       
-  toolbar = new KToolBar(this);
+  toolbar = new QToolBar(this);
   
 
   toolbar->insertButton("neuroscope-22",1,SIGNAL(clicked(int)),this,SLOT(launchNeuroscope()),true,tr("NeuroScope"));
@@ -84,12 +84,12 @@ ManagerView::returnMessage ManagerView::addKonsole(const QString url,int nbSpike
   toolbar->insertWidget(-1,neuroscopeComboBox->sizeHint().width(),neuroscopeComboBox);
  // toolbar->insertCombo(neuroscopeFiles,1,false,SIGNAL(activated(int)),this,SLOT(neuroscopeFileChange(int))); 
   
-  toolbar->insertSeparator();
-  toolbar->insertSeparator();
-  toolbar->insertSeparator();
+  toolbar->addSeparator();
+  toolbar->addSeparator();
+  toolbar->addSeparator();
   toolbar->insertLineSeparator();
-  toolbar->insertSeparator();
-  toolbar->insertSeparator();
+  toolbar->addSeparator();
+  toolbar->addSeparator();
   
   toolbar->insertButton("scripts",2,SIGNAL(clicked(int)),this,SLOT(launchScript()),true,tr("Start"));
   scriptsComboBox = new QComboBox(toolbar);
@@ -106,12 +106,12 @@ ManagerView::returnMessage ManagerView::addKonsole(const QString url,int nbSpike
   toolbar->insertWidget(-1,scriptsComboBox->sizeHint().width(),scriptsComboBox);
   toolbar->insertButton("stop",3,SIGNAL(clicked(int)),this,SLOT(stopScript()),true,tr("Stop"));
   
-  toolbar->insertSeparator();
-  toolbar->insertSeparator();
-  toolbar->insertSeparator();
+  toolbar->addSeparator();
+  toolbar->addSeparator();
+  toolbar->addSeparator();
   toolbar->insertLineSeparator();
-  toolbar->insertSeparator();
-  toolbar->insertSeparator();
+  toolbar->addSeparator();
+  toolbar->addSeparator();
   
   toolbar->insertButton("klusters-22",4,SIGNAL(clicked(int)),this,SLOT(launchKlusters()),true,tr("Klusters"));
   klustersComboBox = new QComboBox(toolbar);
