@@ -894,7 +894,18 @@ void ndManager::checkBeforeLaunchingScripts(){
 }
 
 
+void NeuroscopeApp::slotStateChanged(const QString& state)
+{
+    if(state == QLatin1String("initState")) {
+    } else if(state == QLatin1String("documentState")) {
+    } else if(state == QLatin1String("showManager")) {
+    } else if(state == QLatin1String("hideManger")) {
 
+    } else {
+        qDebug()<<" state unknown"<<state;
+    }
+
+}
 
 
 #include "ndmanager.moc"

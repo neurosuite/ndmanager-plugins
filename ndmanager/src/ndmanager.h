@@ -119,7 +119,9 @@ protected:
   void readProperties();
   
 public slots:
-  
+
+  void slotStateChanged(const QString& state);
+
   /**Updates the menus and toolbars to take into account a Kate kPart.*/
   void updateGUI(Kate::View* view);
   
