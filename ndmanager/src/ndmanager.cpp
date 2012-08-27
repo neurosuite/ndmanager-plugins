@@ -119,6 +119,11 @@ void ndManager::setupActions()
     expertMode->setChecked(config->readBoolEntry("expertMode"));
 
 
+    QMenu *helpMenu = menuBar()->addMenu(tr("Help"));
+    QAction *about = helpMenu->addAction(tr("About"));
+    connect(about,SIGNAL(triggered()), this,SLOT(slotAbout()));
+
+
     createGUI(QString(),false);
 
 }
@@ -894,7 +899,7 @@ void ndManager::checkBeforeLaunchingScripts(){
 }
 
 
-void NeuroscopeApp::slotStateChanged(const QString& state)
+void ndManager::slotStateChanged(const QString& state)
 {
     if(state == QLatin1String("initState")) {
     } else if(state == QLatin1String("documentState")) {
@@ -904,6 +909,11 @@ void NeuroscopeApp::slotStateChanged(const QString& state)
     } else {
         qDebug()<<" state unknown"<<state;
     }
+
+}
+
+void ndManager::slotAbout()
+{
 
 }
 

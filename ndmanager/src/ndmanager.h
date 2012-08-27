@@ -157,6 +157,8 @@ public slots:
   void scriptModification(const Q3ValueList<QString>& scriptNames);
 
 private slots:
+
+  void slotAbout();
   /**Opens a parameter file and loads it.*/
    void slotFileOpen();
    
