@@ -914,7 +914,7 @@ void ndManager::slotStateChanged(const QString& state)
 
 void ndManager::slotAbout()
 {
-
+    QMessageBox::about(this,tr("NdManager"),tr("Neurophysiological Data Processing Manager"));
 }
 
 

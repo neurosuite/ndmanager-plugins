@@ -28,15 +28,6 @@
 //Application specific include files
 #include "ndmanager.h"
 
-static const char description[] =
-    I18N_NOOP("Neurophysiological Data Processing Manager");
-
-static KCmdLineOptions options[] =
-{
-    { "+[URL]", I18N_NOOP( "Document to open." ), 0 },
-    KCmdLineLastOption
-};
-
 QString version;
 
 int main(int argc, char **argv)
@@ -46,11 +37,6 @@ int main(int argc, char **argv)
     QApplication::setApplicationName("ndmanager");
     QApplication app(argc, argv);
 #if KDAB_PENDING
-    KAboutData about("ndmanager", I18N_NOOP("NDManager"), VERSION, description,
-                     KAboutData::License_GPL, "(C) 2004-2007 Lynn Hazan", 0, 0, "lynn.hazan@myrealbox.com");
-    about.addAuthor( "Lynn Hazan", 0, "lynn.hazan@myrealbox.com" );
-   about.addAuthor("Michael Zugaro",I18N_NOOP("Co-designed the interface."), "michael.zugaro@college-de-france.fr");
-    KCmdLineArgs::init(argc, argv, &about);
     KCmdLineArgs::addCmdLineOptions(options);
     KApplication app;
 
