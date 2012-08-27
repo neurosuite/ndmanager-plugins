@@ -19,7 +19,7 @@
  ***************************************************************************/
 #include "queryoutputdialog.h"
 //Added by qt3to4:
-#include <Q3TextStream>
+#include <QTextStream>
 #include <QMessageBox>
 
 #include <QWebSettings>
@@ -53,7 +53,7 @@ void QueryOutputDialog::slotUser1()
 	QFile textFile(filename);
 	if(textFile.open(QIODevice::WriteOnly))
 	{
-		Q3TextStream stream(&textFile);
+		QTextStream stream(&textFile);
 		stream << queryResult;
 		textFile.close();
         if(stream.device()->status() == IO_WriteError ) QMessageBox::critical(this,tr("Could not save the report. This may be due to incorrect write permissions."));
@@ -68,7 +68,7 @@ void QueryOutputDialog::slotUser2()
 	QFile htmlFile(filename);
 	if(htmlFile.open(QIODevice::WriteOnly))
 	{
-		Q3TextStream stream(&htmlFile);
+		QTextStream stream(&htmlFile);
 		stream << htmlText;
 		htmlFile.close();
         if(stream.device()->status() == IO_WriteError ) QMessageBox::critical(this,tr("Could not save the report. This may be due to incorrect write permissions."));

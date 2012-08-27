@@ -28,7 +28,7 @@
 #include <qtabwidget.h>
 #include <qpushbutton.h>
 #include <qfileinfo.h>
-#include <q3textstream.h>
+#include <QTextStream>
 #include <qapplication.h>
 #include <qregexp.h>
 #include <q3textedit.h>
@@ -163,7 +163,7 @@ bool ProgramPage::saveProgramScript(){
    recall = true;
   }
   else{
-   Q3TextStream stream(&file);
+   QTextStream stream(&file);
    stream<<scriptView->getDoc()->text();
    file.close();
   }
@@ -255,7 +255,7 @@ void ProgramPage::nameChanged(const QString& name){
      scriptView->getDoc()->setText("");
     }
     else{
-     Q3TextStream stream(&file);
+     QTextStream stream(&file);
      QString firstLine = stream.readLine();
      int i = firstLine.find(QRegExp("^#!"));
      if(i != -1){

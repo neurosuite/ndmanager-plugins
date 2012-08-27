@@ -30,7 +30,7 @@
 #include <qstringlist.h>
 #include <q3table.h>
 //Added by qt3to4:
-#include <Q3TextStream>
+#include <QTextStream>
 #include <Q3ValueList>
 #include <Q3PtrList>
 #include <Q3Frame>
@@ -435,7 +435,7 @@ void ParameterView::initialize(QMap<int, Q3ValueList<int> >& anatomicalGroups,QM
      QMessageBox::critical (this,tr("IO Error!"),message);
     }
     else{
-     Q3TextStream stream(&file);
+     QTextStream stream(&file);
      QString firstLine = stream.readLine();
      int i = firstLine.find(QRegExp("^#!"));
 
@@ -510,7 +510,7 @@ void ParameterView::loadProgram(QString programUrl){
     QMessageBox::critical (this,tr(message), tr("IO Error!"));
    }
    else{
-    Q3TextStream stream(&file);
+    QTextStream stream(&file);
     QString firstLine = stream.readLine();
     int i = firstLine.find(QRegExp("^#!"));
 

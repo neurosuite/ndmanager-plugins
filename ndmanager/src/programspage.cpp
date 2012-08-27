@@ -28,7 +28,7 @@
 #include <qregexp.h> 
 //Added by qt3to4:
 #include <Q3GridLayout>
-#include <Q3TextStream>
+#include <QTextStream>
 #include <Q3VBoxLayout>
 #include <Q3ValueList>
 #include <Q3Frame>
@@ -126,7 +126,7 @@ void ProgramsPage::loadProgram(){
     QMessageBox::critical (this, tr("IO Error!"),tr(message));
    }
    else{
-    Q3TextStream stream(&file);
+    QTextStream stream(&file);
     QString firstLine = stream.readLine();
     int i = firstLine.find(QRegExp("^<\\?xml version"));
     file.close();

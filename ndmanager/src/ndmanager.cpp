@@ -22,7 +22,7 @@
 #include <qcursor.h>
 #include <qevent.h>
 //Added by qt3to4:
-#include <Q3TextStream>
+#include <QTextStream>
 #include <Q3ValueList>
 #include <Q3PtrList>
 #include <QPixmap>
@@ -762,7 +762,7 @@ void ndManager::slotQuery(){
         QFile htmlFile(d.findResource("data","ndmanager/queryreport.html"));
         if(htmlFile.open(QIODevice::ReadOnly))
         {
-            Q3TextStream stream(&htmlFile);
+            QTextStream stream(&htmlFile);
             html = stream.read();
             htmlFile.close();
         }

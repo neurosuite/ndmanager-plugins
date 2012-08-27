@@ -26,7 +26,7 @@
 #include <iostream>
 #include <fstream>
 //Added by qt3to4:
-#include <Q3TextStream>
+#include <QTextStream>
 #include <Q3ValueList>
 using namespace std;
 
@@ -56,7 +56,7 @@ bool DescriptionWriter::writeTofile(const QString& url){
  root.appendChild(program);
  QString xmlDocument = doc.toString();
  
- Q3TextStream stream(&descriptionFile);
+ QTextStream stream(&descriptionFile);
  stream<< xmlDocument;
  descriptionFile.close();
  
