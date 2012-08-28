@@ -356,7 +356,7 @@ void ndManager::createParameterView(QMap<int, Q3ValueList<int> >& anatomicalGrou
     mainDock->setWidget(parameterView);
     //allow dock on the Bottom side only
     mainDock->setDockSite(QDockWidget::DockBottom);
-    setView(mainDock); // central widget in a KDE mainwindow <=> setMainWidget
+    setCentralWidget(mainDock); // central widget in a KDE mainwindow <=> setMainWidget
     setMainDockWidget(mainDock);
     //disable docking abilities of mainDock itself
     mainDock->setEnableDocking(QDockWidget::DockNone);
