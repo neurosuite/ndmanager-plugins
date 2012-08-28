@@ -30,7 +30,7 @@
 #include <Q3GridLayout>
 #include <QTextStream>
 #include <Q3VBoxLayout>
-#include <Q3ValueList>
+#include <QList>
 #include <QFrame>
 #include <QFileDialog>
 
@@ -107,7 +107,7 @@ void ProgramsPage::loadProgram(){
 
     QStringList programUrls=QFileDialog::getOpenFileNames(this, tr("Select the Script(s) to load..."));
  if(programUrls.size() != 0){
-   Q3ValueList<QString>::iterator iterator;
+   QList<QString>::iterator iterator;
   for(iterator = programUrls.begin();iterator != programUrls.end();++iterator){
    QString programUrl = static_cast<QString>(*iterator);
    QString filePath = programUrl;

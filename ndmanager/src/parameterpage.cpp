@@ -28,7 +28,7 @@
 //Added by qt3to4:
 #include <QEvent>
 #include <Q3MemArray>
-#include <Q3ValueList>
+#include <QList>
 
 ParameterPage::ParameterPage(bool expertMode,QWidget *parent, const char *name)
  : ParameterLayout(parent, name),valueModified(false),descriptionModified(false){
@@ -83,12 +83,12 @@ void ParameterPage::propertyModified(int, int column){
  else descriptionModified = true;
 }
 
-QMap<int, Q3ValueList<QString> > ParameterPage::getParameterInformation(){
- QMap<int, Q3ValueList<QString> > parameterInformation;
+QMap<int, QList<QString> > ParameterPage::getParameterInformation(){
+ QMap<int, QList<QString> > parameterInformation;
   
  int paramNb = 1;
  for(int i =0; i<parameterTable->numRows();++i){
-  Q3ValueList<QString> information;
+  QList<QString> information;
   QString item = parameterTable->text(i,0);
   QString name = item.simplified();
   if(name == " ") continue;
@@ -108,15 +108,15 @@ QMap<int, Q3ValueList<QString> > ParameterPage::getParameterInformation(){
  return parameterInformation;
 }
 
-void ParameterPage::setParameterInformation(QMap<int, Q3ValueList<QString> >& parameters){
+void ParameterPage::setParameterInformation(QMap<int, QList<QString> >& parameters){
  //Clean the parameterTable, just in case, before creating empty rows.
  for(int i =0; i<parameterTable->numRows();++i) parameterTable->removeRow(i);
  parameterTable->setNumRows(parameters.count());
  
- QMap<int,Q3ValueList<QString> >::Iterator iterator;
+ QMap<int,QList<QString> >::Iterator iterator;
  //The iterator gives the keys sorted.
  for(iterator = parameters.begin(); iterator != parameters.end(); ++iterator){
-  Q3ValueList<QString> parameterInfo = iterator.data();
+  QList<QString> parameterInfo = iterator.data();
    
   for(uint i=0;i<parameterInfo.count();++i){ 
    if(ddList.contains(i)){
@@ -159,7 +159,7 @@ void ParameterPage::removeParameter(){
  descriptionModified = true;
  int nbSelections = parameterTable->numSelections();
  if(nbSelections > 0){
-  Q3ValueList< Q3MemArray<int> > rowsToRemove;
+  QList< Q3MemArray<int> > rowsToRemove;
   //Look up the rows to be removed
   for(int j = 0; j < nbSelections;++j){
    Q3TableSelection selection = parameterTable->selection(j);
@@ -174,7 +174,7 @@ void ParameterPage::removeParameter(){
    }
   }
   //Actually remove the rows
-  Q3ValueList< Q3MemArray<int> >::iterator iterator;
+  QList< Q3MemArray<int> >::iterator iterator;
   for(iterator = rowsToRemove.begin(); iterator != rowsToRemove.end(); ++iterator) parameterTable->removeRows(*iterator);
  }  
 }

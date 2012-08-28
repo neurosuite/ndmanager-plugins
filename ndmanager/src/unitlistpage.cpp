@@ -24,7 +24,7 @@
 
 
 // include files for QT
-#include <q3valuelist.h>
+#include <QList>
 #include <qstringlist.h>
 //Added by qt3to4:
 #include <QEvent>
@@ -84,16 +84,16 @@ bool UnitListPage::eventFilter(QObject* object,QEvent* event)
 	else return QWidget::eventFilter(object,event); 
 }
 	
-void UnitListPage::setUnits(const QMap<int, Q3ValueList<QString> >& units)
+void UnitListPage::setUnits(const QMap<int, QList<QString> >& units)
 {
 	for (int i =0; i<unitTable->numRows();++i) unitTable->removeRow(i);
 	unitTable->setNumRows(units.count());
 	
-	QMap<int,Q3ValueList<QString> >::const_iterator iterator;
+	QMap<int,QList<QString> >::const_iterator iterator;
 	//The iterator gives the keys sorted.
 	for (iterator = units.begin(); iterator != units.end(); ++iterator)
 	{
-		Q3ValueList<QString> info = iterator.data();
+		QList<QString> info = iterator.data();
 		for (uint i=0;i<info.count();++i)
 		{ 
 			UnitTableItem* item = new UnitTableItem(unitTable,Q3TableItem::OnTyping,info[i]);
@@ -103,12 +103,12 @@ void UnitListPage::setUnits(const QMap<int, Q3ValueList<QString> >& units)
 	}//end of units loop
 }
 
-void UnitListPage::getUnits(QMap<int, Q3ValueList<QString> >& units)const
+void UnitListPage::getUnits(QMap<int, QList<QString> >& units)const
 { 
 	int unitId = 1;
 	for(int i =0; i<unitTable->numRows();++i)
 	{
-		Q3ValueList<QString> info;
+		QList<QString> info;
 		for(int j = 0;j < unitTable->numCols(); ++j)
 		{
 			QString text = unitTable->text(i,j);
@@ -127,7 +127,7 @@ void UnitListPage::removeUnit()
 		
 	if (nbSelections > 0)
 	{
-		Q3ValueList< Q3MemArray<int> > rowsToRemove;
+		QList< Q3MemArray<int> > rowsToRemove;
 		//Look up the rows to be removed
 		for (int j = 0; j < nbSelections;++j)
 		{
@@ -142,7 +142,7 @@ void UnitListPage::removeUnit()
 			}
 		}
 		//Actually remove the rows
-		Q3ValueList< Q3MemArray<int> >::iterator iterator;
+		QList< Q3MemArray<int> >::iterator iterator;
 		for (iterator = rowsToRemove.begin(); iterator != rowsToRemove.end(); ++iterator) unitTable->removeRows(*iterator);
 	}  
 }

@@ -28,7 +28,7 @@
 //Added by qt3to4:
 #include <Q3VBoxLayout>
 #include <QFrame>
-#include <Q3ValueList>
+#include <QList>
 
 //Include for the application
 #include "launcherpage.h"
@@ -58,8 +58,8 @@ public:
   * @param scriptNames list containing the script names.
   * @return message indicating if the konsole could be added.
   */
-  returnMessage addKonsole(const QString url,int nbSpikeGroups,Q3ValueList<QString> fileExtensions,
-                          const Q3ValueList<QString>& scriptNames); 
+  returnMessage addKonsole(const QString url,int nbSpikeGroups,QList<QString> fileExtensions,
+                          const QList<QString>& scriptNames); 
 
   /** Updates the dropdown list containing the spike groups used to launch Klusters.
   * @param nbGroups the new number of spike groups.
@@ -69,12 +69,12 @@ public:
   /**Triggers the update of the dropdown list containing the file extensions.
   * @param extensions list containing the extensions of all the specific files.
   */
-  void updateFileList(Q3ValueList<QString> extensions);
+  void updateFileList(QList<QString> extensions);
 
   /**Triggers the update of the dropdown list containing the script names.
   * @param scriptNames list containing the script names.
   */
-  void updateScriptList(const Q3ValueList<QString>& scriptNames);
+  void updateScriptList(const QList<QString>& scriptNames);
 
   /** Updates the parameter file url.
   * @param url url of the currently open parameter file.

@@ -19,7 +19,7 @@
  ***************************************************************************/
 // include files for Qt
 #include <qmap.h>
-#include <q3valuelist.h>
+#include <QList>
 
 // include files for KDE
 
@@ -64,19 +64,19 @@ ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::openDocument(const QStri
  XmlReader reader = XmlReader();
 
  if(reader.parseFile(url)){
-  QMap<int, Q3ValueList<int> > anatomicalGroups;
+  QMap<int, QList<int> > anatomicalGroups;
   QMap<QString, QMap<int,QString> > attributes;
-  QMap<int, Q3ValueList<int> > spikeGroups;
+  QMap<int, QList<int> > spikeGroups;
   QMap<int, QMap<QString,QString> > spikeGroupsInformation;
-  QMap<int, Q3ValueList<QString> > units;
+  QMap<int, QList<QString> > units;
   GeneralInformation generalInformation;
   QMap<QString,double> acquisitionSystemInfo;
   QMap<QString,double> videoInformation;
-  Q3ValueList<FileInformation> files;
-  Q3ValueList<ChannelColors> channelColors;
+  QList<FileInformation> files;
+  QList<ChannelColors> channelColors;
   QMap<int,int> channelDefaultOffsets;
   NeuroscopeVideoInfo neuroscopeVideoInfo;
-  Q3ValueList<ProgramInformation> programs;
+  QList<ProgramInformation> programs;
   double lfpRate;
   float screenGain;
   QString traceBackgroundImage;
@@ -154,19 +154,19 @@ ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::newDocument(){
 
 ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::save(QString url){
  //first gather the information
- QMap<int, Q3ValueList<int> > anatomicalGroups;
+ QMap<int, QList<int> > anatomicalGroups;
  QMap<QString, QMap<int,QString> > attributes;
- QMap<int, Q3ValueList<int> > spikeGroups;
+ QMap<int, QList<int> > spikeGroups;
  QMap<int, QMap<QString,QString> > spikeGroupsInformation;
- QMap<int, Q3ValueList<QString> > units;
+ QMap<int, QList<QString> > units;
  GeneralInformation generalInformation;
  QMap<QString,double> acquisitionSystemInfo;
  QMap<QString,double> videoInformation;
- Q3ValueList<FileInformation> files;
- Q3ValueList<ChannelColors> channelColors;
+ QList<FileInformation> files;
+ QList<ChannelColors> channelColors;
  QMap<int,int> channelDefaultOffsets;
  NeuroscopeVideoInfo neuroscopeVideoInfo;
- Q3ValueList<ProgramInformation> programs;
+ QList<ProgramInformation> programs;
  double lfpRate;
  float screenGain;
  QString traceBackgroundImage;

@@ -25,7 +25,7 @@
 //Added by qt3to4:
 #include <QEvent>
 #include <Q3MemArray>
-#include <Q3ValueList>
+#include <QList>
 
 FilePage::FilePage(QWidget *parent, const char *name)
  : FileLayout(parent, name),isIncorrectRow(false),modified(false),isInit(true),extension(""){
@@ -97,7 +97,7 @@ void FilePage::removeChannel(){
  modified = true;
  int nbSelections = mappingTable->numSelections();
  if(nbSelections > 0){
-  Q3ValueList< Q3MemArray<int> > rowsToRemove;
+  QList< Q3MemArray<int> > rowsToRemove;
   //Look up the rows to be removed
   for(int j = 0; j < nbSelections;++j){
    Q3TableSelection selection = mappingTable->selection(j);
@@ -112,20 +112,20 @@ void FilePage::removeChannel(){
    }
   }
   //Actually remove the rows
-  Q3ValueList< Q3MemArray<int> >::iterator iterator;
+  QList< Q3MemArray<int> >::iterator iterator;
   for(iterator = rowsToRemove.begin(); iterator != rowsToRemove.end(); ++iterator) mappingTable->removeRows(*iterator);
  }  
 }
 
-void FilePage::setChannelMapping(const QMap<int, Q3ValueList<int> >& channels){
+void FilePage::setChannelMapping(const QMap<int, QList<int> >& channels){
  for(int i =0; i<mappingTable->numRows();++i) mappingTable->removeRow(i);
  mappingTable->setNumRows(channels.count());
  
- QMap<int,Q3ValueList<int> >::const_iterator iterator;
+ QMap<int,QList<int> >::const_iterator iterator;
  //The iterator gives the keys sorted.
  for(iterator = channels.begin(); iterator != channels.end(); ++iterator){
-  Q3ValueList<int> channelIds = iterator.data();
-  Q3ValueList<int>::iterator channelIterator;
+  QList<int> channelIds = iterator.data();
+  QList<int>::iterator channelIterator;
   
   //create the string containing the channel ids
   QString newChannel;
@@ -142,12 +142,12 @@ void FilePage::setChannelMapping(const QMap<int, Q3ValueList<int> >& channels){
  }//end of groups loop
 }
 
-QMap<int, Q3ValueList<int> > FilePage::getChannelMapping()const{
- QMap<int, Q3ValueList<int> > channelMapping;
+QMap<int, QList<int> > FilePage::getChannelMapping()const{
+ QMap<int, QList<int> > channelMapping;
  
  int channelId = 1;
  for(int i =0; i<mappingTable->numRows();++i){
-  Q3ValueList<int> channels;
+  QList<int> channels;
   QString item = mappingTable->text(i,0);
   QString channelList = item.simplified();
   if(channelList == " " || channelList == "") continue;

@@ -31,7 +31,7 @@
 #include <qlineedit.h>
 //Added by qt3to4:
 #include <QEvent>
-#include <Q3ValueList>
+#include <QList>
 
 // include files for KDE
 
@@ -56,12 +56,12 @@ public:
  * @param groups map containing the list of channels for each sipke group except the trash and undefined groups.
  * @param information map containing the additional information for each spike group except the trash and undefined groups.
  */
- void setGroups(const QMap<int, Q3ValueList<int> >& groups,const QMap<int,  QMap<QString,QString> >& information);
+ void setGroups(const QMap<int, QList<int> >& groups,const QMap<int,  QMap<QString,QString> >& information);
  
  /**Returns the composition of the spike groups.
  * @param groups map containing the list of channels for each group except trash and undefined groups.
  */
- void getGroups(QMap<int, Q3ValueList<int> >& groups)const;
+ void getGroups(QMap<int, QList<int> >& groups)const;
  
  /**Returns the additional information for each spike groups.
  * @param groupInformation map containing the additional information for each group except the trash and undefined groups.

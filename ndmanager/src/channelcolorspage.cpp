@@ -22,7 +22,7 @@
 
 // include files for QT
 #include <qwidget.h>
-#include <q3valuelist.h>
+#include <QList>
 #include <qcolor.h>
 #include <qcolor.h>
 #include <qcolordialog.h>
@@ -44,7 +44,7 @@ ChannelColorsPage::ChannelColorsPage(QWidget* parent, const char *name)
 
 ChannelColorsPage::~ChannelColorsPage(){}
 
-void ChannelColorsPage::getColors(Q3ValueList<ChannelColors>& colors){
+void ChannelColorsPage::getColors(QList<ChannelColors>& colors){
  for(int i =0; i<nbChannels;++i){
   ChannelColors channelColors;
   channelColors.setId(i);
@@ -55,8 +55,8 @@ void ChannelColorsPage::getColors(Q3ValueList<ChannelColors>& colors){
  }
 }
  
- void ChannelColorsPage::setColors(Q3ValueList<ChannelColors>& colors){  
-  Q3ValueList<ChannelColors>::iterator iterator;
+ void ChannelColorsPage::setColors(QList<ChannelColors>& colors){  
+  QList<ChannelColors>::iterator iterator;
   for(iterator = colors.begin(); iterator != colors.end(); ++iterator){
    int id = (*iterator).getId();
    colorTable->verticalHeader()->setLabel(id,QString("%1").arg(id));   

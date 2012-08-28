@@ -31,7 +31,7 @@
 #include <qlayout.h>
 //Added by qt3to4:
 #include <Q3VBoxLayout>
-#include <Q3ValueList>
+#include <QList>
 #include <QFrame>
 #include <QProcess>
 #include <QDebug>
@@ -53,7 +53,7 @@ ManagerView::ManagerView(QWidget *parent, const char *name)
 ManagerView::~ManagerView(){
 }
 
-ManagerView::returnMessage ManagerView::addKonsole(const QString url,int nbSpikeGroups,Q3ValueList<QString> fileExtensions,const Q3ValueList<QString>& scriptNames){
+ManagerView::returnMessage ManagerView::addKonsole(const QString url,int nbSpikeGroups,QList<QString> fileExtensions,const QList<QString>& scriptNames){
  if(konsole == 0L){ 
   parameterUrl = QString(url);
 
@@ -70,7 +70,7 @@ ManagerView::returnMessage ManagerView::addKonsole(const QString url,int nbSpike
   QStringList neuroscopeFiles;
   neuroscopeFiles<<".dat"<<".eeg";
   
-  Q3ValueList<QString>::iterator iterator;
+  QList<QString>::iterator iterator;
   for(iterator = fileExtensions.begin(); iterator != fileExtensions.end(); ++iterator){
    neuroscopeFiles<<QString(".%1").arg(*iterator);   
   }
@@ -98,7 +98,7 @@ ManagerView::returnMessage ManagerView::addKonsole(const QString url,int nbSpike
   scriptsComboBox->setMaximumSize(QSize(150,20));
 
   QStringList scripts;
-  Q3ValueList<QString>::const_iterator iterator2;
+  QList<QString>::const_iterator iterator2;
   for(iterator2 = scriptNames.begin(); iterator2 != scriptNames.end(); ++iterator2){
     scripts<<static_cast<QString>(*iterator2);  
   }
@@ -155,12 +155,12 @@ void ManagerView::updateSpikeGroupList(int nbGroups){
  klustersComboBox->insertStringList(klustersFiles);
 }
 
-void ManagerView::updateFileList(Q3ValueList<QString> extensions){
+void ManagerView::updateFileList(QList<QString> extensions){
   neuroscopeComboBox->clear();
   QStringList neuroscopeFiles;
   neuroscopeFiles<<".dat"<<".eeg";
   
-  Q3ValueList<QString>::iterator iterator;
+  QList<QString>::iterator iterator;
   for(iterator = extensions.begin(); iterator != extensions.end(); ++iterator){
    QString extension = QString(".%1").arg(static_cast<QString>(*iterator));
    neuroscopeFiles<<extension;
@@ -168,11 +168,11 @@ void ManagerView::updateFileList(Q3ValueList<QString> extensions){
   neuroscopeComboBox->insertStringList(neuroscopeFiles);
 }
 
-void ManagerView::updateScriptList(const Q3ValueList<QString>& scriptNames){
+void ManagerView::updateScriptList(const QList<QString>& scriptNames){
   scriptsComboBox->clear();
   QStringList scripts;
   
-  Q3ValueList<QString>::const_iterator iterator;
+  QList<QString>::const_iterator iterator;
   for(iterator = scriptNames.begin(); iterator != scriptNames.end(); ++iterator){
     scripts<<static_cast<QString>(*iterator);  
   }

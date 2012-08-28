@@ -33,7 +33,7 @@
 
 
 //include files for QT
-#include <q3valuelist.h> 
+#include <QList> 
 
 //Libxml2 include files.
 #include <stdlib.h>
@@ -72,7 +72,7 @@ public:
   * @param anatomicalGroups reference to the map given the correspondance between the anatomical group ids and the channel ids.
   * @param attributes reference to the map given the correspondance between the attribute names and a map given for each channel the value of the attribute.
   */  
- void getAnatomicalDescription(int nbChannels,QMap<int, Q3ValueList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes);
+ void getAnatomicalDescription(int nbChannels,QMap<int, QList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes);
 
  /**
   * Gets the spike description: the groups and other type of information specific to a spike group (as the number of features).
@@ -80,13 +80,13 @@ public:
   * @param spikeGroups reference to the map given the correspondance between the spike group ids and the channel ids.
   * @param information reference to the map given the correspondance between the spike group ids and a map given the name and the value of an additional information. 
   */
- void getSpikeDescription(int nbChannels,QMap<int, Q3ValueList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& information);
+ void getSpikeDescription(int nbChannels,QMap<int, QList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& information);
    
  /** Gets a GeneralInformation containing all the general information.
  * If a piece of information is not present, empty string is used as the value.
  * @param generalInformation a GeneralInformation to be filled.
  */
- void getUnits(QMap< int,Q3ValueList<QString> >& units)const;
+ void getUnits(QMap< int,QList<QString> >& units)const;
  /** Gets a GeneralInformation containing all the general information.
  * If a piece of information is not present, empty string is used as the value.
  * @param generalInformation a GeneralInformation to be filled.
@@ -110,14 +110,14 @@ public:
  * Gets the information for the additional files derive from the original raw data file (.dat file).
  * @param files a list of FileInformation to be filled.
  */
- void getFilesInformation(Q3ValueList<FileInformation>& files)const;
+ void getFilesInformation(QList<FileInformation>& files)const;
 
   //NeuroScope related information
    
   /** Gets the list of ChannelColors, class given the color for each channel.
  * @param list list of ChannelColors.
  */
- void getChannelColors(Q3ValueList<ChannelColors>& list)const;
+ void getChannelColors(QList<ChannelColors>& list)const;
  
  /**Returns the screen gain in milivolts by centimeters used to display the field potentiels in NeuroScope,
  * or zero if the element could not be found in the file.
@@ -157,7 +157,7 @@ public:
  /** Gets the information for all the programs used to process the data link to the current parameter file.
  * @param programs a list of ProgramInformation to be filled.
  */
- void getProgramsInformation(Q3ValueList<ProgramInformation>& programs) const; 
+ void getProgramsInformation(QList<ProgramInformation>& programs) const; 
  
  /** Gets the information for one program used to process the data link to the current parameter file.
  * @param programInformation a ProgramInformation to be filled with the information concerning the program.

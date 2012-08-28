@@ -34,7 +34,7 @@
 #include <qlineedit.h>
 //Added by qt3to4:
 #include <QEvent>
-#include <Q3ValueList>
+#include <QList>
 
 // include files for KDE
 
@@ -70,12 +70,12 @@ public:
  /** Initializes the group table.
  * @param groups map containing the list of channels for each group except the trash group.
  */
- void setGroups(const QMap<int, Q3ValueList<int> >& groups);
+ void setGroups(const QMap<int, QList<int> >& groups);
  
  /**Returns the composition of the anatomical groups.
  * @param groups map containing the list of channels for each group except trash group.
  */ 
- void getGroups(QMap<int, Q3ValueList<int> >& groups)const;
+ void getGroups(QMap<int, QList<int> >& groups)const;
  
  /**Initializes the number of channels used.
  * @param nbChannels number of channels.

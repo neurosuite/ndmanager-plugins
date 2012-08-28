@@ -22,7 +22,7 @@
 
 // include files for QT
 #include <qwidget.h>
-#include <q3valuelist.h>
+#include <QList>
 
 // include files for KDE
 

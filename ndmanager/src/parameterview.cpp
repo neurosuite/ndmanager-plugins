@@ -31,7 +31,7 @@
 #include <q3table.h>
 //Added by qt3to4:
 #include <QTextStream>
-#include <Q3ValueList>
+#include <QList>
 #include <Q3PtrList>
 #include <QFrame>
 #include <Q3VBoxLayout>
@@ -174,7 +174,7 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
  connect(programs,SIGNAL(programToLoad(QString)),this,SLOT(loadProgram(QString)));
  connect(this,SIGNAL(aboutToShowPage(QWidget *)),this,SLOT(pageWillBeShown(QWidget *)));
  connect(spike,SIGNAL(nbGroupsModified(int)),this,SLOT(nbSpikeGroupsModified(int)));
- connect(files,SIGNAL(fileModification(Q3ValueList<QString>)),this,SLOT(fileModification(Q3ValueList<QString>)));
+ connect(files,SIGNAL(fileModification(QList<QString>)),this,SLOT(fileModification(QList<QString>)));
 
 
 
@@ -263,7 +263,7 @@ void ParameterView::changeProgramName(ProgramPage* programPage,const QString& ne
  QFrame* programFrame;
 
  //To change the name in the treeview, this one has to be rebuilt
- Q3ValueList<QString>::iterator iterator;
+ QList<QString>::iterator iterator;
  for(iterator = programNames.begin(); iterator != programNames.end(); ++iterator){
   QString name = *iterator;
 
@@ -323,11 +323,11 @@ void ParameterView::removeProgram(ProgramPage* programPage){
  showPage(pageIndex(programsFrame));
 }
 
-void ParameterView::initialize(QMap<int, Q3ValueList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes,
-                          QMap<int, Q3ValueList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& spikeGroupsInformation,QMap<int, Q3ValueList<QString> >& units,
+void ParameterView::initialize(QMap<int, QList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes,
+                          QMap<int, QList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& spikeGroupsInformation,QMap<int, QList<QString> >& units,
                           GeneralInformation& generalInformation,QMap<QString,double>& acquisitionSystemInfo,QMap<QString,double>& videoInformation,
-                          Q3ValueList<FileInformation>& fileList,Q3ValueList<ChannelColors>& channelColors,QMap<int,int>& channelDefaultOffsets,
-                          NeuroscopeVideoInfo& neuroscopeVideoInfo,Q3ValueList<ProgramInformation>& programList,
+                          QList<FileInformation>& fileList,QList<ChannelColors>& channelColors,QMap<int,int>& channelDefaultOffsets,
+                          NeuroscopeVideoInfo& neuroscopeVideoInfo,QList<ProgramInformation>& programList,
                            double lfpRate,float screenGain,int nbSamples,int peakSampleIndex,QString traceBackgroundImage){
 
  //Initialize the general page
@@ -357,7 +357,7 @@ void ParameterView::initialize(QMap<int, Q3ValueList<int> >& anatomicalGroups,QM
  lfp->initialisationOver();
 
  //Initialize the files page
- Q3ValueList<FileInformation>::iterator fileIterator;
+ QList<FileInformation>::iterator fileIterator;
  for(fileIterator = fileList.begin(); fileIterator != fileList.end(); ++fileIterator){
   FileInformation fileInformation = static_cast<FileInformation>(*fileIterator);
   QString extension = fileInformation.getExtension();
@@ -408,7 +408,7 @@ void ParameterView::initialize(QMap<int, Q3ValueList<int> >& anatomicalGroups,QM
 
 
  //Initialize the programs page
- Q3ValueList<ProgramInformation>::iterator programIterator;
+ QList<ProgramInformation>::iterator programIterator;
  for(programIterator = programList.begin(); programIterator != programList.end(); ++programIterator){
   ProgramInformation programInformation = static_cast<ProgramInformation>(*programIterator);
   ProgramPage* programPage = addProgram(programInformation.getProgramName(),false);
@@ -419,7 +419,7 @@ void ParameterView::initialize(QMap<int, Q3ValueList<int> >& anatomicalGroups,QM
   parameterPage->setProgramName(name);
   //set the help
   programPage->setHelp(programInformation.getHelp());
-  QMap<int, Q3ValueList<QString> > info = programInformation.getParameterInformation();
+  QMap<int, QList<QString> > info = programInformation.getParameterInformation();
   parameterPage->setParameterInformation(info);
 
   if(expertMode){
@@ -490,7 +490,7 @@ void ParameterView::loadProgram(QString programUrl){
  //Set the parameters
  ParameterPage* parameterPage = program->getParameterPage();
  parameterPage->setProgramName(name);
- QMap<int, Q3ValueList<QString> > info = programInformation.getParameterInformation();
+ QMap<int, QList<QString> > info = programInformation.getParameterInformation();
  parameterPage->setParameterInformation(info);
 
  //set the help
@@ -535,7 +535,7 @@ void ParameterView::nbChannelsModified(int nbChannels){
 
  //the files page
  //remove any channel mapping
- QMap<int, Q3ValueList<int> > mapping;
+ QMap<int, QList<int> > mapping;
  Q3PtrList<FilePage> fileList;
  files->getFilePages(fileList);
  FilePage* filePage;
@@ -546,8 +546,8 @@ void ParameterView::nbChannelsModified(int nbChannels){
  //the anatomical groups page
  anatomy->setNbChannels(nbChannels);
  //all the channels are put in the group 1
- QMap<int, Q3ValueList<int> > anatomicalGroups;
- Q3ValueList<int> anatomicalGroupOne;
+ QMap<int, QList<int> > anatomicalGroups;
+ QList<int> anatomicalGroupOne;
  for(int i = 0; i<nbChannels;++i) anatomicalGroupOne.append(i);
  anatomicalGroups.insert(1,anatomicalGroupOne);
  anatomy->setGroups(anatomicalGroups);
@@ -560,7 +560,7 @@ void ParameterView::nbChannelsModified(int nbChannels){
 
  //the spike groups page
  //all the channels are put in the undefined group, therefore there is not group in the map (the trash and undefined groups are not shown)
- QMap<int, Q3ValueList<int> > spikeGroups;
+ QMap<int, QList<int> > spikeGroups;
  //no other information is provided
  QMap<int, QMap<QString,QString> > spikeGroupsInformation;
  spike->setGroups(spikeGroups,spikeGroupsInformation);
@@ -568,7 +568,7 @@ void ParameterView::nbChannelsModified(int nbChannels){
  //the channel color page
  this->channelColors->setNbChannels(nbChannels);
  //all the channels have the same default color
- Q3ValueList<ChannelColors> channelColorsList;
+ QList<ChannelColors> channelColorsList;
  for(int i = 0; i<nbChannels;++i){
   ChannelColors channelColors;
   channelColors.setId(i);
@@ -581,10 +581,10 @@ void ParameterView::nbChannelsModified(int nbChannels){
 
 }
 
-Q3ValueList<QString> ParameterView::modifiedScripts(){
- Q3ValueList<QString> programModified;
+QList<QString> ParameterView::modifiedScripts(){
+ QList<QString> programModified;
 
- Q3ValueList<QString>::iterator iterator;
+ QList<QString>::iterator iterator;
  for(iterator = programNames.begin(); iterator != programNames.end(); ++iterator){
   QString name = *iterator;
   ProgramPage* program = programDict[name];
@@ -595,10 +595,10 @@ Q3ValueList<QString> ParameterView::modifiedScripts(){
  return programModified;
 }
 
-Q3ValueList<QString> ParameterView::modifiedProgramDescription(){
- Q3ValueList<QString> programModified;
+QList<QString> ParameterView::modifiedProgramDescription(){
+ QList<QString> programModified;
 
- Q3ValueList<QString>::iterator iterator;
+ QList<QString>::iterator iterator;
  for(iterator = programNames.begin(); iterator != programNames.end(); ++iterator){
   QString name = *iterator;
   ProgramPage* program = programDict[name];
@@ -614,7 +614,7 @@ bool ParameterView::isModified(){
  bool parameterModified = false;
  bool descriptionModified = false;
 
- Q3ValueList<QString>::iterator iterator;
+ QList<QString>::iterator iterator;
  for(iterator = programNames.begin(); iterator != programNames.end(); ++iterator){
   QString name = *iterator;
   ProgramPage* program = programDict[name];
@@ -629,11 +629,11 @@ bool ParameterView::isModified(){
  //programs
 }
 
-void ParameterView::getInformation(QMap<int, Q3ValueList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes,
-                          QMap<int, Q3ValueList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& spikeGroupsInformation,QMap<int, Q3ValueList<QString> >& units,
+void ParameterView::getInformation(QMap<int, QList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes,
+                          QMap<int, QList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& spikeGroupsInformation,QMap<int, QList<QString> >& units,
                           GeneralInformation& generalInformation,QMap<QString,double>& acquisitionSystemInfo,QMap<QString,double>& videoInformation,
-                          Q3ValueList<FileInformation>& files,Q3ValueList<ChannelColors>& channelColors,QMap<int,int>& channelDefaultOffsets,
-                          NeuroscopeVideoInfo& neuroscopeVideoInfo,Q3ValueList<ProgramInformation>& programs,
+                          QList<FileInformation>& files,QList<ChannelColors>& channelColors,QMap<int,int>& channelDefaultOffsets,
+                          NeuroscopeVideoInfo& neuroscopeVideoInfo,QList<ProgramInformation>& programs,
                            double& lfpRate,float& screenGain,int& nbSamples,int& peakSampleIndex,QString& traceBackgroundImage){
 
  //First check if the number of channels has changed before returning the information.
@@ -687,13 +687,13 @@ void ParameterView::getInformation(QMap<int, Q3ValueList<int> >& anatomicalGroup
   FileInformation fileInformation;
   fileInformation.setSamplingRate(filePage->getSamplingRate());
   fileInformation.setExtension(filePage->getExtension());
-  QMap<int, Q3ValueList<int> > mapping = filePage->getChannelMapping();
+  QMap<int, QList<int> > mapping = filePage->getChannelMapping();
   fileInformation.setChannelMapping(mapping);
   files.append(fileInformation);
  }
 
 
- Q3ValueList<QString>::iterator iterator;
+ QList<QString>::iterator iterator;
  for(iterator = programNames.begin(); iterator != programNames.end(); ++iterator){
   QString name = *iterator;
   ProgramPage* program = programDict[name];
@@ -701,7 +701,7 @@ void ParameterView::getInformation(QMap<int, Q3ValueList<int> >& anatomicalGroup
   programInformation.setProgramName(name);
   programInformation.setHelp(program->getHelp());
   ParameterPage* parameterPage = program->getParameterPage();
-  QMap<int, Q3ValueList<QString> > parameterInformation = parameterPage->getParameterInformation();
+  QMap<int, QList<QString> > parameterInformation = parameterPage->getParameterInformation();
   programInformation.setParameterInformation(parameterInformation);
   programs.append(programInformation);
  }
@@ -713,7 +713,7 @@ void ParameterView::hasBeenSave(){
  emit resetModificationStatus();
 
  //This object has a track of all the programPage
- Q3ValueList<QString>::iterator iterator;
+ QList<QString>::iterator iterator;
  for(iterator = programNames.begin(); iterator != programNames.end(); ++iterator){
   QString name = *iterator;
   ProgramPage* program = programDict[name];

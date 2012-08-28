@@ -31,7 +31,7 @@
 #include "channelcolors.h"
 
 //include files for QT
-#include <q3valuelist.h>
+#include <QList>
 #include <qmap.h>
 #include <qdom.h> 
 
@@ -81,21 +81,21 @@ public:
  *  Creates the elements containing the information for the additional files derive from the original raw data file (.dat file).
  * @param files a reference to a list of FileInformation.
  */
- void setFilesInformation(Q3ValueList<FileInformation>& files);
+ void setFilesInformation(QList<FileInformation>& files);
   
  /**
   * Creates the elements related to the anatomical description.
   * @param anatomicalGroups reference to a map providing information about the anatomical group to which each channel belongs.
   * @param attributes reference to a map providing the correspondance between the attribute names and a map providing for each channel the value of the attribute.
   */
-  void setAnatomicalDescription(QMap<int, Q3ValueList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes);
+  void setAnatomicalDescription(QMap<int, QList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes);
  
  /**
   * Creates the elements related to the spike detection.
   * @param spikeGroups reference to the map providing the correspondance between the spike group ids and the channel ids.
   * @param information reference to the map providing the correspondance between the spike group ids and a map providing the name and the value of an additional information. 
   */
-  void setSpikeDetectionInformation(QMap<int, Q3ValueList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& information);
+  void setSpikeDetectionInformation(QMap<int, QList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& information);
   
 
   /**
@@ -125,17 +125,17 @@ public:
   * color of the spike group to which the channel belongs). 
   * @param channelDefaultOffsets reference to a map providing channel default offsets.
   */
-  void setChannelDisplayInformation(Q3ValueList<ChannelColors>& colorList,QMap<int,int>& channelDefaultOffsets);
+  void setChannelDisplayInformation(QList<ChannelColors>& colorList,QMap<int,int>& channelDefaultOffsets);
     
  /** Creates the elements containing the information for all the programs used to process the data link to the current parameter file.
  * @param programs a reference to a list of ProgramInformation.
  */
- void setProgramsInformation(Q3ValueList<ProgramInformation>& programs); 
+ void setProgramsInformation(QList<ProgramInformation>& programs); 
 
  /** Creates the elements containing the information for units.
  * @param units a reference to a map providing the units information.
  */
- void setUnitsInformation(QMap<int, Q3ValueList<QString> >& units); 
+ void setUnitsInformation(QMap<int, QList<QString> >& units); 
 
 private:
 

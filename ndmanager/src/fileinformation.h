@@ -23,7 +23,7 @@
 // include files for QT
 #include <qmap.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 
 /**
 * Class storing the information describing an additional file (filter and/or subset of the raw data file).
@@ -47,7 +47,7 @@ public:
   /**Gets the mapping between the original channels and the ones in the file.
   * @return the channel mapping map.
   */
- inline QMap<int, Q3ValueList<int> > getChannelMapping(){return channelMapping;};
+ inline QMap<int, QList<int> > getChannelMapping(){return channelMapping;};
 
  /**Sets the sampling rate.*/
  inline void setSamplingRate(double rate){samplingRate = rate;};
@@ -60,12 +60,12 @@ public:
  /**Sets the mapping between the original channels and the ones in the file.
  * @param mapping the channel mapping map.
  */
- inline void setChannelMapping(QMap<int, Q3ValueList<int> >& mapping){channelMapping = mapping;};
+ inline void setChannelMapping(QMap<int, QList<int> >& mapping){channelMapping = mapping;};
   
 private:
  double samplingRate;
  QString extension;
- QMap<int, Q3ValueList<int> > channelMapping;
+ QMap<int, QList<int> > channelMapping;
 };
 
 #endif

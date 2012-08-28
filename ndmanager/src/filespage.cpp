@@ -27,7 +27,7 @@
 //Added by qt3to4:
 #include <Q3GridLayout>
 #include <Q3VBoxLayout>
-#include <Q3ValueList>
+#include <QList>
 #include <QFrame>
 #include <Q3PtrList>
 
@@ -127,8 +127,8 @@ void FilesPage::resetModificationStatus(){
  }
 }
 
-Q3ValueList<QString> FilesPage::getFileExtensions(){
- Q3ValueList<QString> extensionList;
+QList<QString> FilesPage::getFileExtensions(){
+ QList<QString> extensionList;
 
  for(int i = 0; i<tabWidget->count();++i) extensionList.append(static_cast<FilePage*>(tabWidget->page(i))->getExtension());
 

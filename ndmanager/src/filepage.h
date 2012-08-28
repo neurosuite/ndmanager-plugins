@@ -31,7 +31,7 @@
 #include <qregexp.h>
 //Added by qt3to4:
 #include <QEvent>
-#include <Q3ValueList>
+#include <QList>
 
 // include files for KDE
 
@@ -67,12 +67,12 @@ inline void setExtension(QString extension){
 /** Initializes the channel mapping table.
 * @param channels map containing the list of original channels for each new channel.
 */
-void setChannelMapping(const QMap<int, Q3ValueList<int> >& channels);
+void setChannelMapping(const QMap<int, QList<int> >& channels);
 
 /**Returns the channel mapping.
 * @return map containing the list of original channels for each new channel.
 */ 
-QMap<int, Q3ValueList<int> > getChannelMapping()const;
+QMap<int, QList<int> > getChannelMapping()const;
 
 /**Returns the sampling rate.*/
 inline double getSamplingRate() const{return samplingRateLineEdit->text().toDouble();};

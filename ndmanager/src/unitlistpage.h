@@ -38,7 +38,7 @@
 #include <qlineedit.h>
 //Added by qt3to4:
 #include <QEvent>
-#include <Q3ValueList>
+#include <QList>
 
 // include files for KDE
 
@@ -64,11 +64,11 @@ class UnitListPage : public UnitListLayout
 		/** Initializes the unit table.
 		* @param units map containing the info for each unit.
 		*/
-		void setUnits(const QMap<int, Q3ValueList<QString> >& units);
+		void setUnits(const QMap<int, QList<QString> >& units);
 		/**Returns the composition of the unit table.
 		* @param units map containing the info for each unit.
 		*/ 
-		void getUnits(QMap<int, Q3ValueList<QString> >& units)const;
+		void getUnits(QMap<int, QList<QString> >& units)const;
 		/**Initializes the number of units classified.
 		* @param nbUnits number of units.
 		*/

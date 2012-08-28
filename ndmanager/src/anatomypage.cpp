@@ -21,7 +21,7 @@
 #include "anatomypage.h"
 
 // include files for QT
-#include <q3valuelist.h>
+#include <QList>
 #include <qstringlist.h>
 //Added by qt3to4:
 #include <QEvent>
@@ -103,15 +103,15 @@ void AnatomyPage::getAttributes(QMap<QString, QMap<int,QString> >& attributesMap
  }
 }
 
-void AnatomyPage::setGroups(const QMap<int, Q3ValueList<int> >& groups){
+void AnatomyPage::setGroups(const QMap<int, QList<int> >& groups){
  for(int i =0; i<groupTable->numRows();++i) groupTable->removeRow(i);
  groupTable->setNumRows(groups.count());
   
- QMap<int,Q3ValueList<int> >::const_iterator iterator;
+ QMap<int,QList<int> >::const_iterator iterator;
  //The iterator gives the keys sorted.
  for(iterator = groups.begin(); iterator != groups.end(); ++iterator){
-  Q3ValueList<int> channelIds = iterator.data();
-  Q3ValueList<int>::iterator channelIterator;
+  QList<int> channelIds = iterator.data();
+  QList<int>::iterator channelIterator;
   
   //create the string containing the channel ids
   QString group;
@@ -127,11 +127,11 @@ void AnatomyPage::setGroups(const QMap<int, Q3ValueList<int> >& groups){
  }//end of groups loop
 }
 
-void AnatomyPage::getGroups(QMap<int, Q3ValueList<int> >& groups)const{
+void AnatomyPage::getGroups(QMap<int, QList<int> >& groups)const{
  
  int groupId = 1;
  for(int i =0; i<groupTable->numRows();++i){
-  Q3ValueList<int> channels;
+  QList<int> channels;
   QString item = groupTable->text(i,0);
   QString channelList = item.simplified();
   if(channelList == " ") continue;
@@ -149,7 +149,7 @@ void AnatomyPage::getGroups(QMap<int, Q3ValueList<int> >& groups)const{
   int nbSelections = groupTable->numSelections();
     
   if(nbSelections > 0){
-   Q3ValueList< Q3MemArray<int> > rowsToRemove;
+   QList< Q3MemArray<int> > rowsToRemove;
    //Look up the rows to be removed
    for(int j = 0; j < nbSelections;++j){
     Q3TableSelection selection = groupTable->selection(j);
@@ -164,7 +164,7 @@ void AnatomyPage::getGroups(QMap<int, Q3ValueList<int> >& groups)const{
     }
    }
    //Actually remove the rows
-   Q3ValueList< Q3MemArray<int> >::iterator iterator;
+   QList< Q3MemArray<int> >::iterator iterator;
    for(iterator = rowsToRemove.begin(); iterator != rowsToRemove.end(); ++iterator) groupTable->removeRows(*iterator);
   }  
  }

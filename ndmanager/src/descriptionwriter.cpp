@@ -27,7 +27,7 @@
 #include <fstream>
 //Added by qt3to4:
 #include <QTextStream>
-#include <Q3ValueList>
+#include <QList>
 using namespace std;
 
 //include files for QT
@@ -66,7 +66,7 @@ bool DescriptionWriter::writeTofile(const QString& url){
 void DescriptionWriter::setProgramInformation(ProgramInformation& programInformation){
  //Get the program information 
  QString name = programInformation.getProgramName();
- QMap<int, Q3ValueList<QString> > parametersInfo = programInformation.getParameterInformation();  
+ QMap<int, QList<QString> > parametersInfo = programInformation.getParameterInformation();  
  QString help = programInformation.getHelp();
  
  program = doc.createElement(PROGRAM);;
@@ -78,11 +78,11 @@ void DescriptionWriter::setProgramInformation(ProgramInformation& programInforma
 
  //Take care of the parameters
  QDomElement parameters = doc.createElement(PARAMETERS);
- QMap<int,Q3ValueList<QString> >::Iterator parameterIterator;
+ QMap<int,QList<QString> >::Iterator parameterIterator;
  //The iterator gives the keys sorted.
  for(parameterIterator = parametersInfo.begin(); parameterIterator != parametersInfo.end(); ++parameterIterator){
   QDomElement parameter = doc.createElement(PARAMETER);
-  Q3ValueList<QString> parameterInfo = parameterIterator.data();
+  QList<QString> parameterInfo = parameterIterator.data();
   
   for(uint i = 0; i< parameterInfo.count();++i){
    //the info are NAME, VALUE and STATUS   

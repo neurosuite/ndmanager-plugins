@@ -35,7 +35,7 @@
 //Added by qt3to4:
 #include <Q3GridLayout>
 #include <QFrame>
-#include <Q3ValueList>
+#include <QList>
 #include <Q3VBoxLayout>
 // include files for KDE
 #include <kstandarddirs.h>
@@ -203,7 +203,7 @@ void ProgramPage::saveProgramParameters(){
   ProgramInformation programInformation;
   programInformation.setProgramName(parameters->getProgramName());
   programInformation.setHelp(help->text());
-  QMap<int, Q3ValueList<QString> > parameterInformation = parameters->getParameterInformation();
+  QMap<int, QList<QString> > parameterInformation = parameters->getParameterInformation();
   programInformation.setParameterInformation(parameterInformation);
   //Create the writer and save the data to disk
   DescriptionWriter descriptionWriter;

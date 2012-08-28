@@ -28,7 +28,7 @@
 #include <QFrame>
 #include <q3ptrlist.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 
 // include files for KDE
 
@@ -61,7 +61,7 @@ public:
  /**Returns a list containing the extensions of the all specific files.
  * @return extension list.
  */
- Q3ValueList<QString> getFileExtensions();
+ QList<QString> getFileExtensions();
  
  /**True if at least one the FilePage has been modified, false otherwise.*/
  bool isModified()const;
@@ -86,7 +86,7 @@ signals:
  /** This signal is used to update the dropdown list containing the file extensions in the managerView.
  * @param extensions list containing the extensions of all the specific files.
  */
- void fileModification(Q3ValueList<QString> extensions);
+ void fileModification(QList<QString> extensions);
 
 private:
  QTabWidget* tabWidget;

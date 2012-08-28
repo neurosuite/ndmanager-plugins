@@ -28,7 +28,7 @@
 #include <qwidget.h>
 #include <q3table.h>
 //Added by qt3to4:
-#include <Q3ValueList>
+#include <QList>
 
 // include files for KDE
 /**
@@ -53,12 +53,12 @@ public:
  /** Returns the colors associated with the channels.
  * @param colors list of ChannelColors given the 3 color used by each channel.
  */
- void getColors(Q3ValueList<ChannelColors>& colors);
+ void getColors(QList<ChannelColors>& colors);
  
  /** Sets the colors associated with the channels.
  * @param colors list of ChannelColors given the 3 color used by each channel.
  */ 
- void setColors(Q3ValueList<ChannelColors>& colors);
+ void setColors(QList<ChannelColors>& colors);
  
  /**True if at least one property has been modified, false otherwise.*/
  inline bool isModified()const{return modified;};
