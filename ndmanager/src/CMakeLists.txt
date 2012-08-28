@@ -48,6 +48,10 @@ set(ndmanager_SRCS
 	channelcolorslayout.cpp
 	channeloffsetslayout.cpp
 	clusterslayout.cpp
+	filelayout.cpp
+	generalinfolayout.cpp
+	launcherlayout.cpp
+	lfplayout.cpp
 	)
 
 qt4_add_resources(ndmanager_SRCS ndmanager-icons.qrc)
@@ -58,10 +62,10 @@ set(ndmanager_UI
 	channelcolorslayout.ui4
 	channeloffsetslayout.ui4
 	clusterslayout.ui4
-       	filelayout.ui 
-	generalinfolayout.ui 
-	launcherlayout.ui 
-	lfplayout.ui 
+       	filelayout.ui4 
+	generalinfolayout.ui4
+	launcherlayout.ui4
+	lfplayout.ui4
 	neuroscopemisclayout.ui 
 	neuroscopevideolayout.ui 
 	parameterlayout.ui 
