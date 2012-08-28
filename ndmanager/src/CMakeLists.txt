@@ -63,21 +63,21 @@ set(ndmanager_SRCS
 qt4_add_resources(ndmanager_SRCS ndmanager-icons.qrc)
 
 set(ndmanager_UI 
-	acquisitionsystemlayout.ui4 
-	anatomylayout.ui4 
-	channelcolorslayout.ui4
-	channeloffsetslayout.ui4
-	clusterslayout.ui4
-       	filelayout.ui4 
-	generalinfolayout.ui4
-	launcherlayout.ui4
-	lfplayout.ui4
-	neuroscopemisclayout.ui4
-	neuroscopevideolayout.ui4
-	parameterlayout.ui4
-        queryinputdialogbase.ui4
-	spikelayout.ui4 
-	videolayout.ui4 ) 
+	acquisitionsystemlayout.ui 
+	anatomylayout.ui
+	channelcolorslayout.ui
+	channeloffsetslayout.ui
+	clusterslayout.ui
+       	filelayout.ui
+	generalinfolayout.ui
+	launcherlayout.ui
+	lfplayout.ui
+	neuroscopemisclayout.ui
+	neuroscopevideolayout.ui
+	parameterlayout.ui
+        queryinputdialogbase.ui
+	spikelayout.ui 
+	videolayout.ui ) 
 
 qt4_wrap_ui(ndmanager_SRCS ${ndmanager_UI})
 
