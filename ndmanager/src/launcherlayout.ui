@@ -73,7 +73,7 @@
     </widget>
    </item>
    <item row="1" column="1">
-    <widget class="KPushButton" name="neuroscopePushButton">
+    <widget class="QPushButton" name="neuroscopePushButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -119,7 +119,7 @@
     </layout>
    </item>
    <item row="2" column="2" rowspan="2">
-    <widget class="KPushButton" name="processStopPushButton">
+    <widget class="QPushButton" name="processStopPushButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -142,7 +142,7 @@
     </widget>
    </item>
    <item row="3" column="1">
-    <widget class="KPushButton" name="processStartPushButton">
+    <widget class="QPushButton" name="processStartPushButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -198,7 +198,7 @@
     </widget>
    </item>
    <item row="5" column="1">
-    <widget class="KPushButton" name="klustersPushButton">
+    <widget class="QPushButton" name="klustersPushButton">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -211,7 +211,7 @@
     </widget>
    </item>
    <item row="6" column="0">
-    <widget class="KPushButton" name="kPushButton1">
+    <widget class="QPushButton" name="kPushButton1">
      <property name="text">
       <string/>
      </property>
@@ -232,11 +232,6 @@
    <class>KIconButton</class>
    <extends>QPushButton</extends>
    <header>kicondialog.h</header>
-  </customwidget>
-  <customwidget>
-   <class>KPushButton</class>
-   <extends>QPushButton</extends>
-   <header>kpushbutton.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
