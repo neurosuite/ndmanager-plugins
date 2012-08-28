@@ -52,6 +52,12 @@ set(ndmanager_SRCS
 	generalinfolayout.cpp
 	launcherlayout.cpp
 	lfplayout.cpp
+	neuroscopemisclayout.cpp
+	neuroscopevideolayout.cpp
+	parameterlayout.cpp
+	queryinputdialogbase.cpp
+	spikelayout.cpp
+	videolayout.cpp
 	)
 
 qt4_add_resources(ndmanager_SRCS ndmanager-icons.qrc)
@@ -66,11 +72,12 @@ set(ndmanager_UI
 	generalinfolayout.ui4
 	launcherlayout.ui4
 	lfplayout.ui4
-	neuroscopemisclayout.ui 
-	neuroscopevideolayout.ui 
-	parameterlayout.ui 
-	spikelayout.ui 
-	videolayout.ui ) 
+	neuroscopemisclayout.ui4
+	neuroscopevideolayout.ui4
+	parameterlayout.ui4
+        queryinputdialogbase.ui4
+	spikelayout.ui4 
+	videolayout.ui4 ) 
 
 qt4_wrap_ui(ndmanager_SRCS ${ndmanager_UI})
 
