@@ -19,7 +19,7 @@
  ***************************************************************************/
 //include files for the application
 #include "acquisitionsystempage.h"
-
+#include <QMessageBox>
 
 //General C++ include files
 #include <iostream>
@@ -27,7 +27,7 @@ using namespace std;
 
 
 AcquisitionSystemPage::AcquisitionSystemPage(QWidget *parent, const char *name)
- : AcquisitionSystemLayout(parent, name),doubleValidator(this),intValidator(this),isInit(true),reset(false),isLostFocus(false),
+ : AcquisitionSystemLayout(parent),doubleValidator(this),intValidator(this),isInit(true),reset(false),isLostFocus(false),
  isReturnPressed(false),modified(false),isCheckAsked(false){
 
  //Set a validator on the line edits, the values have to be integers.
