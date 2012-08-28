@@ -1,128 +1,135 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui version="4.0" stdsetdef="1">
-  <author></author>
-  <comment></comment>
-  <exportmacro></exportmacro>
-  <class>Query</class>
-  <widget class="QWidget" name="Query">
-    <property name="geometry">
-      <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>475</width>
-        <height>179</height>
-      </rect>
-    </property>
-    <property name="windowTitle">
-      <string>Query</string>
-    </property>
-    <widget class="QWidget" name="layout4">
-      <property name="geometry">
-        <rect>
-          <x>10</x>
-          <y>12</y>
-          <width>452</width>
-          <height>156</height>
-        </rect>
-      </property>
-      <layout class="QVBoxLayout">
-        <item>
-          <widget class="QLabel" name="textLabel1">
-            <property name="text">
-              <string>Query</string>
-            </property>
-            <property name="wordWrap">
-              <bool>false</bool>
-            </property>
-          </widget>
-        </item>
-        <item>
-          <widget class="KLineEdit" name="query"/>
-        </item>
-        <item>
-          <widget class="QLabel" name="textLabel1_2">
-            <property name="text">
-              <string>Path</string>
-            </property>
-            <property name="wordWrap">
-              <bool>false</bool>
-            </property>
-          </widget>
-        </item>
-        <item>
-          <widget class="KURLRequester" name="path"/>
-        </item>
-        <item>
-          <spacer name="spacer2">
-            <property name="sizeHint">
-              <size>
-                <width>20</width>
-                <height>20</height>
-              </size>
-            </property>
-            <property name="sizeType">
-              <enum>QSizePolicy::Expanding</enum>
-            </property>
-            <property name="orientation">
-              <enum>Qt::Vertical</enum>
-            </property>
-          </spacer>
-        </item>
-        <item>
-          <layout class="QHBoxLayout">
-            <item>
-              <spacer name="spacer1">
-                <property name="sizeHint">
-                  <size>
-                    <width>316</width>
-                    <height>20</height>
-                  </size>
-                </property>
-                <property name="sizeType">
-                  <enum>QSizePolicy::Expanding</enum>
-                </property>
-                <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                </property>
-              </spacer>
-            </item>
-            <item>
-              <widget class="KPushButton" name="kPushButton1_2">
-                <property name="text">
-                  <string>O&amp;K</string>
-                </property>
-                <property name="shortcut">
-                  <string>Alt+K</string>
-                </property>
-              </widget>
-            </item>
-            <item>
-              <widget class="KPushButton" name="kPushButton1">
-                <property name="text">
-                  <string>Cancel</string>
-                </property>
-              </widget>
-            </item>
-          </layout>
-        </item>
+<ui version="4.0">
+ <class>Query</class>
+ <widget class="QWidget" name="Query">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>475</width>
+    <height>179</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Query</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <layout class="QVBoxLayout">
+     <item>
+      <widget class="QLabel" name="textLabel1">
+       <property name="text">
+        <string>Query</string>
+       </property>
+       <property name="wordWrap">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="KLineEdit" name="query"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="textLabel1_2">
+       <property name="text">
+        <string>Path</string>
+       </property>
+       <property name="wordWrap">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="KURLRequester" name="path" native="true"/>
+     </item>
+     <item>
+      <spacer name="spacer2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Expanding</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <layout class="QHBoxLayout">
+       <item>
+        <spacer name="spacer1">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Expanding</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>316</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="KPushButton" name="kPushButton1_2">
+         <property name="text">
+          <string>O&amp;K</string>
+         </property>
+         <property name="shortcut">
+          <string>Alt+K</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="KPushButton" name="kPushButton1">
+         <property name="text">
+          <string>Cancel</string>
+         </property>
+        </widget>
+       </item>
       </layout>
-    </widget>
-  </widget>
-  <layoutdefault spacing="6" margin="11"/>
-  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
-  <tabstops>
-    <tabstop>path</tabstop>
-    <tabstop>query</tabstop>
-  </tabstops>
-  <includes>
-    <include location="local">klineedit.h</include>
-    <include location="local">kurlrequester.h</include>
-    <include location="local">klineedit.h</include>
-    <include location="local">kpushbutton.h</include>
-    <include location="local">kpushbutton.h</include>
-    <include location="local">kpushbutton.h</include>
-  </includes>
-  <resources>
-    <include location="queryinputdialogbase.qrc"/>
-  </resources>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+ <customwidgets>
+  <customwidget>
+   <class>KLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>klineedit.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KPushButton</class>
+   <extends>QPushButton</extends>
+   <header>kpushbutton.h</header>
+  </customwidget>
+  <customwidget>
+   <class>KURLRequester</class>
+   <extends>QWidget</extends>
+   <header>kurlrequester.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>path</tabstop>
+  <tabstop>query</tabstop>
+ </tabstops>
+ <includes>
+  <include location="local">klineedit.h</include>
+  <include location="local">kurlrequester.h</include>
+  <include location="local">klineedit.h</include>
+  <include location="local">kpushbutton.h</include>
+  <include location="local">kpushbutton.h</include>
+  <include location="local">kpushbutton.h</include>
+ </includes>
+ <resources/>
+ <connections/>
 </ui>
