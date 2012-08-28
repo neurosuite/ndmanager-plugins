@@ -63,10 +63,6 @@ ndManager::ndManager():KDockMainWindow(0, "NDManager"),prefDialog(0L),mainDock(0
 
     initStatusBar();
 
-    // Apply the saved mainwindow settings, if any, and ask the mainwindow
-    // to automatically save settings if changed: window size, toolbar
-    // position, icon size, etc.
-    //KDAB_PENDING setAutoSaveSettings();
 
     // initialize the recent file list
     //KDAB_PENDING fileOpenRecent->loadEntries(config);
@@ -98,7 +94,12 @@ void ndManager::setupActions()
 
     KStdAction::quit(this, SLOT(close()), actionCollection());
     viewMainToolBar = KStdAction::showToolbar(this, SLOT(slotViewMainToolBar()), actionCollection());
-    viewStatusBar = KStdAction::showStatusbar(this, SLOT(slotViewStatusBar()), actionCollection());
+
+    viewStatusBar = settingsMenu->addAction(tr("Show StatusBar"));
+    viewStatusBar->setCheckable(true);
+    connect(viewStatusBar,SIGNAL(triggered()), this,SLOT(slotViewStatusBar()));
+
+
     // KStdAction::preferences(this,SLOT(executePreferencesDlg()), actionCollection());
 
     //Custom actions and menus
