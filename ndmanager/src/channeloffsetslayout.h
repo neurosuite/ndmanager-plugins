@@ -4,7 +4,7 @@
 #include "ui_channeloffsetslayout.h"
 
 
-class ChannelOffsetsLayout : public QWidget, private Ui_ChannelOffsetsLayout
+class ChannelOffsetsLayout : public QWidget, public Ui_ChannelOffsetsLayout
 {
     Q_OBJECT
 

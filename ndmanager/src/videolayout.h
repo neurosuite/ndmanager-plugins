@@ -4,7 +4,7 @@
 #include "ui_videolayout.h"
 
 
-class VideoLayout : public QWidget, private Ui_VideoLayout
+class VideoLayout : public QWidget, public Ui_VideoLayout
 {
     Q_OBJECT
 

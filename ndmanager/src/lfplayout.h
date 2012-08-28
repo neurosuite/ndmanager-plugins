@@ -4,7 +4,7 @@
 #include "ui_lfplayout.h"
 
 
-class LfpLayout : public QWidget, private Ui_LfpLayout
+class LfpLayout : public QWidget, public Ui_LfpLayout
 {
     Q_OBJECT
 

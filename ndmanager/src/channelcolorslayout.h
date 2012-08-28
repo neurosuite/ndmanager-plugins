@@ -4,7 +4,7 @@
 #include "ui_channelcolorslayout.h"
 
 
-class ChannelColorsLayout : public QWidget, private Ui_ChannelColorsLayout
+class ChannelColorsLayout : public QWidget, public Ui_ChannelColorsLayout
 {
     Q_OBJECT
 

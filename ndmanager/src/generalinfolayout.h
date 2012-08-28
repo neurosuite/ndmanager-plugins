@@ -4,7 +4,7 @@
 #include "ui_generalinfolayout.h"
 
 
-class GeneralInfoLayout : public QWidget, private Ui_GeneralInfoLayout
+class GeneralInfoLayout : public QWidget, public Ui_GeneralInfoLayout
 {
     Q_OBJECT
 

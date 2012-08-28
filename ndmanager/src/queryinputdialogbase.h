@@ -4,7 +4,7 @@
 #include "ui_queryinputdialogbase.h"
 
 
-class Query : public QWidget, private Ui_Query
+class Query : public QWidget, public Ui_Query
 {
     Q_OBJECT
 

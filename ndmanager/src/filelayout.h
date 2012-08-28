@@ -4,7 +4,7 @@
 #include "ui_filelayout.h"
 
 
-class FileLayout : public QWidget, private Ui_FileLayout
+class FileLayout : public QWidget, public Ui_FileLayout
 {
     Q_OBJECT
 

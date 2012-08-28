@@ -4,7 +4,7 @@
 #include "ui_launcherlayout.h"
 
 
-class LauncherLayout : public QWidget, private Ui_LauncherLayout
+class LauncherLayout : public QWidget, public Ui_LauncherLayout
 {
     Q_OBJECT
 

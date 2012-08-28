@@ -4,7 +4,7 @@
 #include "ui_spikelayout.h"
 
 
-class SpikeLayout : public QWidget, private Ui_SpikeLayout
+class SpikeLayout : public QWidget, public Ui_SpikeLayout
 {
     Q_OBJECT
 

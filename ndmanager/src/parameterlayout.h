@@ -4,7 +4,7 @@
 #include "ui_parameterlayout.h"
 
 
-class ParameterLayout : public QWidget, private Ui_ParameterLayout
+class ParameterLayout : public QWidget, public Ui_ParameterLayout
 {
     Q_OBJECT
 

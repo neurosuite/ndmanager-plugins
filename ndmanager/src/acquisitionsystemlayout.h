@@ -4,7 +4,7 @@
 #include "ui_acquisitionsystemlayout.h"
 
 
-class AcquisitionSystemLayout : public QWidget, private Ui_AcquisitionSystemLayout
+class AcquisitionSystemLayout : public QWidget, public Ui_AcquisitionSystemLayout
 {
     Q_OBJECT
 

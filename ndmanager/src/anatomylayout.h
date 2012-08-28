@@ -4,7 +4,7 @@
 #include "ui_anatomylayout.h"
 
 
-class AnatomyLayout : public QWidget, private Ui_AnatomyLayout
+class AnatomyLayout : public QWidget, public Ui_AnatomyLayout
 {
     Q_OBJECT
 

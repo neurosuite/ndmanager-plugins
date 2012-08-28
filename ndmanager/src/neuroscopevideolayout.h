@@ -4,7 +4,7 @@
 #include "ui_neuroscopevideolayout.h"
 
 
-class NeuroscopeVideoLayout : public QWidget, private Ui_NeuroscopeVideoLayout
+class NeuroscopeVideoLayout : public QWidget, public Ui_NeuroscopeVideoLayout
 {
     Q_OBJECT
 
