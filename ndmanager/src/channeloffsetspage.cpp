@@ -31,7 +31,7 @@
 using namespace std;
 
 ChannelOffsetsPage::ChannelOffsetsPage(QWidget* parent, const char* name)
- : ChannelOffsetsLayout(parent, name),nbChannels(0),modified(false){
+ : ChannelOffsetsLayout(parent),nbChannels(0),modified(false){
   for(int i = 0;i<offsetTable->numCols();++i) offsetTable->setColumnStretchable(i,true);
   
   connect(offsetTable, SIGNAL(valueChanged(int,int)),this, SLOT(propertyModified()));

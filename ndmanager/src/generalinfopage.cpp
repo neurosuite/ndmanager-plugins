@@ -20,7 +20,7 @@
 #include "generalinfopage.h"
 
 GeneralInfoPage::GeneralInfoPage(QWidget *parent, const char *name)
- : GeneralInfoLayout(parent, name),modified(false),isInit(true){
+ : GeneralInfoLayout(parent),modified(false),isInit(true){
   descriptionTextEdit->setTextFormat(PlainText);
   notesTextEdit->setTextFormat(PlainText);
   

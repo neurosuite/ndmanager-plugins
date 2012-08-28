@@ -21,7 +21,7 @@
 #include "lfppage.h"
 
 LfpPage::LfpPage(QWidget* parent, const char *name)
- : LfpLayout(parent, name),doubleValidator(this),modified(false),isInit(true){
+ : LfpLayout(parent),doubleValidator(this),modified(false),isInit(true){
  
  //Set a validator on the line edits, the values have to be integers.
  samplingRateLineEdit->setValidator(&doubleValidator);

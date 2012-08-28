@@ -73,6 +73,7 @@ void AcquisitionSystemPage::nbChannelsLineEditLostFocus(){
 void AcquisitionSystemPage::nbChannelsChanged(){
  int newNbChannels = nbChannelsLineEdit->text().toInt();
  
+#if KDAB_PENDING
  //the return key has been press or the save action has been asked, the message box has triggered an lostFocusEvent
  if(isLostFocus && isReturnPressed || isLostFocus && isCheckAsked) return;
  if(newNbChannels != nbChannels && !isInit && !reset){
@@ -80,7 +81,7 @@ void AcquisitionSystemPage::nbChannelsChanged(){
       "will rest all the groups. Do you wish to continue?"), tr("Change the number of channels?"),
       tr("Continue"))==QMessageBox::Cancel){
    reset = true;   
-   nbChannelsLineEdit->setText(QString("%1").arg(nbChannels));
+   nbChannelsLineEdit->setText(QString::number(nbChannels));
    reset = false;
   }
   else{
@@ -93,6 +94,7 @@ void AcquisitionSystemPage::nbChannelsChanged(){
 //   nbChannels = newNbChannels;
 //   emit nbChannelsModified(getNbChannels()); 
 //  }
+#endif
 }
 
 

@@ -31,7 +31,7 @@
 #include <QList>
 
 ParameterPage::ParameterPage(bool expertMode,QWidget *parent, const char *name)
- : ParameterLayout(parent, name),valueModified(false),descriptionModified(false){
+ : ParameterLayout(parent),valueModified(false),descriptionModified(false){
  
  status<<tr("Mandatory")<<tr("Optional")<<tr("Dynamic");
   

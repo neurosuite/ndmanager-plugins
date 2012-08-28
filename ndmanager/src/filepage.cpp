@@ -28,7 +28,7 @@
 #include <QList>
 
 FilePage::FilePage(QWidget *parent, const char *name)
- : FileLayout(parent, name),isIncorrectRow(false),modified(false),isInit(true),extension(""){
+ : FileLayout(parent),isIncorrectRow(false),modified(false),isInit(true),extension(""){
  
   mappingTable->setColumnStretchable(0,true);
   

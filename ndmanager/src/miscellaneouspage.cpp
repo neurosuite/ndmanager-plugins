@@ -24,7 +24,7 @@
 
 
 MiscellaneousPage::MiscellaneousPage(QWidget* parent, const char *name)
- : NeuroscopeMiscLayout(parent, name),doubleValidator(this),modified(false),isInit(true){
+ : NeuroscopeMiscLayout(parent),doubleValidator(this),modified(false),isInit(true){
  
  //Set a validator on the line edits, the values have to be integers or doubles.
  screenGainLineEdit->setValidator(&doubleValidator);
@@ -37,7 +37,7 @@ MiscellaneousPage::MiscellaneousPage(QWidget* parent, const char *name)
  
   //Set an icon on the backgroundButton button
  
- traceBackgroundButton->setIconSet(QIcon(":/icons/fileopen")));
+ traceBackgroundButton->setIconSet(QIcon(":/icons/fileopen"));
  
 }
 

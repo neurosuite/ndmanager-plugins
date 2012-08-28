@@ -34,7 +34,7 @@ using namespace std;
 
 
 ChannelColorsPage::ChannelColorsPage(QWidget* parent, const char *name)
- : ChannelColorsLayout(parent, name),nbChannels(0),modified(false){
+ : ChannelColorsLayout(parent),nbChannels(0),modified(false){
   for(int i = 0;i<colorTable->numCols();++i) colorTable->setColumnStretchable(i,true);
   
   connect(colorTable, SIGNAL(pressed(int,int,int,const QPoint&)),this, SLOT(chooseColor(int,int,int)));

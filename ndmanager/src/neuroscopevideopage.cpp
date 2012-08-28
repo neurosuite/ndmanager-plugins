@@ -30,7 +30,7 @@
 #include <kimageeffect.h>
 
 NeuroscopeVideoPage::NeuroscopeVideoPage(QWidget* parent, const char *name)
- : NeuroscopeVideoLayout(parent, name),height(100),width(100),modified(false),isInit(true){
+ : NeuroscopeVideoLayout(parent),height(100),width(100),modified(false),isInit(true){
   
  connect(backgroundButton,SIGNAL(clicked()),this,SLOT(updateBackgroundImage()));
  connect(backgroundLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(updateBackgroundImage(const QString&)));

@@ -34,7 +34,7 @@ using namespace std;
 using namespace ndmanager;
 
 SpikePage::SpikePage(QWidget* parent, const char *name)
- : SpikeLayout(parent, name),isIncorrectRow(false),incorrectRow(0),incorrectColumn(0),modified(false){
+ : SpikeLayout(parent),isIncorrectRow(false),incorrectRow(0),incorrectColumn(0),modified(false){
    
  for(int i = 0;i<groupTable->numCols();++i) groupTable->setColumnStretchable(i,true);
  

@@ -21,7 +21,7 @@
 #include "videopage.h"
 
 VideoPage::VideoPage(QWidget* parent, const char *name)
- : VideoLayout(parent, name),intValidator(this),doubleValidator(this),modified(false),isInit(true){
+ : VideoLayout(parent),intValidator(this),doubleValidator(this),modified(false),isInit(true){
  
  //Set a validator on the line edits, the values have to be integers.
  samplingRateLineEdit->setValidator(&doubleValidator);
