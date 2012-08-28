@@ -21,8 +21,8 @@
 
 GeneralInfoPage::GeneralInfoPage(QWidget *parent, const char *name)
  : GeneralInfoLayout(parent),modified(false),isInit(true){
-  descriptionTextEdit->setTextFormat(PlainText);
-  notesTextEdit->setTextFormat(PlainText);
+  descriptionTextEdit->setTextFormat(Qt::PlainText);
+  notesTextEdit->setTextFormat(Qt::PlainText);
   
  connect(experimentersLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
  connect(descriptionTextEdit,SIGNAL(textChanged()),this,SLOT(propertyModified())); 

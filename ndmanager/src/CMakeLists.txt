@@ -9,7 +9,6 @@ set(ndmanager_SRCS
         clusterspage.cpp 
 	configuration.cpp 
 	descriptionwriter.cpp 
-	editormanager.cpp
         fileinformation.cpp 
 	filepage.cpp 
 	filespage.cpp 

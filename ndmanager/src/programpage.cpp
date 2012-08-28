@@ -31,7 +31,7 @@
 #include <QTextStream>
 #include <qapplication.h>
 #include <qregexp.h>
-#include <q3textedit.h>
+#include <qtextedit.h>
 //Added by qt3to4:
 #include <Q3GridLayout>
 #include <QFrame>
@@ -64,13 +64,8 @@ ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const char* name)
  connect(tabWidget, SIGNAL(currentChanged(QWidget*)), this, SLOT(tabChange(QWidget*)));
 
  if(expertMode){
-  editorMgr = new EditorManager(this);
-  // Load a new Kate document part
-  scriptDoc = editorMgr->add();
-  if(scriptDoc != NULL){
-   scriptView = static_cast<Kate::View*>(scriptDoc->createView(tabWidget));
+     scriptView = new QTextEdit(this);
    tabWidget->addTab(scriptView,tr("Script"));
-  }
  }
 
  frameLayout->addWidget(tabWidget);

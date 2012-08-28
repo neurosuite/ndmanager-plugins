@@ -22,7 +22,6 @@
 
 //include files for the application
 #include "parameterpage.h"
-#include "editormanager.h"
 
 // include files for QT
 #include <qwidget.h>
@@ -31,7 +30,7 @@
 //forward declaration
 class QTabWidget;
 class QPushButton;
-class Q3TextEdit;
+class QTextEdit;
 
 //General C++ include files
 #include <iostream>
@@ -123,7 +122,7 @@ public slots:
   sciptIsModified = false;
   helpIsModified = false;
   parameters->resetModificationStatus();
- };
+ }
  
 private slots:
   
@@ -142,11 +141,9 @@ private:
  bool isInit;
  QString programName;
  QString descriptionUrl;
- Q3TextEdit* help;
+ QTextEdit* help;
  bool helpIsModified;
- EditorManager* editorMgr;
- KTextEditor::Document* scriptDoc;
- Kate::View* scriptView; 
+ QTextEdit* scriptView;
  bool descriptionNotSaved;
  
  /**True if the file is opened in expert mode, false otherwise*/
