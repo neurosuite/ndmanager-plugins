@@ -43,16 +43,21 @@ set(ndmanager_SRCS
         videopage.cpp 
 	xmlreader.cpp 
 	xmlwriter.cpp 
-	acquisitionsystemlayout.cpp)
+	acquisitionsystemlayout.cpp
+	anatomylayout.cpp
+	channelcolorslayout.cpp
+	channeloffsetslayout.cpp
+	clusterslayout.cpp
+	)
 
 qt4_add_resources(ndmanager_SRCS ndmanager-icons.qrc)
 
 set(ndmanager_UI 
 	acquisitionsystemlayout.ui4 
-	anatomylayout.ui 
-	channelcolorslayout.ui 
-	channeloffsetslayout.ui 
-	clusterslayout.ui
+	anatomylayout.ui4 
+	channelcolorslayout.ui4
+	channeloffsetslayout.ui4
+	clusterslayout.ui4
        	filelayout.ui 
 	generalinfolayout.ui 
 	launcherlayout.ui 
