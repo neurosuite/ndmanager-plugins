@@ -359,7 +359,7 @@ void ndManager::createParameterView(QMap<int, Q3ValueList<int> >& anatomicalGrou
     setCentralWidget(mainDock); // central widget in a KDE mainwindow <=> setMainWidget
     setMainDockWidget(mainDock);
     //disable docking abilities of mainDock itself
-    mainDock->setEnableDocking(QDockWidget::DockNone);
+    mainDock->setEnableDocking(Qt::NoDockWidgetArea);
 
     //show all the encapsulated widgets of all controlled dockwidgets
     dockManager->activate();
