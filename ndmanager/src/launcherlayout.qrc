@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/LauncherLayout" >
+        <file>images/image0.png</file>
+        <file>images/image1.png</file>
+    </qresource>
+</RCC>
