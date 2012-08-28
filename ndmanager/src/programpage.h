@@ -54,11 +54,9 @@ public:
  /**Returns the parameterPage contained in the page.*/
  inline ParameterPage* getParameterPage(){return parameters;}
  
- /**Returns the script document (Kate::Document, kpart) contained in the page.*/
- inline KTextEditor::Document* getScript(){return scriptDoc;}
  
- /**Returns the script view(Kate::View, kpart) contained in the page.*/
- inline Kate::View* getScriptView(){return scriptView;}
+ /**Returns the script view contained in the page.*/
+ inline QTextEdit* getScriptView(){return scriptView;}
  
  /**Returns the content of the help.*/
  QString getHelp();
@@ -97,7 +95,7 @@ signals:
 public slots:
  inline void removeProgram(){
   emit programToRemove(this);
- };
+ }
  /**Saves the program parameters.*/
  void saveProgramParameters();
  
@@ -136,7 +134,7 @@ private:
  QPushButton* saveScriptButton; 
  QPushButton* saveParametersButton;      
  ParameterPage* parameters;
- Q3TextEdit* script; 
+ QTextEdit* script;
  bool sciptIsModified;
  bool isInit;
  QString programName;

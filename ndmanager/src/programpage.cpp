@@ -37,8 +37,10 @@
 #include <QFrame>
 #include <QList>
 #include <Q3VBoxLayout>
+#include <QFileDialog>
+#include <QMessageBox>
 // include files for KDE
-#include <kstandarddirs.h>
+//#include <kstandarddirs.h>
 
 
 
@@ -47,84 +49,84 @@
 using namespace std;
 
 ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const char* name)
- : QFrame(parent, name),sciptIsModified(false),isInit(true),programName(name),helpIsModified(false),descriptionNotSaved(true),expertMode(expertMode){
- Q3VBoxLayout* frameLayout = new Q3VBoxLayout(this,0,0);
+    : QFrame(parent, name),sciptIsModified(false),isInit(true),programName(name),helpIsModified(false),descriptionNotSaved(true),expertMode(expertMode){
+    Q3VBoxLayout* frameLayout = new Q3VBoxLayout(this,0,0);
 
- //Creat the upper part containing a tabWidget with 3 tabs, one with the parameters (ParameterPage), one with the script and one with the help.
- //In expert mode, the script tab does not exist.
+    //Creat the upper part containing a tabWidget with 3 tabs, one with the parameters (ParameterPage), one with the script and one with the help.
+    //In expert mode, the script tab does not exist.
 
- tabWidget = new QTabWidget(this);
-// script = new KTextEdit(tabWidget);
- help = new Q3TextEdit(tabWidget);
- if(!expertMode) help->setReadOnly(true);
- parameters = new ParameterPage(expertMode,tabWidget);
- tabWidget->addTab(parameters,tr("Parameters"));
+    tabWidget = new QTabWidget(this);
+    // script = new KTextEdit(tabWidget);
+    help = new QTextEdit(tabWidget);
+    if(!expertMode) help->setReadOnly(true);
+    parameters = new ParameterPage(expertMode,tabWidget);
+    tabWidget->addTab(parameters,tr("Parameters"));
 
- tabWidget->addTab(help,tr("Help"));
- connect(tabWidget, SIGNAL(currentChanged(QWidget*)), this, SLOT(tabChange(QWidget*)));
+    tabWidget->addTab(help,tr("Help"));
+    connect(tabWidget, SIGNAL(currentChanged(QWidget*)), this, SLOT(tabChange(QWidget*)));
 
- if(expertMode){
-     scriptView = new QTextEdit(this);
-   tabWidget->addTab(scriptView,tr("Script"));
- }
+    if(expertMode){
+        scriptView = new QTextEdit(this);
+        tabWidget->addTab(scriptView,tr("Script"));
+    }
 
- frameLayout->addWidget(tabWidget);
+    frameLayout->addWidget(tabWidget);
 
- //Add the buttons
- QWidget* buttons = new QWidget(this);
- Q3GridLayout* gridLayout = new Q3GridLayout(buttons,1,1,0,6);
- frameLayout->addWidget(buttons);
+    //Add the buttons
+    QWidget* buttons = new QWidget(this);
+    Q3GridLayout* gridLayout = new Q3GridLayout(buttons,1,1,0,6);
+    frameLayout->addWidget(buttons);
 
- if(expertMode){
-  saveParametersButton = new QPushButton(tr("Save Script Description As ..."),buttons);
-  saveParametersButton->setSizePolicy(
-   QSizePolicy((QSizePolicy::SizeType)0,(QSizePolicy::SizeType)0,0,0,saveParametersButton->sizePolicy().hasHeightForWidth()));
-  saveParametersButton->setMinimumSize(QSize(200,0));
-  saveParametersButton->setMaximumSize(QSize(300,32767));
-  gridLayout->addWidget(saveParametersButton,0,1);
+    if(expertMode){
+        saveParametersButton = new QPushButton(tr("Save Script Description As ..."),buttons);
+        saveParametersButton->setSizePolicy(
+                    QSizePolicy((QSizePolicy::SizeType)0,(QSizePolicy::SizeType)0,0,0,saveParametersButton->sizePolicy().hasHeightForWidth()));
+        saveParametersButton->setMinimumSize(QSize(200,0));
+        saveParametersButton->setMaximumSize(QSize(300,32767));
+        gridLayout->addWidget(saveParametersButton,0,1);
 
-  saveScriptButton = new QPushButton(tr("Save Script As ..."),buttons);
-  saveScriptButton->setSizePolicy(
-    QSizePolicy((QSizePolicy::SizeType)0,(QSizePolicy::SizeType)0,0,0,saveScriptButton->sizePolicy().hasHeightForWidth()));
-  saveScriptButton->setMinimumSize(QSize(124,0));
-  saveScriptButton->setMaximumSize(QSize(130,32767));
-  gridLayout->addWidget(saveScriptButton,0,3);
+        saveScriptButton = new QPushButton(tr("Save Script As ..."),buttons);
+        saveScriptButton->setSizePolicy(
+                    QSizePolicy((QSizePolicy::SizeType)0,(QSizePolicy::SizeType)0,0,0,saveScriptButton->sizePolicy().hasHeightForWidth()));
+        saveScriptButton->setMinimumSize(QSize(124,0));
+        saveScriptButton->setMaximumSize(QSize(130,32767));
+        gridLayout->addWidget(saveScriptButton,0,3);
 
-  removeButton = new QPushButton(tr("Remove Script"),buttons);
-  removeButton->setSizePolicy(QSizePolicy((QSizePolicy::SizeType)0,(QSizePolicy::SizeType)0,0,0,removeButton->sizePolicy().hasHeightForWidth()));
-  removeButton->setMinimumSize(QSize(124,0));
-  removeButton->setMaximumSize(QSize(124,32767));
-  gridLayout->addWidget(removeButton,0,5);
+        removeButton = new QPushButton(tr("Remove Script"),buttons);
+        removeButton->setSizePolicy(QSizePolicy((QSizePolicy::SizeType)0,(QSizePolicy::SizeType)0,0,0,removeButton->sizePolicy().hasHeightForWidth()));
+        removeButton->setMinimumSize(QSize(124,0));
+        removeButton->setMaximumSize(QSize(124,32767));
+        gridLayout->addWidget(removeButton,0,5);
 
-  QSpacerItem* space1 = new QSpacerItem(112,16,QSizePolicy::Expanding,QSizePolicy::Minimum);
-  gridLayout->addItem(space1,0,0);
-  QSpacerItem* space2 = new QSpacerItem(29,16,QSizePolicy::Fixed,QSizePolicy::Minimum);
-  gridLayout->addItem(space2,0,2);
-  QSpacerItem* space3 = new QSpacerItem(29,16,QSizePolicy::Fixed,QSizePolicy::Minimum);
-  gridLayout->addItem(space3,0,4);
-  QSpacerItem* space4 = new QSpacerItem(112,16,QSizePolicy::Expanding,QSizePolicy::Minimum);
-  gridLayout->addItem(space4,0,6);
+        QSpacerItem* space1 = new QSpacerItem(112,16,QSizePolicy::Expanding,QSizePolicy::Minimum);
+        gridLayout->addItem(space1,0,0);
+        QSpacerItem* space2 = new QSpacerItem(29,16,QSizePolicy::Fixed,QSizePolicy::Minimum);
+        gridLayout->addItem(space2,0,2);
+        QSpacerItem* space3 = new QSpacerItem(29,16,QSizePolicy::Fixed,QSizePolicy::Minimum);
+        gridLayout->addItem(space3,0,4);
+        QSpacerItem* space4 = new QSpacerItem(112,16,QSizePolicy::Expanding,QSizePolicy::Minimum);
+        gridLayout->addItem(space4,0,6);
 
-  connect(saveScriptButton,SIGNAL(clicked()),this,SLOT(saveProgramScript()));
-  connect(saveParametersButton,SIGNAL(clicked()),this,SLOT(saveProgramParameters()));
-  connect(scriptView->getDoc(),SIGNAL(textChanged()),this,SLOT(scriptModified()));
-  connect(help,SIGNAL(textChanged()),this,SLOT(helpModified()));
- }
- else{
-  removeButton = new QPushButton(tr("Remove Script"),buttons);
-  removeButton->setSizePolicy(QSizePolicy((QSizePolicy::SizeType)0,(QSizePolicy::SizeType)0,0,0,removeButton->sizePolicy().hasHeightForWidth()));
-  removeButton->setMinimumSize(QSize(124,0));
-  removeButton->setMaximumSize(QSize(124,32767));
-  gridLayout->addWidget(removeButton,0,1);
+        connect(saveScriptButton,SIGNAL(clicked()),this,SLOT(saveProgramScript()));
+        connect(saveParametersButton,SIGNAL(clicked()),this,SLOT(saveProgramParameters()));
+        connect(scriptView,SIGNAL(textChanged()),this,SLOT(scriptModified()));
+        connect(help,SIGNAL(textChanged()),this,SLOT(helpModified()));
+    }
+    else{
+        removeButton = new QPushButton(tr("Remove Script"),buttons);
+        removeButton->setSizePolicy(QSizePolicy((QSizePolicy::SizeType)0,(QSizePolicy::SizeType)0,0,0,removeButton->sizePolicy().hasHeightForWidth()));
+        removeButton->setMinimumSize(QSize(124,0));
+        removeButton->setMaximumSize(QSize(124,32767));
+        gridLayout->addWidget(removeButton,0,1);
 
-  QSpacerItem* space1 = new QSpacerItem(112,16,QSizePolicy::Expanding,QSizePolicy::Minimum);
-  gridLayout->addItem(space1,0,0);
-  QSpacerItem* space2 = new QSpacerItem(112,16,QSizePolicy::Expanding,QSizePolicy::Minimum);
-  gridLayout->addItem(space2,0,2);
- }
+        QSpacerItem* space1 = new QSpacerItem(112,16,QSizePolicy::Expanding,QSizePolicy::Minimum);
+        gridLayout->addItem(space1,0,0);
+        QSpacerItem* space2 = new QSpacerItem(112,16,QSizePolicy::Expanding,QSizePolicy::Minimum);
+        gridLayout->addItem(space2,0,2);
+    }
 
- connect(removeButton,SIGNAL(clicked()),this,SLOT(removeProgram()));
- connect(parameters,SIGNAL(nameChanged(const QString&)),this,SLOT(nameChanged(const QString&)));
+    connect(removeButton,SIGNAL(clicked()),this,SLOT(removeProgram()));
+    connect(parameters,SIGNAL(nameChanged(const QString&)),this,SLOT(nameChanged(const QString&)));
 }
 
 
@@ -134,161 +136,161 @@ ProgramPage::~ProgramPage(){
 QString ProgramPage::getHelp(){return help->text();}
 
 void ProgramPage::setHelp(QString helpContent){
- help->setText(helpContent);
+    help->setText(helpContent);
 }
 
 bool ProgramPage::saveProgramScript(){
- bool recall = false;
- //find the file corresponding to the program name
- QString name = parameters->getProgramName();
- QString path = KStandardDirs::findExe(name,getenv("PATH"),true);
- QString message = "";
- QString title = "";
- QString scriptUrl;
+    bool recall = false;
+    //find the file corresponding to the program name
+    QString name = parameters->getProgramName();
+    QString path = KStandardDirs::findExe(name,getenv("PATH"),true);
+    QString message = "";
+    QString title = "";
+    QString scriptUrl;
 
- if(!path.isNull()) scriptUrl = QFileDialog::getSaveFileName( this, tr("Save as..."),path,tr("*"));
- else scriptUrl = QFileDialog::getSaveFileName(this, tr("Save as..."),QString(),tr("*"));
+    if(!path.isNull()) scriptUrl = QFileDialog::getSaveFileName( this, tr("Save as..."),path,tr("*"));
+    else scriptUrl = QFileDialog::getSaveFileName(this, tr("Save as..."),QString(),tr("*"));
 
- if(!scriptUrl.isEmpty()){
-  path = scriptUrl;
-  QFile file(path);
-  if(!file.open(QIODevice::WriteOnly)){
-   message = QString("The file %1 could not be saved possibly because of insufficient file access permissions.").arg(name);
-   title = "IO Error!";
-   recall = true;
-  }
-  else{
-   QTextStream stream(&file);
-   stream<<scriptView->getDoc()->text();
-   file.close();
-  }
- }
+    if(!scriptUrl.isEmpty()){
+        path = scriptUrl;
+        QFile file(path);
+        if(!file.open(QIODevice::WriteOnly)){
+            message = QString("The file %1 could not be saved possibly because of insufficient file access permissions.").arg(name);
+            title = "IO Error!";
+            recall = true;
+        }
+        else{
+            QTextStream stream(&file);
+            stream<<scriptView->text();
+            file.close();
+        }
+    }
 
- //If the change in the programName lineedit has not yet been validated, a call to nameChanged will be done after this call. Therefore
- //programName has to be updated so no message will be display in that call (otherwise there will be conflict in the events)
- if(programName != parameters->getProgramName()) programName = parameters->getProgramName();
- if(title != "") QMessageBox::critical (this, tr(title),tr(message));
- if(recall) return saveProgramScript();
- else{
-  if(title != "") return false;
-  else{
-   sciptIsModified = false;
-   return true;
-  }
- }
+    //If the change in the programName lineedit has not yet been validated, a call to nameChanged will be done after this call. Therefore
+    //programName has to be updated so no message will be display in that call (otherwise there will be conflict in the events)
+    if(programName != parameters->getProgramName()) programName = parameters->getProgramName();
+    if(title != "") QMessageBox::critical (this, tr(title),tr(message));
+    if(recall) return saveProgramScript();
+    else{
+        if(title != "") return false;
+        else{
+            sciptIsModified = false;
+            return true;
+        }
+    }
 }
 
 void ProgramPage::saveProgramParameters(){
- //Always ask the user where to save the information. If as save has already be done, set the save location as the default location
- //for the new save
- if(descriptionUrl.isEmpty()){
-  QString descriptionUrlTmp;
-  descriptionUrlTmp.setPath(QDir::currentPath());
-  QString name = parameters->getProgramName();
-  name.append(".xml");
-  descriptionUrlTmp.setFileName(name);
-  descriptionUrl = QFileDialog::getSaveFileName(this, tr("Save as..."),descriptionUrlTmp,tr("*.xml|Xml Files"));
- }
- else{
-  descriptionUrl = QFileDialog::getSaveFileName(this, tr("Save as..."),descriptionUrl,tr("*.xml|Xml Files"));
- }
- //a location has been chosen
- if(!descriptionUrl.isEmpty()){
-  //Get the information
-  ProgramInformation programInformation;
-  programInformation.setProgramName(parameters->getProgramName());
-  programInformation.setHelp(help->text());
-  QMap<int, QList<QString> > parameterInformation = parameters->getParameterInformation();
-  programInformation.setParameterInformation(parameterInformation);
-  //Create the writer and save the data to disk
-  DescriptionWriter descriptionWriter;
-  descriptionWriter.setProgramInformation(programInformation);
-  bool status = descriptionWriter.writeTofile(descriptionUrl);
-  if(!status){
-   QString message = QString("The file %1 could not be saved possibly because of insufficient file access permissions.").arg(descriptionUrl.fileName());
-   QMessageBox::critical (this, tr("IO Error!"),tr(message));
-  }
-  descriptionNotSaved = false;
- }
+    //Always ask the user where to save the information. If as save has already be done, set the save location as the default location
+    //for the new save
+    if(descriptionUrl.isEmpty()){
+        QString descriptionUrlTmp;
+        descriptionUrlTmp.setPath(QDir::currentPath());
+        QString name = parameters->getProgramName();
+        name.append(".xml");
+        descriptionUrlTmp.setFileName(name);
+        descriptionUrl = QFileDialog::getSaveFileName(this, tr("Save as..."),descriptionUrlTmp,tr("*.xml|Xml Files"));
+    }
+    else{
+        descriptionUrl = QFileDialog::getSaveFileName(this, tr("Save as..."),descriptionUrl,tr("*.xml|Xml Files"));
+    }
+    //a location has been chosen
+    if(!descriptionUrl.isEmpty()){
+        //Get the information
+        ProgramInformation programInformation;
+        programInformation.setProgramName(parameters->getProgramName());
+        programInformation.setHelp(help->text());
+        QMap<int, QList<QString> > parameterInformation = parameters->getParameterInformation();
+        programInformation.setParameterInformation(parameterInformation);
+        //Create the writer and save the data to disk
+        DescriptionWriter descriptionWriter;
+        descriptionWriter.setProgramInformation(programInformation);
+        bool status = descriptionWriter.writeTofile(descriptionUrl);
+        if(!status){
+            QString message = tr("The file %1 could not be saved possibly because of insufficient file access permissions.").arg(descriptionUrl.fileName());
+            QMessageBox::critical (this, tr("IO Error!"),tr(message));
+        }
+        descriptionNotSaved = false;
+    }
 }
 
 
 bool ProgramPage::areParametersModified()const{
- return parameters->isValueModified();
+    return parameters->isValueModified();
 }
 
 bool ProgramPage::isDescriptionModified()const{
- return (parameters->isDescriptionModified() || helpIsModified);
+    return (parameters->isDescriptionModified() || helpIsModified);
 }
 
 bool ProgramPage::isDescriptionModifiedAndNotSaved()const{
- return (descriptionNotSaved && (parameters->isDescriptionModified() || helpIsModified));
+    return (descriptionNotSaved && (parameters->isDescriptionModified() || helpIsModified));
 }
 
 void ProgramPage::nameChanged(const QString& name){
- QString message = "";
- QString title = "";
+    QString message;
+    QString title;
 
- //If a call to saveProgram has been made, the check on the script has already be done.
- if(programName != parameters->getProgramName()){
-   //Warn the programPage that the name has indeed been modified.
-  parameters->programNameChanged();
-  programName = parameters->getProgramName();
+    //If a call to saveProgram has been made, the check on the script has already be done.
+    if(programName != parameters->getProgramName()){
+        //Warn the programPage that the name has indeed been modified.
+        parameters->programNameChanged();
+        programName = parameters->getProgramName();
 
-  //in expert mode, update the script
-  if(expertMode){
-   //find the file corresponding to the program name
-   QString path = KStandardDirs::findExe(name,getenv("PATH"),true);
+        //in expert mode, update the script
+        if(expertMode){
+            //find the file corresponding to the program name
+            QString path = KStandardDirs::findExe(name,getenv("PATH"),true);
 
-   if(!path.isNull()){
-    QFileInfo fileInfo(path);
-    QFile file(path);
-    if(!file.open(QIODevice::ReadOnly)){
-     message = QString("The file %1 is not readable.").arg(name);
-     title = "IO Error!";
-     scriptDoc->closeURL();
-     scriptView->getDoc()->setText("");
+            if(!path.isNull()){
+                QFile file(path);
+                if(!file.open(QIODevice::ReadOnly)){
+                    message = tr("The file %1 is not readable.").arg(name);
+                    title = "IO Error!";
+                    scriptDoc->closeURL();
+                    scriptView->setText("");
+                }
+                else{
+                    QTextStream stream(&file);
+                    QString firstLine = stream.readLine();
+                    int i = firstLine.find(QRegExp("^#!"));
+                    if(i != -1){
+                        scriptDoc->openURL(path);
+                        file.close();
+                        //Setting the content of the KTextEdit (named script) will trigger a scriptModified and therefore set sciptIsModified to true. The initial load of the script
+                        //should no be considered as a modification.
+                        sciptIsModified = false;
+                    }
+                    else{
+                        message =  tr("The file %1 does not appear to be a script file (a script file should begin with #!).").arg(name);
+                        title = "IO Error!";
+                        scriptDoc->closeURL();
+                        scriptView->setText("");
+                    }
+                }
+            }
+            else{
+                message =  tr("The file %1 could not be found in your PATH.").arg(name);
+                title = "IO Error!";
+                scriptDoc->closeURL();
+                scriptView->setText("");
+                //Setting the content of the KTextEdit (named script) will trigger a scriptModified and therefore set sciptIsModified to true. The initial load of the script
+                //should no be considered as a modification.
+                sciptIsModified = false;
+            }
+        }
     }
-    else{
-     QTextStream stream(&file);
-     QString firstLine = stream.readLine();
-     int i = firstLine.find(QRegExp("^#!"));
-     if(i != -1){
-      scriptDoc->openURL(path);
-      file.close();
-      //Setting the content of the KTextEdit (named script) will trigger a scriptModified and therefore set sciptIsModified to true. The initial load of the script
-      //should no be considered as a modification.
-      sciptIsModified = false;
-     }
-     else{
-      message =  QString("The file %1 does not appear to be a script file (a script file should begin with #!).").arg(name);
-      title = "IO Error!";
-      scriptDoc->closeURL();
-      scriptView->getDoc()->setText("");
-     }
-    }
-   }
-   else{
-    message =  QString("The file %1 could not be found in your PATH.").arg(name);
-    title = "IO Error!";
-    scriptDoc->closeURL();
-    scriptView->getDoc()->setText("");
-    //Setting the content of the KTextEdit (named script) will trigger a scriptModified and therefore set sciptIsModified to true. The initial load of the script
-    //should no be considered as a modification.
-    sciptIsModified = false;
-   }
-  }
- }
 
- //will update the left iconList
- emit programNameChanged(this,name,message,title);
+    //will update the left iconList
+    emit programNameChanged(this,name,message,title);
 }
 
 void ProgramPage::tabChange(QWidget * page){
- if(page == scriptView){
-  emit scriptShown(scriptView);
- }
- else emit scriptHidden();
+    if(page == scriptView){
+        emit scriptShown(scriptView);
+    } else {
+        emit scriptHidden();
+    }
 }
 
 

@@ -1,6 +1,7 @@
 project(ndmanager-src)
 
-set(ndmanager_SRCS 
+set(ndmanager_SRCS
+        programpage.cpp	
 	acquisitionsystempage.cpp
         anatomypage.cpp 
 	channelcolors.cpp 
@@ -29,7 +30,6 @@ set(ndmanager_SRCS
 	parameterview.cpp 
 	pref.cpp 
 	programinformation.cpp 
-	programpage.cpp
         programspage.cpp 
 	queryinputdialog.cpp 
 	queryoutputdialog.cpp 
