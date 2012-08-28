@@ -33,7 +33,7 @@
 #include <QTextStream>
 #include <Q3ValueList>
 #include <Q3PtrList>
-#include <Q3Frame>
+#include <QFrame>
 #include <Q3VBoxLayout>
 
 // include files for KDE
@@ -61,7 +61,7 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
  setShowIconsInTreeList(true);
 
  //adding page "General information"
- Q3Frame* frame = addPage(tr("General"), tr("General information"),
+ QFrame* frame = addPage(tr("General"), tr("General information"),
      KGlobal::iconLoader()->loadIcon("kfm",KIcon::Panel,0,false) );
  Q3VBoxLayout* frameLayout = new Q3VBoxLayout(frame,0,0);
  generalInfo = new GeneralInfoPage(frame);
@@ -218,7 +218,7 @@ ProgramPage* ParameterView::addProgram(QString programName,bool show){
  programPath.append("Scripts");
  programPath.append(programName);
 
- Q3Frame* frame = addPage(programPath);
+ QFrame* frame = addPage(programPath);
  Q3VBoxLayout* frameLayout = new Q3VBoxLayout(frame,0,0);
  ProgramPage* program = new ProgramPage(expertMode,frame,programName);
  frameLayout->addWidget(program);
@@ -260,7 +260,7 @@ void ParameterView::changeProgramName(ProgramPage* programPage,const QString& ne
   return;
  }
 
- Q3Frame* programFrame;
+ QFrame* programFrame;
 
  //To change the name in the treeview, this one has to be rebuilt
  Q3ValueList<QString>::iterator iterator;
@@ -268,7 +268,7 @@ void ParameterView::changeProgramName(ProgramPage* programPage,const QString& ne
   QString name = *iterator;
 
   ProgramPage* program = programDict[name];
-  Q3Frame* parentFrame = static_cast<Q3Frame*>(program->parent());
+  QFrame* parentFrame = static_cast<QFrame*>(program->parent());
   removePage(parentFrame);
 
   bool isTobeModified = false;
@@ -283,7 +283,7 @@ void ParameterView::changeProgramName(ProgramPage* programPage,const QString& ne
   programPath.append("Scripts");
   programPath.append(name);
 
-  Q3Frame* frame = addPage(programPath);
+  QFrame* frame = addPage(programPath);
   Q3VBoxLayout* frameLayout = new Q3VBoxLayout(frame,0,0);
   program->reparent(frame,QPoint(0,0));
   frameLayout->addWidget(program);
@@ -309,7 +309,7 @@ void ParameterView::changeProgramName(ProgramPage* programPage,const QString& ne
 
 void ParameterView::removeProgram(ProgramPage* programPage){
  programsModified = true;
- Q3Frame* parentFrame = static_cast<Q3Frame*>(programPage->parent());
+ QFrame* parentFrame = static_cast<QFrame*>(programPage->parent());
  removePage(parentFrame);
  QString name = programPage->name();
  programNames.remove(name);

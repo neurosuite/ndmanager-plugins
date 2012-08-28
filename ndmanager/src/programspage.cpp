@@ -31,7 +31,7 @@
 #include <QTextStream>
 #include <Q3VBoxLayout>
 #include <Q3ValueList>
-#include <Q3Frame>
+#include <QFrame>
 #include <QFileDialog>
 
 
@@ -41,7 +41,7 @@ using namespace std;
 
 
 ProgramsPage::ProgramsPage(bool expertMode,QWidget *parent, const char *name)
- : Q3Frame(parent, name),expertMode(expertMode){
+ : QFrame(parent, name),expertMode(expertMode){
  
  Q3VBoxLayout* frameLayout = new Q3VBoxLayout(this,0,0);
    

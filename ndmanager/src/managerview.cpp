@@ -32,7 +32,7 @@
 //Added by qt3to4:
 #include <Q3VBoxLayout>
 #include <Q3ValueList>
-#include <Q3Frame>
+#include <QFrame>
 #include <QProcess>
 #include <QDebug>
 #include <QAction>
@@ -44,7 +44,7 @@
 using namespace std;
 
 ManagerView::ManagerView(QWidget *parent, const char *name)
- : /*QSplitter(parent, name),*/Q3Frame(parent, name),konsole(0L),isUptoDate(true){
+ : /*QSplitter(parent, name),*/QFrame(parent, name),konsole(0L),isUptoDate(true){
  // setOrientation(Qt::Vertical);
  frameLayout = new Q3VBoxLayout(this,0,0);
 }

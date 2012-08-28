@@ -29,7 +29,7 @@
 #include <qwidget.h>
 #include <q3valuelist.h>
 //Added by qt3to4:
-#include <Q3Frame>
+#include <QFrame>
 
 // include files for KDE
 #include <kjanuswidget.h> 
@@ -320,7 +320,7 @@ private:
   ProgramsPage* programs;
   
   /**Pointer on the frame containing the page with the information for the programs.*/
-  Q3Frame* programsFrame;
+  QFrame* programsFrame;
   
   /**Dictionary containing all the programs.*/
   Q3Dict<ProgramPage> programDict;

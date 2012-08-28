@@ -27,7 +27,7 @@
 #include <qspinbox.h> 
 //Added by qt3to4:
 #include <Q3VBoxLayout>
-#include <Q3Frame>
+#include <QFrame>
 #include <Q3ValueList>
 
 //Include for the application
@@ -41,7 +41,7 @@
 /**
 @author Lynn Hazan
 */
-class ManagerView : public Q3Frame/*QSplitter*/
+class ManagerView : public QFrame/*QSplitter*/
 {
 Q_OBJECT
 public:

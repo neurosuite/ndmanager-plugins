@@ -25,7 +25,7 @@
 
 // include files for QT
 #include <qwidget.h>
-#include <q3frame.h>
+#include <QFrame>
 #include <q3ptrlist.h>
 //Added by qt3to4:
 #include <Q3ValueList>
@@ -40,7 +40,7 @@ class QPushButton;
 * Container used to group the new files created out of the raw data contained in the .dat file.
 * @author Lynn Hazan
 */
-class FilesPage : public Q3Frame
+class FilesPage : public QFrame
 {
 Q_OBJECT
 public:

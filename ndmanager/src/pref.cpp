@@ -27,7 +27,7 @@
 #include <qlayout.h>
 #include <qlabel.h>
 //Added by qt3to4:
-#include <Q3Frame>
+#include <QFrame>
 #include <Q3HBoxLayout>
 
 ndManagerPreferences::ndManagerPreferences(QWidget* parent,const char* name, Qt::WFlags f)
@@ -36,7 +36,7 @@ ndManagerPreferences::ndManagerPreferences(QWidget* parent,const char* name, Qt:
 {
   setHelp("settings","ndManager");
  
-  Q3Frame *frame;
+  QFrame *frame;
   frame = addPage(tr("First Page"), tr("Page One Options"));
   m_pageOne = new ndManagerPrefPageOne(frame);
 
@@ -94,7 +94,7 @@ void ndManagerPreferences::enableApply() {
 
 
 ndManagerPrefPageOne::ndManagerPrefPageOne(QWidget *parent)
-    : Q3Frame(parent)
+    : QFrame(parent)
 {
     Q3HBoxLayout *layout = new Q3HBoxLayout(this);
     layout->setAutoAdd(true);
@@ -103,7 +103,7 @@ ndManagerPrefPageOne::ndManagerPrefPageOne(QWidget *parent)
 }
 
 ndManagerPrefPageTwo::ndManagerPrefPageTwo(QWidget *parent)
-    : Q3Frame(parent)
+    : QFrame(parent)
 {
     Q3HBoxLayout *layout = new Q3HBoxLayout(this);
     layout->setAutoAdd(true);

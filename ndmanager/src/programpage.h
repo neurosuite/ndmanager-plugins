@@ -26,7 +26,7 @@
 
 // include files for QT
 #include <qwidget.h>
-#include <q3frame.h>
+#include <QFrame>
 
 //forward declaration
 class QTabWidget;
@@ -40,7 +40,7 @@ using namespace std;
 /**
 @author Lynn Hazan
 */
-class ProgramPage : public Q3Frame
+class ProgramPage : public QFrame
 {
 Q_OBJECT
 public:

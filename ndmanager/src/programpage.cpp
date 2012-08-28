@@ -34,7 +34,7 @@
 #include <q3textedit.h>
 //Added by qt3to4:
 #include <Q3GridLayout>
-#include <Q3Frame>
+#include <QFrame>
 #include <Q3ValueList>
 #include <Q3VBoxLayout>
 // include files for KDE
@@ -47,7 +47,7 @@
 using namespace std;
 
 ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const char* name)
- : Q3Frame(parent, name),sciptIsModified(false),isInit(true),programName(name),helpIsModified(false),descriptionNotSaved(true),expertMode(expertMode){
+ : QFrame(parent, name),sciptIsModified(false),isInit(true),programName(name),helpIsModified(false),descriptionNotSaved(true),expertMode(expertMode){
  Q3VBoxLayout* frameLayout = new Q3VBoxLayout(this,0,0);
 
  //Creat the upper part containing a tabWidget with 3 tabs, one with the parameters (ParameterPage), one with the script and one with the help.
