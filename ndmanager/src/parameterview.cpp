@@ -36,10 +36,6 @@
 #include <QFrame>
 #include <Q3VBoxLayout>
 
-// include files for KDE
-
-#include <kstandarddirs.h>
-
 //include files for the application
 #include "parameterview.h"
 #include "ndmanagerdoc.h"

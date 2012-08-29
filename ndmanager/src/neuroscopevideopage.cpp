@@ -25,10 +25,6 @@
 //Added by qt3to4:
 #include <QPixmap>
 
-// include files for KDE
-
-#include <kimageeffect.h>
-
 NeuroscopeVideoPage::NeuroscopeVideoPage(QWidget* parent, const char *name)
  : NeuroscopeVideoLayout(parent),height(100),width(100),modified(false),isInit(true){
   
@@ -44,13 +40,15 @@ NeuroscopeVideoPage::NeuroscopeVideoPage(QWidget* parent, const char *name)
 
   //Set an icon on the backgroundButton button
  
- backgroundButton->setIconSet(QIcon(":/icons/fileopen")));
+ backgroundButton->setIconSet(QIcon(":/icons/fileopen"));
 }
 
 
 NeuroscopeVideoPage::~NeuroscopeVideoPage(){}
 
 void NeuroscopeVideoPage::updateDisplayedImage(){ 
+#if KDAB_PENDING
+
  if(backgroungImage != NULL){
    //apply first the rotation and then the flip
   QImage rotatedImage = backgroungImage;
@@ -84,6 +82,7 @@ void NeuroscopeVideoPage::updateDisplayedImage(){
   }
   if(pixmap.convertFromImage(flippedImage)) backgroundPixmap->setPixmap(pixmap); 
  }
+#endif
 }
 
 #include "neuroscopevideopage.moc"

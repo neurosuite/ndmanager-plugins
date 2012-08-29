@@ -21,12 +21,6 @@
 #include <qmap.h>
 #include <QList>
 
-// include files for KDE
-
-#include <kio/job.h>
-
-#include <kstandarddirs.h>
-
 
 // application specific includes
 #include <ndmanagerdoc.h>

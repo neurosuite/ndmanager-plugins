@@ -53,94 +53,6 @@ ManagerView::ManagerView(QWidget *parent, const char *name)
 ManagerView::~ManagerView(){
 }
 
-ManagerView::returnMessage ManagerView::addKonsole(const QString url,int nbSpikeGroups,QList<QString> fileExtensions,const QList<QString>& scriptNames){
- if(konsole == 0L){ 
-  parameterUrl = QString(url);
-
-  konsole = new NdKonsole(this,"NdKonsole");
-  frameLayout->addWidget(konsole);
-      
-  toolbar = new QToolBar(this);
-  
-
-  toolbar->addAction(QIcon(":icons/neuroscope-22")),tr("NeuroScope"),this,SLOT(launchNeuroscope());
-
-   //qDebug()<<"url "<<url.directory()<<" url.fileName() "<<url.fileName()<<" parameterUrl.fileName() "<<parameterUrl.fileName();
-  
-  QStringList neuroscopeFiles;
-  neuroscopeFiles<<".dat"<<".eeg";
-  
-  QList<QString>::iterator iterator;
-  for(iterator = fileExtensions.begin(); iterator != fileExtensions.end(); ++iterator){
-   neuroscopeFiles<<QString(".%1").arg(*iterator);   
-  }
-
-  neuroscopeComboBox = new QComboBox(toolbar);
-  neuroscopeComboBox->setGeometry(QRect(13,53,150,20));
-  neuroscopeComboBox->setMinimumSize(QSize(90,20));
-  neuroscopeComboBox->setMaximumSize(QSize(150,20));
-
-  neuroscopeComboBox->insertStringList(neuroscopeFiles);
-  connect(neuroscopeComboBox,SIGNAL(activated(int)),this,SLOT(neuroscopeFileChange(int)));
-  toolbar->addWidget(neuroscopeComboBox);
- // toolbar->insertCombo(neuroscopeFiles,1,false,SIGNAL(activated(int)),this,SLOT(neuroscopeFileChange(int))); 
-  
-  toolbar->addSeparator();
-  toolbar->addSeparator();
-  toolbar->addSeparator();
-  toolbar->insertLineSeparator();
-  toolbar->addSeparator();
-  toolbar->addSeparator();
-  toolbar->addAction(QIcon(":icon/scripts")),tr("Start"),this,SLOT(launchScript());
-  scriptsComboBox = new QComboBox(toolbar);
-  scriptsComboBox->setGeometry(QRect(13,53,150,20));
-  scriptsComboBox->setMinimumSize(QSize(90,20));
-  scriptsComboBox->setMaximumSize(QSize(150,20));
-
-  QStringList scripts;
-  QList<QString>::const_iterator iterator2;
-  for(iterator2 = scriptNames.begin(); iterator2 != scriptNames.end(); ++iterator2){
-    scripts<<static_cast<QString>(*iterator2);  
-  }
-  scriptsComboBox->insertStringList(scripts);
-  toolbar->addWidget(scriptsComboBox);
-  toolbar->addAction(QIcon(":icon/stop")),tr("Stop"),this,SLOT(stopScript());
-
-  toolbar->addSeparator();
-  toolbar->addSeparator();
-  toolbar->addSeparator();
-  toolbar->insertLineSeparator();
-  toolbar->addSeparator();
-  toolbar->addSeparator();
-  
-  toolbar->addAction(QIcon(":icon/klusters-22")),tr("KLusters"),this,SLOT(launchKlusters());
-
-  klustersComboBox = new QComboBox(toolbar);
-  klustersComboBox->setGeometry(QRect(13,53,150,20));
-  klustersComboBox->setMinimumSize(QSize(90,20));
-  klustersComboBox->setMaximumSize(QSize(150,20));
-  QStringList klustersFiles;
-  for (int i = 0; i < nbSpikeGroups;++i){
-   klustersFiles<<QString("%1").arg(i+1);
-  }
-
-  klustersComboBox->insertStringList(klustersFiles);
-  toolbar->addWidget(klustersComboBox);
-  frameLayout->addWidget(toolbar);
-
-
-  
-  //setOpaqueResize(true);   
-  connect(konsole, SIGNAL(beingDestroyed()), this, SLOT(konsoleBeingDestroyed()));
- 
-  return static_cast<returnMessage>(konsole->loadConsoleIfNeeded(url));
- }
- else{
-  return static_cast<returnMessage>(konsole->loadConsoleIfNeeded(url));
- }
- return OK;
-}
-
 void ManagerView::neuroscopeFileChange(int){
 
 }
@@ -247,7 +159,8 @@ void ManagerView::launchScript(){
   else{
 	  QString fileName = parameterUrl.fileName();
 	  QString baseName = fileName.left(fileName.length()-4);
-	  konsole->runCommand(script+" "+baseName);
+
+	  //KDAB_PORTING konsole->runCommand(script+" "+baseName);
   }
  }
 }

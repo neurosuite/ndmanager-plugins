@@ -370,6 +370,7 @@ void ndManager::createParameterView(QMap<int, QList<int> >& anatomicalGroups,QMa
 }
 
 void ndManager::createManagerView(){
+#if KDAB_PENDING	
     if(managerView == 0L){
         //Create and add the ManagerView
         QDockWidget* manager = createDockWidget("Manager", QPixmap());
@@ -412,6 +413,7 @@ void ndManager::createManagerView(){
     //show all the encapsulated widgets of all controlled dockwidgets
     dockManager->activate();
     slotStateChanged("hideManger");
+#endif
 }
 
 void ndManager::konsoleDockBeingClosed(){

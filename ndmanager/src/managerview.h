@@ -32,7 +32,6 @@
 
 //Include for the application
 #include "launcherpage.h"
-#include "ndkonsole.h"
 
 //Include files for KDE
 #include <QToolBar>
@@ -51,16 +50,6 @@ public:
  /**Information retun after a call to addKonsole*/
   enum returnMessage {OK=0,NO_KPART=1,PART_LOADING_ERROR=2};
     
-  /** Adds a Konsole and a LauncherPage.
-  * @param url url of the currently open parameter file.
-  * @param nbSpikeGroups number of current spike groups.
-  * @param fileExtensions list containing the extensions of the all specific files (other than the .dat and .eeg files).
-  * @param scriptNames list containing the script names.
-  * @return message indicating if the konsole could be added.
-  */
-  returnMessage addKonsole(const QString url,int nbSpikeGroups,QList<QString> fileExtensions,
-                          const QList<QString>& scriptNames); 
-
   /** Updates the dropdown list containing the spike groups used to launch Klusters.
   * @param nbGroups the new number of spike groups.
   */
@@ -114,7 +103,6 @@ private slots:
  void stopScript();
 
 private:
- NdKonsole* konsole;  
  LauncherPage* launcherpage;
  QToolBar* toolbar;
  Q3VBoxLayout* frameLayout;

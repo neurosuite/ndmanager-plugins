@@ -32,7 +32,7 @@
 #include <QFrame>
 
 // include files for KDE
-#include <kjanuswidget.h> 
+//#include <kjanuswidget.h> 
  
 
 //include files for the application
