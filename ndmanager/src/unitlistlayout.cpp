@@ -1,4 +1,3 @@
-#include <kdialog.h>
 /****************************************************************************
 ** Form implementation generated from reading ui file '/home/lynn/CMBN/NDManager/ndmanager/src/unitlistlayout.ui'
 **
@@ -67,19 +66,19 @@ UnitListLayout::UnitListLayout( QWidget* parent, const char* name, Qt::WFlags fl
 
     unitTable = new UnitTable( this, "unitTable" );
     unitTable->setNumCols( unitTable->numCols() + 1 );
-    unitTable->horizontalHeader()->setLabel( unitTable->numCols() - 1, tr2i18n( "Group" ) );
+    unitTable->horizontalHeader()->setLabel( unitTable->numCols() - 1, tr( "Group" ) );
     unitTable->setNumCols( unitTable->numCols() + 1 );
-    unitTable->horizontalHeader()->setLabel( unitTable->numCols() - 1, tr2i18n( "Cluster" ) );
+    unitTable->horizontalHeader()->setLabel( unitTable->numCols() - 1, tr( "Cluster" ) );
     unitTable->setNumCols( unitTable->numCols() + 1 );
-    unitTable->horizontalHeader()->setLabel( unitTable->numCols() - 1, tr2i18n( "Structure" ) );
+    unitTable->horizontalHeader()->setLabel( unitTable->numCols() - 1, tr( "Structure" ) );
     unitTable->setNumCols( unitTable->numCols() + 1 );
-    unitTable->horizontalHeader()->setLabel( unitTable->numCols() - 1, tr2i18n( "Type" ) );
+    unitTable->horizontalHeader()->setLabel( unitTable->numCols() - 1, tr( "Type" ) );
     unitTable->setNumCols( unitTable->numCols() + 1 );
-    unitTable->horizontalHeader()->setLabel( unitTable->numCols() - 1, tr2i18n( "I.D." ) );
+    unitTable->horizontalHeader()->setLabel( unitTable->numCols() - 1, tr( "I.D." ) );
     unitTable->setNumCols( unitTable->numCols() + 1 );
-    unitTable->horizontalHeader()->setLabel( unitTable->numCols() - 1, tr2i18n( "Quality" ) );
+    unitTable->horizontalHeader()->setLabel( unitTable->numCols() - 1, tr( "Quality" ) );
     unitTable->setNumCols( unitTable->numCols() + 1 );
-    unitTable->horizontalHeader()->setLabel( unitTable->numCols() - 1, tr2i18n( "Notes" ) );
+    unitTable->horizontalHeader()->setLabel( unitTable->numCols() - 1, tr( "Notes" ) );
     unitTable->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)7, (QSizePolicy::SizeType)7, 0, 0, unitTable->sizePolicy().hasHeightForWidth() ) );
     unitTable->setMinimumSize( QSize( 200, 100 ) );
     unitTable->setVScrollBarMode( Q3Table::Auto );
@@ -102,7 +101,7 @@ UnitListLayout::UnitListLayout( QWidget* parent, const char* name, Qt::WFlags fl
     UnitListLayoutLayout->addLayout( layout21, 0, 0 );
     languageChange();
     resize( QSize(678, 218).expandedTo(minimumSizeHint()) );
-    clearWState( WState_Polished );
+    //KDAB_PENDING clearWState( WState_Polished );
 
     // tab order
     setTabOrder( unitTable, addUnitButton );
@@ -123,17 +122,17 @@ UnitListLayout::~UnitListLayout()
  */
 void UnitListLayout::languageChange()
 {
-    setCaption( tr2i18n( "Unit List" ) );
-    addUnitButton->setText( tr2i18n( "&Add" ) );
-    removeUnitButton->setText( tr2i18n( "Rem&ove" ) );
-    unitTable->horizontalHeader()->setLabel( 0, tr2i18n( "Group" ) );
-    unitTable->horizontalHeader()->setLabel( 1, tr2i18n( "Cluster" ) );
-    unitTable->horizontalHeader()->setLabel( 2, tr2i18n( "Structure" ) );
-    unitTable->horizontalHeader()->setLabel( 3, tr2i18n( "Type" ) );
-    unitTable->horizontalHeader()->setLabel( 4, tr2i18n( "I.D." ) );
-    unitTable->horizontalHeader()->setLabel( 5, tr2i18n( "Quality" ) );
-    unitTable->horizontalHeader()->setLabel( 6, tr2i18n( "Notes" ) );
-    textLabel4_2_2_4_2_2_2->setText( tr2i18n( "Units" ) );
+    setCaption( tr( "Unit List" ) );
+    addUnitButton->setText( tr( "&Add" ) );
+    removeUnitButton->setText( tr( "Rem&ove" ) );
+    unitTable->horizontalHeader()->setLabel( 0, tr( "Group" ) );
+    unitTable->horizontalHeader()->setLabel( 1, tr( "Cluster" ) );
+    unitTable->horizontalHeader()->setLabel( 2, tr( "Structure" ) );
+    unitTable->horizontalHeader()->setLabel( 3, tr( "Type" ) );
+    unitTable->horizontalHeader()->setLabel( 4, tr( "I.D." ) );
+    unitTable->horizontalHeader()->setLabel( 5, tr( "Quality" ) );
+    unitTable->horizontalHeader()->setLabel( 6, tr( "Notes" ) );
+    textLabel4_2_2_4_2_2_2->setText( tr( "Units" ) );
 }
 
 #include "unitlistlayout.moc"

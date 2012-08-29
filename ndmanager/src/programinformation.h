@@ -24,7 +24,7 @@
 #include <qmap.h>
 //Added by qt3to4:
 #include <QList>
-
+#include <QString>
 /**
 * Class storing the information describing a program to be used to process the raw data.
 @author Lynn Hazan

@@ -33,7 +33,7 @@
 #include <QList>
 #include <QFrame>
 #include <QFileDialog>
-
+#include <QMessageBox>
 
 //General C++ include files
 #include <iostream>

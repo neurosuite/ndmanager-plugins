@@ -25,13 +25,13 @@ set(ndmanager_SRCS
         neuroscopevideoinfo.cpp 
 	neuroscopevideopage.cpp
         parameterpage.cpp 
-	parameterview.cpp 
-	pref.cpp 
+	#parameterview.cpp 
+	#pref.cpp 
 	programinformation.cpp 
-        programspage.cpp
-        programpage.cpp	
-	queryinputdialog.cpp 
-	queryoutputdialog.cpp 
+	programspage.cpp
+	#programpage.cpp	
+	#queryinputdialog.cpp 
+	 #queryoutputdialog.cpp 
 	spikepage.cpp
         tags.cpp 
 	unitlistlayout.cpp 
