@@ -48,7 +48,7 @@ set(ndmanager_SRCS
 	clusterslayout.cpp
 	filelayout.cpp
 	generalinfolayout.cpp
-	launcherlayout.cpp
+	#launcherlayout.cpp
 	lfplayout.cpp
 	neuroscopemisclayout.cpp
 	neuroscopevideolayout.cpp

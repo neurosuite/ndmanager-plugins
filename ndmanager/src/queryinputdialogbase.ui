@@ -40,7 +40,7 @@
       </widget>
      </item>
      <item>
-      <widget class="KURLRequester" name="path" native="true"/>
+      <widget class="QLineEdit" name="path" native="true"/>
      </item>
      <item>
       <spacer name="spacer2">
@@ -101,20 +101,10 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
- <customwidgets>
-  <customwidget>
-   <class>KURLRequester</class>
-   <extends>QWidget</extends>
-   <header>kurlrequester.h</header>
-  </customwidget>
- </customwidgets>
  <tabstops>
   <tabstop>path</tabstop>
   <tabstop>query</tabstop>
  </tabstops>
- <includes>
-  <include location="local">kurlrequester.h</include>
- </includes>
  <resources/>
  <connections/>
 </ui>
