@@ -58,7 +58,7 @@ set(ndmanager_SRCS
 	videolayout.cpp
 	)
 
-qt4_add_resources(ndmanager_SRCS ndmanager-icons.qrc)
+qt4_add_resources(ndmanager_SRCS ndmanager-icons.qrc ndmanager-html.qrc)
 
 set(ndmanager_UI 
 	acquisitionsystemlayout.ui 

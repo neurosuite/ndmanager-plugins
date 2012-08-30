@@ -28,9 +28,6 @@
 #include <QPixmap>
 #include <QFileDialog>
 #include <QMessageBox>
-// include files for KDE
-
-
 #include <QStatusBar>
 #include <QProcess>
 
@@ -761,8 +758,7 @@ void ndManager::slotQuery(){
         QApplication::restoreOverrideCursor();
 
         // Read HTML footer from file
-        KStandardDirs d;
-        QFile htmlFile(d.findResource("data","ndmanager/queryreport.html"));
+        QFile htmlFile(":/queryreport.html");
         if(htmlFile.open(QIODevice::ReadOnly))
         {
             QTextStream stream(&htmlFile);
