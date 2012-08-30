@@ -713,7 +713,7 @@ void ndManager::slotReload(){
     QFileInfo file(filePath);
 
     if(!file.exists()){
-        KMessageBox::sorry (this,tr("The selected parameter file could not be reloaded as it appears to have been removed from disk."), tr("Sorry!"));
+        QMessageBox::critical (this, tr("Sorry!"),tr("The selected parameter file could not be reloaded as it appears to have been removed from disk."));
         slotStatusMsg(tr("Ready."));
         return;
     }
