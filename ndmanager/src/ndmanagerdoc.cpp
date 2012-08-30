@@ -140,7 +140,7 @@ ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::newDocument(){
     //If the user has no local version of the file the system default is used
     QString path = locate("appdata","ndManagerDefault.xml");
 
-    QString url = QString();
+    QString url;
     url.setPath(path);
     return openDocument(url);
 }

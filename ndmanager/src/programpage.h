@@ -88,7 +88,6 @@ public:
 signals:
     void programToRemove(ProgramPage* programPage);
     void programNameChanged(ProgramPage* programPage,const QString& name,QString message,QString title);
-    void scriptShown(Kate::View* scriptView);
     void scriptHidden();
 
 

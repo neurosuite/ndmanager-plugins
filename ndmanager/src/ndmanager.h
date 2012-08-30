@@ -30,6 +30,7 @@
 #include <QDockWidget>
 
 #include <QProcess>
+#include <QMainWindow>
 
 // application specific includes
 #include "parameterview.h"
@@ -52,7 +53,7 @@ class QAction;
  * @author Lynn Hazan <lynn.hazan@myrealbox.com>
  * @version 0.1
  */
-class ndManager : public KDockMainWindow
+class ndManager : public QMainWindow
 {
     Q_OBJECT
 public:
@@ -122,8 +123,6 @@ public slots:
 
     void slotStateChanged(const QString& state);
 
-    /**Updates the menus and toolbars to take into account a Kate kPart.*/
-    void updateGUI(Kate::View* view);
 
     /**Updates the menus and toolbars to remove a Kate kPart.*/
     void updateGUI();
@@ -257,7 +256,7 @@ private:
     QString filePath;
 
     //Action and toolbar pointers
-    KRecentFilesAction* fileOpenRecent;
+    //KDAB_PENDING KRecentFilesAction* fileOpenRecent;
     QAction* viewMainToolBar;
     QAction* viewToolBar;
     QAction* viewStatusBar;

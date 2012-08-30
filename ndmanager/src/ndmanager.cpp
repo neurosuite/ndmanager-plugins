@@ -786,35 +786,6 @@ void ndManager::slotQueryResult(QString message){
     queryResult += message;
 }
 
-void ndManager::updateGUI(Kate::View* view){
-    Q3PtrList<KXMLGUIClient> clients = guiFactory()->clients();
-
-    //A part has already be added, remove it to add the current one
-    if(clients.count() > 1){
-        guiFactory()->removeClient(clients.at(1));
-        clients = guiFactory()->clients();
-    }
-
-    //Load the ui.rc file only once
-    if(kateXmlDocument.toString().isEmpty()){
-        QString path = locate("appdata","ndmanager_katepartui.rc");
-        QFile file(path);
-
-        if(!file.open(QIODevice::ReadOnly)) return;
-        //actually load the file in a tree in  memory
-        if(!kateXmlDocument.setContent(&file)){
-            file.close();
-            return;
-        }
-        file.close();
-    }
-
-    //set the ndmanger version of katepartui.rc as the XMLGUI for the current view.
-    view->setXMLGUIBuildDocument(kateXmlDocument);
-
-    if(clients.count() == 1) guiFactory()->addClient(view);
-}
-
 void ndManager::updateGUI(){
     Q3PtrList<KXMLGUIClient> clients = guiFactory()->clients();
 

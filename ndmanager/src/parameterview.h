@@ -200,9 +200,6 @@ signals:
     void resetModificationStatus();
 
     /**This signal is used to update the menus and toolbars.*/
-    void partShown(Kate::View* view);
-
-    /**This signal is used to update the menus and toolbars.*/
     void partHidden();
 
     /**This signal is used to update the dropdown list containing the spike groups in the managerView.*/
@@ -255,7 +252,6 @@ public slots:
 
 private slots:
 
-    void scriptShown(Kate::View* scriptView);
     void scriptHidden();
     void pageWillBeShown(QWidget * page);
 

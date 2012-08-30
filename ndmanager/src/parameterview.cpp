@@ -35,6 +35,7 @@
 #include <Q3PtrList>
 #include <QFrame>
 #include <Q3VBoxLayout>
+#include <QMessageBox>
 
 //include files for the application
 #include "parameterview.h"
@@ -230,7 +231,6 @@ ProgramPage* ParameterView::addProgram(QString programName,bool show){
     //set connections
     connect(program,SIGNAL(programNameChanged(ProgramPage*,const QString&,QString,QString)),this,SLOT(changeProgramName(ProgramPage*,const QString&,QString,QString)));
     connect(program,SIGNAL(programToRemove(ProgramPage*)),this,SLOT(removeProgram(ProgramPage*)));
-    connect(program,SIGNAL(scriptShown(Kate::View*)),this,SLOT(scriptShown(Kate::View*)));
     connect(program,SIGNAL(scriptHidden()),this,SLOT(scriptHidden()));
 
     //Show the new page
@@ -418,7 +418,7 @@ void ParameterView::initialize(QMap<int, QList<int> >& anatomicalGroups,QMap<QSt
         programPage->setHelp(programInformation.getHelp());
         QMap<int, QList<QString> > info = programInformation.getParameterInformation();
         parameterPage->setParameterInformation(info);
-
+#if KDAB_PENDING
         if(expertMode){
             //set the script if any
             KTextEditor::Document* scriptDoc = programPage->getScript();
@@ -449,6 +449,7 @@ void ParameterView::initialize(QMap<int, QList<int> >& anatomicalGroups,QMap<QSt
                 }
             }
         }
+#endif
     }
 }
 
@@ -734,9 +735,6 @@ void ParameterView::pageWillBeShown(QWidget *){
     if(activePageIndex() < 9) emit partHidden();
 }
 
-void ParameterView::scriptShown(Kate::View* scriptView){
-    emit partShown(scriptView);
-}
 
 void ParameterView::scriptHidden(){
     emit partHidden();
