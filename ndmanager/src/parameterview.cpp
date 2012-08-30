@@ -470,7 +470,7 @@ void ParameterView::loadProgram(QString programUrl){
 
     if(programNames.contains(name)){
         QString message =  tr("The selected script %1 is already loaded. Do you want to reload it?").arg(name);
-        int answer = KMessageBox::questionYesNo(this,message, tr("Script already loaded"));
+        int answer = QMessageBox::question(this,tr("Script already loaded"),message );
         if(answer == QMessageBox::No){
             counter--;
             return;
@@ -499,7 +499,7 @@ void ParameterView::loadProgram(QString programUrl){
         KTextEditor::Document* scriptDoc = program->getScript();
         Kate::View* scriptView = program->getScriptView();
         //find the file corresponding to the program name
-        QString path = NdManagerUtils::findExecutable(name,getenv("PATH"));
+        QString path = NdManagerUtils::findExecutable(name,QStringList()<<getenv("PATH"));
         if(!path.isNull()){
             QFileInfo fileInfo(path);
             QFile file(path);

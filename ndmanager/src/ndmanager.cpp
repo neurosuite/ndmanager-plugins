@@ -251,7 +251,7 @@ void ndManager::openDocumentFile(const QString& url)
         if((fileOpenRecent->items().contains(url.prettyURL())) && !file.exists()){
             QString title = "File not found: ";
             title.append(filePath);
-            int answer = KMessageBox::questionYesNo(this,tr("The selected file no longer exists. Do you want to remove it from the list of recent opened files ?"), tr(title));
+            int answer = QMessageBox::question(this,tr("The selected file no longer exists. Do you want to remove it from the list of recent opened files ?"), tr(title));
             if(answer == QMessageBox::Yes){
                 QString* urlB = new QString();
                 urlB->setPath(url.url());
@@ -267,7 +267,7 @@ void ndManager::openDocumentFile(const QString& url)
     }
     //Do not handle remote files
     else{
-        KMessageBox::sorry(this,tr("Sorry, NDManager does not handle remote files."),tr("Remote file handling"));
+        QMessageBox::critical(this,tr("Remote file handling"),tr("Sorry, NDManager does not handle remote files."));
         //KDAB_PENDING fileOpenRecent->addURL(url); //hack, unselect the item
         return;
     }

@@ -25,7 +25,7 @@ set(ndmanager_SRCS
         neuroscopevideoinfo.cpp 
 	neuroscopevideopage.cpp
         parameterpage.cpp 
-	parameterview.cpp 
+	#parameterview.cpp 
 	pref.cpp 
 	programinformation.cpp 
 	programspage.cpp
