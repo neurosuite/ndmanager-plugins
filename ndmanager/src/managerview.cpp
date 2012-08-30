@@ -36,6 +36,7 @@
 #include <QProcess>
 #include <QDebug>
 #include <QAction>
+#include <QMessageBox>
 
 //General C++ include files
 #include <iostream>
@@ -44,8 +45,7 @@
 using namespace std;
 
 ManagerView::ManagerView(QWidget *parent, const char *name)
-    : /*QSplitter(parent, name),*/QFrame(parent, name),konsole(0L),isUptoDate(true){
-    // setOrientation(Qt::Vertical);
+    : QFrame(parent, name),isUptoDate(true){
     frameLayout = new Q3VBoxLayout(this,0,0);
 }
 
@@ -93,8 +93,9 @@ void ManagerView::updateScriptList(const QList<QString>& scriptNames){
 
 void ManagerView::launchNeuroscope(){
     emit checkBeforeLaunchingPrograms();
+    QFileInfo parameterUrlFileInfo(parameterUrl);
     //The parameter file is new or has been imported from an existing file.
-    if(parameterUrl.fileName() == "Untitled"){
+    if(parameterUrlFileInfo.fileName() == "Untitled"){
         QMessageBox::critical (this,tr("Unsaved file!"),tr("In order to launch NeuroScope, the parameter file has to be saved first.") );
         return;
     }
@@ -105,10 +106,10 @@ void ManagerView::launchNeuroscope(){
         }
         //Launch NeuroScope.
         else{
-            QString fileName = parameterUrl.fileName();
+            QString fileName = parameterUrlFileInfo.fileName();
             QString baseName = fileName.left(fileName.length()-4);
             QString fileToUse = baseName.append(neuroscopeComboBox->currentText());
-            QProcess::startDetached("neuroscope", QStringList()<<QString(parameterUrl.directory(false) + fileToUse));
+            QProcess::startDetached("neuroscope", QStringList()<<QString(parameterUrlFileInfo.absolutePath()+ QDir::separator() + fileToUse));
         }
     }
 }
@@ -120,8 +121,9 @@ void ManagerView::launchKlusters(){
     }
 
     emit checkBeforeLaunchingPrograms();
+    QFileInfo parameterUrlFileInfo(parameterUrl);
     //The parameter file is new or has been imported from an existing file.
-    if(parameterUrl.fileName() == "Untitled"){
+    if(parameterUrlFileInfo.fileName() == "Untitled"){
         QMessageBox::critical (this, tr("Unsaved file!"),tr("In order to launch Klusters, the parameter file has to be saved first."));
         return;
     }
@@ -132,10 +134,10 @@ void ManagerView::launchKlusters(){
         }
         //Launch Klusters.
         else{
-            QString fileName = parameterUrl.fileName();
+            QString fileName = parameterUrlFileInfo.fileName();
             QString baseName = fileName.left(fileName.length()-4);
             QString fileToUse = baseName.append(".spk.").append(klustersComboBox->currentText());
-            QProcess::startDetached("klusters",QStringList()<<parameterUrl.directory(false) + fileToUse);
+            QProcess::startDetached("klusters",QStringList()<<QString(parameterUrlFileInfo.absolutePath()+QDir::separator() + fileToUse));
         }
     }
 }
@@ -144,7 +146,8 @@ void ManagerView::launchScript(){
     emit checkBeforeLaunchingScripts();
     QString script = scriptsComboBox->currentText();
     //The parameter file is new or has been imported from an existing file.
-    if(parameterUrl.fileName() == "Untitled"){
+    QFileInfo parameterUrlFileInfo(parameterUrl);
+    if(parameterUrlFileInfo.fileName() == "Untitled"){
         QString message = tr("In order to launch %1, the parameter file has to be saved first.").arg(script);
         QMessageBox::critical (this, tr("Unsaved file!"),message);
         return;
@@ -157,7 +160,7 @@ void ManagerView::launchScript(){
         }
         //Launch the script.
         else{
-            QString fileName = parameterUrl.fileName();
+            QString fileName = parameterUrlFileInfo.fileName();
             QString baseName = fileName.left(fileName.length()-4);
 
             //KDAB_PORTING konsole->runCommand(script+" "+baseName);
