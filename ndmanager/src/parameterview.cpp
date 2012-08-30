@@ -42,6 +42,7 @@
 #include "ndmanager.h"
 #include "tags.h"
 #include "xmlreader.h"
+#include "ndmanagerutils.h"
 
 //General C++ include files
 #include <iostream>
@@ -423,7 +424,7 @@ void ParameterView::initialize(QMap<int, QList<int> >& anatomicalGroups,QMap<QSt
             KTextEditor::Document* scriptDoc = programPage->getScript();
             Kate::View* scriptView = programPage->getScriptView();
             //find the file corresponding to the program name
-            QString path = KStandardDirs::findExe(name,getenv("PATH"),true);
+            QString path = NdManagerUtils::findExecutable(name,getenv("PATH"));
             if(!path.isNull()){
                 QFile file(path);
                 if(!file.open(QIODevice::ReadOnly)){
@@ -497,7 +498,7 @@ void ParameterView::loadProgram(QString programUrl){
         KTextEditor::Document* scriptDoc = program->getScript();
         Kate::View* scriptView = program->getScriptView();
         //find the file corresponding to the program name
-        QString path = KStandardDirs::findExe(name,getenv("PATH"),true);
+        QString path = NdManagerUtils::findExecutable(name,getenv("PATH"));
         if(!path.isNull()){
             QFileInfo fileInfo(path);
             QFile file(path);

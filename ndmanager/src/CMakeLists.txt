@@ -48,7 +48,7 @@ set(ndmanager_SRCS
 	clusterslayout.cpp
 	filelayout.cpp
 	generalinfolayout.cpp
-	launcherlayout.cpp
+	#launcherlayout.cpp
 	lfplayout.cpp
 	neuroscopemisclayout.cpp
 	neuroscopevideolayout.cpp
@@ -56,6 +56,7 @@ set(ndmanager_SRCS
 	queryinputdialogbase.cpp
 	spikelayout.cpp
 	videolayout.cpp
+	ndmanagerutils.cpp
 	)
 
 qt4_add_resources(ndmanager_SRCS ndmanager-icons.qrc ndmanager-html.qrc)

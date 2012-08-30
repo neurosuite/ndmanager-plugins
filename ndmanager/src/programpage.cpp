@@ -39,9 +39,7 @@
 #include <Q3VBoxLayout>
 #include <QFileDialog>
 #include <QMessageBox>
-// include files for KDE
-//#include <kstandarddirs.h>
-
+#include "ndmanagerutils.h"
 
 
 //General C++ include files
@@ -143,7 +141,7 @@ bool ProgramPage::saveProgramScript(){
     bool recall = false;
     //find the file corresponding to the program name
     QString name = parameters->getProgramName();
-    QString path = KStandardDirs::findExe(name,getenv("PATH"),true);
+    QString path = NdManagerUtils::findExecutable(name,getenv("PATH"));
     QString message = "";
     QString title = "";
     QString scriptUrl;
@@ -240,7 +238,7 @@ void ProgramPage::nameChanged(const QString& name){
         //in expert mode, update the script
         if(expertMode){
             //find the file corresponding to the program name
-            QString path = KStandardDirs::findExe(name,getenv("PATH"),true);
+            QString path = NdManagerUtils::findExecutable(name,getenv("PATH"));
 
             if(!path.isNull()){
                 QFile file(path);
