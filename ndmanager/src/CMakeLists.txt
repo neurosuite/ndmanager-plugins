@@ -15,7 +15,7 @@ set(ndmanager_SRCS
         generalinfopage.cpp 
 	generalinformation.cpp 
 	helper.cpp 
-	#launcherpage.cpp
+	launcherpage.cpp
         lfppage.cpp 
 	#main.cpp 
 	#managerview.cpp 
@@ -29,7 +29,7 @@ set(ndmanager_SRCS
 	#pref.cpp 
 	programinformation.cpp 
 	programspage.cpp
-	#programpage.cpp	
+	programpage.cpp	
 	#queryinputdialog.cpp 
 	 #queryoutputdialog.cpp 
 	spikepage.cpp
@@ -48,7 +48,7 @@ set(ndmanager_SRCS
 	clusterslayout.cpp
 	filelayout.cpp
 	generalinfolayout.cpp
-	#launcherlayout.cpp
+	launcherlayout.cpp
 	lfplayout.cpp
 	neuroscopemisclayout.cpp
 	neuroscopevideolayout.cpp
