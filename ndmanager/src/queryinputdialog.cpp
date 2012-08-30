@@ -35,33 +35,33 @@ QueryInputDialog::QueryInputDialog(QWidget *parent,const QString& caption,const 
 {
     setWindowTitle(caption);
     setModal(true);
-	
-	page = new QWidget(this);
-	setMainWidget(page);
-	layout = new Q3VBoxLayout(page,0,spacingHint());
+
+    page = new QWidget(this);
+    setMainWidget(page);
+    layout = new Q3VBoxLayout(page,0,spacingHint());
 
     QLabel *label1 = new QLabel(tr("Query"),page,"query_label");
-	layout->addWidget(label1);
+    layout->addWidget(label1);
 
-	query = new QLineEdit(page,"query");
-	query->setMinimumWidth(fontMetrics().maxWidth()*20);
-	query->setFocus();
-	layout->addWidget(query);
+    query = new QLineEdit(page,"query");
+    query->setMinimumWidth(fontMetrics().maxWidth()*20);
+    query->setFocus();
+    layout->addWidget(query);
 
     QLabel *label2 = new QLabel(tr("Path"),page,"path_label");
-	layout->addWidget(label2);
+    layout->addWidget(label2);
 
     path = new QLineEdit(page,"path");
-	path->setMinimumWidth(fontMetrics().maxWidth()*20);
+    path->setMinimumWidth(fontMetrics().maxWidth()*20);
     path->setText(urltext);
-	layout->addWidget(path);
+    layout->addWidget(path);
 
-	layout->addStretch(10);
+    layout->addStretch(10);
 
-	//connections
-	connect(path,SIGNAL(textChanged (const QString &)),this,SLOT(pathChanged(const QString &)));
+    //connections
+    connect(path,SIGNAL(textChanged (const QString &)),this,SLOT(pathChanged(const QString &)));
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok
-                                                       | QDialogButtonBox::Cancel);
+                                     | QDialogButtonBox::Cancel);
     layout->addWidget(buttonBox);
     connect(buttonBox, SIGNAL(accepted()), this, SLOT(accept()));
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(reject()));
@@ -73,15 +73,15 @@ QueryInputDialog::~QueryInputDialog()
 }
 
 void QueryInputDialog::pathChanged(const QString & newPath){
-	
-	if(newPath != QString("")){
-		//Enable the OK button
+
+    if(newPath != QString("")){
+        //Enable the OK button
         buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
-	}
-	else if(newPath == QString("")){
-		//Disable the OK button
+    }
+    else if(newPath == QString("")){
+        //Disable the OK button
         buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
-	}
+    }
 }
 
 #include "queryinputdialog.moc"

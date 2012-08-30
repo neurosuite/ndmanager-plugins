@@ -31,16 +31,16 @@
 using namespace std;
 
 LauncherPage::LauncherPage(const QString url,QWidget* parent,const char* name)
- : LauncherLayout(parent){
-  QDir dir(url);
-  qDebug()<<"currentPath "<<url;
- QStringList neuroscopeFiles = dir.entryList("*.dat;*.eeg;*.fil");
-  qDebug()<<"neuroscopeFiles.size() "<<neuroscopeFiles.size();
- neuroscopeFiles.append("");
- neuroscopeComboBox->insertStringList(neuroscopeFiles);
- QStringList klustersFiles = dir.entryList("*.fet;*.spk;*.clu");
- klustersFiles.append("");
- klustersComboBox->insertStringList(klustersFiles);
+    : LauncherLayout(parent){
+    QDir dir(url);
+    qDebug()<<"currentPath "<<url;
+    QStringList neuroscopeFiles = dir.entryList("*.dat;*.eeg;*.fil");
+    qDebug()<<"neuroscopeFiles.size() "<<neuroscopeFiles.size();
+    neuroscopeFiles.append("");
+    neuroscopeComboBox->insertStringList(neuroscopeFiles);
+    QStringList klustersFiles = dir.entryList("*.fet;*.spk;*.clu");
+    klustersFiles.append("");
+    klustersComboBox->insertStringList(klustersFiles);
 
 }
 

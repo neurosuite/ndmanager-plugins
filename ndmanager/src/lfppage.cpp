@@ -21,12 +21,12 @@
 #include "lfppage.h"
 
 LfpPage::LfpPage(QWidget* parent, const char *name)
- : LfpLayout(parent),doubleValidator(this),modified(false),isInit(true){
- 
- //Set a validator on the line edits, the values have to be integers.
- samplingRateLineEdit->setValidator(&doubleValidator);
- 
- connect(samplingRateLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
+    : LfpLayout(parent),doubleValidator(this),modified(false),isInit(true){
+
+    //Set a validator on the line edits, the values have to be integers.
+    samplingRateLineEdit->setValidator(&doubleValidator);
+
+    connect(samplingRateLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
 }
 
 LfpPage::~LfpPage(){}

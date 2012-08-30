@@ -37,48 +37,48 @@
 */
 class VideoPage : public VideoLayout
 {
-Q_OBJECT
+    Q_OBJECT
 public:
-  VideoPage(QWidget* parent = 0, const char *name = 0);
-  ~VideoPage();
+    VideoPage(QWidget* parent = 0, const char *name = 0);
+    ~VideoPage();
     
-  /**Sets the sampling rate.*/
-  inline void setSamplingRate(double rate){samplingRateLineEdit->setText(Helper::doubleToString(rate));};
+    /**Sets the sampling rate.*/
+    inline void setSamplingRate(double rate){samplingRateLineEdit->setText(Helper::doubleToString(rate));}
 
-  /**Sets the video image width.*/
-  inline void setWidth(int width){widthLineEdit->setText(QString("%1").arg(width));};
+    /**Sets the video image width.*/
+    inline void setWidth(int width){widthLineEdit->setText(QString("%1").arg(width));}
 
-  /**Sets the video image height.*/
-  inline void setHeight(int height){heightLineEdit->setText(QString("%1").arg(height));};
+    /**Sets the video image height.*/
+    inline void setHeight(int height){heightLineEdit->setText(QString("%1").arg(height));}
 
-  /**Returns the sampling rate.*/
-  inline double getSamplingRate() const{return samplingRateLineEdit->text().toDouble();};
+    /**Returns the sampling rate.*/
+    inline double getSamplingRate() const{return samplingRateLineEdit->text().toDouble();}
 
-  /**Returns the video image width.*/
-  inline int getWidth()const{return widthLineEdit->text().toInt();};
+    /**Returns the video image width.*/
+    inline int getWidth()const{return widthLineEdit->text().toInt();}
 
-  /**Returns the video image height.*/
-  inline int getHeight()const{return heightLineEdit->text().toInt();};
+    /**Returns the video image height.*/
+    inline int getHeight()const{return heightLineEdit->text().toInt();}
 
-  /**True if at least one property has been modified, false otherwise.*/
-  inline bool isModified()const{return modified;};
+    /**True if at least one property has been modified, false otherwise.*/
+    inline bool isModified()const{return modified;}
 
-  /**Indicates that the initialisation is finished.*/
-  inline void initialisationOver(){isInit = false;}
-  
+    /**Indicates that the initialisation is finished.*/
+    inline void initialisationOver(){isInit = false;}
+
 public slots:
- 
- /** Will be called when any properties is modified.*/
- inline void propertyModified(){if(!isInit) modified = true;};
+
+    /** Will be called when any properties is modified.*/
+    inline void propertyModified(){if(!isInit) modified = true;}
     
- /**Resets the internal modification status to false.*/
-inline void resetModificationStatus(){modified = false;};
- 
-  private:
-  QIntValidator intValidator;  
-  QDoubleValidator doubleValidator;          
-  bool modified;
-  bool isInit;
+    /**Resets the internal modification status to false.*/
+    inline void resetModificationStatus(){modified = false;}
+
+private:
+    QIntValidator intValidator;
+    QDoubleValidator doubleValidator;
+    bool modified;
+    bool isInit;
 };
 
 #endif

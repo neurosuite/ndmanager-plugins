@@ -26,8 +26,8 @@
 #include <qwidget.h>
 #include <qstring.h>
 #include <qcolor.h>
- 
-   /**
+
+/**
   *Class storing the channel color information.
   *@author Lynn Hazan
   */
@@ -35,74 +35,74 @@
 class ChannelColors {
 public:
 
-  /*Constructor*/
-  inline ChannelColors(){
-   id = 0;
-   color = QColor(Qt::black); 
-  };
+    /*Constructor*/
+    inline ChannelColors(){
+        id = 0;
+        color = QColor(Qt::black);
+    }
 
-  /**Constructor
+    /**Constructor
   * @param id chanel id.
   * @param color channel color.
   */
-  inline ChannelColors(int id,QString color):id(id){
-   setColor(color); 
-  };
+    inline ChannelColors(int id,QString color):id(id){
+        setColor(color);
+    }
 
-  inline ~ChannelColors(){};
+    inline ~ChannelColors(){}
 
-  /**Sets the channel id.
+    /**Sets the channel id.
   * @param channelId channel id.
   */
-  inline void setId(int channelId){id = channelId;};
+    inline void setId(int channelId){id = channelId;}
 
-  /**Sets the color used to display the channel.
+    /**Sets the color used to display the channel.
   * @param colorName name of the color in the format "#RRGGBB".
   */
-  inline void setColor(QString colorName){color = QColor(colorName);};
+    inline void setColor(QString colorName){color = QColor(colorName);}
 
-  /**Sets the group color (anatomical group) for the channel.
+    /**Sets the group color (anatomical group) for the channel.
   * @param colorName name of the color in the format "#RRGGBB".
   */
-  inline void setGroupColor(QString colorName){groupColor = QColor(colorName);};
+    inline void setGroupColor(QString colorName){groupColor = QColor(colorName);}
 
-  /**Sets the spike group color for the channel.
+    /**Sets the spike group color for the channel.
   * @param colorName name of the color in the format "#RRGGBB".
   */
-  inline void setSpikeGroupColor(QString colorName){spikeGroupColor = QColor(colorName);};
-  
-  /**Gets the channel id.
+    inline void setSpikeGroupColor(QString colorName){spikeGroupColor = QColor(colorName);}
+
+    /**Gets the channel id.
   * @return channel id.
   */
-  inline int getId() const{return id;};
+    inline int getId() const{return id;}
 
-  /**Gets the color used to display the channel.
+    /**Gets the color used to display the channel.
   * @return name of the color in the format "#RRGGBB".
   */
-  inline QColor getColor() const{return color;};
+    inline QColor getColor() const{return color;}
 
-  /**Gets the group color (anatomical group) for the channel.
+    /**Gets the group color (anatomical group) for the channel.
   * @return name of the color in the format "#RRGGBB".
   */
-  inline QColor getGroupColor() const{return groupColor;};
+    inline QColor getGroupColor() const{return groupColor;}
 
-  /**Gets the spike group color for the channel.
+    /**Gets the spike group color for the channel.
   * @return name of the color in the format "#RRGGBB".
   */
-  inline QColor getSpikeGroupColor() const{return spikeGroupColor;};
+    inline QColor getSpikeGroupColor() const{return spikeGroupColor;}
     
 private:
-  /**Channel id*/
-  int id;
+    /**Channel id*/
+    int id;
 
-  /**Color used to display the channel.*/
-  QColor color;
+    /**Color used to display the channel.*/
+    QColor color;
 
-  /**Group color (anatomical group) for the channel.*/
-  QColor groupColor;
+    /**Group color (anatomical group) for the channel.*/
+    QColor groupColor;
 
-  /**Spike group color for the channel.*/
-  QColor spikeGroupColor;
+    /**Spike group color for the channel.*/
+    QColor spikeGroupColor;
 };
 
 #endif

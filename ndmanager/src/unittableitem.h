@@ -25,17 +25,17 @@
 #include <QPixmap>
 
 /**
-	@author Lynn Hazan <lynn.hazan@myrealbox.com>
+    @author Lynn Hazan <lynn.hazan@myrealbox.com>
 */
 class UnitTableItem : public Q3TableItem
 {
 public:
-	UnitTableItem ( Q3Table * table, EditType et );
-	UnitTableItem ( Q3Table * table, EditType et, const QString & text );
-	UnitTableItem ( Q3Table * table, EditType et, const QString & text, const QPixmap & p );
+    UnitTableItem ( Q3Table * table, EditType et );
+    UnitTableItem ( Q3Table * table, EditType et, const QString & text );
+    UnitTableItem ( Q3Table * table, EditType et, const QString & text, const QPixmap & p );
 
-	QString key () const;
-			
+    QString key () const;
+
     ~UnitTableItem();
 
 };

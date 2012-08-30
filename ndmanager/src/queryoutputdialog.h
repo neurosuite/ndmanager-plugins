@@ -25,32 +25,28 @@
 #include <qlineedit.h>
 #include <QDialog>
 #include <q3vbox.h>
-#if KDAB_REENABLE_QT4
 #include <QWebView>
-#endif
 
 /**
 Dialog used to display result from query.
 
-	@author Michaël Zugaro <michael.zugaro@college-de-france.fr>
+    @author Michaël Zugaro <michael.zugaro@college-de-france.fr>
 */
 class QueryOutputDialog : public QDialog
 {
-	Q_OBJECT
-	public:
-		QueryOutputDialog(QString htmlText,QString queryResult,QWidget *parent = 0,const QString& caption = "Query",const QString& urltext = "");
-		virtual ~QueryOutputDialog();
-	public slots:
-		virtual void slotUser1();
-		virtual void slotUser2();
-			
-	private:
-		Q3VBox			*vbox;
-#if KDAB_REENABLE_QT4		
-		QWebView        *html;
-#endif
-		QString		htmlText;
-		QString		queryResult;
+    Q_OBJECT
+public:
+    QueryOutputDialog(QString htmlText,QString queryResult,QWidget *parent = 0,const QString& caption = "Query",const QString& urltext = "");
+    virtual ~QueryOutputDialog();
+public slots:
+    virtual void slotUser1();
+    virtual void slotUser2();
+
+private:
+    Q3VBox			*vbox;
+    QWebView        *html;
+    QString		htmlText;
+    QString		queryResult;
 };
 
 #endif

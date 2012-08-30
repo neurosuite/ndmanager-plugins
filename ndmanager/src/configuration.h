@@ -28,18 +28,18 @@
 class Configuration{
 public:
     
- /** Reads the configuration data from the application config file.
+    /** Reads the configuration data from the application config file.
  * If a property does not already exist in the config file it will be
  * set to a default value.*/
- void read();
- /** Writes the configuration data to the application config file.*/
- void write() const;
+    void read();
+    /** Writes the configuration data to the application config file.*/
+    void write() const;
 
- Configuration();
- inline ~Configuration(){};
- Configuration(const Configuration&);
+    Configuration();
+    inline ~Configuration(){}
+    Configuration(const Configuration&);
 
- friend Configuration& configuration();
+    friend Configuration& configuration();
 
 };
 

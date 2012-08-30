@@ -35,69 +35,69 @@
 */
 class GeneralInfoPage : public GeneralInfoLayout
 {
-Q_OBJECT
+    Q_OBJECT
 public:
     GeneralInfoPage(QWidget *parent = 0, const char *name = 0);
     ~GeneralInfoPage();
     
     /**Sets the date.*/
     inline void setDate(QDate date){
-     kDatePicker->setSelectedDate(date);
+        kDatePicker->setSelectedDate(date);
     }
     
     /**Sets the experimenters.*/
     inline void setExperimenters(QString experimenters){
-     experimentersLineEdit->setText(experimenters);
+        experimentersLineEdit->setText(experimenters);
     }
     
-   /**SSets the description.*/
+    /**SSets the description.*/
     inline void setDescription(QString description){
-     descriptionTextEdit->setText(description);
+        descriptionTextEdit->setText(description);
     }
     
-   /**Sets the notes.*/
+    /**Sets the notes.*/
     inline void setNotes(QString notes){
-     notesTextEdit->setText(notes);
+        notesTextEdit->setText(notes);
     }
     
     
     /**Gets the date.*/
     inline QDate getDate(){
-     return kDatePicker->selectedDate();
+        return kDatePicker->selectedDate();
     }
     
     /**Gets the experimenters.*/
     inline QString getExperimenters(){
-     return experimentersLineEdit->text();
+        return experimentersLineEdit->text();
     }
     
-   /**Gets the description.*/
+    /**Gets the description.*/
     inline QString getDescription(){
-     return descriptionTextEdit->text();
+        return descriptionTextEdit->text();
     }
     
-   /**Gets the notes.*/
+    /**Gets the notes.*/
     inline QString getNotes(){
-     return notesTextEdit->text();
+        return notesTextEdit->text();
     }
     
-   /**True if at least one property has been modified, false otherwise.*/
-   inline bool isModified()const{return modified;}
+    /**True if at least one property has been modified, false otherwise.*/
+    inline bool isModified()const{return modified;}
     
-  /**Indicates that the initialisation is finished.*/
-  inline void initialisationOver(){isInit = false;}
-   
-public slots:
- 
- /** Will be called when any properties is modified.*/
- inline void propertyModified(){if(!isInit) modified = true;}
+    /**Indicates that the initialisation is finished.*/
+    inline void initialisationOver(){isInit = false;}
 
- /**Resets the internal modification status to false.*/
- inline void resetModificationStatus(){modified = false;}
- 
+public slots:
+
+    /** Will be called when any properties is modified.*/
+    inline void propertyModified(){if(!isInit) modified = true;}
+
+    /**Resets the internal modification status to false.*/
+    inline void resetModificationStatus(){modified = false;}
+
 private:
-  bool modified;
-  bool isInit;
+    bool modified;
+    bool isInit;
 };
 
 #endif

@@ -42,75 +42,75 @@
 */
 class ManagerView : public QFrame/*QSplitter*/
 {
-Q_OBJECT
+    Q_OBJECT
 public:
     ManagerView(QWidget *parent = 0, const char *name = 0);
     ~ManagerView();
 
- /**Information retun after a call to addKonsole*/
-  enum returnMessage {OK=0,NO_KPART=1,PART_LOADING_ERROR=2};
+    /**Information retun after a call to addKonsole*/
+    enum returnMessage {OK=0,NO_KPART=1,PART_LOADING_ERROR=2};
     
-  /** Updates the dropdown list containing the spike groups used to launch Klusters.
+    /** Updates the dropdown list containing the spike groups used to launch Klusters.
   * @param nbGroups the new number of spike groups.
   */
-  void updateSpikeGroupList(int nbGroups);
-  
-  /**Triggers the update of the dropdown list containing the file extensions.
+    void updateSpikeGroupList(int nbGroups);
+
+    /**Triggers the update of the dropdown list containing the file extensions.
   * @param extensions list containing the extensions of all the specific files.
   */
-  void updateFileList(QList<QString> extensions);
+    void updateFileList(QList<QString> extensions);
 
-  /**Triggers the update of the dropdown list containing the script names.
+    /**Triggers the update of the dropdown list containing the script names.
   * @param scriptNames list containing the script names.
   */
-  void updateScriptList(const QList<QString>& scriptNames);
+    void updateScriptList(const QList<QString>& scriptNames);
 
-  /** Updates the parameter file url.
+    /** Updates the parameter file url.
   * @param url url of the currently open parameter file.
-  */  
-  void updateDocUrl(const QString url);
+  */
+    void updateDocUrl(const QString url);
 
-  /** Updates the parameter file information.
+    /** Updates the parameter file information.
   * @param url url of the currently open parameter file.
   * @param isUptoDate true if the parameter file is up to date, false if there are unsaved changes.
   */
-  void updateDocumentInformation(const QString url,bool isUptoDate);
+    void updateDocumentInformation(const QString url,bool isUptoDate);
 
 signals:
-  void beingDestroyed();
-  void checkBeforeLaunchingPrograms();
-  void checkBeforeLaunchingScripts();
-   
+    void beingDestroyed();
+    void checkBeforeLaunchingPrograms();
+    void checkBeforeLaunchingScripts();
+
 public slots:  
- inline void konsoleBeingDestroyed(){emit beingDestroyed();};
- void neuroscopeFileChange(int index);
+    inline void konsoleBeingDestroyed(){emit beingDestroyed();}
+    void neuroscopeFileChange(int index);
 
 private slots: 
- /**Launches NeuroScope using, as a parameter, the file selected in the dropdown list containing the file extensions 
+    /**Launches NeuroScope using, as a parameter, the file selected in the dropdown list containing the file extensions
  */
- void launchNeuroscope();
- 
- /**Launches Klusters using, as a parameter, the electrode group selected in the dropdown list containing the electrode ids 
- */
- void launchKlusters();
+    void launchNeuroscope();
 
- /**Launches the script selected in the dropdown list containing the existing scripts. 
+    /**Launches Klusters using, as a parameter, the electrode group selected in the dropdown list containing the electrode ids
  */
- void launchScript();
+    void launchKlusters();
 
- /**Stops the currently running script. 
+    /**Launches the script selected in the dropdown list containing the existing scripts.
  */
- void stopScript();
+    void launchScript();
+
+    /**Stops the currently running script.
+ */
+    void stopScript();
 
 private:
- LauncherPage* launcherpage;
- QToolBar* toolbar;
- Q3VBoxLayout* frameLayout;
- QComboBox* neuroscopeComboBox;
- QComboBox* klustersComboBox;
- QComboBox* scriptsComboBox;
- QString parameterUrl;
- bool isUptoDate;
+    LauncherPage* launcherpage;
+    QToolBar* toolbar;
+    Q3VBoxLayout* frameLayout;
+    QComboBox* neuroscopeComboBox;
+    QComboBox* klustersComboBox;
+    QComboBox* scriptsComboBox;
+    QString parameterUrl;
+    bool isUptoDate;
 };
 
 #endif

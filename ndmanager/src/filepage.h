@@ -46,117 +46,117 @@ using namespace std;
 */
 class FilePage : public FileLayout
 {
-Q_OBJECT
+    Q_OBJECT
 public:
- /**Constructor.*/
- FilePage(QWidget *parent = 0, const char *name = 0);
- 
- /**Destructor.*/
- ~FilePage();
+    /**Constructor.*/
+    FilePage(QWidget *parent = 0, const char *name = 0);
 
- /**Sets the sampling rate.*/
-inline void setSamplingRate(double rate){
-samplingRateLineEdit->setText(Helper::doubleToString(rate));};
+    /**Destructor.*/
+    ~FilePage();
 
- /**Sets the file extension.*/
-inline void setExtension(QString extension){
- this->extension = extension;
- extensionLineEdit->setText(extension);
-};
+    /**Sets the sampling rate.*/
+    inline void setSamplingRate(double rate){
+        samplingRateLineEdit->setText(Helper::doubleToString(rate));}
 
-/** Initializes the channel mapping table.
+    /**Sets the file extension.*/
+    inline void setExtension(QString extension){
+        this->extension = extension;
+        extensionLineEdit->setText(extension);
+    }
+
+    /** Initializes the channel mapping table.
 * @param channels map containing the list of original channels for each new channel.
 */
-void setChannelMapping(const QMap<int, QList<int> >& channels);
+    void setChannelMapping(const QMap<int, QList<int> >& channels);
 
-/**Returns the channel mapping.
+    /**Returns the channel mapping.
 * @return map containing the list of original channels for each new channel.
 */ 
-QMap<int, QList<int> > getChannelMapping()const;
+    QMap<int, QList<int> > getChannelMapping()const;
 
-/**Returns the sampling rate.*/
-inline double getSamplingRate() const{return samplingRateLineEdit->text().toDouble();};
+    /**Returns the sampling rate.*/
+    inline double getSamplingRate() const{return samplingRateLineEdit->text().toDouble();}
 
-/**Returns the sampling rate.*/
-inline QString getExtension() const{return extensionLineEdit->text();};
+    /**Returns the sampling rate.*/
+    inline QString getExtension() const{return extensionLineEdit->text();}
 
-/**True if at least one property has been modified, false otherwise.*/
-inline bool isModified()const{return modified;};
+    /**True if at least one property has been modified, false otherwise.*/
+    inline bool isModified()const{return modified;}
 
 signals:
- /** Siganls a change in a file extension.
+    /** Siganls a change in a file extension.
  * @param extension the new extension for the current file.
- * @param filePage a pointer on the FilePage which has its extension changed. 
+ * @param filePage a pointer on the FilePage which has its extension changed.
  */
- void extensionChanged(const QString& extension,FilePage* filePage);
+    void extensionChanged(const QString& extension,FilePage* filePage);
 
 protected:
- /** Event filter to validate the entries in the mapping table.
+    /** Event filter to validate the entries in the mapping table.
  * @param object target object for the event.
  * @param event event sent.
  */
- bool eventFilter(QObject* object,QEvent* event);
- 
+    bool eventFilter(QObject* object,QEvent* event);
+
 public slots:
- 
- /**Notifies that the file extension has changed.*/
- inline void changeCaption(){
-  if(extensionLineEdit->text() != extension){
-   extension = extensionLineEdit->text();
-   emit extensionChanged(extension,this);
-  }
- };
 
- /**Adds a new line to the mapping table.*/
- void addChannel();
- 
- /**Removes the selected lines from the mapping table.*/
- void removeChannel();
- 
- /**Validates the current entry in the mapping table.*/
- inline void slotValidate(){
-  modified = true;
-  if(isIncorrectRow){
-   mappingTable->selectRow(incorrectRow);
-   mappingTable->editCell(incorrectRow,0);
-  }
- };
- 
-  /**Validates the current entry in the mapping table.*/
- inline void mappingChanged(int row,int column){
-  modified = true;
-  QString channel = mappingTable->text(row,column);
-  //the group entry should only contain digits and whitespaces
-  if(channel.contains(QRegExp("[^\\d\\s]")) != 0){
-   isIncorrectRow = true;
-   incorrectRow = row;
-   mappingTable->selectRow(row);
-  }
-  else{
-   if(isIncorrectRow){
-    QString incorrectMapping = mappingTable->text(incorrectRow,0);
-    if(incorrectMapping.contains(QRegExp("[^\\d\\s]")) != 0) return;
-   }
-   isIncorrectRow = false;
-   mappingTable->adjustColumn(column);
-  } 
- };
- 
- /** Will be called when any properties is modified.*/
- inline void propertyModified(){if(!isInit) modified = true;};
+    /**Notifies that the file extension has changed.*/
+    inline void changeCaption(){
+        if(extensionLineEdit->text() != extension){
+            extension = extensionLineEdit->text();
+            emit extensionChanged(extension,this);
+        }
+    }
 
- /**Indicates that the initialisation is finished.*/
- inline void initialisationOver(){isInit = false;}
- 
- /**Resets the internal modification status to false.*/
- inline void resetModificationStatus(){modified = false;};
- 
+    /**Adds a new line to the mapping table.*/
+    void addChannel();
+
+    /**Removes the selected lines from the mapping table.*/
+    void removeChannel();
+
+    /**Validates the current entry in the mapping table.*/
+    inline void slotValidate(){
+        modified = true;
+        if(isIncorrectRow){
+            mappingTable->selectRow(incorrectRow);
+            mappingTable->editCell(incorrectRow,0);
+        }
+    }
+
+    /**Validates the current entry in the mapping table.*/
+    inline void mappingChanged(int row,int column){
+        modified = true;
+        QString channel = mappingTable->text(row,column);
+        //the group entry should only contain digits and whitespaces
+        if(channel.contains(QRegExp("[^\\d\\s]")) != 0){
+            isIncorrectRow = true;
+            incorrectRow = row;
+            mappingTable->selectRow(row);
+        }
+        else{
+            if(isIncorrectRow){
+                QString incorrectMapping = mappingTable->text(incorrectRow,0);
+                if(incorrectMapping.contains(QRegExp("[^\\d\\s]")) != 0) return;
+            }
+            isIncorrectRow = false;
+            mappingTable->adjustColumn(column);
+        }
+    }
+
+    /** Will be called when any properties is modified.*/
+    inline void propertyModified(){if(!isInit) modified = true;}
+
+    /**Indicates that the initialisation is finished.*/
+    inline void initialisationOver(){isInit = false;}
+
+    /**Resets the internal modification status to false.*/
+    inline void resetModificationStatus(){modified = false;}
+
 private:
- bool isIncorrectRow;
- int incorrectRow;
- bool modified;
- bool isInit;
- QString extension; 
+    bool isIncorrectRow;
+    int incorrectRow;
+    bool modified;
+    bool isInit;
+    QString extension;
 };
 
 #endif

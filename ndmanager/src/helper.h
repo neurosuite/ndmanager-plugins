@@ -26,7 +26,7 @@
 
 
 /**
-	@author Lynn Hazan <lynn.hazan@myrealbox.com>
+    @author Lynn Hazan <lynn.hazan@myrealbox.com>
 */
 class  Helper{
 public:
@@ -34,13 +34,13 @@ public:
 
     virtual ~Helper();
 
-	inline static QString doubleToString(double value){
+    inline static QString doubleToString(double value){
 
-	 QString stringValue = QString("%1").arg(value,0,'g',14);
-  	/* QRegExp regexp("(?:([0-9]*[.][0-9]*[1-9])0*$)|(?:([0-9]*)[.]0*$)");
+        QString stringValue = QString("%1").arg(value,0,'g',14);
+        /* QRegExp regexp("(?:([0-9]*[.][0-9]*[1-9])0*$)|(?:([0-9]*)[.]0*$)");
     return stringValue.replace(regexp,"\\1\\2");*/
-return stringValue;
-   };
+        return stringValue;
+    }
 };
 
 #endif

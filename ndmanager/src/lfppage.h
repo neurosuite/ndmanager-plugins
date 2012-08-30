@@ -36,35 +36,35 @@
 */
 class LfpPage : public LfpLayout
 {
-Q_OBJECT
+    Q_OBJECT
 public:
     LfpPage(QWidget* parent = 0, const char *name = 0);
     ~LfpPage();
 
-  /**Sets the sampling rate.*/
-  inline void setSamplingRate(double rate){samplingRateLineEdit->setText(Helper::doubleToString(rate));};
+    /**Sets the sampling rate.*/
+    inline void setSamplingRate(double rate){samplingRateLineEdit->setText(Helper::doubleToString(rate));}
 
-  /**Returns the sampling rate.*/
-  inline double getSamplingRate() const{return samplingRateLineEdit->text().toDouble();};
- 
-  /**True if at least one property has been modified, false otherwise.*/
-  inline bool isModified()const{return modified;};
-  
-  /**Indicates that the initialisation is finished.*/
-  inline void initialisationOver(){isInit = false;}
+    /**Returns the sampling rate.*/
+    inline double getSamplingRate() const{return samplingRateLineEdit->text().toDouble();}
+
+    /**True if at least one property has been modified, false otherwise.*/
+    inline bool isModified()const{return modified;}
+
+    /**Indicates that the initialisation is finished.*/
+    inline void initialisationOver(){isInit = false;}
     
 public slots:
- 
- /** Will be called when any properties is modified.*/
- inline void propertyModified(){if(!isInit) modified = true;};
-  
- /**Resets the internal modification status to false.*/
- inline void resetModificationStatus(){modified = false;};
- 
- private:
-  QDoubleValidator doubleValidator;     
-  bool modified;
-  bool isInit;
+
+    /** Will be called when any properties is modified.*/
+    inline void propertyModified(){if(!isInit) modified = true;}
+
+    /**Resets the internal modification status to false.*/
+    inline void resetModificationStatus(){modified = false;}
+
+private:
+    QDoubleValidator doubleValidator;
+    bool modified;
+    bool isInit;
 };
 
 #endif

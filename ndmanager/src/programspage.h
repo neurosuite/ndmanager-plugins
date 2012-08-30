@@ -28,7 +28,7 @@
 
 
 // include files for KDE
- 
+
 
 //forward declaration
 class QPushButton;
@@ -38,31 +38,31 @@ class QPushButton;
 */
 class ProgramsPage : public QFrame
 {
-Q_OBJECT
+    Q_OBJECT
 public:
- /** Constructor
- * @param expertMode true if the file is opened in expert mode, false otherwise.  
- * @param parent the parent QWidget. 
- * @param name name of the widget (can be used for introspection).   
+    /** Constructor
+ * @param expertMode true if the file is opened in expert mode, false otherwise.
+ * @param parent the parent QWidget.
+ * @param name name of the widget (can be used for introspection).
  */
-  ProgramsPage(bool expertMode,QWidget *parent = 0, const char *name = 0);
-  ~ProgramsPage();
+    ProgramsPage(bool expertMode,QWidget *parent = 0, const char *name = 0);
+    ~ProgramsPage();
 
 signals:
- void addNewProgram();
- void programToLoad(QString programUrl);
-  
+    void addNewProgram();
+    void programToLoad(QString programUrl);
+
 public slots:
- inline void addProgram(){emit addNewProgram();};
- void loadProgram();
+    inline void addProgram(){emit addNewProgram();}
+    void loadProgram();
     
 private:
- QPushButton* addButton;
- QPushButton* loadButton;
- QFrame* descriptionFrame;
- 
- /**True if the file is opened in expert mode, false otherwise*/
- bool expertMode; 
+    QPushButton* addButton;
+    QPushButton* loadButton;
+    QFrame* descriptionFrame;
+
+    /**True if the file is opened in expert mode, false otherwise*/
+    bool expertMode;
 };
 
 #endif

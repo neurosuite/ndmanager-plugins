@@ -33,20 +33,20 @@ UnitTableItem::UnitTableItem ( Q3Table * table, EditType et, const QString & tex
 UnitTableItem::UnitTableItem ( Q3Table * table, EditType et, const QString & text, const QPixmap & p ): Q3TableItem(table,et,text,p)
 {
 }
-		
+
 UnitTableItem::~UnitTableItem()
 {
 }
 
 QString UnitTableItem::key () const{
-	QString txt = text();
-	float fVal = txt.toFloat();
-	if (fVal > 0) // true only if txt is a float number
-	{
-		txt.prepend("00000");
-		txt = txt.right(5);
-		txt.append(".0");
-	}
-	return txt;
+    QString txt = text();
+    float fVal = txt.toFloat();
+    if (fVal > 0) // true only if txt is a float number
+    {
+        txt.prepend("00000");
+        txt = txt.right(5);
+        txt.append(".0");
+    }
+    return txt;
 }
 

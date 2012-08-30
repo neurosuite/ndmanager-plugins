@@ -31,44 +31,44 @@
 */
 class ProgramInformation{
 public:
- /**Constructor.*/
- inline ProgramInformation(){};
- /**Destructor.*/
- inline ~ProgramInformation(){};
+    /**Constructor.*/
+    ProgramInformation(){}
+    /**Destructor.*/
+    ~ProgramInformation(){}
 
-  /**Sets the name of the program.
+    /**Sets the name of the program.
   * @param name name of the program.
   */
-  inline void setProgramName(QString name){this->name = name;};
+    inline void setProgramName(QString name){this->name = name;}
     
-  /**Sets the help available on the program.
+    /**Sets the help available on the program.
   * @param help help about the program.
   */
-  inline void setHelp(QString help){this->help = help;};
- 
- /** Initializes the parameter table.
- * @param parameters map containing the list of parameters. 
+    inline void setHelp(QString help){this->help = help;}
+
+    /** Initializes the parameter table.
+ * @param parameters map containing the list of parameters.
  * Each entry is a list containing the name of the parameter its status (optional, mandatory or dynamic) and its value if any.
  */
- inline void setParameterInformation(QMap<int, QList<QString> >& parameters){
-  this->parameters = parameters;
- };
- 
- /**Gets the name of the program.*/
- inline QString getProgramName() const{return name;};
+    inline void setParameterInformation(QMap<int, QList<QString> >& parameters){
+        this->parameters = parameters;
+    }
 
- /**Gets the help about the program.*/
- inline QString getHelp() const{return help;};
- 
- /**Returns the information for each parameter.
+    /**Gets the name of the program.*/
+    inline QString getProgramName() const{return name;}
+
+    /**Gets the help about the program.*/
+    inline QString getHelp() const{return help;}
+
+    /**Returns the information for each parameter.
  * @return map containing the list of parameters. Each entry contains the name of the parameter, its value and its status (optional, mandatory or dynamic).
  */
- QMap<int, QList<QString> > getParameterInformation(){return parameters;};
- 
- private:
-  QString name;
-  QMap<int, QList<QString> > parameters;
-  QString help;
+    QMap<int, QList<QString> > getParameterInformation(){return parameters;}
+
+private:
+    QString name;
+    QMap<int, QList<QString> > parameters;
+    QString help;
 };
 
 #endif

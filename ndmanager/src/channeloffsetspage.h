@@ -32,43 +32,43 @@
 */
 class ChannelOffsetsPage : public ChannelOffsetsLayout
 {
-Q_OBJECT
+    Q_OBJECT
 public:
     ChannelOffsetsPage(QWidget* parent = 0, const char* name = 0);
     ~ChannelOffsetsPage();
 
- /**Sets the number of channels, creating the correspondent number of lines in the table.
+    /**Sets the number of channels, creating the correspondent number of lines in the table.
  * @param nbChannels number of channels.
  */
- inline void setNbChannels(int nbChannels){
-   this->nbChannels = nbChannels;
-   for(int i =0; i<offsetTable->numRows();++i) offsetTable->removeRow(i);
-   offsetTable->setNumRows(nbChannels);
- };
+    inline void setNbChannels(int nbChannels){
+        this->nbChannels = nbChannels;
+        for(int i =0; i<offsetTable->numRows();++i) offsetTable->removeRow(i);
+        offsetTable->setNumRows(nbChannels);
+    }
     
- /** Returns the offsets associated with the channels.
+    /** Returns the offsets associated with the channels.
  * @param offsets map given the channel default offsetsr.
  */
- void getOffsets(QMap<int,int>& offsets);
- 
- /**Sets the offsets associated with the channels.
+    void getOffsets(QMap<int,int>& offsets);
+
+    /**Sets the offsets associated with the channels.
  * @param offsets map given the channel default offsets.
- */ 
- void setOffsets(QMap<int,int>& offsets);
- 
- /**True if at least one property has been modified, false otherwise.*/
- inline bool isModified()const{return modified;};
- 
+ */
+    void setOffsets(QMap<int,int>& offsets);
+
+    /**True if at least one property has been modified, false otherwise.*/
+    inline bool isModified()const{return modified;}
+
 public slots: 
- /** Will be called when any properties is modified.*/
- inline void propertyModified(){modified = true;};
- 
- /**Resets the internal modification status to false.*/
- inline void resetModificationStatus(){modified = false;};
-  
+    /** Will be called when any properties is modified.*/
+    inline void propertyModified(){modified = true;}
+
+    /**Resets the internal modification status to false.*/
+    inline void resetModificationStatus(){modified = false;}
+
 private:
- int nbChannels; 
- bool modified;    
+    int nbChannels;
+    bool modified;
 };
 
 #endif

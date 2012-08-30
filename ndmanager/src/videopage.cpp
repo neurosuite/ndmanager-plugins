@@ -21,16 +21,16 @@
 #include "videopage.h"
 
 VideoPage::VideoPage(QWidget* parent, const char *name)
- : VideoLayout(parent),intValidator(this),doubleValidator(this),modified(false),isInit(true){
- 
- //Set a validator on the line edits, the values have to be integers.
- samplingRateLineEdit->setValidator(&doubleValidator);
- widthLineEdit->setValidator(&intValidator);
- heightLineEdit->setValidator(&intValidator);
+    : VideoLayout(parent),intValidator(this),doubleValidator(this),modified(false),isInit(true){
 
- connect(widthLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
- connect(heightLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
- connect(samplingRateLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
+    //Set a validator on the line edits, the values have to be integers.
+    samplingRateLineEdit->setValidator(&doubleValidator);
+    widthLineEdit->setValidator(&intValidator);
+    heightLineEdit->setValidator(&intValidator);
+
+    connect(widthLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
+    connect(heightLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
+    connect(samplingRateLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
 
 }
 

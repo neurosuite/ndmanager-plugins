@@ -33,79 +33,79 @@
 */
 class ndManagerDoc{
 
- private: 
-  /**The url of the document .*/
-  QString docUrl;
+private:
+    /**The url of the document .*/
+    QString docUrl;
     
 public:
- /**Constructor.
- * @param parent the parent QWidget. 
+    /**Constructor.
+ * @param parent the parent QWidget.
  */
- ndManagerDoc(QWidget* parent);
- ~ndManagerDoc();
-   
- /**Information retun after a call to openFile/saveDocument/createFeatureFile*/
-  enum OpenSaveCreateReturnMessage {OK=0,OPEN_ERROR=1,DOWNLOAD_ERROR=3,INCORRECT_FILE=4,SAVE_ERROR=5,
-                             UPLOAD_ERROR=6,INCORRECT_CONTENT=7,CREATION_ERROR=8,PARSE_ERROR=9,MISSING_FILE=10,ALREADY_OPENED=11};
-  
- /**closes the actual document.*/
-  void closeDocument();
-  
-  /** opens the document by filename.
+    ndManagerDoc(QWidget* parent);
+    ~ndManagerDoc();
+
+    /**Information retun after a call to openFile/saveDocument/createFeatureFile*/
+    enum OpenSaveCreateReturnMessage {OK=0,OPEN_ERROR=1,DOWNLOAD_ERROR=3,INCORRECT_FILE=4,SAVE_ERROR=5,
+                                      UPLOAD_ERROR=6,INCORRECT_CONTENT=7,CREATION_ERROR=8,PARSE_ERROR=9,MISSING_FILE=10,ALREADY_OPENED=11}
+
+    /**closes the actual document.*/
+    void closeDocument();
+
+    /** opens the document by filename.
   * @param url url of the file to open (dat file or eeg file).
   * @return an opensavecreatereturnmessage enum giving the open status.
   */
-  OpenSaveCreateReturnMessage openDocument(const QString& url);
-       
- /**Returns the QString of the document. */
- inline const QString& url() const{return docUrl;};
-                         
-  /**Loads information in order to create a new the document .
+    OpenSaveCreateReturnMessage openDocument(const QString& url);
+
+    /**Returns the QString of the document. */
+    inline const QString& url() const{return docUrl;}
+
+    /**Loads information in order to create a new the document .
   * @return an opensavecreatereturnmessage enum giving the initialization status.
   */
-  OpenSaveCreateReturnMessage newDocument();
- 
- /**Saves the current parameter file.
+    OpenSaveCreateReturnMessage newDocument();
+
+    /**Saves the current parameter file.
  @return an OpenSaveCreateReturnMessage enum giving the saving status.
- */    
- inline OpenSaveCreateReturnMessage save(){return save(docUrl);};
- 
-  /**Saves the current parameter file on the disk at the location defined by url.
+ */
+    inline OpenSaveCreateReturnMessage save(){return save(docUrl);}
+
+    /**Saves the current parameter file on the disk at the location defined by url.
  * @param url url of the file where to save the parameter information.
  * @return an OpenSaveCreateReturnMessage enum giving the saving status.
- */    
- OpenSaveCreateReturnMessage save(QString url);
- 
- /**Saves the parameter file.
+ */
+    OpenSaveCreateReturnMessage save(QString url);
+
+    /**Saves the parameter file.
  * @param newUrl new url where to write the parameter fil to.
  * @return an OpenSaveCreateReturnMessage enum giving the saving status.
  */
- inline OpenSaveCreateReturnMessage saveAs(QString newUrl){
-  docUrl = newUrl;
-  return save(docUrl);  
- }; 
- 
- /**Save the current parameter file as the default one in the user .kde directory.*/
- OpenSaveCreateReturnMessage saveDefault();
+    inline OpenSaveCreateReturnMessage saveAs(QString newUrl){
+        docUrl = newUrl;
+        return save(docUrl);
+    }
 
-  /**Saves the script @p scriptName.
+    /**Save the current parameter file as the default one in the user .kde directory.*/
+    OpenSaveCreateReturnMessage saveDefault();
+
+    /**Saves the script @p scriptName.
  * @param scriptName name of the script to save.
  * @return an OpenSaveCreateReturnMessage enum giving the saving status.
- */    
- OpenSaveCreateReturnMessage saveScript(QString scriptName);
+ */
+    OpenSaveCreateReturnMessage saveScript(QString scriptName);
 
- /**Renames the parameter file.
+    /**Renames the parameter file.
  * @param newUrl new url where to write the parameter fil to.
  */
- inline void rename(QString newUrl){
-  docUrl = newUrl; 
- }; 
- 
+    inline void rename(QString newUrl){
+        docUrl = newUrl;
+    }
+
 private:
 
- /**Pointer on the parent widget (main window).*/
- QWidget* parent;    
- 
+    /**Pointer on the parent widget (main window).*/
+    QWidget* parent;
+
 };
 
 #endif

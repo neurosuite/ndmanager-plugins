@@ -37,86 +37,86 @@ using namespace std;
 using namespace ndmanager;
 
 DescriptionWriter::DescriptionWriter():doc(){
- //create the processing instruction
- QDomProcessingInstruction processingInstruction = doc.createProcessingInstruction("xml","version='1.0'");
- doc.appendChild(processingInstruction);
+    //create the processing instruction
+    QDomProcessingInstruction processingInstruction = doc.createProcessingInstruction("xml","version='1.0'");
+    doc.appendChild(processingInstruction);
 
- //Create the root element.
- root = doc.createElement(PARAMETER);
- doc.appendChild(root);
+    //Create the root element.
+    root = doc.createElement(PARAMETER);
+    doc.appendChild(root);
 }
 
 DescriptionWriter::~DescriptionWriter(){}
 
 bool DescriptionWriter::writeTofile(const QString& url){ 
- QFile descriptionFile(url);
- bool status = descriptionFile.open(QIODevice::WriteOnly);
- if(!status) return status;
+    QFile descriptionFile(url);
+    bool status = descriptionFile.open(QIODevice::WriteOnly);
+    if(!status) return status;
 
- root.appendChild(program);
- QString xmlDocument = doc.toString();
- 
- QTextStream stream(&descriptionFile);
- stream<< xmlDocument;
- descriptionFile.close();
- 
- return true;
+    root.appendChild(program);
+    QString xmlDocument = doc.toString();
+
+    QTextStream stream(&descriptionFile);
+    stream<< xmlDocument;
+    descriptionFile.close();
+
+    return true;
 }
 
 void DescriptionWriter::setProgramInformation(ProgramInformation& programInformation){
- //Get the program information 
- QString name = programInformation.getProgramName();
- QMap<int, QList<QString> > parametersInfo = programInformation.getParameterInformation();  
- QString help = programInformation.getHelp();
- 
- program = doc.createElement(PROGRAM);;
- 
- QDomElement nameElement = doc.createElement(NAME);
- QDomText nameValue = doc.createTextNode(name);
- nameElement.appendChild(nameValue);
- program.appendChild(nameElement);
+    //Get the program information
+    QString name = programInformation.getProgramName();
+    QMap<int, QList<QString> > parametersInfo = programInformation.getParameterInformation();
+    QString help = programInformation.getHelp();
 
- //Take care of the parameters
- QDomElement parameters = doc.createElement(PARAMETERS);
- QMap<int,QList<QString> >::Iterator parameterIterator;
- //The iterator gives the keys sorted.
- for(parameterIterator = parametersInfo.begin(); parameterIterator != parametersInfo.end(); ++parameterIterator){
-  QDomElement parameter = doc.createElement(PARAMETER);
-  QList<QString> parameterInfo = parameterIterator.data();
-  
-  for(uint i = 0; i< parameterInfo.count();++i){
-   //the info are NAME, VALUE and STATUS   
-   if(i == 0){
+    program = doc.createElement(PROGRAM);;
+
     QDomElement nameElement = doc.createElement(NAME);
-    QDomText nameValue = doc.createTextNode(parameterInfo[i]);
+    QDomText nameValue = doc.createTextNode(name);
     nameElement.appendChild(nameValue);
-    parameter.appendChild(nameElement);    
-   }
-   if(i == 1){
-    QDomElement valueElement = doc.createElement(VALUE);
-    if(parameterInfo[i] != ""){
-     QDomText valueValue = doc.createTextNode(parameterInfo[i]);
-     valueElement.appendChild(valueValue);    
-    }
-    parameter.appendChild(valueElement);    
-   }
-   if(i == 2){
-    QDomElement statusElement = doc.createElement(STATUS);
-    QDomText statusValue = doc.createTextNode(parameterInfo[i]);
-    statusElement.appendChild(statusValue);
-    parameter.appendChild(statusElement);    
-   }
-  }
-  parameters.appendChild(parameter);
- }
+    program.appendChild(nameElement);
 
- program.appendChild(parameters);
- 
- QDomElement helpElement = doc.createElement(HELP);
- if(help != ""){
-  QDomText helpValue = doc.createTextNode(help);
-  helpElement.appendChild(helpValue);    
- }
- program.appendChild(helpElement);
- 
+    //Take care of the parameters
+    QDomElement parameters = doc.createElement(PARAMETERS);
+    QMap<int,QList<QString> >::Iterator parameterIterator;
+    //The iterator gives the keys sorted.
+    for(parameterIterator = parametersInfo.begin(); parameterIterator != parametersInfo.end(); ++parameterIterator){
+        QDomElement parameter = doc.createElement(PARAMETER);
+        QList<QString> parameterInfo = parameterIterator.data();
+
+        for(uint i = 0; i< parameterInfo.count();++i){
+            //the info are NAME, VALUE and STATUS
+            if(i == 0){
+                QDomElement nameElement = doc.createElement(NAME);
+                QDomText nameValue = doc.createTextNode(parameterInfo[i]);
+                nameElement.appendChild(nameValue);
+                parameter.appendChild(nameElement);
+            }
+            if(i == 1){
+                QDomElement valueElement = doc.createElement(VALUE);
+                if(parameterInfo[i] != ""){
+                    QDomText valueValue = doc.createTextNode(parameterInfo[i]);
+                    valueElement.appendChild(valueValue);
+                }
+                parameter.appendChild(valueElement);
+            }
+            if(i == 2){
+                QDomElement statusElement = doc.createElement(STATUS);
+                QDomText statusValue = doc.createTextNode(parameterInfo[i]);
+                statusElement.appendChild(statusValue);
+                parameter.appendChild(statusElement);
+            }
+        }
+        parameters.appendChild(parameter);
+    }
+
+    program.appendChild(parameters);
+
+    QDomElement helpElement = doc.createElement(HELP);
+    if(help != ""){
+        QDomText helpValue = doc.createTextNode(help);
+        helpElement.appendChild(helpValue);
+    }
+    program.appendChild(helpElement);
+
 }

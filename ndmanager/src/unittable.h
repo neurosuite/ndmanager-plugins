@@ -23,17 +23,17 @@
 #include <q3table.h>
 
 /**
-	@author Lynn Hazan <lynn.hazan@myrealbox.com>
+    @author Lynn Hazan <lynn.hazan@myrealbox.com>
 */
 class UnitTable : public Q3Table
 {
 public:
-	UnitTable(QWidget * parent = 0, const char * name = 0 );
-	UnitTable( int numRows, int numCols, QWidget * parent = 0, const char * name = 0 );
+    UnitTable(QWidget * parent = 0, const char * name = 0 );
+    UnitTable( int numRows, int numCols, QWidget * parent = 0, const char * name = 0 );
 
     ~UnitTable();
 
-	 virtual void columnClicked(int col);
+    virtual void columnClicked(int col);
 
 };
 

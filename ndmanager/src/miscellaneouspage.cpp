@@ -24,21 +24,21 @@
 
 
 MiscellaneousPage::MiscellaneousPage(QWidget* parent, const char *name)
- : NeuroscopeMiscLayout(parent),doubleValidator(this),modified(false),isInit(true){
- 
- //Set a validator on the line edits, the values have to be integers or doubles.
- screenGainLineEdit->setValidator(&doubleValidator);
- 
- connect(traceBackgroundButton,SIGNAL(clicked()),this,SLOT(updateTraceBackgroundImage()));
- connect(traceBackgroundLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(updateTraceBackgroundImage(const QString&)));
+    : NeuroscopeMiscLayout(parent),doubleValidator(this),modified(false),isInit(true){
 
- connect(screenGainLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
- connect(traceBackgroundLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
- 
-  //Set an icon on the backgroundButton button
- 
- traceBackgroundButton->setIconSet(QIcon(":/icons/fileopen"));
- 
+    //Set a validator on the line edits, the values have to be integers or doubles.
+    screenGainLineEdit->setValidator(&doubleValidator);
+
+    connect(traceBackgroundButton,SIGNAL(clicked()),this,SLOT(updateTraceBackgroundImage()));
+    connect(traceBackgroundLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(updateTraceBackgroundImage(const QString&)));
+
+    connect(screenGainLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
+    connect(traceBackgroundLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
+
+    //Set an icon on the backgroundButton button
+
+    traceBackgroundButton->setIconSet(QIcon(":/icons/fileopen"));
+
 }
 
 MiscellaneousPage::~MiscellaneousPage(){}

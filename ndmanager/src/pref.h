@@ -31,33 +31,33 @@ class ndManagerPreferences : public QDialog
 {
     Q_OBJECT
 public:
-  ndManagerPreferences(QWidget* parent,const char* name=0, Qt::WFlags f=0);
-  
-  /** Transfers the settings from the configuration object to the dialog.*/
-  void updateDialog();
-   
-  /** Transfers the settings from the dialog to the configuration object.*/
-  void updateConfiguration();
-   
-  /** */
-  inline bool isApplyEnable(){return applyEnable;};
+    ndManagerPreferences(QWidget* parent,const char* name=0, Qt::WFlags f=0);
 
- public slots:
-   /**Will be called when the "Default" button has been clicked.*/
-   void slotDefault();
-   /**Will be called when the "Apply" button has been clicked.*/
-   void slotApply();
-   /**Will be called whenever a setting was changed.*/
-   void enableApply();
+    /** Transfers the settings from the configuration object to the dialog.*/
+    void updateDialog();
 
- signals:
-   /// Will be emitted when the new settings should be applied.
-   void settingsChanged();
+    /** Transfers the settings from the dialog to the configuration object.*/
+    void updateConfiguration();
+
+    /** */
+    inline bool isApplyEnable(){return applyEnable;}
+
+public slots:
+    /**Will be called when the "Default" button has been clicked.*/
+    void slotDefault();
+    /**Will be called when the "Apply" button has been clicked.*/
+    void slotApply();
+    /**Will be called whenever a setting was changed.*/
+    void enableApply();
+
+signals:
+    /// Will be emitted when the new settings should be applied.
+    void settingsChanged();
 
 private:
-  ndManagerPrefPageOne* m_pageOne;
-  ndManagerPrefPageTwo* m_pageTwo;
-  bool applyEnable;
+    ndManagerPrefPageOne* m_pageOne;
+    ndManagerPrefPageTwo* m_pageTwo;
+    bool applyEnable;
 };
 
 class ndManagerPrefPageOne : public QFrame

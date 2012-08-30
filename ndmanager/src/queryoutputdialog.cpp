@@ -23,23 +23,24 @@
 #include <QMessageBox>
 
 #include <QWebSettings>
+
 QueryOutputDialog::QueryOutputDialog(QString htmlText,QString queryResult,QWidget *parent,const QString& caption,const QString& urltext) :
-KDialogBase(parent,"Query Results",true,caption,Ok|User1|User2,Ok,true,KGuiItem(tr("Save As Text")),KGuiItem(tr("Save As HTML"))),
-htmlText(htmlText),
-queryResult(queryResult)
+    KDialogBase(parent,"Query Results",true,caption,Ok|User1|User2,Ok,true,KGuiItem(tr("Save As Text")),KGuiItem(tr("Save As HTML"))),
+    htmlText(htmlText),
+    queryResult(queryResult)
 {
-	vbox = new Q3VBox(this);
-	setMainWidget(vbox);
-	html = new QWebView(vbox);
-	html->setHtml(htmlText);
-	html->reload();
-	html->settings()->setAttribute(QWebSettings::JavascriptEnabled, false);
-        html->settings()->setAttribute(QWebSettings::JavaEnabled,false);
-	html->settings()->setAttribute(QWebSettings::PluginsEnabled,false);
-	html->settings()->setAttribute(QWebSettings::LocalContentCanAccessFileUrls, true);
-	html->settings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls,false);
-	resize(800,600);
-	
+    vbox = new Q3VBox(this);
+    setMainWidget(vbox);
+    html = new QWebView(vbox);
+    html->setHtml(htmlText);
+    html->reload();
+    html->settings()->setAttribute(QWebSettings::JavascriptEnabled, false);
+    html->settings()->setAttribute(QWebSettings::JavaEnabled,false);
+    html->settings()->setAttribute(QWebSettings::PluginsEnabled,false);
+    html->settings()->setAttribute(QWebSettings::LocalContentCanAccessFileUrls, true);
+    html->settings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls,false);
+    resize(800,600);
+
 }
 
 QueryOutputDialog::~QueryOutputDialog()
@@ -50,14 +51,14 @@ void QueryOutputDialog::slotUser1()
 {
     QString filename = QFileDialog::getSaveFileName(this,"saveQuery",QString(),"*");
     if(QFile::exists(filename) && QMessageBox::question(this,QString(),tr("File already exists. Overwrite?"),QMessageBox::Yes|QMessageBox::No) == QMessageBox::No) return;
-	QFile textFile(filename);
-	if(textFile.open(QIODevice::WriteOnly))
-	{
-		QTextStream stream(&textFile);
-		stream << queryResult;
-		textFile.close();
+    QFile textFile(filename);
+    if(textFile.open(QIODevice::WriteOnly))
+    {
+        QTextStream stream(&textFile);
+        stream << queryResult;
+        textFile.close();
         if(stream.device()->status() == IO_WriteError ) QMessageBox::critical(this,tr("Could not save the report. This may be due to incorrect write permissions."));
-	}
+    }
     else QMessageBox::critical(this,tr("Could not save the report. This may be due to incorrect write permissions."));
 }
 
@@ -65,14 +66,14 @@ void QueryOutputDialog::slotUser2()
 {
     QString filename = QFileDialog::getSaveFileName(this,"saveQuery",QString(),"*.html");
     if(QFile::exists(filename) && QMessageBox::question(this,QString(),tr("File already exists. Overwrite?"),QMessageBox::Yes|QMessageBox::No) == QMessageBox::No) return;
-	QFile htmlFile(filename);
-	if(htmlFile.open(QIODevice::WriteOnly))
-	{
-		QTextStream stream(&htmlFile);
-		stream << htmlText;
-		htmlFile.close();
+    QFile htmlFile(filename);
+    if(htmlFile.open(QIODevice::WriteOnly))
+    {
+        QTextStream stream(&htmlFile);
+        stream << htmlText;
+        htmlFile.close();
         if(stream.device()->status() == IO_WriteError ) QMessageBox::critical(this,tr("Could not save the report. This may be due to incorrect write permissions."));
-	}
+    }
     else QMessageBox::critical(this,tr("Could not save the report. This may be due to incorrect write permissions."));
 }
 

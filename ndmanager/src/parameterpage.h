@@ -43,86 +43,86 @@ using namespace std;
 */
 class ParameterPage : public ParameterLayout
 {
-Q_OBJECT
+    Q_OBJECT
 public:
-/**Constructor.
- * @param expertMode true if the file is opened in expert mode, false otherwise.  
- * @param parent the parent QWidget. 
- * @param name name of the widget (can be used for introspection).   
+    /**Constructor.
+ * @param expertMode true if the file is opened in expert mode, false otherwise.
+ * @param parent the parent QWidget.
+ * @param name name of the widget (can be used for introspection).
 */
-  ParameterPage(bool expertMode, QWidget *parent = 0, const char *name = 0);
-  ~ParameterPage();
-  
-  /**Sets the name of the program.
+    ParameterPage(bool expertMode, QWidget *parent = 0, const char *name = 0);
+    ~ParameterPage();
+
+    /**Sets the name of the program.
   * @param name name of the program.
   */
-  inline void setProgramName(QString name){nameLineEdit->setText(name);};
-  
-  /**Gets the name of the program.*/
-  inline QString getProgramName() const{return nameLineEdit->text();};
-  
-  /**Updates an internal status to reflect the change in program name.
+    inline void setProgramName(QString name){nameLineEdit->setText(name);}
+
+    /**Gets the name of the program.*/
+    inline QString getProgramName() const{return nameLineEdit->text();}
+
+    /**Updates an internal status to reflect the change in program name.
   */
-  inline void programNameChanged(){descriptionModified = true;};
-  
-  
- /** Initializes the parameter table.
- * @param parameters map containing the list of parameters. 
+    inline void programNameChanged(){descriptionModified = true;}
+
+
+    /** Initializes the parameter table.
+ * @param parameters map containing the list of parameters.
  Each entry contains the name of the parameter, its value and its status (optional, mandatory or dynamic).
  */
- void setParameterInformation(QMap<int, QList<QString> >& parameters);
- 
- /**Returns the information for each parameter.
+    void setParameterInformation(QMap<int, QList<QString> >& parameters);
+
+    /**Returns the information for each parameter.
  * @return map containing the list of parameters. Each entry contains the name of the parameter, its value and its status (optional, mandatory or dynamic).
  */
- QMap<int, QList<QString> > getParameterInformation();
- 
- /**True if at least one of the description property has been modified, false otherwise.*/
- inline bool isDescriptionModified()const{return descriptionModified;};
-   
- /**True if the value of at least one of parameters has been modified, false otherwise.*/
- inline bool isValueModified()const{return valueModified;};
+    QMap<int, QList<QString> > getParameterInformation();
+
+    /**True if at least one of the description property has been modified, false otherwise.*/
+    inline bool isDescriptionModified()const{return descriptionModified;}
+
+    /**True if the value of at least one of parameters has been modified, false otherwise.*/
+    inline bool isValueModified()const{return valueModified;}
 
 signals:
- void nameChanged(const QString& extension);
- 
+    void nameChanged(const QString& extension);
+
 public slots:
- /**Handles the change of the program's name.*/
- inline void changeCaption(){ 
-  QString name = nameLineEdit->text();  
-  if(name == "" && !name.contains("New Script-")) emit nameChanged(tr("Unknown"));
-  else emit nameChanged(name);
- };
- 
- /**Adds a new line in the parameter table.*/
- void addParameter();
- /**Removes the selected lines from the parameter table.*/
- void removeParameter(); 
-  
- /** Will be called when any properties is modified.*/
- void propertyModified(int row, int column);
- 
- /**Resets the internal modification status to false.*/
- inline void resetModificationStatus(){
-  valueModified = false;
-  descriptionModified = false;
- };
-  
- 
+    /**Handles the change of the program's name.*/
+    inline void changeCaption(){
+        QString name = nameLineEdit->text();
+        if(name == "" && !name.contains("New Script-")) emit nameChanged(tr("Unknown"));
+        else emit nameChanged(name);
+    }
+
+    /**Adds a new line in the parameter table.*/
+    void addParameter();
+    /**Removes the selected lines from the parameter table.*/
+    void removeParameter();
+
+    /** Will be called when any properties is modified.*/
+    void propertyModified(int row, int column);
+
+    /**Resets the internal modification status to false.*/
+    inline void resetModificationStatus(){
+        valueModified = false;
+        descriptionModified = false;
+    }
+
+
 protected:
- /** Event filter to validate the entries in the group table.
+    /** Event filter to validate the entries in the group table.
  * @param object target object for the event.
  * @param event event sent.
  */
- bool eventFilter(QObject* object,QEvent* event);
- 
- 
+    bool eventFilter(QObject* object,QEvent* event);
+
+
 private:
- QStringList status; 
- /**Stores the list of column containing drop down list.*/
- QList<int> ddList;
- bool valueModified;
- bool descriptionModified;
+    QStringList status;
+    /**Stores the list of column containing drop down list.*/
+    QList<int> ddList;
+    bool valueModified;
+    bool descriptionModified;
 };
 
 #endif

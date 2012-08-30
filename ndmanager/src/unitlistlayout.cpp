@@ -31,16 +31,16 @@ UnitListLayout::UnitListLayout( QWidget* parent, const char* name, Qt::WFlags fl
     : QWidget( parent, name, fl )
 {
     if ( !name )
-	setName( "UnitListLayout" );
-    UnitListLayoutLayout = new Q3GridLayout( this, 1, 1, 11, 6, "UnitListLayoutLayout"); 
+        setName( "UnitListLayout" );
+    UnitListLayoutLayout = new Q3GridLayout( this, 1, 1, 11, 6, "UnitListLayoutLayout");
 
-    layout21 = new Q3GridLayout( 0, 1, 1, 0, 6, "layout21"); 
+    layout21 = new Q3GridLayout( 0, 1, 1, 0, 6, "layout21");
 
-    layout20 = new Q3GridLayout( 0, 1, 1, 0, 6, "layout20"); 
+    layout20 = new Q3GridLayout( 0, 1, 1, 0, 6, "layout20");
     spacer10_2_3_2 = new QSpacerItem( 354, 16, QSizePolicy::Expanding, QSizePolicy::Minimum );
     layout20->addItem( spacer10_2_3_2, 0, 1 );
 
-    layout19 = new Q3GridLayout( 0, 1, 1, 0, 6, "layout19"); 
+    layout19 = new Q3GridLayout( 0, 1, 1, 0, 6, "layout19");
     spacer10_2_2 = new QSpacerItem( 20, 16, QSizePolicy::Fixed, QSizePolicy::Minimum );
     layout19->addItem( spacer10_2_2, 0, 0 );
     spacer10_2_2_2 = new QSpacerItem( 20, 16, QSizePolicy::Fixed, QSizePolicy::Minimum );

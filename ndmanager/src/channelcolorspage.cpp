@@ -34,57 +34,57 @@ using namespace std;
 
 
 ChannelColorsPage::ChannelColorsPage(QWidget* parent, const char *name)
- : ChannelColorsLayout(parent),nbChannels(0),modified(false){
-  for(int i = 0;i<colorTable->numCols();++i) colorTable->setColumnStretchable(i,true);
-  
-  connect(colorTable, SIGNAL(pressed(int,int,int,const QPoint&)),this, SLOT(chooseColor(int,int,int)));
-  connect(colorTable, SIGNAL(valueChanged(int,int)),this, SLOT(propertyModified()));
-  connect(colorTable, SIGNAL(doubleClicked(int,int,int,const QPoint&)),this, SLOT(propertyModified()));
+    : ChannelColorsLayout(parent),nbChannels(0),modified(false){
+    for(int i = 0;i<colorTable->numCols();++i) colorTable->setColumnStretchable(i,true);
+
+    connect(colorTable, SIGNAL(pressed(int,int,int,const QPoint&)),this, SLOT(chooseColor(int,int,int)));
+    connect(colorTable, SIGNAL(valueChanged(int,int)),this, SLOT(propertyModified()));
+    connect(colorTable, SIGNAL(doubleClicked(int,int,int,const QPoint&)),this, SLOT(propertyModified()));
 }
 
 ChannelColorsPage::~ChannelColorsPage(){}
 
 void ChannelColorsPage::getColors(QList<ChannelColors>& colors){
- for(int i =0; i<nbChannels;++i){
-  ChannelColors channelColors;
-  channelColors.setId(i);
-  channelColors.setColor(colorTable->text(i,0));
-  channelColors.setGroupColor(colorTable->text(i,1));
-  channelColors.setSpikeGroupColor(colorTable->text(i,2));
-  colors.append(channelColors);
- }
+    for(int i =0; i<nbChannels;++i){
+        ChannelColors channelColors;
+        channelColors.setId(i);
+        channelColors.setColor(colorTable->text(i,0));
+        channelColors.setGroupColor(colorTable->text(i,1));
+        channelColors.setSpikeGroupColor(colorTable->text(i,2));
+        colors.append(channelColors);
+    }
 }
- 
- void ChannelColorsPage::setColors(QList<ChannelColors>& colors){  
-  QList<ChannelColors>::iterator iterator;
-  for(iterator = colors.begin(); iterator != colors.end(); ++iterator){
-   int id = (*iterator).getId();
-   colorTable->verticalHeader()->setLabel(id,QString("%1").arg(id));   
-   Q3TableItem* itemColor = new Q3TableItem(colorTable,Q3TableItem::OnTyping,(*iterator).getColor().name());
-   itemColor->setWordWrap(true);
-   colorTable->setItem(id,0,itemColor);
 
-   Q3TableItem* itemGroupColor = new Q3TableItem(colorTable,Q3TableItem::OnTyping,(*iterator).getGroupColor().name());
-   itemGroupColor->setWordWrap(true);
-   colorTable->setItem(id,1,itemGroupColor);
+void ChannelColorsPage::setColors(QList<ChannelColors>& colors){
+    QList<ChannelColors>::iterator iterator;
+    for(iterator = colors.begin(); iterator != colors.end(); ++iterator){
+        int id = (*iterator).getId();
+        colorTable->verticalHeader()->setLabel(id,QString("%1").arg(id));
+        Q3TableItem* itemColor = new Q3TableItem(colorTable,Q3TableItem::OnTyping,(*iterator).getColor().name());
+        itemColor->setWordWrap(true);
+        colorTable->setItem(id,0,itemColor);
 
-   Q3TableItem* itemSpikeGroupColor = new Q3TableItem(colorTable,Q3TableItem::OnTyping,(*iterator).getSpikeGroupColor().name());
-   itemSpikeGroupColor->setWordWrap(true);
-   colorTable->setItem(id,2,itemSpikeGroupColor);
-  }
- }
-    
+        Q3TableItem* itemGroupColor = new Q3TableItem(colorTable,Q3TableItem::OnTyping,(*iterator).getGroupColor().name());
+        itemGroupColor->setWordWrap(true);
+        colorTable->setItem(id,1,itemGroupColor);
+
+        Q3TableItem* itemSpikeGroupColor = new Q3TableItem(colorTable,Q3TableItem::OnTyping,(*iterator).getSpikeGroupColor().name());
+        itemSpikeGroupColor->setWordWrap(true);
+        colorTable->setItem(id,2,itemSpikeGroupColor);
+    }
+}
+
 void ChannelColorsPage::chooseColor(int row,int column,int button){
- if(button == Qt::MidButton){
-  //Get the color associated with the item
-  QColor color(colorTable->text(row,column));
- 
-  QColor result = QColorDialog::getColor(color,0);
-  if (result.isValid()) {
-   colorTable->setText(row,column,result.name());
-   modified = true;
-  }
- }
+    if(button == Qt::MidButton){
+        //Get the color associated with the item
+        QColor color(colorTable->text(row,column));
+
+        QColor result = QColorDialog::getColor(color,0);
+        if (result.isValid()) {
+            colorTable->setText(row,column,result.name());
+            modified = true;
+        }
+    }
 } 
-    
+
 #include "channelcolorspage.moc"

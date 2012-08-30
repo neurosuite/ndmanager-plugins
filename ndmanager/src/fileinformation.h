@@ -31,41 +31,41 @@
 */
 class FileInformation{
 public:
-  /**Constructor.*/
-  inline FileInformation(){}
-  /**Destructor.*/
-  inline ~FileInformation(){}
-  
-  /**Gets the file sampling rate.*/
-  inline double getSamplingRate()const{return samplingRate;}
-  
-  /**Gets the file extension.
+    /**Constructor.*/
+    inline FileInformation(){}
+    /**Destructor.*/
+    inline ~FileInformation(){}
+
+    /**Gets the file sampling rate.*/
+    inline double getSamplingRate()const{return samplingRate;}
+
+    /**Gets the file extension.
   * @return the file extension.
   */
-  QString getExtension()const{return extension;}
-  
-  /**Gets the mapping between the original channels and the ones in the file.
+    QString getExtension()const{return extension;}
+
+    /**Gets the mapping between the original channels and the ones in the file.
   * @return the channel mapping map.
   */
- inline QMap<int, QList<int> > getChannelMapping(){return channelMapping;}
+    inline QMap<int, QList<int> > getChannelMapping(){return channelMapping;}
 
- /**Sets the sampling rate.*/
- inline void setSamplingRate(double rate){samplingRate = rate;}
- 
- /**Sets the file extension.
+    /**Sets the sampling rate.*/
+    inline void setSamplingRate(double rate){samplingRate = rate;}
+
+    /**Sets the file extension.
  * @param ext file extension.
  */
- inline void setExtension(const QString& ext){extension = ext;}
-      
- /**Sets the mapping between the original channels and the ones in the file.
+    inline void setExtension(const QString& ext){extension = ext;}
+
+    /**Sets the mapping between the original channels and the ones in the file.
  * @param mapping the channel mapping map.
  */
- inline void setChannelMapping(QMap<int, QList<int> >& mapping){channelMapping = mapping;}
-  
+    inline void setChannelMapping(QMap<int, QList<int> >& mapping){channelMapping = mapping;}
+
 private:
- double samplingRate;
- QString extension;
- QMap<int, QList<int> > channelMapping;
+    double samplingRate;
+    QString extension;
+    QMap<int, QList<int> > channelMapping;
 };
 
 #endif

@@ -38,7 +38,7 @@ class QueryInputDialog : public QDialog
 {
     Q_OBJECT
 public:
-    QueryInputDialog(QWidget *parent = 0,const QString& caption = "Query",const QString& urltext = "");
+    QueryInputDialog(QWidget *parent = 0,const QString& caption = tr("Query"),const QString& urltext = QString());
     virtual ~QueryInputDialog();
     inline QString getQuery() const { return query->text(); }
     inline QString getPath() const { return path->text(); }

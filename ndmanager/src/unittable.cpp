@@ -22,16 +22,16 @@
 UnitTable::UnitTable(QWidget * parent, const char * name): Q3Table(parent,name){}
 
 UnitTable::UnitTable( int numRows, int numCols, QWidget * parent, const char * name): Q3Table(numRows,numCols,parent,name){}
-	
+
 UnitTable::~UnitTable()
 {
 }
 
 void UnitTable::columnClicked ( int col ){
-	static bool ascending = TRUE;
-	if (!sorting()) return;
-	ascending=!ascending;
-	sortColumn( col, ascending, TRUE);
+    static bool ascending = TRUE;
+    if (!sorting()) return;
+    ascending=!ascending;
+    sortColumn( col, ascending, TRUE);
 }
 
 

@@ -41,111 +41,111 @@ using namespace std;
 */
 class ProgramPage : public QFrame
 {
-Q_OBJECT
+    Q_OBJECT
 public:
-/**Constructor.
- * @param expertMode true if the file is opened in expert mode, false otherwise.  
- * @param parent the parent QWidget. 
- * @param name name of the widget (can be used for introspection).   
+    /**Constructor.
+ * @param expertMode true if the file is opened in expert mode, false otherwise.
+ * @param parent the parent QWidget.
+ * @param name name of the widget (can be used for introspection).
 */
- ProgramPage(bool expertMode,QWidget* parent = 0, const char* name = 0);
- ~ProgramPage();
- 
- /**Returns the parameterPage contained in the page.*/
- inline ParameterPage* getParameterPage(){return parameters;}
- 
- 
- /**Returns the script view contained in the page.*/
- inline QTextEdit* getScriptView(){return scriptView;}
- 
- /**Returns the content of the help.*/
- QString getHelp();
- 
- /**Sets the content of the help.*/
- void setHelp(QString helpContent);
- 
- /**True if the ParameterPage has been modified, false otherwise.*/
- bool areParametersModified()const;
+    ProgramPage(bool expertMode,QWidget* parent = 0, const char* name = 0);
+    ~ProgramPage();
 
- /**True if the program description has been modified, false otherwise.
- * The program description includes the program name, the number of parameters, their name and status, 
+    /**Returns the parameterPage contained in the page.*/
+    inline ParameterPage* getParameterPage(){return parameters;}
+
+
+    /**Returns the script view contained in the page.*/
+    inline QTextEdit* getScriptView(){return scriptView;}
+
+    /**Returns the content of the help.*/
+    QString getHelp();
+
+    /**Sets the content of the help.*/
+    void setHelp(QString helpContent);
+
+    /**True if the ParameterPage has been modified, false otherwise.*/
+    bool areParametersModified()const;
+
+    /**True if the program description has been modified, false otherwise.
+ * The program description includes the program name, the number of parameters, their name and status,
  * and the help.
  */
- bool isDescriptionModified()const;
- 
- /**True if the program description has been modified and not saved, false otherwise.
- * The program description includes the program name, the number of parameters, their name and status, 
+    bool isDescriptionModified()const;
+
+    /**True if the program description has been modified and not saved, false otherwise.
+ * The program description includes the program name, the number of parameters, their name and status,
  * and the help.
  */
- bool isDescriptionModifiedAndNotSaved()const;
- 
- /**True if the script has been modified, false otherwise.*/
- inline bool isScriptModified()const{return sciptIsModified;}
- 
- /**Indicates that the initialisation is finished.*/
- inline void initialisationOver(){isInit = false;}
- 
+    bool isDescriptionModifiedAndNotSaved()const;
+
+    /**True if the script has been modified, false otherwise.*/
+    inline bool isScriptModified()const{return sciptIsModified;}
+
+    /**Indicates that the initialisation is finished.*/
+    inline void initialisationOver(){isInit = false;}
+
 signals:
- void programToRemove(ProgramPage* programPage);
- void programNameChanged(ProgramPage* programPage,const QString& name,QString message,QString title);
- void scriptShown(Kate::View* scriptView);
- void scriptHidden();
- 
- 
+    void programToRemove(ProgramPage* programPage);
+    void programNameChanged(ProgramPage* programPage,const QString& name,QString message,QString title);
+    void scriptShown(Kate::View* scriptView);
+    void scriptHidden();
+
+
 public slots:
- inline void removeProgram(){
-  emit programToRemove(this);
- }
- /**Saves the program parameters.*/
- void saveProgramParameters();
- 
- /**Saves the currently loaded script.
+    inline void removeProgram(){
+        emit programToRemove(this);
+    }
+    /**Saves the program parameters.*/
+    void saveProgramParameters();
+
+    /**Saves the currently loaded script.
  * @return true if the script has been correctly save false otherwise.
  */
- bool saveProgramScript();
-  
- /**Takes the change if the program name into account.
+    bool saveProgramScript();
+
+    /**Takes the change if the program name into account.
  * @param name name of the program.
  */
- void nameChanged(const QString& name);
+    void nameChanged(const QString& name);
     
- /** Will be called when the script is modified.*/
- inline void scriptModified(){if(!isInit) sciptIsModified = true;}
- 
- /** Will be called when the help is modified.*/
- inline void helpModified(){if(!isInit) helpIsModified = true;}
- 
- /**Resets the internal modification status to false.*/
- inline void resetModificationStatus(){
-  sciptIsModified = false;
-  helpIsModified = false;
-  parameters->resetModificationStatus();
- }
- 
-private slots:
-  
- /**Updates the menus and actions when the script becomes the active tab.*/
- void tabChange(QWidget* widget);
+    /** Will be called when the script is modified.*/
+    inline void scriptModified(){if(!isInit) sciptIsModified = true;}
 
- 
+    /** Will be called when the help is modified.*/
+    inline void helpModified(){if(!isInit) helpIsModified = true;}
+
+    /**Resets the internal modification status to false.*/
+    inline void resetModificationStatus(){
+        sciptIsModified = false;
+        helpIsModified = false;
+        parameters->resetModificationStatus();
+    }
+
+private slots:
+
+    /**Updates the menus and actions when the script becomes the active tab.*/
+    void tabChange(QWidget* widget);
+
+
 private: 
- QTabWidget* tabWidget;
- QPushButton* removeButton;
- QPushButton* saveScriptButton; 
- QPushButton* saveParametersButton;      
- ParameterPage* parameters;
- QTextEdit* script;
- bool sciptIsModified;
- bool isInit;
- QString programName;
- QString descriptionUrl;
- QTextEdit* help;
- bool helpIsModified;
- QTextEdit* scriptView;
- bool descriptionNotSaved;
- 
- /**True if the file is opened in expert mode, false otherwise*/
- bool expertMode;  
+    QTabWidget* tabWidget;
+    QPushButton* removeButton;
+    QPushButton* saveScriptButton;
+    QPushButton* saveParametersButton;
+    ParameterPage* parameters;
+    QTextEdit* script;
+    bool sciptIsModified;
+    bool isInit;
+    QString programName;
+    QString descriptionUrl;
+    QTextEdit* help;
+    bool helpIsModified;
+    QTextEdit* scriptView;
+    bool descriptionNotSaved;
+
+    /**True if the file is opened in expert mode, false otherwise*/
+    bool expertMode;
 };
 
 #endif

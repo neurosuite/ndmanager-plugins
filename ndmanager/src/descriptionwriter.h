@@ -36,31 +36,31 @@ This class writes a program description to disk.
 */
 class DescriptionWriter{
 public:
-  DescriptionWriter();
-  ~DescriptionWriter();
-  
-  /**Writes the xml tree to a description file given by @p url.
+    DescriptionWriter();
+    ~DescriptionWriter();
+
+    /**Writes the xml tree to a description file given by @p url.
   * @param url url of the file to write to.
   * @return true if the description file could be write to disk, false otherwise.
   */
-  bool writeTofile(const QString& url);
-  
-/** Creates the elements containing the information for a program used to process the data link to the current parameter file.
+    bool writeTofile(const QString& url);
+
+    /** Creates the elements containing the information for a program used to process the data link to the current parameter file.
  * @param programInformation a ProgramInformation containing the program parameter description.
  */
- void setProgramInformation(ProgramInformation& programInformation); 
+    void setProgramInformation(ProgramInformation& programInformation);
 
 private:
 
-  /**The description document.*/    
-  QDomDocument doc;
+    /**The description document.*/
+    QDomDocument doc;
 
-  /**The root element.*/
-  QDomElement root;   
-  
- /**The element containing the information about the program.*/
-  QDomElement program;
-  
+    /**The root element.*/
+    QDomElement root;
+
+    /**The element containing the information about the program.*/
+    QDomElement program;
+
 };
 
 #endif

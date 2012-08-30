@@ -35,41 +35,41 @@
 */
 class ClustersPage : public ClustersLayout
 {
-Q_OBJECT
+    Q_OBJECT
 public:
     ClustersPage(QWidget* parent = 0, const char* name = 0);
     ~ClustersPage();
 
-  /**Sets the number of samples per spike waveform.*/
-  inline void setNbSamples(int nb){nbSamplesLineEdit->setText(QString("%1").arg(nb));};
+    /**Sets the number of samples per spike waveform.*/
+    inline void setNbSamples(int nb){nbSamplesLineEdit->setText(QString("%1").arg(nb));}
 
-  /**Sets the index of the peak sample in the spike waveform.*/
-  inline void setPeakIndex(int index){peakIndexLineEdit->setText(QString("%1").arg(index));};
+    /**Sets the index of the peak sample in the spike waveform.*/
+    inline void setPeakIndex(int index){peakIndexLineEdit->setText(QString("%1").arg(index));}
 
-  /**Returns the number of samples per spike waveform.*/
-  inline int getNbSamples()const{return nbSamplesLineEdit->text().toInt();};
+    /**Returns the number of samples per spike waveform.*/
+    inline int getNbSamples()const{return nbSamplesLineEdit->text().toInt();}
 
-  /**Returns the index of the peak sample in the spike waveform.*/
-  inline int getPeakIndex()const{return peakIndexLineEdit->text().toInt();};
-  
-  /**True if at least one property has been modified, false otherwise.*/
-  inline bool isModified()const{return modified;};
-  
-  /**Indicates that the initialisation is finished.*/
-  inline void initialisationOver(){isInit = false;}
-  
+    /**Returns the index of the peak sample in the spike waveform.*/
+    inline int getPeakIndex()const{return peakIndexLineEdit->text().toInt();}
+
+    /**True if at least one property has been modified, false otherwise.*/
+    inline bool isModified()const{return modified;}
+
+    /**Indicates that the initialisation is finished.*/
+    inline void initialisationOver(){isInit = false;}
+
 public slots:
- 
- /** Will be called when any properties is modified.*/
- inline void propertyModified(){if(!isInit) modified = true;};
-  
- /**Resets the internal modification status to false.*/
- inline void resetModificationStatus(){modified = false;};
-  
- private:
-  QIntValidator intValidator;
-  bool modified;
-  bool isInit;
+
+    /** Will be called when any properties is modified.*/
+    inline void propertyModified(){if(!isInit) modified = true;}
+
+    /**Resets the internal modification status to false.*/
+    inline void resetModificationStatus(){modified = false;}
+
+private:
+    QIntValidator intValidator;
+    bool modified;
+    bool isInit;
 };
 
 #endif

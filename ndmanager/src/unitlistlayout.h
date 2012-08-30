@@ -36,7 +36,7 @@ public:
 
     QPushButton* addUnitButton;
     QPushButton* removeUnitButton;
-	 UnitTable* unitTable;
+    UnitTable* unitTable;
     QLabel* textLabel4_2_2_4_2_2_2;
 
 protected:

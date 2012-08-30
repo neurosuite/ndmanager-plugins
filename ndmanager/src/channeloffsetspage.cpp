@@ -31,33 +31,33 @@
 using namespace std;
 
 ChannelOffsetsPage::ChannelOffsetsPage(QWidget* parent, const char* name)
- : ChannelOffsetsLayout(parent),nbChannels(0),modified(false){
-  for(int i = 0;i<offsetTable->numCols();++i) offsetTable->setColumnStretchable(i,true);
-  
-  connect(offsetTable, SIGNAL(valueChanged(int,int)),this, SLOT(propertyModified()));
-  connect(offsetTable, SIGNAL(doubleClicked(int,int,int,const QPoint&)),this, SLOT(propertyModified()));
- 
+    : ChannelOffsetsLayout(parent),nbChannels(0),modified(false){
+    for(int i = 0;i<offsetTable->numCols();++i) offsetTable->setColumnStretchable(i,true);
+
+    connect(offsetTable, SIGNAL(valueChanged(int,int)),this, SLOT(propertyModified()));
+    connect(offsetTable, SIGNAL(doubleClicked(int,int,int,const QPoint&)),this, SLOT(propertyModified()));
+
 }
 
 ChannelOffsetsPage::~ChannelOffsetsPage(){}
 
 void ChannelOffsetsPage::getOffsets(QMap<int,int>& offsets){
- for(int i =0; i<nbChannels;++i){
-  offsets.insert(i,offsetTable->text(i,0).toInt());
- }
+    for(int i =0; i<nbChannels;++i){
+        offsets.insert(i,offsetTable->text(i,0).toInt());
+    }
 }
- 
- void ChannelOffsetsPage::setOffsets(QMap<int,int>& offsets){  
-  QMap<int,int>::Iterator iterator;
-  //The iterator gives the keys sorted.
-  for(iterator = offsets.begin(); iterator != offsets.end(); ++iterator){
-   int channelId = iterator.key();
-   offsetTable->verticalHeader()->setLabel(channelId,QString("%1").arg(channelId));   
-   Q3TableItem* item = new Q3TableItem(offsetTable,Q3TableItem::OnTyping,QString("%1").arg(iterator.data()));
-   item->setWordWrap(true);
-   offsetTable->setItem(channelId,0,item);
-  }
- }
-    
+
+void ChannelOffsetsPage::setOffsets(QMap<int,int>& offsets){
+    QMap<int,int>::Iterator iterator;
+    //The iterator gives the keys sorted.
+    for(iterator = offsets.begin(); iterator != offsets.end(); ++iterator){
+        int channelId = iterator.key();
+        offsetTable->verticalHeader()->setLabel(channelId,QString("%1").arg(channelId));
+        Q3TableItem* item = new Q3TableItem(offsetTable,Q3TableItem::OnTyping,QString("%1").arg(iterator.data()));
+        item->setWordWrap(true);
+        offsetTable->setItem(channelId,0,item);
+    }
+}
+
 
 #include "channeloffsetspage.moc"
