@@ -29,6 +29,7 @@
 //Added by qt3to4:
 #include <QFrame>
 #include <Q3HBoxLayout>
+#include <QMessageBox>
 
 ndManagerPreferences::ndManagerPreferences(QWidget* parent,const char* name, Qt::WFlags f)
     : KDialogBase(TreeList, tr("ndManager Preferences"),
@@ -67,9 +68,8 @@ void ndManagerPreferences::updateConfiguration(){
 
 
 void ndManagerPreferences::slotDefault() {
-    if(KMessageBox::warningContinueCancel(this, tr("This will set the default options "
-                                                   "in ALL pages of the preferences dialog! Do you wish to continue?"), tr("Set default options?"),
-                                          tr("Set defaults"))==KMessageBox::Continue){
+    if(QMessageBox::warning(this, tr("Set default options?"), tr("This will set the default options "
+                                                   "in ALL pages of the preferences dialog! Do you wish to continue?"))==QMessageBox::Ok){
         
 
         enableApply();   // enable apply button

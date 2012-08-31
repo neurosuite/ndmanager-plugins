@@ -35,6 +35,11 @@ int main(int argc, char **argv)
     QApplication::setOrganizationName("sourceforge");
     QApplication::setOrganizationDomain("sourceforge.net");
     QApplication::setApplicationName("ndmanager");
+
+    QStringList args;
+    for (int i = 1; i < argc; ++i) {
+        args.push_back(QString::fromLocal8Bit(argv[i]));
+    }
     QApplication app(argc, argv);
 #if KDAB_PENDING
     KCmdLineArgs::addCmdLineOptions(options);
@@ -67,5 +72,16 @@ int main(int argc, char **argv)
 #endif
     ndManager* manager = new ndManager();
     manager->show();
+    if(args.count()){
+        QString file = args.at(0);
+        if(file.left(1) != "/"){
+            QString url;
+            url = QDir::currentPath()+ QDir::separator() + file;
+            manager->openDocumentFile(url);
+        } else {
+            manager->openDocumentFile(file);
+        }
+    }
+
     return app.exec();
 }

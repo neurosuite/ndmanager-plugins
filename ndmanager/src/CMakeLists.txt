@@ -17,7 +17,7 @@ set(ndmanager_SRCS
 	helper.cpp 
 	launcherpage.cpp
         lfppage.cpp 
-	#main.cpp 
+	main.cpp 
 	managerview.cpp 
 	miscellaneouspage.cpp
 	#ndmanager.cpp 

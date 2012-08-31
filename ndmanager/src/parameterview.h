@@ -188,7 +188,7 @@ public:
     /**Returns a list containing all the script names.
  * @return script name list.
  */
-    inline const QList<QString>& getFileScriptNames()const{return programNames;};
+    inline const QList<QString>& getFileScriptNames()const{return programNames;}
 
 signals:
     /**
