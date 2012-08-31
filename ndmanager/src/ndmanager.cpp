@@ -258,7 +258,7 @@ void ndManager::openDocumentFile(const QString& url)
     slotStatusMsg(tr("Opening file..."));
 
     filePath = url;
-
+#if KDAB_PENDING
     if(url.protocol() == "file"){
         QFileInfo file(filePath);
         if((fileOpenRecent->items().contains(url.prettyURL())) && !file.exists()){
@@ -284,9 +284,9 @@ void ndManager::openDocumentFile(const QString& url)
         //KDAB_PENDING fileOpenRecent->addURL(url); //hack, unselect the item
         return;
     }
-
+#endif
     //Check if the file exists
-    if(!KStandardDirs::exists(url)){
+    if(!QFile::exists(url)){
         QMessageBox::critical (this, tr("Error!"),tr("The selected file does not exist."));
         //KDAB_PENDING fileOpenRecent-> removeURL(url);
         return;
