@@ -44,10 +44,15 @@
 #include <iostream>
 using namespace std;
 
-ndManager::ndManager():KDockMainWindow(0, "NDManager"),prefDialog(0L),mainDock(0),filePath(""),
-    importedFile(false),newFile(false),managerView(0L){
-    //Gets the configuration object of the application throught the static reference to the application kapp
-    config = kapp->config();
+ndManager::ndManager()
+    :QMainWindow(0, "NDManager"),
+      prefDialog(0L),
+      mainDock(0),
+      filePath(""),
+      importedFile(false),
+      newFile(false),
+      managerView(0L)
+{
 
     //Apply the user settings.
     initializePreferences();
@@ -82,15 +87,39 @@ void ndManager::initializePreferences(){
 void ndManager::setupActions()
 {
 
-    KStdAction::open(this, SLOT(slotFileOpen()), actionCollection());
-    KStdAction::openNew(this, SLOT(slotNewFile()), actionCollection());
-    fileOpenRecent = KStdAction::openRecent(this, SLOT(slotFileOpenRecent(const QString&)), actionCollection());
-    new QAction(tr("&Close"), "fileclose",0,this, SLOT(slotFileClose()),actionCollection(), "file_close");
-    KStdAction::save(this, SLOT(slotSave()), actionCollection());
-    KStdAction::saveAs(this, SLOT(slotSaveAs()), actionCollection());
+    //File Menu
+    QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
 
-    KStdAction::quit(this, SLOT(close()), actionCollection());
-    viewMainToolBar = KStdAction::showToolbar(this, SLOT(slotViewMainToolBar()), actionCollection());
+    mNewAction = fileMenu->addAction(tr("&Open..."));
+    mNewAction->setShortcut(QKeySequence::New);
+    connect(mNewAction, SIGNAL(triggered()), this, SLOT(slotNewOpen()));
+
+
+    mOpenAction = fileMenu->addAction(tr("&Open..."));
+    mOpenAction->setShortcut(QKeySequence::Open);
+    connect(mOpenAction, SIGNAL(triggered()), this, SLOT(slotFileOpen()));
+
+
+    //KDAB_PENDING fileOpenRecent = KStdAction::openRecent(this, SLOT(slotFileOpenRecent(const QString&)), actionCollection());
+
+    mCloseAction = fileMenu->addAction(tr("Close"));
+    mCloseAction->setShortcut(QKeySequence::Close);
+    connect(mCloseAction, SIGNAL(triggered()), this, SLOT(slotFileClose()));
+
+    mSaveAction = fileMenu->addAction(tr("Save..."));
+    mSaveAction->setShortcut(QKeySequence::Save);
+    connect(mSaveAction, SIGNAL(triggered()), this, SLOT(slotSave()));
+
+    mSaveAsAction = fileMenu->addAction(tr("&Save As..."));
+    mSaveAsAction->setShortcut(QKeySequence::SaveAs);
+    connect(mSaveAsAction, SIGNAL(triggered()), this, SLOT(slotSaveAs()));
+
+
+    mQuitAction = fileMenu->addAction(tr("Quit"));
+    mQuitAction->setShortcut(QKeySequence::Print);
+    connect(mQuitAction, SIGNAL(triggered()), this, SLOT(close()));
+
+    //KDAB_PENDING viewMainToolBar = KStdAction::showToolbar(this, SLOT(slotViewMainToolBar()), actionCollection());
 
     viewStatusBar = settingsMenu->addAction(tr("Show StatusBar"));
     viewStatusBar->setCheckable(true);
@@ -101,21 +130,34 @@ void ndManager::setupActions()
 
     //Custom actions and menus
     //File menu
-    new QAction(tr("Use &Template..."),0,this,SLOT(slotImport()),actionCollection(),"import");
-    new QAction(tr("&Reload"),"F5",this,SLOT(slotReload()),actionCollection(),"reload");
-    new QAction(tr("Save as &Default"),0,this,SLOT(slotSaveDefault()),actionCollection(),"save_as_default");
 
-    //the Query menu
-    new QAction(tr("&Query"),0,this,SLOT(slotQuery()),actionCollection(),"query");
+    mUseTemplateAction = fileMenu->addAction(tr("Use &Template..."));
+    connect(mUseTemplateAction, SIGNAL(triggered()), this, SLOT(slotImport()));
+
+    mReloadAction = fileMenu->addAction(tr("&Reload"));
+    mReloadAction->setShortcut(Qt::Key_F5);
+    connect(mReloadAction, SIGNAL(triggered()), this, SLOT(slotReload()));
+
+    mSaveAsDefaultAction = fileMenu->addAction(tr("Save as &Default"));
+    connect(mSaveAsDefaultAction, SIGNAL(triggered()), this, SLOT(slotSaveDefault()));
+
+
+    QMenu *actionMenu = menuBar()->addMenu(tr("&Actions"));
+    mQueryAction = actionMenu->addAction(tr("&Query"));
+    connect(mQueryAction, SIGNAL(triggered()), this, SLOT(slotQuery()));
+
 
     //Processing menu
-    new QAction(tr("Show Processing Manager"),0,this,SLOT(createManagerView()),actionCollection(),"processingManager");
+    QMenu *processingMenu = menuBar()->addMenu(tr("&Processing"));
+    mProcessingManager = processingMenu->addAction(tr("Show Processing Manager"));
 
     //Settings
-    expertMode = new QAction(tr("&Expert Mode"),0,this,SLOT(slotExpertMode()),actionCollection(),"expert");
+    QMenu *settingsMenu = menuBar()->addMenu("&Settings");
+    mExpertMode = settingsMenu->addAction(tr("&Expert Mode"));
+#if KDAB_PENDING
     config->setGroup("General");
     expertMode->setChecked(config->readBoolEntry("expertMode"));
-
+#endif
 
     QMenu *helpMenu = menuBar()->addMenu(tr("Help"));
     QAction *about = helpMenu->addAction(tr("About"));
@@ -131,35 +173,6 @@ void ndManager::initStatusBar()
     statusBar()->showMessage(tr("Ready."));
 }
 
-void ndManager::saveProperties()
-{
-#if KDAB_PENDING
-    //Save the recent file list
-    fileOpenRecent->saveEntries(config);
-    config->writePathEntry("openFile",filePath);
-
-    //Save the curent mode
-    this->config->setGroup("General");
-    this->config->writeEntry("expertMode",expertMode->isChecked());
-#endif
-}
-
-void ndManager::readProperties()
-{
-#if KDAB_PENDING
-    // initialize the recent file list
-    fileOpenRecent->loadEntries(config);
-    filePath = config->readPathEntry("openFile");
-
-    //Read out the mode
-    this->config->setGroup("General");
-    expertMode->setChecked(this->config->readBoolEntry("expertMode"));
-
-    QString url;
-    url.setPath(filePath);
-    openDocumentFile(url);
-#endif
-}
 
 void ndManager::slotStatusMsg(const QString &text)
 {

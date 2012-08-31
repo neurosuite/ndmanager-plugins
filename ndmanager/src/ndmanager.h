@@ -105,20 +105,6 @@ public:
  */
     inline ParameterView* getParameterView(){return parameterView;}
 
-protected:
-    /**
-   * This function is called when it is time for the app to save its
-   * properties for session management purposes.
-   */
-    void saveProperties();
-
-    /**
-   * This function is called when this app is restored.  The KConfig
-   * object points to the session management config file that was saved
-   * with @ref saveProperties
-   */
-    void readProperties();
-
 public slots:
 
     void slotStateChanged(const QString& state);
@@ -261,6 +247,17 @@ private:
     QAction* viewToolBar;
     QAction* viewStatusBar;
     QAction* expertMode;
+    QAction* mOpenAction;
+    QAction* mCloseAction;
+    QAction* mSaveAction;
+    QAction* mSaveAsAction;
+    QAction* mQuitAction;
+    QAction* mUseTemplateAction;
+    QAction* mReloadAction;
+    QAction* mSaveAsDefaultAction;
+    QAction* mNewAction;
+    QAction* mQueryAction;
+    QAction* mProcessingManager;
 
     /**Stores if the current file has been imported and therefore needs to be saved under a new name.*/
     bool importedFile;
