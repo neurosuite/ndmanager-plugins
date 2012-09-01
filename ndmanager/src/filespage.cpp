@@ -32,8 +32,8 @@
 #include <Q3PtrList>
 
 //General C++ include files
-#include <iostream>
-using namespace std;
+
+
 
 FilesPage::FilesPage(QWidget* parent, const char *name)
  : QFrame(parent, name){

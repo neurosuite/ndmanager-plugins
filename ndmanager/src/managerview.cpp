@@ -39,10 +39,10 @@
 #include <QMessageBox>
 
 //General C++ include files
-#include <iostream>
 
 
-using namespace std;
+
+
 
 ManagerView::ManagerView(QWidget *parent, const char *name)
     : QFrame(parent, name),isUptoDate(true){

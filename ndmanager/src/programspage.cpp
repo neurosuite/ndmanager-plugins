@@ -36,8 +36,8 @@
 #include <QMessageBox>
 
 //General C++ include files
-#include <iostream>
-using namespace std;
+
+
 
 
 ProgramsPage::ProgramsPage(bool expertMode,QWidget *parent, const char *name)

@@ -43,8 +43,8 @@
 
 
 //General C++ include files
-#include <iostream>
-using namespace std;
+
+
 
 ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const char* name)
     : QFrame(parent, name),sciptIsModified(false),isInit(true),programName(name),helpIsModified(false),descriptionNotSaved(true),expertMode(expertMode){
@@ -141,7 +141,7 @@ bool ProgramPage::saveProgramScript(){
     bool recall = false;
     //find the file corresponding to the program name
     QString name = parameters->getProgramName();
-    QString path = NdManagerUtils::findExecutable(name,getenv("PATH"));
+    QString path = NdManagerUtils::findExecutable(name,QStringList()<<QString::fromLocal8Bit(getenv("PATH")));
     QString message = "";
     QString title = "";
     QString scriptUrl;
@@ -183,10 +183,10 @@ void ProgramPage::saveProgramParameters(){
     //for the new save
     if(descriptionUrl.isEmpty()){
         QString descriptionUrlTmp;
-        descriptionUrlTmp.setPath(QDir::currentPath());
+        descriptionUrlTmp = QDir::currentPath();
         QString name = parameters->getProgramName();
         name.append(".xml");
-        descriptionUrlTmp.setFileName(name);
+        descriptionUrlTmp += QDir::separator() + name;
         descriptionUrl = QFileDialog::getSaveFileName(this, tr("Save as..."),descriptionUrlTmp,tr("*.xml|Xml Files"));
     }
     else{
@@ -205,8 +205,8 @@ void ProgramPage::saveProgramParameters(){
         descriptionWriter.setProgramInformation(programInformation);
         bool status = descriptionWriter.writeTofile(descriptionUrl);
         if(!status){
-            QString message = tr("The file %1 could not be saved possibly because of insufficient file access permissions.").arg(descriptionUrl.fileName());
-            QMessageBox::critical (this, tr("IO Error!"),tr(message));
+            QString message = tr("The file %1 could not be saved possibly because of insufficient file access permissions.").arg(descriptionUrl);
+            QMessageBox::critical (this, tr("IO Error!"),message);
         }
         descriptionNotSaved = false;
     }
@@ -238,7 +238,7 @@ void ProgramPage::nameChanged(const QString& name){
         //in expert mode, update the script
         if(expertMode){
             //find the file corresponding to the program name
-            QString path = NdManagerUtils::findExecutable(name,getenv("PATH"));
+            QString path = NdManagerUtils::findExecutable(name,QStringList()<<QString::fromLocal8Bit(getenv("PATH")));
 
             if(!path.isNull()){
                 QFile file(path);

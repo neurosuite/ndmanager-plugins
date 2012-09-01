@@ -33,8 +33,8 @@ class QPushButton;
 class QTextEdit;
 
 //General C++ include files
-#include <iostream>
-using namespace std;
+
+
 
 /**
 @author Lynn Hazan

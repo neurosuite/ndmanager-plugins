@@ -25,8 +25,8 @@
 #include <qstring.h> 
 
 //General C++ include files
-#include <iostream>
-using namespace std;
+
+
 
 /**
 * Class storing the information contained in the General Information part of the parameter file.

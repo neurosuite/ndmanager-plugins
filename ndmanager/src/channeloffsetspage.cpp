@@ -27,8 +27,8 @@
 // include files for KDE
 
 //General C++ include files
-#include <iostream>
-using namespace std;
+
+
 
 ChannelOffsetsPage::ChannelOffsetsPage(QWidget* parent, const char* name)
     : ChannelOffsetsLayout(parent),nbChannels(0),modified(false){

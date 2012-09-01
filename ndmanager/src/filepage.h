@@ -37,8 +37,8 @@
 
 
 //General C++ include files
-#include <iostream>
-using namespace std;
+
+
 
 /**
 * Class used to represent a new file created out of the raw data contained in the .dat file.

@@ -41,8 +41,8 @@
 #include "queryoutputdialog.h"
 
 //General C++ include files
-#include <iostream>
-using namespace std;
+
+
 
 ndManager::ndManager()
     :QMainWindow(0, "NDManager"),

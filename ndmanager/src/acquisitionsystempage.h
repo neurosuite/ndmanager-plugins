@@ -32,10 +32,8 @@
 #include <qlineedit.h>
 #include <qvalidator.h>
 
-// include files for KDE
 
-#include <iostream>
-using namespace std;
+
 
 /**
 @author Lynn Hazan
@@ -52,12 +50,12 @@ public:
   inline void setNbChannels(int nb){
    nbChannels = nb;
    nbChannelsLineEdit->setText(QString("%1").arg(nb));
-  };
+  }
 
   /**Sets the sampling rate.*/
   inline void setSamplingRate(double rate){ 
   samplingRateLineEdit->setText(Helper::doubleToString(rate));
-  };
+  }
 
   /**Sets the resolution of the acquisition system.*/
    inline void setResolution(int res){
@@ -78,28 +76,28 @@ public:
          resolutionComboBox->setCurrentItem(2);
          break;
     }
-   };
+   }
    
   /**Sets the initial offset for all the field potentials.*/
-  inline void setOffset(int offset){offsetLineEdit->setText(QString("%1").arg(offset));};
+  inline void setOffset(int offset){offsetLineEdit->setText(QString("%1").arg(offset));}
 
   /**Sets the voltage range of the acquisition system in milivolts.
   */
   inline void setVoltageRange(int value){
    voltageRangeLineEdit->setText(QString("%1").arg(value));
-  };
+  }
 
   /**Sets the amplification of the acquisition system.
   */
   inline void setAmplification(int value){
    amplificationLineEdit->setText(QString("%1").arg(value));
-  };
+  }
 
   /**Returns the number of channels.*/
-  inline int getNbChannels() const{return nbChannelsLineEdit->text().toInt();};
+  inline int getNbChannels() const{return nbChannelsLineEdit->text().toInt();}
 
   /**Returns the sampling rate.*/
-  inline double getSamplingRate() const{return samplingRateLineEdit->text().toDouble();};
+  inline double getSamplingRate() const{return samplingRateLineEdit->text().toDouble();}
  
   /**Returns the resolution of the acquisition system.*/
   inline int getResolution()const{
@@ -115,25 +113,25 @@ public:
       default:
         return 16;
    }    
-  };
+  }
   
   /**Returns the initial offset for all the field potentials.*/
-  inline int getOffset() const{return offsetLineEdit->text().toInt();};
+  inline int getOffset() const{return offsetLineEdit->text().toInt();}
   
   /**Returns the voltage range of the acquisition system in volts.
   */
   inline int getVoltageRange() const{
    return voltageRangeLineEdit->text().toInt();
-  };
+  }
 
   /**Returns the amplification of the acquisition system.
   */
   inline int getAmplification() const{
    return amplificationLineEdit->text().toInt();
-  };
+  }
  
   /**True if at least one property has been modified, false otherwise.*/
-  inline bool isModified()const{return modified;};
+  inline bool isModified()const{return modified;}
  
   /**Checks if the number of channels has changed.*/
   void checkNbChannels();
@@ -146,13 +144,13 @@ public:
    void nbChannelsLineEditLostFocus(); 
   
    /** Will be called when any properties except the number of channels has been modified.*/
-  inline void propertyModified(){if(!isInit) modified = true;};
+  inline void propertyModified(){if(!isInit) modified = true;}
 
   /**Indicates that the initialisation is finished.*/
   inline void initialisationOver(){isInit = false;}
     
   /**Resets the internal modification status to false.*/
-  inline void resetModificationStatus(){modified = false;};
+  inline void resetModificationStatus(){modified = false;}
    
   signals:
    /*Signals that the number of channels has been modified.

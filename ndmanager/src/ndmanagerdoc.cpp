@@ -36,8 +36,8 @@
 #include "parameterview.h"
 
 //General C++ include files
-#include <iostream>
-using namespace std;
+
+
 
 using namespace ndmanager;
 
@@ -138,10 +138,13 @@ ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::openDocument(const QStri
 
 ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::newDocument(){
     //If the user has no local version of the file the system default is used
+#if KDAB_PENDING
     QString path = locate("appdata","ndManagerDefault.xml");
-
+#endif
     QString url;
+#if KDAB_PENDING    
     url.setPath(path);
+#endif
     return openDocument(url);
 }
 
@@ -204,10 +207,14 @@ ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::save(QString url){
 }
 
 ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::saveDefault(){
+#if KDAB_PENDING	
     //The file is save in the user local directory (.kde))
     QString path = locateLocal("appdata","ndManagerDefault.xml");
+#endif
     QString url;
+#if KDAB_PENDING
     url.setPath(path);
+#endif
 
     return save(url);
 }

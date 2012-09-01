@@ -36,8 +36,8 @@
 // include files for KDE
 
 //General C++ include files
-#include <iostream>
-using namespace std;
+
+
 
 /**
 * Class used to represent the information linked to the spike groups.

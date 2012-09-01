@@ -29,8 +29,8 @@
 #include <QList>
 
 //General C++ include files
-#include <iostream>
-using namespace std;
+
+
 using namespace ndmanager;
 
 SpikePage::SpikePage(QWidget* parent, const char *name)

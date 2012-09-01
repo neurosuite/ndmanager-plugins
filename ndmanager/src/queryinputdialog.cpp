@@ -27,18 +27,20 @@
 
 
 //General C++ include files
-#include <iostream>
-using namespace std;
+
+
 
 QueryInputDialog::QueryInputDialog(QWidget *parent,const QString& caption,const QString& urltext) :
-    QDialog(parent,"Query",true,caption,Ok|Cancel,Ok,true)
+    QDialog(parent)
 {
     setWindowTitle(caption);
     setModal(true);
 
+    QHBoxLayout *lay = new QHBoxLayout;
+    setLayout(lay);
     page = new QWidget(this);
-    setMainWidget(page);
-    layout = new Q3VBoxLayout(page,0,spacingHint());
+    lay->addWidget(page);
+    layout = new Q3VBoxLayout(page,0);
 
     QLabel *label1 = new QLabel(tr("Query"),page,"query_label");
     layout->addWidget(label1);

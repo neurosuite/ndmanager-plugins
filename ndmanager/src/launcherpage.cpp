@@ -25,10 +25,10 @@
 #include <qstringlist.h> 
 
 //General C++ include files
-#include <iostream>
+
 #include <QDebug>
 
-using namespace std;
+
 
 LauncherPage::LauncherPage(const QString url,QWidget* parent,const char* name)
     : LauncherLayout(parent){

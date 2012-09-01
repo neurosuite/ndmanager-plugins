@@ -22,8 +22,8 @@
 #include <QMessageBox>
 
 //General C++ include files
-#include <iostream>
-using namespace std;
+
+
 
 
 AcquisitionSystemPage::AcquisitionSystemPage(QWidget *parent, const char *name)
