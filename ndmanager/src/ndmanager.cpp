@@ -187,8 +187,10 @@ void ndManager::slotViewMainToolBar()
     slotStatusMsg(tr("Toggle the main toolbar..."));
 
     // turn Toolbar on or off
-    if(!viewMainToolBar->isChecked()) toolBar("mainToolBar")->hide();
-    else toolBar("mainToolBar")->show();
+    if(!viewMainToolBar->isChecked())
+        toolBar("mainToolBar")->hide();
+    else
+        toolBar("mainToolBar")->show();
 
     slotStatusMsg(tr("Ready."));
 }
@@ -199,8 +201,10 @@ void ndManager::slotViewStatusBar()
     slotStatusMsg(tr("Toggle the statusbar..."));
     ///////////////////////////////////////////////////////////////////
     //turn Statusbar on or off
-    if(!viewStatusBar->isChecked()) statusBar()->hide();
-    else statusBar()->show();
+    if(!viewStatusBar->isChecked())
+        statusBar()->hide();
+    else
+        statusBar()->show();
 
     slotStatusMsg(tr("Ready."));
 }
@@ -212,7 +216,8 @@ void ndManager::slotFileOpen()
 
     QString url=QFileDialog::getOpenFileName(this, tr("Open File..."),QString(),
                                              tr("*.xml|Parameter File (*.xml)\n*|All files") );
-    if(!url.isEmpty()) openDocumentFile(url);
+    if(!url.isEmpty())
+        openDocumentFile(url);
 
     slotStatusMsg(tr("Ready."));
 }
