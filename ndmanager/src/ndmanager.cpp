@@ -262,33 +262,21 @@ void ndManager::openDocumentFile(const QString& url)
     slotStatusMsg(tr("Opening file..."));
 
     filePath = url;
-#if KDAB_PENDING
-    if(url.protocol() == "file"){
-        QFileInfo file(filePath);
-        if((fileOpenRecent->items().contains(url.prettyURL())) && !file.exists()){
-            QString title = "File not found: ";
-            title.append(filePath);
-            int answer = QMessageBox::question(this,tr("The selected file no longer exists. Do you want to remove it from the list of recent opened files ?"), tr(title));
-            if(answer == QMessageBox::Yes){
-                QString* urlB = new QString();
-                urlB->setPath(url.url());
-                mFileOpenRecent->removeRecentFile(url);
-            }
-            else  {
-                mFileOpenRecent->addRecentFile(url); //hack, unselect the item
-            }
-            filePath = "";
-
-            return;
+    QFileInfo file(filePath);
+    if(!file.exists()){
+        QString title = tr("File not found: ");
+        title.append(filePath);
+        int answer = QMessageBox::question(this,tr("The selected file no longer exists. Do you want to remove it from the list of recent opened files ?"), title);
+        if(answer == QMessageBox::Yes){
+            mFileOpenRecent->removeRecentFile(url);
         }
-    }
-    //Do not handle remote files
-    else{
-        QMessageBox::critical(this,tr("Remote file handling"),tr("Sorry, NDManager does not handle remote files."));
-        //KDAB_PENDING fileOpenRecent->addURL(url); //hack, unselect the item
+        else  {
+            mFileOpenRecent->addRecentFile(url); //hack, unselect the item
+        }
+        filePath.clear();
+
         return;
     }
-#endif
     //Check if the file exists
     if(!QFile::exists(url)){
         QMessageBox::critical (this, tr("Error!"),tr("The selected file does not exist."));
