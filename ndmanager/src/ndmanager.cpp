@@ -66,8 +66,6 @@ ndManager::ndManager()
     initStatusBar();
 
 
-    // initialize the recent file list
-    //KDAB_PENDING fileOpenRecent->loadEntries(config);
 
     //Disable some actions at startup (see the ndManager.rc file)
     slotStateChanged("initState");
@@ -99,8 +97,9 @@ void ndManager::setupActions()
     mOpenAction->setShortcut(QKeySequence::Open);
     connect(mOpenAction, SIGNAL(triggered()), this, SLOT(slotFileOpen()));
 
-
-    //KDAB_PENDING fileOpenRecent = KStdAction::openRecent(this, SLOT(slotFileOpenRecent(const QString&)), actionCollection());
+    mFileOpenRecent = new QRecentFileAction(this);
+    fileMenu->addAction(mFileOpenRecent);
+    connect(mFileOpenRecent, SIGNAL(recentFileSelected(QString)), this, SLOT(slotFileOpenRecent(QString)));
 
     mCloseAction = fileMenu->addAction(tr("Close"));
     mCloseAction->setShortcut(QKeySequence::Close);
@@ -273,10 +272,10 @@ void ndManager::openDocumentFile(const QString& url)
             if(answer == QMessageBox::Yes){
                 QString* urlB = new QString();
                 urlB->setPath(url.url());
-                //KDAB_PENDING fileOpenRecent->removeURL(url);
+                mFileOpenRecent->removeRecentFile(url);
             }
             else  {
-                //KDAB_PENDING fileOpenRecent->addURL(url); //hack, unselect the item
+                mFileOpenRecent->addRecentFile(url); //hack, unselect the item
             }
             filePath = "";
 
@@ -293,7 +292,7 @@ void ndManager::openDocumentFile(const QString& url)
     //Check if the file exists
     if(!QFile::exists(url)){
         QMessageBox::critical (this, tr("Error!"),tr("The selected file does not exist."));
-        //KDAB_PENDING fileOpenRecent-> removeURL(url);
+        mFileOpenRecent-> removeRecentFile(url);
         return;
     }
 
@@ -301,7 +300,7 @@ void ndManager::openDocumentFile(const QString& url)
 
     //If no document is open already, open the document asked.
     if(!mainDock){
-        //KDAB_PENDING fileOpenRecent->addURL(url);
+        mFileOpenRecent->addRecentFile(url);
 
         //Open the file (that will also initialize the document)
         int returnStatus = doc->openDocument(url);
@@ -325,13 +324,13 @@ void ndManager::openDocumentFile(const QString& url)
         QString path = doc->url();
 
         if(path == url){
-            //KDAB_PENDING fileOpenRecent->addURL(url); //hack, unselect the item
+            mFileOpenRecent->addRecentFile(url); //hack, unselect the item
             QApplication::restoreOverrideCursor();
             return;
         }
         //If the document asked is not the already open. Open a new instance of the application with it.
         else{
-            //KDAB_PENDING fileOpenRecent->addURL(url);
+            mFileOpenRecent->addRecentFile(url);
             //Save the recent file list
             fileOpenRecent->saveEntries(config);
             filePath = path;

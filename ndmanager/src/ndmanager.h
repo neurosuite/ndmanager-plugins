@@ -31,6 +31,7 @@
 
 #include <QProcess>
 #include <QMainWindow>
+#include <qrecentfileaction.h>
 
 // application specific includes
 #include "parameterview.h"
@@ -258,6 +259,8 @@ private:
     QAction* mNewAction;
     QAction* mQueryAction;
     QAction* mProcessingManager;
+
+    QRecentFileAction *mFileOpenRecent;
 
     /**Stores if the current file has been imported and therefore needs to be saved under a new name.*/
     bool importedFile;

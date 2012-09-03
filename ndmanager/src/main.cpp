@@ -41,35 +41,6 @@ int main(int argc, char **argv)
         args.push_back(QString::fromLocal8Bit(argv[i]));
     }
     QApplication app(argc, argv);
-#if KDAB_PENDING
-    KCmdLineArgs::addCmdLineOptions(options);
-    KApplication app;
-
-    version = VERSION;
-
-    // see if we are starting with session management
-    if (app.isRestored()){RESTORE(ndManager);}
-    else{
-     // no session.. just start up normally
-     ndManager* manager = new ndManager();
-     KCmdLineArgs* args = KCmdLineArgs::parsedArgs();
-
-     //If there is an argument provided it is the name of the file.
-     if(args->count()){
-       QString file = args->arg(0);
-       if(file.left(1) != "/"){
-        QString url = QString();
-        url.setPath((QDir::currentPath()).append("/"));
-        url.setFileName(file);
-        manager->openDocumentFile(url);
-       }
-       else  manager->openDocumentFile(file);
-     }
-     args->clear();
-     manager->show();
-    }
-
-#endif
     ndManager* manager = new ndManager();
     manager->show();
     if(args.count()){
