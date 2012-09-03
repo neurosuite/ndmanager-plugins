@@ -22,7 +22,7 @@ set(ndmanager_SRCS
 	miscellaneouspage.cpp
 	ndmanager.cpp 
 	ndmanagerdoc.cpp
-        neuroscopevideoinfo.cpp 
+	neuroscopevideoinfo.cpp 
 	neuroscopevideopage.cpp
         parameterpage.cpp 
 	parameterview.cpp 
