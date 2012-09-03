@@ -69,7 +69,7 @@ public:
     void getGroupInformation(QMap<int,  QMap<QString,QString> >& groupInformation)const;
 
     /**True if at least one property has been modified, false otherwise.*/
-    inline bool isModified()const{return modified;};
+    inline bool isModified()const{return modified;}
 
     /**Returns the current number of group of spikes.
 */
@@ -98,7 +98,7 @@ public slots:
             groupTable->setItem(groupTable->numRows() - 1,i,item);
         }
         emit nbGroupsModified(groupTable->numRows());
-    };
+    }
 
     /**Removes the selected lines from the group table.*/
     void removeGroup();
@@ -146,10 +146,10 @@ public slots:
     };
 
     /** Will be called when any properties is modified.*/
-    inline void propertyModified(){modified = true;};
+    inline void propertyModified(){modified = true;}
 
     /**Resets the internal modification status to false.*/
-    inline void resetModificationStatus(){modified = false;};
+    inline void resetModificationStatus(){modified = false;}
 
 private:
     bool isIncorrectRow;

@@ -54,5 +54,7 @@ int main(int argc, char **argv)
         }
     }
 
-    return app.exec();
+    const int ret = app.exec();
+    delete manager;
+    return ret;
 }

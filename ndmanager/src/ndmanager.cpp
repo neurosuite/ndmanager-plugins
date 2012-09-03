@@ -527,7 +527,8 @@ bool ndManager::queryClose()
     config->setGroup("General");
     config->writeEntry("expertMode",expertMode->isChecked());
 
-    if(doc == 0 || mainDock == 0L) return true;
+    if(doc == 0 || mainDock == 0L)
+        return true;
     else{
         //check first if some scripts have been modified
         QList<QString> scriptModified = parameterView->modifiedScripts();

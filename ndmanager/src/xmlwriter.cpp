@@ -223,7 +223,8 @@ void XmlWriter::setFilesInformation(QList<FileInformation>& fileList){
             channelMapping.appendChild(originalChannels);
         }
 
-        if(mapping.size() != 0) fileElement.appendChild(channelMapping);
+        if(mapping.size() != 0)
+            fileElement.appendChild(channelMapping);
         files.appendChild(fileElement);
     }
 }

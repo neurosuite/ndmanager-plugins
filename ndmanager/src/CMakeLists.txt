@@ -17,9 +17,9 @@ set(ndmanager_SRCS
 	helper.cpp 
 	launcherpage.cpp
         lfppage.cpp 
-	main.cpp 
-	managerview.cpp 
-	miscellaneouspage.cpp
+	#main.cpp 
+	#managerview.cpp 
+	#miscellaneouspage.cpp
 	ndmanager.cpp 
 	ndmanagerdoc.cpp
 	neuroscopevideoinfo.cpp 
