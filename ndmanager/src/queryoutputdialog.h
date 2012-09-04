@@ -20,11 +20,7 @@
 #ifndef QUERYOUTPUTDIALOG_H
 #define QUERYOUTPUTDIALOG_H
 
-#include <qlayout.h>
-#include <qlabel.h>
-#include <qlineedit.h>
-#include <QDialog>
-#include <q3vbox.h>
+#include <qpagedialog.h>
 //#include <QWebView>
 
 /**
@@ -32,18 +28,17 @@ Dialog used to display result from query.
 
     @author Michaël Zugaro <michael.zugaro@college-de-france.fr>
 */
-class QueryOutputDialog : public QDialog
+class QueryOutputDialog : public QPageDialog
 {
     Q_OBJECT
 public:
     QueryOutputDialog(const QString& htmlText,const QString& queryResult,QWidget *parent = 0,const QString& caption = tr("Query"),const QString& urltext = QString());
     virtual ~QueryOutputDialog();
 public slots:
-    virtual void slotUser1();
-    virtual void slotUser2();
+    void slotUser1();
+    void slotUser2();
 
 private:
-    Q3VBox			*vbox;
     QWebView        *html;
     QString		htmlText;
     QString		queryResult;
