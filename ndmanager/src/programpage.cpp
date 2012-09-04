@@ -244,16 +244,14 @@ void ProgramPage::nameChanged(const QString& name){
                 QFile file(path);
                 if(!file.open(QIODevice::ReadOnly)){
                     message = tr("The file %1 is not readable.").arg(name);
-                    title = "IO Error!";
-                    scriptDoc->closeURL();
-                    scriptView->setText("");
+                    title = tr("IO Error!");
+                    scriptView->clear();
                 }
                 else{
                     QTextStream stream(&file);
                     QString firstLine = stream.readLine();
                     int i = firstLine.find(QRegExp("^#!"));
                     if(i != -1){
-                        scriptDoc->openURL(path);
                         file.close();
                         //Setting the content of the KTextEdit (named script) will trigger a scriptModified and therefore set sciptIsModified to true. The initial load of the script
                         //should no be considered as a modification.
@@ -261,17 +259,15 @@ void ProgramPage::nameChanged(const QString& name){
                     }
                     else{
                         message =  tr("The file %1 does not appear to be a script file (a script file should begin with #!).").arg(name);
-                        title = "IO Error!";
-                        scriptDoc->closeURL();
-                        scriptView->setText("");
+                        title = tr("IO Error!");
+                        scriptView->clear();
                     }
                 }
             }
             else{
                 message =  tr("The file %1 could not be found in your PATH.").arg(name);
-                title = "IO Error!";
-                scriptDoc->closeURL();
-                scriptView->setText("");
+                title = tr("IO Error!");
+                scriptView->clear();
                 //Setting the content of the KTextEdit (named script) will trigger a scriptModified and therefore set sciptIsModified to true. The initial load of the script
                 //should no be considered as a modification.
                 sciptIsModified = false;
@@ -284,11 +280,13 @@ void ProgramPage::nameChanged(const QString& name){
 }
 
 void ProgramPage::tabChange(QWidget * page){
+#if KDAB_PENDING
     if(page == scriptView){
         emit scriptShown(scriptView);
     } else {
         emit scriptHidden();
     }
+#endif
 }
 
 
