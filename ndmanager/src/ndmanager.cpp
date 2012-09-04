@@ -30,7 +30,8 @@
 #include <QMessageBox>
 #include <QStatusBar>
 #include <QProcess>
-
+#include <QMenu>
+#include <QMenuBar>
 
 
 

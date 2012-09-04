@@ -20,18 +20,18 @@ set(ndmanager_SRCS
 	#main.cpp 
 	#managerview.cpp 
 	#miscellaneouspage.cpp
-	ndmanager.cpp 
-	ndmanagerdoc.cpp
+	#ndmanager.cpp 
+	#ndmanagerdoc.cpp
 	neuroscopevideoinfo.cpp 
 	neuroscopevideopage.cpp
         parameterpage.cpp 
-	parameterview.cpp 
+	#parameterview.cpp 
 	pref.cpp 
 	programinformation.cpp 
 	programspage.cpp
-	programpage.cpp	
+	#programpage.cpp	
 	queryinputdialog.cpp 
-	queryoutputdialog.cpp 
+	#queryoutputdialog.cpp 
 	spikepage.cpp
         tags.cpp 
 	unitlistlayout.cpp 

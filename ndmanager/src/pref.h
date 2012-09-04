@@ -21,13 +21,13 @@
 #ifndef _NDMANAGERPREF_H_
 #define _NDMANAGERPREF_H_
 
-#include <QDialog>
+#include <qpagedialog.h>
 #include <QFrame>
 
 class ndManagerPrefPageOne;
 class ndManagerPrefPageTwo;
 
-class ndManagerPreferences : public QDialog
+class ndManagerPreferences : public QPageDialog
 {
     Q_OBJECT
 public:

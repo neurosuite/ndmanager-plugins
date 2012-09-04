@@ -24,7 +24,7 @@
 
 #include <QWebSettings>
 
-QueryOutputDialog::QueryOutputDialog(QString htmlText,QString queryResult,QWidget *parent,const QString& caption,const QString& urltext) :
+QueryOutputDialog::QueryOutputDialog(const QString& htmlText,const QString& queryResult,QWidget *parent,const QString& caption,const QString& urltext) :
     KDialogBase(parent,"Query Results",true,caption,Ok|User1|User2,Ok,true,KGuiItem(tr("Save As Text")),KGuiItem(tr("Save As HTML"))),
     htmlText(htmlText),
     queryResult(queryResult)

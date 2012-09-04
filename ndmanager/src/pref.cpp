@@ -32,22 +32,34 @@
 #include <QMessageBox>
 
 ndManagerPreferences::ndManagerPreferences(QWidget* parent,const char* name, Qt::WFlags f)
-    : KDialogBase(TreeList, tr("ndManager Preferences"),
-                  Help|Default|Ok|Apply|Cancel,Ok, parent, name, f)
+    : QPageDialog(parent)
 {
-    setHelp("settings","ndManager");
+    setButtons(Help | Default | Ok | Apply | Cancel);
+    setDefaultButton(Ok);
+    setFaceType(Tree);
+    setCaption(tr("ndManager Preferences"));
 
-    QFrame *frame;
-    frame = addPage(tr("First Page"), tr("Page One Options"));
-    m_pageOne = new ndManagerPrefPageOne(frame);
 
-    frame = addPage(tr("Second Page"), tr("Page Two Options"));
-    m_pageTwo = new ndManagerPrefPageTwo(frame);
+    QWidget * w = new QWidget(this);
+    m_pageOne = new ndManagerPrefPageOne(w);
+    QPageWidgetItem *item = new QPageWidgetItem(m_pageOne,tr("First Page"));
+    item->setHeader(tr("Page One Options"));
+    addPage(item);
+
+    w = new QWidget(this);
+    m_pageTwo = new ndManagerPrefPageTwo(w);
+    item = new QPageWidgetItem(m_pageTwo,tr("Second Page"));
+    item->setHeader(tr("Page Two Options"));
+    addPage(item);
 
     // connect interactive widgets and selfmade signals to the enableApply slotDefault
     // connect(prefGeneral->headerCheckBox,SIGNAL(clicked()),this,SLOT(enableApply()));
 
     applyEnable = false;
+
+    connect(this, SIGNAL(applyClicked()), SLOT(slotApply()));
+    connect(this, SIGNAL(defaultClicked()), SLOT(slotDefault()));
+
 }
 
 
@@ -69,8 +81,8 @@ void ndManagerPreferences::updateConfiguration(){
 
 void ndManagerPreferences::slotDefault() {
     if(QMessageBox::warning(this, tr("Set default options?"), tr("This will set the default options "
-                                                   "in ALL pages of the preferences dialog! Do you wish to continue?"))==QMessageBox::Ok){
-        
+                                                                 "in ALL pages of the preferences dialog! Do you wish to continue?"))==QMessageBox::Ok){
+
 
         enableApply();   // enable apply button
     }

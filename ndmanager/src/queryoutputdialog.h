@@ -25,7 +25,7 @@
 #include <qlineedit.h>
 #include <QDialog>
 #include <q3vbox.h>
-#include <QWebView>
+//#include <QWebView>
 
 /**
 Dialog used to display result from query.
@@ -36,7 +36,7 @@ class QueryOutputDialog : public QDialog
 {
     Q_OBJECT
 public:
-    QueryOutputDialog(QString htmlText,QString queryResult,QWidget *parent = 0,const QString& caption = "Query",const QString& urltext = "");
+    QueryOutputDialog(const QString& htmlText,const QString& queryResult,QWidget *parent = 0,const QString& caption = tr("Query"),const QString& urltext = QString());
     virtual ~QueryOutputDialog();
 public slots:
     virtual void slotUser1();

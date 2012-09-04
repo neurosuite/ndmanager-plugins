@@ -76,14 +76,7 @@ QueryInputDialog::~QueryInputDialog()
 
 void QueryInputDialog::pathChanged(const QString & newPath){
 
-    if(newPath != QString("")){
-        //Enable the OK button
-        buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
-    }
-    else if(newPath == QString("")){
-        //Disable the OK button
-        buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
-    }
+    buttonBox->button(QDialogButtonBox::Ok)->setEnabled(!newPath.isEmpty());
 }
 
 #include "queryinputdialog.moc"
