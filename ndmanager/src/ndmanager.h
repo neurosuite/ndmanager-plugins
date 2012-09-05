@@ -244,7 +244,6 @@ private:
     QString filePath;
 
     //Action and toolbar pointers
-    //KDAB_PENDING KRecentFilesAction* fileOpenRecent;
     QAction* viewMainToolBar;
     QAction* viewToolBar;
     QAction* viewStatusBar;
