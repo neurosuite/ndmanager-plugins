@@ -17,15 +17,15 @@ set(ndmanager_SRCS
 	helper.cpp 
 	launcherpage.cpp
         lfppage.cpp 
-	#main.cpp 
+	main.cpp 
 	managerview.cpp 
 	miscellaneouspage.cpp
-	#ndmanager.cpp 
+	ndmanager.cpp 
 	ndmanagerdoc.cpp
 	neuroscopevideoinfo.cpp 
 	neuroscopevideopage.cpp
         parameterpage.cpp 
-	#parameterview.cpp 
+	parameterview.cpp 
 	pref.cpp 
 	programinformation.cpp 
 	programspage.cpp

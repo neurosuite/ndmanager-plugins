@@ -32,6 +32,7 @@
 #include <QProcess>
 #include <QMainWindow>
 #include <qrecentfileaction.h>
+#include <QToolBar>
 
 // application specific includes
 #include "parameterview.h"
@@ -112,7 +113,7 @@ public slots:
 
 
     /**Updates the menus and toolbars to remove a Kate kPart.*/
-    void updateGUI();
+    //void updateGUI();
 
     /**Takes care of the closing of a Konsole.
   */  void konsoleDockBeingClosed();
@@ -260,7 +261,10 @@ private:
     QAction* mQueryAction;
     QAction* mProcessingManager;
 
+    QAction* mExpertMode;
     QRecentFileAction *mFileOpenRecent;
+
+    QToolBar *mMainToolBar;
 
     /**Stores if the current file has been imported and therefore needs to be saved under a new name.*/
     bool importedFile;

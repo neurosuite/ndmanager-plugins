@@ -53,10 +53,14 @@ using namespace ndmanager;
 
 const QString ParameterView::DEFAULT_COLOR = "#0080ff";
 
-ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const char*, bool expertMode): KJanusWidget(parent, tr("Parameter View"),TreeList),doc(doc),counter(0),programsModified(false),programId(0),expertMode(expertMode){
+ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const char*, bool expertMode)
+    : QPageDialog(parent)
+    ,doc(doc),counter(0),programsModified(false),programId(0),expertMode(expertMode){
 
-    //Showw the icones next to the name in the list
-    setShowIconsInTreeList(true);
+    setCaption(tr("Parameter View"));
+    setFaceType(Tree);
+    //Show the icones next to the name in the list
+    //setShowIconsInTreeList(true);
 
     //adding page "General information"
     QFrame* frame = addPage(tr("General"), tr("General information"),
@@ -195,7 +199,9 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
     }
 }
 
-ParameterView::~ParameterView(){}
+ParameterView::~ParameterView()
+{
+}
 
 void ParameterView::addNewProgram(){
     counter++;

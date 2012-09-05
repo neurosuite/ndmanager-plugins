@@ -32,14 +32,14 @@
 #include <QProcess>
 #include <QMenu>
 #include <QMenuBar>
-
+#include <QDebug>
 
 
 // application specific includes
 #include "ndmanager.h"
 #include "configuration.h"  // class Configuration
 #include "queryinputdialog.h"
-#include "queryoutputdialog.h"
+//#include "queryoutputdialog.h"
 
 //General C++ include files
 
@@ -54,6 +54,8 @@ ndManager::ndManager()
       newFile(false),
       managerView(0L)
 {
+
+    mMainToolBar = new QToolBar();
 
     //Apply the user settings.
     initializePreferences();
@@ -121,6 +123,7 @@ void ndManager::setupActions()
 
     //KDAB_PENDING viewMainToolBar = KStdAction::showToolbar(this, SLOT(slotViewMainToolBar()), actionCollection());
 
+    QMenu *settingsMenu = menuBar()->addMenu(tr("&Settings"));
     viewStatusBar = settingsMenu->addAction(tr("Show StatusBar"));
     viewStatusBar->setCheckable(true);
     connect(viewStatusBar,SIGNAL(triggered()), this,SLOT(slotViewStatusBar()));
@@ -152,7 +155,6 @@ void ndManager::setupActions()
     mProcessingManager = processingMenu->addAction(tr("Show Processing Manager"));
 
     //Settings
-    QMenu *settingsMenu = menuBar()->addMenu("&Settings");
     mExpertMode = settingsMenu->addAction(tr("&Expert Mode"));
 #if KDAB_PENDING
     config->setGroup("General");
@@ -163,8 +165,6 @@ void ndManager::setupActions()
     QAction *about = helpMenu->addAction(tr("About"));
     connect(about,SIGNAL(triggered()), this,SLOT(slotAbout()));
 
-
-    createGUI(QString(),false);
 
 }
 
@@ -188,9 +188,9 @@ void ndManager::slotViewMainToolBar()
 
     // turn Toolbar on or off
     if(!viewMainToolBar->isChecked())
-        toolBar("mainToolBar")->hide();
+        mMainToolBar->hide();
     else
-        toolBar("mainToolBar")->show();
+        mMainToolBar->show();
 
     slotStatusMsg(tr("Ready."));
 }
@@ -252,7 +252,7 @@ void ndManager::slotNewFile(){
     }
     //Open a new instance of the application.
     else{
-        QProcess::startDetached("ndmanager", QStringList()<<command);
+        //KDAB_PENDING QProcess::startDetached("ndmanager", QStringList()<<command);
     }
     QApplication::restoreOverrideCursor();
     slotStatusMsg(tr("Ready."));
@@ -302,8 +302,6 @@ void ndManager::openDocumentFile(const QString& url)
             return;
         }
 
-        //Save the recent file list
-        fileOpenRecent->saveEntries(config);
 
         setCaption(url);
         QApplication::restoreOverrideCursor();
@@ -320,8 +318,6 @@ void ndManager::openDocumentFile(const QString& url)
         //If the document asked is not the already open. Open a new instance of the application with it.
         else{
             mFileOpenRecent->addRecentFile(url);
-            //Save the recent file list
-            fileOpenRecent->saveEntries(config);
             filePath = path;
 
             QProcess::startDetached("ndmanager", QStringList()<<url);
@@ -340,13 +336,14 @@ void ndManager::createParameterView(QMap<int, QList<int> >& anatomicalGroups,QMa
                                     double lfpRate,float screenGain,int nbSamples,int peakSampleIndex,QString traceBackgroundImage){
 
     //Create the mainDock (parameter view)
-    mainDock = createDockWidget( "1", QPixmap(), 0L, tr("Parameters"), tr("Parameters"));
-    mainDock->setDockWindowTransient(this,true);
+    mainDock = new QDockWidget(tr("Parameters"));
+            // createDockWidget( "1", QPixmap(), 0L, tr("Parameters"), tr("Parameters"));
+    //KDAB_PENDING mainDock->setDockWindowTransient(this,true);
 
     parameterView = new ParameterView(this,*doc,mainDock,tr("ParameterView"),expertMode->isChecked());
 
-    connect(parameterView,SIGNAL(partShown(Kate::View*)),this,SLOT(updateGUI(Kate::View*)));
-    connect(parameterView,SIGNAL(partHidden()),this,SLOT(updateGUI()));
+    //connect(parameterView,SIGNAL(partShown(Kate::View*)),this,SLOT(updateGUI(Kate::View*)));
+    //connect(parameterView,SIGNAL(partHidden()),this,SLOT(updateGUI()));
     connect(parameterView,SIGNAL(nbSpikeGroupsHasBeenModified(int)),this,SLOT(nbSpikeGroupsModified(int)));
     connect(parameterView,SIGNAL(fileHasBeenModified(QList<QString>)),this,SLOT(fileModification(QList<QString>)));
     connect(parameterView,SIGNAL(scriptListHasBeenModified(const QList<QString>&)),this,SLOT(scriptModification(const QList<QString>&)));
@@ -358,14 +355,14 @@ void ndManager::createParameterView(QMap<int, QList<int> >& anatomicalGroups,QMa
 
     mainDock->setWidget(parameterView);
     //allow dock on the Bottom side only
-    mainDock->setDockSite(QDockWidget::DockBottom);
+    //KDAB_PENDING mainDock->setDockSite(QDockWidget::DockBottom);
     setCentralWidget(mainDock); // central widget in a KDE mainwindow <=> setMainWidget
-    setMainDockWidget(mainDock);
+    //KDAB_PENDING setMainDockWidget(mainDock);
     //disable docking abilities of mainDock itself
-    mainDock->setEnableDocking(Qt::NoDockWidgetArea);
+    //KDAB_PENDING mainDock->setEnableDocking(Qt::NoDockWidgetArea);
 
     //show all the encapsulated widgets of all controlled dockwidgets
-    dockManager->activate();
+    //KDAB_PENDING dockManager->activate();
 
     //Enable some actions now that a document is open (see the klustersui.rc file)
     slotStateChanged("documentState");
@@ -420,9 +417,11 @@ void ndManager::createManagerView(){
 }
 
 void ndManager::konsoleDockBeingClosed(){
+#if KDAB_PENDING
     QDockWidget* dock = dockManager->findWidgetParentDock(managerView);
     dock->undock();
     dock->hide();
+#endif
     slotStateChanged("showManager");
 }
 
@@ -503,15 +502,17 @@ void ndManager::slotFileClose(){
             //close the document
             doc->closeDocument();
             //update gui in case of Kate kparte added
-            updateGUI();
+            //updateGUI();
             //Delete the main view
             delete mainDock;
             mainDock = 0L;
             if(managerView != 0L){
+#if KDAB_PENDING
                 QDockWidget* dock = dockManager->findWidgetParentDock(managerView);
-                dock->undock();
+                //KDAB_PENDING dock->undock();
                 dock->hide();
                 delete dock;
+#endif
             }
             resetState();
         }
@@ -521,13 +522,12 @@ void ndManager::slotFileClose(){
 
 bool ndManager::queryClose()
 {
-    //Save the recent file list
-    fileOpenRecent->saveEntries(config);
 
+#if KDAB_PENDING
     //Save the current mode
     config->setGroup("General");
     config->writeEntry("expertMode",expertMode->isChecked());
-
+#endif
     if(doc == 0 || mainDock == 0L)
         return true;
     else{
@@ -594,11 +594,11 @@ void ndManager::slotSave(){
     //if  the current file is new or was initially imported, it has to be saved under a new name
     if(importedFile || newFile){
         QString initialPath;
-        if(newFile) initialPath = QDir::currentPath();
+        if(newFile)
+            initialPath = QDir::currentPath();
         else{
             QString currentUrl =  doc->url();
-            currentUrl.setFileName("");
-            initialPath = currentUrl;
+            initialPath = QFileInfo(currentUrl).absolutePath();
         }
 
         QString url=QFileDialog::getSaveFileName( this, tr("Save as..."),initialPath,tr("*.xml|Xml Files\n*|All Files"));
@@ -692,24 +692,22 @@ void ndManager::slotReload(){
     slotStatusMsg(tr("reloading..."));
 
     //Get the current active page index
-    int activePageIndex = parameterView->activePageIndex();
+    int activePageIndex = 0;//KDAB_PENDING parameterView->activePageIndex();
 
-    //Save the recent file list
-    fileOpenRecent->saveEntries(config);
-    config->writePathEntry("openFile",filePath);
+    //config->writePathEntry("openFile",filePath);
 
     //close the current document
     doc->closeDocument();
-    //update gui in case of Kate kparte added
-    updateGUI();
     //Delete the main view
     delete mainDock;
     mainDock = 0L;
     if(managerView != 0L){
+#if KDAB_PENDING
         QDockWidget* dock = dockManager->findWidgetParentDock(managerView);
         dock->undock();
         dock->hide();
         delete dock;
+#endif
     }
     resetState();
 
@@ -741,14 +739,15 @@ void ndManager::slotReload(){
     QApplication::restoreOverrideCursor();
 
     //Raise the previously active page
-    parameterView->showPage(activePageIndex);
+    //KDAB_PENDING parameterView->showPage(activePageIndex);
 
     slotStatusMsg(tr("Ready."));
 }
 
 void ndManager::slotQuery(){
+#if KDAB_PENDING
     slotStatusMsg(tr("Processing query..."));
-    queryResult = "";
+    queryResult.clear();
     QueryInputDialog *queryInputDialog = new QueryInputDialog();
     if(queryInputDialog->exec() == QDialog::Accepted)
     {
@@ -787,12 +786,14 @@ void ndManager::slotQuery(){
     }
     delete queryInputDialog;
     slotStatusMsg(tr("Ready."));
+#endif
 }
 
 void ndManager::slotQueryResult(QString message){
     queryResult += message;
 }
 
+/*
 void ndManager::updateGUI(){
     Q3PtrList<KXMLGUIClient> clients = guiFactory()->clients();
 
@@ -801,6 +802,7 @@ void ndManager::updateGUI(){
         guiFactory()->removeClient(clients.at(1));
     }
 }
+*/
 
 void ndManager::slotExpertMode(){
     bool isImportedFile = importedFile;
@@ -813,15 +815,13 @@ void ndManager::slotExpertMode(){
     else if(isImportedFile && filePath.contains("Untitled")){
         QString url = importedFileUrl;
         openDocumentFile(url);
-        url.setFileName("Untitled");
+        url+= QDir::separator() + tr("Untitled");
         doc->rename(url);
         filePath = url;
         setCaption(url);
     }
     else{
-        QString url;
-        url.setPath(filePath);
-        openDocumentFile(url);
+        openDocumentFile(filePath);
     }
 }
 

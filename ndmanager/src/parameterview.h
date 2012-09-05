@@ -31,9 +31,7 @@
 //Added by qt3to4:
 #include <QFrame>
 
-// include files for KDE
-//#include <kjanuswidget.h> 
-
+#include <qpagedialog.h>
 
 //include files for the application
 #include "acquisitionsystempage.h"
@@ -69,7 +67,7 @@ class QString;
  * @author Lynn Hazan <lynn.hazan@myrealbox.com>
  * @version 0.1
  */
-class ParameterView : public KJanusWidget
+class ParameterView : public QPageDialog
 {
     Q_OBJECT
 public:
@@ -243,12 +241,12 @@ public slots:
     /**Triggers the update of the dropdown list containing the spike groups in the managerView.
   * @param nbGroups the new number of spike groups.
   */
-    inline void nbSpikeGroupsModified(int nbGroups){emit nbSpikeGroupsHasBeenModified(nbGroups);};
+    inline void nbSpikeGroupsModified(int nbGroups){emit nbSpikeGroupsHasBeenModified(nbGroups);}
 
     /**Triggers the update of the dropdown list containing the file extensions in the managerView.
   * @param extensions list containing the extensions of all the specific files.
   */
-    inline void fileModification(QList<QString> extensions){emit fileHasBeenModified(extensions);};
+    inline void fileModification(QList<QString> extensions){emit fileHasBeenModified(extensions);}
 
 private slots:
 
