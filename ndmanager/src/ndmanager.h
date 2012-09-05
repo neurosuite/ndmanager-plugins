@@ -262,6 +262,7 @@ private:
     QAction* mProcessingManager;
 
     QAction* mExpertMode;
+    QAction* mPreferenceAction;
     QRecentFileAction *mFileOpenRecent;
 
     QToolBar *mMainToolBar;

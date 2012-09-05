@@ -121,15 +121,21 @@ void ndManager::setupActions()
     mQuitAction->setShortcut(QKeySequence::Print);
     connect(mQuitAction, SIGNAL(triggered()), this, SLOT(close()));
 
-    //KDAB_PENDING viewMainToolBar = KStdAction::showToolbar(this, SLOT(slotViewMainToolBar()), actionCollection());
-
     QMenu *settingsMenu = menuBar()->addMenu(tr("&Settings"));
+
+    viewMainToolBar = settingsMenu->addAction(tr("Show Main Toolbar"));
+
+    viewMainToolBar->setCheckable(true);
+    connect(viewMainToolBar,SIGNAL(triggered()), this,SLOT(slotViewMainToolBar()));
+
+
     viewStatusBar = settingsMenu->addAction(tr("Show StatusBar"));
     viewStatusBar->setCheckable(true);
     connect(viewStatusBar,SIGNAL(triggered()), this,SLOT(slotViewStatusBar()));
 
 
-    // KStdAction::preferences(this,SLOT(executePreferencesDlg()), actionCollection());
+    mPreferenceAction = settingsMenu->addAction(tr("Preferences"));
+    connect(mPreferenceAction,SIGNAL(triggered()), this,SLOT(executePreferencesDlg()));
 
     //Custom actions and menus
     //File menu
