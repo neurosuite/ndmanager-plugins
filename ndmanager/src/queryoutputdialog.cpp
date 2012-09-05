@@ -21,6 +21,7 @@
 //Added by qt3to4:
 #include <QTextStream>
 #include <QMessageBox>
+#include <QFileDialog>
 
 #include <QWebSettings>
 
@@ -43,7 +44,6 @@ QueryOutputDialog::QueryOutputDialog(const QString& htmlText,const QString& quer
 
     addPage(w,QString());
 
-    html = new QWebView(vbox);
     html->setHtml(htmlText);
     html->reload();
     html->settings()->setAttribute(QWebSettings::JavascriptEnabled, false);
@@ -74,10 +74,10 @@ void QueryOutputDialog::slotUser1()
         stream << queryResult;
         textFile.close();
         if(stream.device()->status() == IO_WriteError )
-            QMessageBox::critical(this,tr("Could not save the report. This may be due to incorrect write permissions."));
+            QMessageBox::critical(this,QString(),tr("Could not save the report. This may be due to incorrect write permissions."));
     }
     else
-        QMessageBox::critical(this,tr("Could not save the report. This may be due to incorrect write permissions."));
+        QMessageBox::critical(this,QString(),tr("Could not save the report. This may be due to incorrect write permissions."));
 }
 
 void QueryOutputDialog::slotUser2()
@@ -92,10 +92,10 @@ void QueryOutputDialog::slotUser2()
         stream << htmlText;
         htmlFile.close();
         if(stream.device()->status() == IO_WriteError )
-            QMessageBox::critical(this,tr("Could not save the report. This may be due to incorrect write permissions."));
+            QMessageBox::critical(this,QString(),tr("Could not save the report. This may be due to incorrect write permissions."));
     }
     else
-        QMessageBox::critical(this,tr("Could not save the report. This may be due to incorrect write permissions."));
+        QMessageBox::critical(this,QString(),tr("Could not save the report. This may be due to incorrect write permissions."));
 }
 
 #include "queryoutputdialog.moc"

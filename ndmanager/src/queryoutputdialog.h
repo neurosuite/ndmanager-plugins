@@ -21,7 +21,7 @@
 #define QUERYOUTPUTDIALOG_H
 
 #include <qpagedialog.h>
-//#include <QWebView>
+#include <QWebView>
 
 /**
 Dialog used to display result from query.
