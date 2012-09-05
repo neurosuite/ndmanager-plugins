@@ -63,42 +63,53 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
     //setShowIconsInTreeList(true);
 
     //adding page "General information"
-    QFrame* frame = addPage(tr("General"), tr("General information"),
-                            KGlobal::iconLoader()->loadIcon("kfm",KIcon::Panel,0,false) );
-    Q3VBoxLayout* frameLayout = new Q3VBoxLayout(frame,0,0);
-    generalInfo = new GeneralInfoPage(frame);
-    frameLayout->addWidget(generalInfo);
+    QWidget * w = new QWidget(this);
+    generalInfo = new GeneralInfoPage(w);
+    QPageWidgetItem *item = new QPageWidgetItem(generalInfo,tr("General"));
+    item->setHeader(tr("General information"));
+    item->setIcon(QIcon(":/icons/kfm"));
+    addPage(item);
 
     //adding page "Acquisition System"
-    frame = addPage(tr("Acquisition System"), tr("Acquisition System"),
-                    QIcon(":icons/acquisition") );
-    frameLayout = new Q3VBoxLayout(frame,0,0);
-    acquisitionSystem = new AcquisitionSystemPage(frame);
-    frameLayout->addWidget(acquisitionSystem);
+    w = new QWidget(this);
+    acquisitionSystem = new AcquisitionSystemPage(w);
+    item = new QPageWidgetItem(acquisitionSystem,tr("Acquisition System"));
+    item->setHeader(tr("Acquisition System"));
+    item->setIcon(QIcon(":/icons/acquisition"));
+    addPage(item);
+
+
+
 
     //adding page "Video"
-    frame = addPage(tr("Video"), tr("Video"),
-                    QIcon(":icons/video") );
-    frameLayout = new Q3VBoxLayout(frame,0,0);
-    video = new VideoPage(frame);
-    frameLayout->addWidget(video);
+    w = new QWidget(this);
+    video = new VideoPage(w);
+    item = new QPageWidgetItem(video,tr("Video"));
+    item->setHeader(tr("Video"));
+    item->setIcon(QIcon(":/icons/video"));
+    addPage(item);
+
+
 
     //adding page "Local Field Potentials "
-    frame = addPage(tr("Local Field Potentials"), tr("Local Field Potentials"),
-                    QIcon(":icons/lfp") );
-    frameLayout = new Q3VBoxLayout(frame,0,0);
-    lfp = new LfpPage(frame);
-    frameLayout->addWidget(lfp);
+    w = new QWidget(this);
+    lfp = new LfpPage(w);
+    item = new QPageWidgetItem(lfp,tr("Local Field Potentials"));
+    item->setHeader(tr("Local Field Potentials"));
+    item->setIcon(QIcon(":/icons/lfp"));
+    addPage(item);
+
 
 
     //adding page "Files"
     //This page is added only if the expert mode is set. The page is always created to keep track of the file information
     if(expertMode){
-        frame = addPage(tr("Files"), tr("Other Files"),
-                        QIcon(":icons/files"));
-        frameLayout = new Q3VBoxLayout(frame,0,0);
-        files = new FilesPage(frame);
-        frameLayout->addWidget(files);
+        w = new QWidget(this);
+        files = new FilesPage(w);
+        item = new QPageWidgetItem(files,tr("Files"));
+        item->setHeader(tr("Other Files"));
+        item->setIcon(QIcon(":/icons/files"));
+        addPage(item);
     }
     else{
         files = new FilesPage();
@@ -107,11 +118,13 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
     //adding page "Anatomical Groups"
     //This page is added only if the expert mode is set. The page is always created to keep track of the file information
     if(expertMode){
-        frame = addPage(tr("Anatomical Groups"), tr("Anatomical Groups"),
-                        QIcon(":icons/anatomy") );
-        frameLayout = new Q3VBoxLayout(frame,0,0);
-        anatomy = new AnatomyPage(frame);
-        frameLayout->addWidget(anatomy);
+        w = new QWidget(this);
+        anatomy = new AnatomyPage(w);
+        item = new QPageWidgetItem(anatomy,tr("Anatomical Groups"));
+        item->setHeader(tr("Anatomical Groups"));
+        item->setIcon(QIcon(":/icons/anatomy"));
+        addPage(item);
+
     }
     else{
         anatomy = new AnatomyPage();
@@ -120,30 +133,32 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
     //adding page "Spike Groups"
     //This page is added only if the expert mode is set. The page is always created to keep track of the file information
     if(expertMode){
-        frame = addPage(tr("Spike Groups"), tr("Spike Groups"),
-                        QIcon(":icons/spikes") );
-        frameLayout = new Q3VBoxLayout(frame,0,0);
-        spike = new SpikePage(frame);
-        frameLayout->addWidget(spike);
+        w = new QWidget(this);
+        spike = new SpikePage(w);
+        item = new QPageWidgetItem(spike,tr("Spike Groups"));
+        item->setHeader(tr("Spike Groups"));
+        item->setIcon(QIcon(":/icons/spikes"));
+        addPage(item);
+
     }
     else{
         spike = new SpikePage();
     }
 
     //adding page "Unit List"
-    frame = addPage(tr("Units"), tr("Units"),
-                    QIcon(":icons/units") );
-    frameLayout = new Q3VBoxLayout(frame,0,0);
-    unitList = new UnitListPage(frame);
-    frameLayout->addWidget(unitList);
+    w = new QWidget(this);
+    unitList = new UnitListPage(w);
+    item = new QPageWidgetItem(unitList,tr("Units"));
+    item->setHeader(tr("Units"));
+    item->setIcon(QIcon(":/icons/units"));
+    addPage(item);
+
+
 
     //adding page "Neuroscope"
-    frame = addPage(tr("Neuroscope"), tr("Neuroscope"),
-                    QIcon(":icons/neuroscope") );
-    frameLayout = new Q3VBoxLayout(frame,0,0);
+    w = new QWidget(this);
 
-    QTabWidget* tabWidget = new QTabWidget(frame);
-    frameLayout->addWidget(tabWidget);
+    QTabWidget* tabWidget = new QTabWidget(w);
     //adding "Miscellaneous" tab
     miscellaneous = new MiscellaneousPage();
     tabWidget->addTab(miscellaneous,tr("Miscellaneous"));
@@ -163,12 +178,24 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
     //This tab is added only if the expert mode is set. The page is always created to keep track of the file information
     if(expertMode)tabWidget->addTab(channelDefaultOffsets,tr("Channel Offsets"));
 
+
+    item = new QPageWidgetItem(tabWidget,tr("Neuroscope"));
+    item->setHeader(tr("Neuroscope"));
+    item->setIcon(QIcon(":/icons/neuroscope"));
+    addPage(item);
+
+
+
     //adding page "Programs"
-    programsFrame = addPage(tr("Scripts"), tr("Scripts"),
-                            QIcon(":icons/programs") );
-    frameLayout = new Q3VBoxLayout(programsFrame,0,0);
-    programs = new ProgramsPage(expertMode,programsFrame);
-    frameLayout->addWidget(programs);
+
+    w = new QWidget(this);
+    programs = new ProgramsPage(expertMode,w);
+    item = new QPageWidgetItem(programs,tr("Scripts"));
+    item->setHeader(tr("Scripts"));
+    item->setIcon(QIcon(":/icons/units"));
+    addPage(item);
+
+
 
     //set connections
     connect(acquisitionSystem,SIGNAL(nbChannelsModified(int)),this,SLOT(nbChannelsModified(int)));
@@ -218,6 +245,7 @@ ProgramPage* ParameterView::addProgram(QString programName){
 }
 
 ProgramPage* ParameterView::addProgram(QString programName,bool show){
+#if KDAB_PENDING
     QStringList programPath;
     programPath.append("Scripts");
     programPath.append(programName);
@@ -243,10 +271,13 @@ ProgramPage* ParameterView::addProgram(QString programName,bool show){
     if(show) showPage(pageIndex(frame));
 
     return program;
+#else
+    return 0;
+#endif
 }
 
 void ParameterView::changeProgramName(ProgramPage* programPage,const QString& newName,QString message,QString title){
-
+#if KDAB_PENDING
     QString oldName = programPage->name();
     if(newName == oldName) return;
 
@@ -304,13 +335,16 @@ void ParameterView::changeProgramName(ProgramPage* programPage,const QString& ne
     showPage(pageIndex(programFrame));
 
     //If the message if not empty show a message box with it
-    if(message !="") QMessageBox::critical (this,tr(title),tr(message) );
+    if(!message.isEmpty())
+        QMessageBox::critical (this,tr(title),tr(message) );
 
     emit scriptListHasBeenModified(programNames);
+#endif
 }
 
 
 void ParameterView::removeProgram(ProgramPage* programPage){
+#if KDAB_PENDING
     programsModified = true;
     QFrame* parentFrame = static_cast<QFrame*>(programPage->parent());
     removePage(parentFrame);
@@ -324,6 +358,7 @@ void ParameterView::removeProgram(ProgramPage* programPage){
 
     //Show the program page
     showPage(pageIndex(programsFrame));
+#endif
 }
 
 void ParameterView::initialize(QMap<int, QList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes,
@@ -460,7 +495,7 @@ void ParameterView::initialize(QMap<int, QList<int> >& anatomicalGroups,QMap<QSt
 }
 
 void ParameterView::loadProgram(QString programUrl){
-    QString programDecriptionName = programUrl.fileName();
+    QString programDecriptionName = QFileInfo(programUrl).fileName();
     counter++;
     programId++;
 
@@ -499,7 +534,7 @@ void ParameterView::loadProgram(QString programUrl){
 
     //set the help
     program->setHelp(programInformation.getHelp());
-
+#if KDAB_PENDING
     if(expertMode){
         //set the script if any
         KTextEditor::Document* scriptDoc = program->getScript();
@@ -531,6 +566,7 @@ void ParameterView::loadProgram(QString programUrl){
         }
         program->initialisationOver();
     }
+#endif
     emit scriptListHasBeenModified(programNames);
 }
 
@@ -737,8 +773,10 @@ void ParameterView::saveProgramDescription(QString programName){
 }
 
 void ParameterView::pageWillBeShown(QWidget *){
+#if KDAB_PENDING
     //There are 8 main pages, everything else is an additional program
     if(activePageIndex() < 9) emit partHidden();
+#endif
 }
 
 
