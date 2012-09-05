@@ -694,7 +694,7 @@ void ndManager::slotReload(){
     slotStatusMsg(tr("reloading..."));
 
     //Get the current active page index
-    int activePageIndex = 0;//KDAB_PENDING parameterView->activePageIndex();
+    QPageWidgetItem* activePage = parameterView->currentPage();
 
     //config->writePathEntry("openFile",filePath);
 
@@ -741,7 +741,7 @@ void ndManager::slotReload(){
     QApplication::restoreOverrideCursor();
 
     //Raise the previously active page
-    //KDAB_PENDING parameterView->showPage(activePageIndex);
+   parameterView->setCurrentPage(activePage);
 
     slotStatusMsg(tr("Ready."));
 }

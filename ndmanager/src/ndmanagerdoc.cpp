@@ -222,6 +222,8 @@ ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::saveDefault(){
 ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::saveScript(QString scriptName){
     ParameterView* view = dynamic_cast<ndManager*>(parent)->getParameterView();
     bool status = view->saveScript(scriptName);
-    if(status) return OK;
-    else return SAVE_ERROR;
+    if(status)
+        return OK;
+    else
+        return SAVE_ERROR;
 }
