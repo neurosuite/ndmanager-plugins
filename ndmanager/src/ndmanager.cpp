@@ -46,7 +46,6 @@ ndManager::ndManager()
     :QMainWindow(0, "NDManager"),
       prefDialog(0L),
       mainDock(0),
-      filePath(""),
       importedFile(false),
       newFile(false),
       managerView(0L)
@@ -88,7 +87,7 @@ void ndManager::setupActions()
     //File Menu
     QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
 
-    mNewAction = fileMenu->addAction(tr("&Open..."));
+    mNewAction = fileMenu->addAction(tr("&New..."));
     mNewAction->setShortcut(QKeySequence::New);
     connect(mNewAction, SIGNAL(triggered()), this, SLOT(slotNewOpen()));
 

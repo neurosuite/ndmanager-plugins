@@ -101,7 +101,6 @@ UnitListLayout::UnitListLayout( QWidget* parent, const char* name, Qt::WFlags fl
     UnitListLayoutLayout->addLayout( layout21, 0, 0 );
     languageChange();
     resize( QSize(678, 218).expandedTo(minimumSizeHint()) );
-    //KDAB_PENDING clearWState( WState_Polished );
 
     // tab order
     setTabOrder( unitTable, addUnitButton );
