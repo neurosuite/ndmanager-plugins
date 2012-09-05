@@ -39,10 +39,7 @@
 #include "ndmanager.h"
 #include "configuration.h"  // class Configuration
 #include "queryinputdialog.h"
-//#include "queryoutputdialog.h"
-
-//General C++ include files
-
+#include "queryoutputdialog.h"
 
 
 ndManager::ndManager()
