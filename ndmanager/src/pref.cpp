@@ -28,7 +28,7 @@
 #include <qlabel.h>
 //Added by qt3to4:
 #include <QFrame>
-#include <Q3HBoxLayout>
+#include <QHBoxLayout>
 #include <QMessageBox>
 
 ndManagerPreferences::ndManagerPreferences(QWidget* parent,const char* name, Qt::WFlags f)
@@ -108,18 +108,18 @@ void ndManagerPreferences::enableApply() {
 ndManagerPrefPageOne::ndManagerPrefPageOne(QWidget *parent)
     : QFrame(parent)
 {
-    Q3HBoxLayout *layout = new Q3HBoxLayout(this);
-    layout->setAutoAdd(true);
+    QHBoxLayout *layout = new QHBoxLayout(this);
+    QLabel * lab = new QLabel(tr("Add something here"), this);
+    layout->addWidget(lab);
 
-    new QLabel(tr("Add something here"), this);
 }
 
 ndManagerPrefPageTwo::ndManagerPrefPageTwo(QWidget *parent)
     : QFrame(parent)
 {
-    Q3HBoxLayout *layout = new Q3HBoxLayout(this);
-    layout->setAutoAdd(true);
+    QHBoxLayout *layout = new QHBoxLayout(this);
 
-    new QLabel(tr("Add something here"), this);
+    QLabel * lab = new QLabel(tr("Add something here"), this);
+    layout->addWidget(lab);
 }
 #include "pref.moc"
