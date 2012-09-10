@@ -15,11 +15,6 @@
 //Added by qt3to4:
 #include <Q3GridLayout>
 #include <QLabel>
-#include <Q3HBoxLayout>
-#include <Q3VBoxLayout>
-
-class Q3VBoxLayout;
-class Q3HBoxLayout;
 class Q3GridLayout;
 class QSpacerItem;
 class QPushButton;
