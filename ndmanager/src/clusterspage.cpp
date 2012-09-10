@@ -20,7 +20,7 @@
 //include files for the application
 #include "clusterspage.h"
 
-ClustersPage::ClustersPage(QWidget* parent, const char* name)
+ClustersPage::ClustersPage(QWidget* parent)
     : ClustersLayout(parent),intValidator(this),modified(false),isInit(true){
 
     //Set a validator on the line edits, the values have to be integers.

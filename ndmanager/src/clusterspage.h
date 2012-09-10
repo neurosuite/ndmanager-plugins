@@ -37,7 +37,7 @@ class ClustersPage : public ClustersLayout
 {
     Q_OBJECT
 public:
-    ClustersPage(QWidget* parent = 0, const char* name = 0);
+    ClustersPage(QWidget* parent = 0);
     ~ClustersPage();
 
     /**Sets the number of samples per spike waveform.*/

@@ -34,7 +34,7 @@ class ChannelOffsetsPage : public ChannelOffsetsLayout
 {
     Q_OBJECT
 public:
-    ChannelOffsetsPage(QWidget* parent = 0, const char* name = 0);
+    ChannelOffsetsPage(QWidget* parent = 0);
     ~ChannelOffsetsPage();
 
     /**Sets the number of channels, creating the correspondent number of lines in the table.

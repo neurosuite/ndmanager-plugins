@@ -30,7 +30,7 @@
 
 
 
-ChannelOffsetsPage::ChannelOffsetsPage(QWidget* parent, const char* name)
+ChannelOffsetsPage::ChannelOffsetsPage(QWidget* parent)
     : ChannelOffsetsLayout(parent),nbChannels(0),modified(false){
     for(int i = 0;i<offsetTable->numCols();++i) offsetTable->setColumnStretchable(i,true);
 
