@@ -36,7 +36,7 @@
             </spacer>
           </item>
           <item row="4" column="2">
-            <widget class="Q3TextEdit" name="notesTextEdit">
+            <widget class="QTextEdit" name="notesTextEdit">
               <property name="minimumSize">
                 <size>
                   <width>420</width>
@@ -180,7 +180,7 @@
             </widget>
           </item>
           <item row="3" column="2">
-            <widget class="Q3TextEdit" name="descriptionTextEdit">
+            <widget class="QTextEdit" name="descriptionTextEdit">
               <property name="minimumSize">
                 <size>
                   <width>420</width>
