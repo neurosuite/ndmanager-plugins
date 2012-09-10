@@ -533,19 +533,17 @@ void ParameterView::loadProgram(QString programUrl){
 
     //set the help
     program->setHelp(programInformation.getHelp());
-#if KDAB_PENDING
     if(expertMode){
         //set the script if any
-        KTextEditor::Document* scriptDoc = program->getScript();
-        Kate::View* scriptView = program->getScriptView();
+        QTextEdit* scriptView = program->getScriptView();
         //find the file corresponding to the program name
-        QString path = NdManagerUtils::findExecutable(name,QStringList()<<getenv("PATH"));
+        const QString path = NdManagerUtils::findExecutable(name,QStringList()<<qgetenv("PATH"));
         if(!path.isNull()){
             QFileInfo fileInfo(path);
             QFile file(path);
             if(!file.open(QIODevice::ReadOnly)){
-                QString message = QString("The file %1 is not readable.").arg(name);
-                QMessageBox::critical (this,tr(message), tr("IO Error!"));
+                QString message = tr("The file %1 is not readable.").arg(name);
+                QMessageBox::critical (this,message, tr("IO Error!"));
             }
             else{
                 QTextStream stream(&file);
@@ -553,7 +551,7 @@ void ParameterView::loadProgram(QString programUrl){
                 int i = firstLine.find(QRegExp("^#!"));
 
                 if(i != -1){
-                    scriptDoc->openURL(path);
+                    //KDAB_PENDING scriptDoc->openURL(path);
                     file.close();
                 }
                 else{
@@ -565,7 +563,6 @@ void ParameterView::loadProgram(QString programUrl){
         }
         program->initialisationOver();
     }
-#endif
     emit scriptListHasBeenModified(programNames);
 }
 
