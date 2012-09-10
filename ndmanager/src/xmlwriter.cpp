@@ -123,11 +123,11 @@ void XmlWriter::setAcquisitionSystemInformation(QMap<QString,double>& acquisitio
     acquisitionSystem = doc.createElement(ACQUISITION);
 
     QDomElement resolutionElement = doc.createElement(BITS);
-    QDomText resolutionValue = doc.createTextNode(QString("%1").arg(acquisitionSystemInfo[BITS]));
+    QDomText resolutionValue = doc.createTextNode(QString::fromLatin1("%1").arg(acquisitionSystemInfo[BITS]));
     resolutionElement.appendChild(resolutionValue);
 
     QDomElement nbChannelsElement = doc.createElement(NB_CHANNELS);
-    QDomText nbChannelsValue = doc.createTextNode(QString("%1").arg(acquisitionSystemInfo[NB_CHANNELS]));
+    QDomText nbChannelsValue = doc.createTextNode(QString::fromLatin1("%1").arg(acquisitionSystemInfo[NB_CHANNELS]));
     nbChannelsElement.appendChild(nbChannelsValue);
 
     QDomElement samplingRateElement = doc.createElement(SAMPLING_RATE);
@@ -135,15 +135,15 @@ void XmlWriter::setAcquisitionSystemInformation(QMap<QString,double>& acquisitio
     samplingRateElement.appendChild(samplingRateValue);
 
     QDomElement voltageRangeElement = doc.createElement(VOLTAGE_RANGE);
-    QDomText voltageRangeValue = doc.createTextNode(QString("%1").arg(acquisitionSystemInfo[VOLTAGE_RANGE]));
+    QDomText voltageRangeValue = doc.createTextNode(QString::fromLatin1("%1").arg(acquisitionSystemInfo[VOLTAGE_RANGE]));
     voltageRangeElement.appendChild(voltageRangeValue);
 
     QDomElement amplificationElement = doc.createElement(AMPLIFICATION);
-    QDomText amplificationValue = doc.createTextNode(QString("%1").arg(acquisitionSystemInfo[AMPLIFICATION]));
+    QDomText amplificationValue = doc.createTextNode(QString::fromLatin1("%1").arg(acquisitionSystemInfo[AMPLIFICATION]));
     amplificationElement.appendChild(amplificationValue);
 
     QDomElement offsetElement = doc.createElement(OFFSET);
-    QDomText offsetValue = doc.createTextNode(QString("%1").arg(acquisitionSystemInfo[OFFSET]));
+    QDomText offsetValue = doc.createTextNode(QString::fromLatin1("%1").arg(acquisitionSystemInfo[OFFSET]));
     offsetElement.appendChild(offsetValue);
 
     acquisitionSystem.appendChild(resolutionElement);
@@ -162,11 +162,11 @@ void XmlWriter::setVideoInformation(QMap<QString,double>& videoInformation){
     samplingRateElement.appendChild(samplingRateValue);
 
     QDomElement widthElement = doc.createElement(WIDTH);
-    QDomText widthValue = doc.createTextNode(QString("%1").arg(videoInformation[WIDTH]));
+    QDomText widthValue = doc.createTextNode(QString::fromLatin1("%1").arg(videoInformation[WIDTH]));
     widthElement.appendChild(widthValue);
 
     QDomElement heightElement = doc.createElement(HEIGHT);
-    QDomText heightValue = doc.createTextNode(QString("%1").arg(videoInformation[HEIGHT]));
+    QDomText heightValue = doc.createTextNode(QString::fromLatin1("%1").arg(videoInformation[HEIGHT]));
     heightElement.appendChild(heightValue);
 
     video.appendChild(samplingRateElement);
@@ -216,7 +216,7 @@ void XmlWriter::setFilesInformation(QList<FileInformation>& fileList){
             QList<int>::iterator channelIterator;
             for(channelIterator = channelIds.begin(); channelIterator != channelIds.end(); ++channelIterator){
                 QDomElement idElement = doc.createElement(CHANNEL);
-                QDomText idValue = doc.createTextNode(QString("%1").arg(*channelIterator));
+                QDomText idValue = doc.createTextNode(QString::fromLatin1("%1").arg(*channelIterator));
                 idElement.appendChild(idValue);
                 originalChannels.appendChild(idElement);
             }
@@ -245,7 +245,7 @@ void XmlWriter::setAnatomicalDescription(QMap<int, QList<int> >& anatomicalGroup
 
         for(channelIterator = channelIds.begin(); channelIterator != channelIds.end(); ++channelIterator){
             QDomElement idElement = doc.createElement(CHANNEL);
-            QDomText idValue = doc.createTextNode(QString("%1").arg(*channelIterator));
+            QDomText idValue = doc.createTextNode(QString::fromLatin1("%1").arg(*channelIterator));
             idElement.appendChild(idValue);
             //the attributs are hard coded for the moment, and there is only SKIP for the time being
             idElement.setAttribute(SKIP,attributes["Skip"][*channelIterator]);
@@ -275,7 +275,7 @@ void  XmlWriter::setSpikeDetectionInformation(QMap<int, QList<int> >& spikeGroup
 
         for(channelIterator = channelIds.begin(); channelIterator != channelIds.end(); ++channelIterator){
             QDomElement idElement = doc.createElement(CHANNEL);
-            QDomText idValue = doc.createTextNode(QString("%1").arg(*channelIterator));
+            QDomText idValue = doc.createTextNode(QString::fromLatin1("%1").arg(*channelIterator));
             idElement.appendChild(idValue);
             channelListElement.appendChild(idElement);
         }
@@ -317,11 +317,11 @@ void XmlWriter::setMiscellaneousInformation(float screenGain,QString traceBackgr
     miscellaneous = doc.createElement(MISCELLANEOUS);
 
     QDomElement gainElement = doc.createElement(SCREENGAIN);
-    QDomText gainValue = doc.createTextNode(QString("%1").arg(screenGain,0,'f',6));
+    QDomText gainValue = doc.createTextNode(QString::fromLatin1("%1").arg(screenGain,0,'f',6));
     gainElement.appendChild(gainValue);
 
     QDomElement imageElement = doc.createElement(TRACE_BACKGROUND_IMAGE);
-    QDomText imageValue = doc.createTextNode(QString("%1").arg(traceBackgroundImage));
+    QDomText imageValue = doc.createTextNode(QString::fromLatin1("%1").arg(traceBackgroundImage));
     imageElement.appendChild(imageValue);
 
     miscellaneous.appendChild(gainElement);
@@ -332,11 +332,11 @@ void XmlWriter::setNeuroscopeVideoInformation(NeuroscopeVideoInfo& videoInfo){
     neuroscopeVideo = doc.createElement(VIDEO);
 
     QDomElement rotationElement = doc.createElement(ROTATE);
-    QDomText rotationValue = doc.createTextNode(QString("%1").arg(videoInfo.getRotation()));
+    QDomText rotationValue = doc.createTextNode(QString::fromLatin1("%1").arg(videoInfo.getRotation()));
     rotationElement.appendChild(rotationValue);
 
     QDomElement flipElement = doc.createElement(FLIP);
-    QDomText flipValue = doc.createTextNode(QString("%1").arg(videoInfo.getFlip()));
+    QDomText flipValue = doc.createTextNode(QString::fromLatin1("%1").arg(videoInfo.getFlip()));
     flipElement.appendChild(flipValue);
 
     QDomElement pathElement = doc.createElement(VIDEO_IMAGE);
@@ -344,7 +344,7 @@ void XmlWriter::setNeuroscopeVideoInformation(NeuroscopeVideoInfo& videoInfo){
     pathElement.appendChild(pathValue);
 
     QDomElement drawTrajectoryElement = doc.createElement(POSITIONS_BACKGROUND);
-    QDomText drawTrajectoryValue = doc.createTextNode(QString("%1").arg(videoInfo.getTrajectory()));
+    QDomText drawTrajectoryValue = doc.createTextNode(QString::fromLatin1("%1").arg(videoInfo.getTrajectory()));
     drawTrajectoryElement.appendChild(drawTrajectoryValue);
 
     neuroscopeVideo.appendChild(rotationElement);
@@ -357,11 +357,11 @@ void XmlWriter::setNeuroscopeSpikeInformation(int nbSamples,int peakSampleIndex)
     spikes = doc.createElement(SPIKES);
 
     QDomElement nbSamplesElement = doc.createElement(NB_SAMPLES);
-    QDomText nbSamplesValue = doc.createTextNode(QString("%1").arg(nbSamples));
+    QDomText nbSamplesValue = doc.createTextNode(QString::fromLatin1("%1").arg(nbSamples));
     nbSamplesElement.appendChild(nbSamplesValue);
 
     QDomElement peakElement = doc.createElement(PEAK_SAMPLE_INDEX);
-    QDomText peakValue = doc.createTextNode(QString("%1").arg(peakSampleIndex));
+    QDomText peakValue = doc.createTextNode(QString::fromLatin1("%1").arg(peakSampleIndex));
     peakElement.appendChild(peakValue);
 
     spikes.appendChild(nbSamplesElement);
@@ -381,7 +381,7 @@ void XmlWriter::setChannelDisplayInformation(QList<ChannelColors>& colorList,QMa
         int offset = channelDefaultOffsets[channelId];
 
         QDomElement idElement = doc.createElement(CHANNEL);
-        QDomText idValue = doc.createTextNode(QString("%1").arg(channelId));
+        QDomText idValue = doc.createTextNode(QString::fromLatin1("%1").arg(channelId));
         idElement.appendChild(idValue);
 
         QDomElement colorElement = doc.createElement(COLOR);
@@ -403,11 +403,11 @@ void XmlWriter::setChannelDisplayInformation(QList<ChannelColors>& colorList,QMa
         channelColors.appendChild(spikeColorElement);
 
         QDomElement idElement2 = doc.createElement(CHANNEL);
-        QDomText idValue2 = doc.createTextNode(QString("%1").arg(channelId));
+        QDomText idValue2 = doc.createTextNode(QString::fromLatin1("%1").arg(channelId));
         idElement2.appendChild(idValue2);
 
         QDomElement offsetElement = doc.createElement(DEFAULT_OFFSET);
-        QDomText offsetValue = doc.createTextNode(QString("%1").arg(offset));
+        QDomText offsetValue = doc.createTextNode(QString::fromLatin1("%1").arg(offset));
         offsetElement.appendChild(offsetValue);
 
         QDomElement channelOffset = doc.createElement(CHANNEL_OFFSET);

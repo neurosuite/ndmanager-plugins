@@ -89,7 +89,7 @@ void FilePage::addChannel(){
     item->setWordWrap(true);
     int rowId = mappingTable->numRows() - 1;
     mappingTable->setItem(rowId,0,item);
-    mappingTable->verticalHeader()->setLabel(rowId,QString("%1").arg(rowId));
+    mappingTable->verticalHeader()->setLabel(rowId,QString::fromLatin1("%1").arg(rowId));
 }
 
 void FilePage::removeChannel(){
@@ -130,7 +130,7 @@ void FilePage::setChannelMapping(const QMap<int, QList<int> >& channels){
         //create the string containing the channel ids
         QString newChannel;
         for(channelIterator = channelIds.begin(); channelIterator != channelIds.end(); ++channelIterator){
-            newChannel.append(QString("%1").arg(*channelIterator));
+            newChannel.append(QString::fromLatin1("%1").arg(*channelIterator));
             newChannel.append(" ");
         }
 

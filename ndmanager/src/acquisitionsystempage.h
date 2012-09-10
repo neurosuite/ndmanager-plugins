@@ -49,7 +49,7 @@ public:
   /**Sets the number of channels.*/
   inline void setNbChannels(int nb){
    nbChannels = nb;
-   nbChannelsLineEdit->setText(QString("%1").arg(nb));
+   nbChannelsLineEdit->setText(QString::fromLatin1("%1").arg(nb));
   }
 
   /**Sets the sampling rate.*/
@@ -79,18 +79,18 @@ public:
    }
    
   /**Sets the initial offset for all the field potentials.*/
-  inline void setOffset(int offset){offsetLineEdit->setText(QString("%1").arg(offset));}
+  inline void setOffset(int offset){offsetLineEdit->setText(QString::fromLatin1("%1").arg(offset));}
 
   /**Sets the voltage range of the acquisition system in milivolts.
   */
   inline void setVoltageRange(int value){
-   voltageRangeLineEdit->setText(QString("%1").arg(value));
+   voltageRangeLineEdit->setText(QString::fromLatin1("%1").arg(value));
   }
 
   /**Sets the amplification of the acquisition system.
   */
   inline void setAmplification(int value){
-   amplificationLineEdit->setText(QString("%1").arg(value));
+   amplificationLineEdit->setText(QString::fromLatin1("%1").arg(value));
   }
 
   /**Returns the number of channels.*/

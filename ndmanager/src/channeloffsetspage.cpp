@@ -52,8 +52,8 @@ void ChannelOffsetsPage::setOffsets(QMap<int,int>& offsets){
     //The iterator gives the keys sorted.
     for(iterator = offsets.begin(); iterator != offsets.end(); ++iterator){
         int channelId = iterator.key();
-        offsetTable->verticalHeader()->setLabel(channelId,QString("%1").arg(channelId));
-        Q3TableItem* item = new Q3TableItem(offsetTable,Q3TableItem::OnTyping,QString("%1").arg(iterator.data()));
+        offsetTable->verticalHeader()->setLabel(channelId,QString::fromLatin1("%1").arg(channelId));
+        Q3TableItem* item = new Q3TableItem(offsetTable,Q3TableItem::OnTyping,QString::fromLatin1("%1").arg(iterator.data()));
         item->setWordWrap(true);
         offsetTable->setItem(channelId,0,item);
     }

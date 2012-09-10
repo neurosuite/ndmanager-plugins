@@ -46,10 +46,10 @@ public:
     inline void setSamplingRate(double rate){samplingRateLineEdit->setText(Helper::doubleToString(rate));}
 
     /**Sets the video image width.*/
-    inline void setWidth(int width){widthLineEdit->setText(QString("%1").arg(width));}
+    inline void setWidth(int width){widthLineEdit->setText(QString::fromLatin1("%1").arg(width));}
 
     /**Sets the video image height.*/
-    inline void setHeight(int height){heightLineEdit->setText(QString("%1").arg(height));}
+    inline void setHeight(int height){heightLineEdit->setText(QString::fromLatin1("%1").arg(height));}
 
     /**Returns the sampling rate.*/
     inline double getSamplingRate() const{return samplingRateLineEdit->text().toDouble();}

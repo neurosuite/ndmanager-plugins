@@ -59,7 +59,7 @@ void ChannelColorsPage::setColors(QList<ChannelColors>& colors){
     QList<ChannelColors>::iterator iterator;
     for(iterator = colors.begin(); iterator != colors.end(); ++iterator){
         int id = (*iterator).getId();
-        colorTable->verticalHeader()->setLabel(id,QString("%1").arg(id));
+        colorTable->verticalHeader()->setLabel(id,QString::fromLatin1("%1").arg(id));
         Q3TableItem* itemColor = new Q3TableItem(colorTable,Q3TableItem::OnTyping,(*iterator).getColor().name());
         itemColor->setWordWrap(true);
         colorTable->setItem(id,0,itemColor);
