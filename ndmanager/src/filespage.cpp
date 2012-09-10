@@ -26,7 +26,7 @@
 #include <qpushbutton.h> 
 //Added by qt3to4:
 #include <Q3GridLayout>
-#include <Q3VBoxLayout>
+#include <QVBoxLayout>
 #include <QList>
 #include <QFrame>
 #include <Q3PtrList>
@@ -38,7 +38,9 @@
 FilesPage::FilesPage(QWidget* parent)
     : QFrame(parent){
 
-    Q3VBoxLayout* frameLayout = new Q3VBoxLayout(this,0,0);
+    QVBoxLayout* frameLayout = new QVBoxLayout(this);
+    frameLayout->setMargin(0);
+    frameLayout->setSpacing(0);
     tabWidget = new QTabWidget(this);
     frameLayout->addWidget(tabWidget);
 

@@ -29,8 +29,7 @@
 #include <qdir.h> 
 #include <qstringlist.h> 
 #include <qlayout.h>
-//Added by qt3to4:
-#include <Q3VBoxLayout>
+#include <QVBoxLayout>
 #include <QList>
 #include <QFrame>
 #include <QProcess>
@@ -46,7 +45,9 @@
 
 ManagerView::ManagerView(QWidget *parent)
     : QFrame(parent),isUptoDate(true){
-    frameLayout = new Q3VBoxLayout(this,0,0);
+    frameLayout = new QVBoxLayout(this);
+    frameLayout->setSpacing(0);
+    frameLayout->setMargin(0);
 }
 
 

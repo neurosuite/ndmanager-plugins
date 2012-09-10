@@ -26,7 +26,7 @@
 #include <qcombobox.h>
 #include <qspinbox.h> 
 //Added by qt3to4:
-#include <Q3VBoxLayout>
+
 #include <QFrame>
 #include <QList>
 
@@ -37,6 +37,7 @@
 #include <QToolBar>
 #include <QDockWidget>
 
+class QVBoxLayout;
 /**
 @author Lynn Hazan
 */
@@ -105,7 +106,7 @@ private slots:
 private:
     LauncherPage* launcherpage;
     QToolBar* toolbar;
-    Q3VBoxLayout* frameLayout;
+    QVBoxLayout* frameLayout;
     QComboBox* neuroscopeComboBox;
     QComboBox* klustersComboBox;
     QComboBox* scriptsComboBox;
