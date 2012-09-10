@@ -24,7 +24,6 @@
 //Added by qt3to4:
 #include <QTextStream>
 #include <QList>
-#include <Q3PtrList>
 #include <QPixmap>
 #include <QFileDialog>
 #include <QMessageBox>
@@ -794,17 +793,6 @@ void ndManager::slotQuery(){
 void ndManager::slotQueryResult(QString message){
     queryResult += message;
 }
-
-/*
-void ndManager::updateGUI(){
-    Q3PtrList<KXMLGUIClient> clients = guiFactory()->clients();
-
-    //A part has already be added, remove
-    if(clients.count() > 1){
-        guiFactory()->removeClient(clients.at(1));
-    }
-}
-*/
 
 void ndManager::slotExpertMode(){
     bool isImportedFile = importedFile;

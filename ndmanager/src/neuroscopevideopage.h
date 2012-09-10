@@ -32,7 +32,6 @@
 #include <qlabel.h>
 #include <qpixmap.h>
 #include <qimage.h>
-#include <q3groupbox.h>
 #include <qcheckbox.h> 
 #include <QFileDialog>
 
