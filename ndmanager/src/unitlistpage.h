@@ -34,7 +34,6 @@
 #include <qmap.h>
 #include <qregexp.h>
 #include <q3header.h> 
-#include <q3memarray.h> 
 #include <qlineedit.h>
 //Added by qt3to4:
 #include <QEvent>
