@@ -83,10 +83,10 @@ public:
   this->nbChannels = nbChannels;
   for(int i =0; i<attributesTable->numRows();++i) attributesTable->removeRow(i);
   attributesTable->setNumRows(nbChannels);
- }; 
+ }
  
   /**True if at least one property has been modified, false otherwise.*/
- inline bool isModified()const{return modified;};
+ inline bool isModified()const{return modified;}
 
 protected:
  /** Event filter to validate the entries in the group table.
@@ -105,7 +105,7 @@ public slots:
   Q3TableItem* item = new Q3TableItem(groupTable,Q3TableItem::WhenCurrent,"");
   item->setWordWrap(true);
   groupTable->setItem(groupTable->numRows() - 1,0,item);
- };
+ }
  
  /**Removes the selected lines from the group table.*/
  void removeGroup();
@@ -117,7 +117,7 @@ public slots:
    groupTable->selectRow(incorrectRow);
    groupTable->setCurrentCell(incorrectRow,0);
   }
- };
+ }
  
   /**Validates the current entry in the group table.*/
  inline void groupChanged(int row,int column){
@@ -147,7 +147,7 @@ public slots:
    groupTable->selectRow(incorrectRow);
    groupTable->setCurrentCell(incorrectRow,0);
   }   
- };
+ }
  
   /**Validates the current entry in the attribute table.*/
  inline void attributeChanged(int row,int column){
@@ -166,13 +166,13 @@ public slots:
    }
   }
   else attributesTable->adjustRow(row);
- };
+ }
  
   /** Will be called when any properties is modified.*/
-  inline void propertyModified(){modified = true;};
+  inline void propertyModified(){modified = true;}
 
  /**Resets the internal modification status to false.*/
- inline void resetModificationStatus(){modified = false;};
+ inline void resetModificationStatus(){modified = false;}
    
 private:
  int nbChannels; 
