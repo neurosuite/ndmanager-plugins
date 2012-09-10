@@ -28,8 +28,8 @@
 class UnitTable : public Q3Table
 {
 public:
-    UnitTable(QWidget * parent = 0, const char * name = 0 );
-    UnitTable( int numRows, int numCols, QWidget * parent = 0, const char * name = 0 );
+    UnitTable(QWidget * parent = 0 );
+    UnitTable( int numRows, int numCols, QWidget * parent = 0 );
 
     ~UnitTable();
 

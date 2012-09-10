@@ -64,7 +64,7 @@ UnitListLayout::UnitListLayout( QWidget* parent, const char* name, Qt::WFlags fl
 
     layout20->addMultiCellLayout( layout19, 3, 3, 0, 1 );
 
-    unitTable = new UnitTable( this, "unitTable" );
+    unitTable = new UnitTable( this );
     unitTable->setNumCols( unitTable->numCols() + 1 );
     unitTable->horizontalHeader()->setLabel( unitTable->numCols() - 1, tr( "Group" ) );
     unitTable->setNumCols( unitTable->numCols() + 1 );
