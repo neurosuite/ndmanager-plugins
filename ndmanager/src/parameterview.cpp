@@ -539,7 +539,6 @@ void ParameterView::loadProgram(QString programUrl){
         //find the file corresponding to the program name
         const QString path = NdManagerUtils::findExecutable(name,QStringList()<<qgetenv("PATH"));
         if(!path.isNull()){
-            QFileInfo fileInfo(path);
             QFile file(path);
             if(!file.open(QIODevice::ReadOnly)){
                 QString message = tr("The file %1 is not readable.").arg(name);
