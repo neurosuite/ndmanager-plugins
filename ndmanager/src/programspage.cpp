@@ -45,7 +45,7 @@ ProgramsPage::ProgramsPage(bool expertMode,QWidget *parent)
 
     Q3VBoxLayout* frameLayout = new Q3VBoxLayout(this,0,0);
 
-    QString message = "Here you can add a new script description or load an existing one from disk.";
+    QString message = tr("Here you can add a new script description or load an existing one from disk.");
     QLabel* description = new QLabel(message,this);
     description->adjustSize();
     description->setAlignment(Qt::AlignCenter);
@@ -122,8 +122,8 @@ void ProgramsPage::loadProgram(){
             //Check if the file is an XML file <=> conains the xml declaration
             QFile file(filePath);
             if(!file.open(QIODevice::ReadOnly)){
-                QString message = QString("The file %1 is not readable.").arg(filePath);
-                QMessageBox::critical (this, tr("IO Error!"),tr(message));
+                QString message = tr("The file %1 is not readable.").arg(filePath);
+                QMessageBox::critical (this, tr("IO Error!"),message);
             }
             else{
                 QTextStream stream(&file);
@@ -136,7 +136,8 @@ void ProgramsPage::loadProgram(){
                     return;
                 }
             }
-            if(!programUrl.isEmpty())emit programToLoad(programUrl);
+            if(!programUrl.isEmpty())
+                emit programToLoad(programUrl);
         }
     }
 }

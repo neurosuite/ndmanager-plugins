@@ -131,9 +131,12 @@ ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const QString& name)
 ProgramPage::~ProgramPage(){
 }
 
-QString ProgramPage::getHelp(){return help->text();}
+QString ProgramPage::getHelp()
+{
+    return help->text();
+}
 
-void ProgramPage::setHelp(QString helpContent){
+void ProgramPage::setHelp(const QString& helpContent){
     help->setText(helpContent);
 }
 
@@ -142,19 +145,21 @@ bool ProgramPage::saveProgramScript(){
     //find the file corresponding to the program name
     QString name = parameters->getProgramName();
     QString path = NdManagerUtils::findExecutable(name,QStringList()<<QString::fromLocal8Bit(getenv("PATH")));
-    QString message = "";
-    QString title = "";
+    QString message;
+    QString title;
     QString scriptUrl;
 
-    if(!path.isNull()) scriptUrl = QFileDialog::getSaveFileName( this, tr("Save as..."),path,tr("*"));
-    else scriptUrl = QFileDialog::getSaveFileName(this, tr("Save as..."),QString(),tr("*"));
+    if(!path.isNull())
+        scriptUrl = QFileDialog::getSaveFileName( this, tr("Save as..."),path,tr("*"));
+    else
+        scriptUrl = QFileDialog::getSaveFileName(this, tr("Save as..."),QString(),tr("*"));
 
     if(!scriptUrl.isEmpty()){
         path = scriptUrl;
         QFile file(path);
         if(!file.open(QIODevice::WriteOnly)){
-            message = QString("The file %1 could not be saved possibly because of insufficient file access permissions.").arg(name);
-            title = "IO Error!";
+            message = tr("The file %1 could not be saved possibly because of insufficient file access permissions.").arg(name);
+            title = tr("IO Error!");
             recall = true;
         }
         else{
@@ -167,10 +172,12 @@ bool ProgramPage::saveProgramScript(){
     //If the change in the programName lineedit has not yet been validated, a call to nameChanged will be done after this call. Therefore
     //programName has to be updated so no message will be display in that call (otherwise there will be conflict in the events)
     if(programName != parameters->getProgramName()) programName = parameters->getProgramName();
-    if(title != "") QMessageBox::critical (this, tr(title),tr(message));
+    if(!title.isEmpty())
+        QMessageBox::critical (this, title,message);
     if(recall) return saveProgramScript();
     else{
-        if(title != "") return false;
+        if(!title.isEmpty())
+            return false;
         else{
             sciptIsModified = false;
             return true;
@@ -280,13 +287,11 @@ void ProgramPage::nameChanged(const QString& name){
 }
 
 void ProgramPage::tabChange(QWidget * page){
-#if KDAB_PENDING
     if(page == scriptView){
         emit scriptShown(scriptView);
     } else {
         emit scriptHidden();
     }
-#endif
 }
 
 

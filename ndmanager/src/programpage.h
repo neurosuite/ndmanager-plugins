@@ -62,7 +62,7 @@ public:
     QString getHelp();
 
     /**Sets the content of the help.*/
-    void setHelp(QString helpContent);
+    void setHelp(const QString& helpContent);
 
     /**True if the ParameterPage has been modified, false otherwise.*/
     bool areParametersModified()const;
@@ -89,7 +89,7 @@ signals:
     void programToRemove(ProgramPage* programPage);
     void programNameChanged(ProgramPage* programPage,const QString& name,QString message,QString title);
     void scriptHidden();
-
+    void scriptShown(QTextEdit* scriptView);
 
 public slots:
     inline void removeProgram(){
