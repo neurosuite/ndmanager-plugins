@@ -38,7 +38,7 @@ class LfpPage : public LfpLayout
 {
     Q_OBJECT
 public:
-    LfpPage(QWidget* parent = 0, const char *name = 0);
+    LfpPage(QWidget* parent = 0);
     ~LfpPage();
 
     /**Sets the sampling rate.*/

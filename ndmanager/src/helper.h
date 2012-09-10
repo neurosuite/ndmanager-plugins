@@ -36,7 +36,7 @@ public:
 
     inline static QString doubleToString(double value){
 
-        QString stringValue = QString("%1").arg(value,0,'g',14);
+        QString stringValue = QString::fromLatin1("%1").arg(value,0,'g',14);
         /* QRegExp regexp("(?:([0-9]*[.][0-9]*[1-9])0*$)|(?:([0-9]*)[.]0*$)");
     return stringValue.replace(regexp,"\\1\\2");*/
         return stringValue;

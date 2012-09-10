@@ -42,56 +42,56 @@ class QPushButton;
 */
 class FilesPage : public QFrame
 {
-Q_OBJECT
+    Q_OBJECT
 public:
- FilesPage(QWidget* parent = 0, const char *name = 0);
- ~FilesPage();
- 
- /**Adds a tab containg a new file.
+    FilesPage(QWidget* parent = 0);
+    ~FilesPage();
+
+    /**Adds a tab containg a new file.
  * @param title caption for the new tab, it corresponds to the extension.
  * @return a pointer on the newly created page.
- */   
- FilePage* addFile(QString title);
- 
- /**Fills the list @p fileList with pointers to the FilePage.
+ */
+    FilePage* addFile(const QString& title);
+
+    /**Fills the list @p fileList with pointers to the FilePage.
  * @param fileList list to be filled with the current FilePage.
  */
- void getFilePages(Q3PtrList<FilePage>& fileList);
+    void getFilePages(Q3PtrList<FilePage>& fileList);
 
- /**Returns a list containing the extensions of the all specific files.
+    /**Returns a list containing the extensions of the all specific files.
  * @return extension list.
  */
- QList<QString> getFileExtensions();
- 
- /**True if at least one the FilePage has been modified, false otherwise.*/
- bool isModified()const;
- 
-public slots:
- /**Adds a new tab for a new file.*/
- void addNewFile();
- 
- /**Removes the current tab.*/
- void removeFile();
- 
- /**Changes the caption of the tab corresponding to the FilePage which has its extension changed.
- * @param caption the new caption.
- * @param filePage a pointer on the FilePage which has its extension changed.  
- */
- void changeCaption(const QString& caption,FilePage* filePage);
+    QList<QString> getFileExtensions();
 
- /**Resets the internal modification status of the the FilePages to false.*/
- void resetModificationStatus();
-      
+    /**True if at least one the FilePage has been modified, false otherwise.*/
+    bool isModified()const;
+
+public slots:
+    /**Adds a new tab for a new file.*/
+    void addNewFile();
+
+    /**Removes the current tab.*/
+    void removeFile();
+
+    /**Changes the caption of the tab corresponding to the FilePage which has its extension changed.
+ * @param caption the new caption.
+ * @param filePage a pointer on the FilePage which has its extension changed.
+ */
+    void changeCaption(const QString& caption,FilePage* filePage);
+
+    /**Resets the internal modification status of the the FilePages to false.*/
+    void resetModificationStatus();
+
 signals:
- /** This signal is used to update the dropdown list containing the file extensions in the managerView.
+    /** This signal is used to update the dropdown list containing the file extensions in the managerView.
  * @param extensions list containing the extensions of all the specific files.
  */
- void fileModification(QList<QString> extensions);
+    void fileModification(QList<QString> extensions);
 
 private:
- QTabWidget* tabWidget;
- QPushButton* addButton;
- QPushButton* removeButton;
+    QTabWidget* tabWidget;
+    QPushButton* addButton;
+    QPushButton* removeButton;
 };
 
 #endif

@@ -23,7 +23,7 @@
 // include files for KDE
 
 
-MiscellaneousPage::MiscellaneousPage(QWidget* parent, const char *name)
+MiscellaneousPage::MiscellaneousPage(QWidget* parent)
     : NeuroscopeMiscLayout(parent),doubleValidator(this),modified(false),isInit(true){
 
     //Set a validator on the line edits, the values have to be integers or doubles.

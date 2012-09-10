@@ -33,7 +33,7 @@
 
 
 
-ChannelColorsPage::ChannelColorsPage(QWidget* parent, const char *name)
+ChannelColorsPage::ChannelColorsPage(QWidget* parent)
     : ChannelColorsLayout(parent),nbChannels(0),modified(false){
     for(int i = 0;i<colorTable->numCols();++i) colorTable->setColumnStretchable(i,true);
 

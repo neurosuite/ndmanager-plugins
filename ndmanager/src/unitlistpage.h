@@ -58,7 +58,7 @@ class UnitListPage : public UnitListLayout
 
 public:
     /**Constructor.*/
-    UnitListPage(QWidget* parent = 0, const char *name = 0);
+    UnitListPage(QWidget* parent = 0);
     /**Destructor.*/
     ~UnitListPage();
     /** Initializes the unit table.

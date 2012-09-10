@@ -26,7 +26,7 @@
 
 
 
-AcquisitionSystemPage::AcquisitionSystemPage(QWidget *parent, const char *name)
+AcquisitionSystemPage::AcquisitionSystemPage(QWidget *parent)
  : AcquisitionSystemLayout(parent),doubleValidator(this),intValidator(this),isInit(true),reset(false),isLostFocus(false),
  isReturnPressed(false),modified(false),isCheckAsked(false){
 

@@ -27,7 +27,7 @@
 #include <QEvent>
 #include <Q3MemArray>
 
-AnatomyPage::AnatomyPage(QWidget* parent, const char *name)
+AnatomyPage::AnatomyPage(QWidget* parent)
  : AnatomyLayout(parent),nbChannels(0),isIncorrectRow(false),incorrectRow(0),modified(false){
   
  for(int i = 0;i<attributesTable->numCols();++i) attributesTable->setColumnStretchable(i,true);

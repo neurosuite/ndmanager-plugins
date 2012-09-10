@@ -48,7 +48,7 @@ class SpikePage : public SpikeLayout
     Q_OBJECT
 public:
     /**Constructor.*/
-    SpikePage(QWidget*parent = 0, const char *name = 0);
+    SpikePage(QWidget*parent = 0);
     /**Destructor.*/
     ~SpikePage();
 

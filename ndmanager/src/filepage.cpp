@@ -27,7 +27,7 @@
 #include <Q3MemArray>
 #include <QList>
 
-FilePage::FilePage(QWidget *parent, const char *name)
+FilePage::FilePage(QWidget *parent)
     : FileLayout(parent),isIncorrectRow(false),modified(false),isInit(true),extension(""){
 
     mappingTable->setColumnStretchable(0,true);

@@ -44,8 +44,8 @@
 
 
 
-ManagerView::ManagerView(QWidget *parent, const char *name)
-    : QFrame(parent, name),isUptoDate(true){
+ManagerView::ManagerView(QWidget *parent)
+    : QFrame(parent),isUptoDate(true){
     frameLayout = new Q3VBoxLayout(this,0,0);
 }
 

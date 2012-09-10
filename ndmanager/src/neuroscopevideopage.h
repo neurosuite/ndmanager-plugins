@@ -51,7 +51,7 @@ class NeuroscopeVideoPage : public NeuroscopeVideoLayout
 {
     Q_OBJECT
 public:
-    NeuroscopeVideoPage(QWidget* parent = 0, const char *name = 0);
+    NeuroscopeVideoPage(QWidget* parent = 0);
     ~NeuroscopeVideoPage();
 
     /**Sets the background image.*/

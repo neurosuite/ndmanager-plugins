@@ -45,7 +45,7 @@ public:
  * @param parent the parent QWidget.
  * @param name name of the widget (can be used for introspection).
  */
-    ProgramsPage(bool expertMode,QWidget *parent = 0, const char *name = 0);
+    ProgramsPage(bool expertMode,QWidget *parent = 0);
     ~ProgramsPage();
 
 signals:

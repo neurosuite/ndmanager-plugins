@@ -44,7 +44,7 @@ class ManagerView : public QFrame/*QSplitter*/
 {
     Q_OBJECT
 public:
-    ManagerView(QWidget *parent = 0, const char *name = 0);
+    ManagerView(QWidget *parent = 0);
     ~ManagerView();
 
     /**Information retun after a call to addKonsole*/

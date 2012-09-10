@@ -39,7 +39,7 @@ class VideoPage : public VideoLayout
 {
     Q_OBJECT
 public:
-    VideoPage(QWidget* parent = 0, const char *name = 0);
+    VideoPage(QWidget* parent = 0);
     ~VideoPage();
     
     /**Sets the sampling rate.*/

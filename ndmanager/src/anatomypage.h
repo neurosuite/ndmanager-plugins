@@ -53,7 +53,7 @@ class AnatomyPage : public AnatomyLayout
 Q_OBJECT
 public:
   /**Constructor.*/
-  AnatomyPage(QWidget* parent = 0, const char *name = 0);
+  AnatomyPage(QWidget* parent = 0);
  /**Destructor.*/
  ~AnatomyPage();
 

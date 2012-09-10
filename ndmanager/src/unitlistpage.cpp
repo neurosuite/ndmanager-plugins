@@ -30,8 +30,8 @@
 #include <QEvent>
 #include <Q3MemArray>
 
-UnitListPage::UnitListPage(QWidget* parent, const char *name) :
-    UnitListLayout(parent,name),nbUnits(0),isIncorrect(false),incorrectRow(0),modified(false)
+UnitListPage::UnitListPage(QWidget* parent) :
+    UnitListLayout(parent),nbUnits(0),isIncorrect(false),incorrectRow(0),modified(false)
 {
     for(int i = 0;i<unitTable->numCols();++i) unitTable->setColumnStretchable(i,true);
 

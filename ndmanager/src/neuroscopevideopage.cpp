@@ -25,7 +25,7 @@
 //Added by qt3to4:
 #include <QPixmap>
 
-NeuroscopeVideoPage::NeuroscopeVideoPage(QWidget* parent, const char *name)
+NeuroscopeVideoPage::NeuroscopeVideoPage(QWidget* parent)
     : NeuroscopeVideoLayout(parent),height(100),width(100),modified(false),isInit(true){
 
     connect(backgroundButton,SIGNAL(clicked()),this,SLOT(updateBackgroundImage()));

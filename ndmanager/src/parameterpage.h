@@ -50,7 +50,7 @@ public:
  * @param parent the parent QWidget.
  * @param name name of the widget (can be used for introspection).
 */
-    ParameterPage(bool expertMode, QWidget *parent = 0, const char *name = 0);
+    ParameterPage(bool expertMode, QWidget *parent = 0);
     ~ParameterPage();
 
     /**Sets the name of the program.

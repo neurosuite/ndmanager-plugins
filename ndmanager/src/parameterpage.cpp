@@ -30,7 +30,7 @@
 #include <Q3MemArray>
 #include <QList>
 
-ParameterPage::ParameterPage(bool expertMode,QWidget *parent, const char *name)
+ParameterPage::ParameterPage(bool expertMode,QWidget *parent)
     : ParameterLayout(parent),valueModified(false),descriptionModified(false){
 
     status<<tr("Mandatory")<<tr("Optional")<<tr("Dynamic");

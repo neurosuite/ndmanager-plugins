@@ -42,7 +42,7 @@ class AcquisitionSystemPage : public AcquisitionSystemLayout
 {
 Q_OBJECT
 public:
-    AcquisitionSystemPage(QWidget* parent = 0, const char *name = 0);
+    AcquisitionSystemPage(QWidget* parent = 0);
 
     ~AcquisitionSystemPage();
     

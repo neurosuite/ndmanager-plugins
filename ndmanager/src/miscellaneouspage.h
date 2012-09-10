@@ -41,7 +41,7 @@ class MiscellaneousPage : public NeuroscopeMiscLayout
 {
     Q_OBJECT
 public:
-    MiscellaneousPage(QWidget* parent = 0, const char *name = 0);
+    MiscellaneousPage(QWidget* parent = 0);
     ~MiscellaneousPage();
 
     

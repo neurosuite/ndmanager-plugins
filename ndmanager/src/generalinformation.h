@@ -37,33 +37,33 @@ public:
 
  inline GeneralInformation(){
   date = QDate::currentDate();
- };
+ }
 
-inline ~GeneralInformation(){};
+inline ~GeneralInformation(){}
 
   /**Sets the date.*/
-  inline void setDate(QDate date){this->date = date;};
+  inline void setDate(const QDate& date){this->date = date;}
   
   /**Sets the experimenters.*/
-  inline void setExperimenters(QString experimenters){this->experimenters = experimenters;};
+  inline void setExperimenters(const QString& experimenters){this->experimenters = experimenters;}
   
  /**Sets the description.*/
-  inline void setDescription(QString description){this->description = description;};
+  inline void setDescription(const QString& description){this->description = description;}
   
  /**Sets the notes.*/
- inline void setNotes(QString notes){this->notes = notes;};
+ inline void setNotes(const QString& notes){this->notes = notes;}
   
   /**Gets the date.*/
-  inline QDate getDate(){return date;};
+  inline QDate getDate() const{return date;}
   
   /**Gets the experimenters.*/
-  inline QString getExperimenters(){return experimenters;};
+  inline QString getExperimenters() const {return experimenters;}
   
  /**Gets the description.*/
-  inline QString getDescription(){return description;};
+  inline QString getDescription() const {return description;}
   
  /**Gets the notes.*/
-  inline QString getNotes(){return notes;};
+  inline QString getNotes() const {return notes;}
      
 private:
  QDate date;

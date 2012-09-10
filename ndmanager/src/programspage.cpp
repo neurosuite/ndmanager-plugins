@@ -40,8 +40,8 @@
 
 
 
-ProgramsPage::ProgramsPage(bool expertMode,QWidget *parent, const char *name)
-    : QFrame(parent, name),expertMode(expertMode){
+ProgramsPage::ProgramsPage(bool expertMode,QWidget *parent)
+    : QFrame(parent),expertMode(expertMode){
 
     Q3VBoxLayout* frameLayout = new Q3VBoxLayout(this,0,0);
 
