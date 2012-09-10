@@ -29,6 +29,7 @@
 #include <qobject.h>
 #include <qstringlist.h>
 #include <q3table.h>
+#include <QTextEdit>
 //Added by qt3to4:
 #include <QTextStream>
 #include <QList>
@@ -459,13 +460,11 @@ void ParameterView::initialize(QMap<int, QList<int> >& anatomicalGroups,QMap<QSt
         programPage->setHelp(programInformation.getHelp());
         QMap<int, QList<QString> > info = programInformation.getParameterInformation();
         parameterPage->setParameterInformation(info);
-#if KDAB_PENDING
         if(expertMode){
             //set the script if any
-            KTextEditor::Document* scriptDoc = programPage->getScript();
-            Kate::View* scriptView = programPage->getScriptView();
+            QTextEdit* scriptView = programPage->getScriptView();
             //find the file corresponding to the program name
-            QString path = NdManagerUtils::findExecutable(name,getenv("PATH"));
+            QString path = NdManagerUtils::findExecutable(name,QStringList()<<qgetenv("PATH"));
             if(!path.isNull()){
                 QFile file(path);
                 if(!file.open(QIODevice::ReadOnly)){
@@ -478,19 +477,18 @@ void ParameterView::initialize(QMap<int, QList<int> >& anatomicalGroups,QMap<QSt
                     int i = firstLine.find(QRegExp("^#!"));
 
                     if(i != -1){
-                        scriptDoc->openURL(path);
+                        //KDAB_PORTING scriptDoc->openURL(path);
                         file.close();
                         programPage->initialisationOver();
                     }
                     else{
                         QString message =  tr("The file %1  does not appear to be a script file (a script file should begin with #!).").arg(name);
                         QMessageBox::critical (this,tr("IO Error!"),message);
-                        scriptView->getDoc()->text();
+                        scriptView->clear();
                     }
                 }
             }
         }
-#endif
     }
 }
 
@@ -507,7 +505,8 @@ void ParameterView::loadProgram(QString programUrl){
 
     QString name = programInformation.getProgramName();
     //If the description file was incorrect, no name was supplied
-    if(name=="") name = QString("Untitled-%1").arg(programId);
+    if(name=="")
+        name = QString::fromLatin1("Untitled-%1").arg(programId);
 
     if(programNames.contains(name)){
         QString message =  tr("The selected script %1 is already loaded. Do you want to reload it?").arg(name);
@@ -560,7 +559,7 @@ void ParameterView::loadProgram(QString programUrl){
                 else{
                     QString message =  tr("The file %1  does not appear to be a script file (a script file should begin with #!).").arg(name);
                     QMessageBox::critical (this,tr("IO Error!"),message);
-                    scriptView->getDoc()->text();
+                    scriptView->clear();
                 }
             }
         }
