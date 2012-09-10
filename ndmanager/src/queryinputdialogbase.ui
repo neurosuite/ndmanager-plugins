@@ -10,9 +10,6 @@
     <height>179</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>Query</string>
-  </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <layout class="QVBoxLayout">
@@ -80,9 +77,6 @@
         <widget class="QPushButton" name="kPushButton1_2">
          <property name="text">
           <string>O&amp;K</string>
-         </property>
-         <property name="shortcut">
-          <string>Alt+K</string>
          </property>
         </widget>
        </item>
