@@ -19,8 +19,7 @@
  ***************************************************************************/
 // application specific includes
 #include "queryinputdialog.h"
-//Added by qt3to4:
-#include <Q3VBoxLayout>
+#include <QVBoxLayout>
 #include <QLabel>
 #include <QDialogButtonBox>
 #include <QPushButton>
@@ -40,7 +39,8 @@ QueryInputDialog::QueryInputDialog(QWidget *parent,const QString& caption,const 
     setLayout(lay);
     page = new QWidget(this);
     lay->addWidget(page);
-    layout = new Q3VBoxLayout(page,0);
+    QVBoxLayout *layout = new QVBoxLayout(page);
+    layout->setMargin(0);
 
     QLabel *label1 = new QLabel(tr("Query"),page,"query_label");
     layout->addWidget(label1);

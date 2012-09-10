@@ -35,7 +35,7 @@
 #include <QList>
 #include <Q3PtrList>
 #include <QFrame>
-#include <Q3VBoxLayout>
+#include <QVBoxLayout>
 #include <QMessageBox>
 
 //include files for the application
@@ -252,7 +252,9 @@ ProgramPage* ParameterView::addProgram(QString programName,bool show){
     programPath.append(programName);
 
     QFrame* frame = addPage(programPath);
-    Q3VBoxLayout* frameLayout = new Q3VBoxLayout(frame,0,0);
+    QVBoxLayout* frameLayout = new QVBoxLayout(frame);
+    frameLayout->setMargin(0);
+    frameLayout->setSpacing(0);
     ProgramPage* program = new ProgramPage(expertMode,frame,programName);
     frameLayout->addWidget(program);
 
@@ -319,7 +321,9 @@ void ParameterView::changeProgramName(ProgramPage* programPage,const QString& ne
         programPath.append(name);
 
         QFrame* frame = addPage(programPath);
-        Q3VBoxLayout* frameLayout = new Q3VBoxLayout(frame,0,0);
+        QVBoxLayout* frameLayout = new QVBoxLayout(frame);
+        frameLayout->setMargin(0);
+        frameLayout->setSpacing(0);
         program->reparent(frame,QPoint(0,0));
         frameLayout->addWidget(program);
 

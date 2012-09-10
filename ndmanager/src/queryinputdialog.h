@@ -24,8 +24,6 @@
 #include "qlayout.h"
 #include "qlabel.h"
 #include "qlineedit.h"
-//Added by qt3to4:
-#include <Q3VBoxLayout>
 
 #include <QDialog>
 class QDialogButtonBox;
@@ -51,7 +49,6 @@ private:
     QWidget			*page;
     QLineEdit	*path;
     QLineEdit		*query;
-    Q3VBoxLayout		*layout;
     QDialogButtonBox *buttonBox;
 };
 
