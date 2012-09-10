@@ -29,7 +29,7 @@
 //Added by qt3to4:
 #include <Q3GridLayout>
 #include <QTextStream>
-#include <Q3VBoxLayout>
+#include <QVBoxLayout>
 #include <QList>
 #include <QFrame>
 #include <QFileDialog>
@@ -43,7 +43,9 @@
 ProgramsPage::ProgramsPage(bool expertMode,QWidget *parent)
     : QFrame(parent),expertMode(expertMode){
 
-    Q3VBoxLayout* frameLayout = new Q3VBoxLayout(this,0,0);
+    QVBoxLayout* frameLayout = new QVBoxLayout(this);
+    frameLayout->setMargin(0);
+    frameLayout->setSpacing(0);
 
     QString message = tr("Here you can add a new script description or load an existing one from disk.");
     QLabel* description = new QLabel(message,this);
