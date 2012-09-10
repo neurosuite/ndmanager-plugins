@@ -46,7 +46,7 @@
 
 
 
-ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const char* name)
+ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const QString& name)
     : QFrame(parent, name),sciptIsModified(false),isInit(true),programName(name),helpIsModified(false),descriptionNotSaved(true),expertMode(expertMode){
     Q3VBoxLayout* frameLayout = new Q3VBoxLayout(this,0,0);
 

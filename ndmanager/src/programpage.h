@@ -48,7 +48,7 @@ public:
  * @param parent the parent QWidget.
  * @param name name of the widget (can be used for introspection).
 */
-    ProgramPage(bool expertMode,QWidget* parent = 0, const char* name = 0);
+    ProgramPage(bool expertMode, QWidget* parent = 0, const QString &name = QString());
     ~ProgramPage();
 
     /**Returns the parameterPage contained in the page.*/
