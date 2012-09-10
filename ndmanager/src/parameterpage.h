@@ -26,7 +26,6 @@
 // include files for QT
 #include <qstringlist.h> 
 #include <qlineedit.h> 
-#include <q3table.h> 
 //Added by qt3to4:
 #include <QEvent>
 #include <QList>

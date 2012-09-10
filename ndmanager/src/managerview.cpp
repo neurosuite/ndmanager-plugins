@@ -24,7 +24,6 @@
 
 
 // include files for Qt
-#include <q3textedit.h> 
 #include <qwidget.h> 
 #include <qdir.h> 
 #include <qstringlist.h> 

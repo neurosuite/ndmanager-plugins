@@ -24,7 +24,6 @@
 // include files for QT
 #include <qwidget.h>
 #include <qvalidator.h>
-#include <q3listview.h>
 #include <q3dict.h>
 #include <qwidget.h>
 #include <QList>
