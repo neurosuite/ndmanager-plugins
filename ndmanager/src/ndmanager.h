@@ -112,12 +112,6 @@ public slots:
     void slotStateChanged(const QString& state);
 
 
-    /**Updates the menus and toolbars to remove a Kate kPart.*/
-    //void updateGUI();
-
-    /**Takes care of the closing of a Konsole.
-  */  void konsoleDockBeingClosed();
-    
     /**Triggers the update of the dropdown list containing the spike groups in the managerView.
   * @param nbGroups the new number of spike groups.
   */
@@ -201,8 +195,6 @@ private slots:
     /***Saves the current parameter file with a new name.*/
     void slotSaveAs();
 
-    /**Creates a ManagerView.*/
-    void createManagerView();
 
     /**Shift between the user and expert mode.*/
     void slotExpertMode();

@@ -447,7 +447,6 @@ void ParameterView::initialize(QMap<int, QList<int> >& anatomicalGroups,QMap<QSt
     for(programIterator = programList.begin(); programIterator != programList.end(); ++programIterator){
         ProgramInformation programInformation = static_cast<ProgramInformation>(*programIterator);
         ProgramPage* programPage = addProgram(programInformation.getProgramName(),false);
-        qDebug()<<" ddddddddddddddddddddddddd"<<programPage;
         //set the parameters
         ParameterPage* parameterPage = programPage->getParameterPage();
         QString name = programInformation.getProgramName();

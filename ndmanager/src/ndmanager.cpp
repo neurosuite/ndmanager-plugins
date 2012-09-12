@@ -370,61 +370,7 @@ void ndManager::createParameterView(QMap<int, QList<int> >& anatomicalGroups,QMa
 
 }
 
-void ndManager::createManagerView(){
-#if KDAB_PENDING	
-    if(managerView == 0L){
-        //Create and add the ManagerView
-        QDockWidget* manager = createDockWidget("Manager", QPixmap());
-        managerView = new ManagerView();
 
-        int returnStatus =  managerView->addKonsole(doc->url(),parameterView->getNbGroups(),parameterView->getFileExtensions(),
-                                                    parameterView->getFileScriptNames());
-        if(returnStatus == ManagerView::NO_KPART){
-            QMessageBox::critical (this, tr("IO Error!"),tr("The Konsole part does not exist, no terminal can be created."));
-            return;
-        }
-        if(returnStatus == ManagerView::PART_LOADING_ERROR){
-            QMessageBox::critical (this, tr("IO Error!"),tr("The Konsole part could not be loaded."));
-            return;
-        }
-
-
-        //Enable the application to be informed that the dockWidget is being closed.
-        //To do so, connect the dockwidget close button to the konsoleDockBeingClosed slot.
-        connect(manager, SIGNAL(headerCloseButtonClicked()), this, SLOT(konsoleDockBeingClosed()));
-        //Enable the application to be informed that Konsole is being destroyed.
-        connect(managerView, SIGNAL(beingDestroyed()), this, SLOT(konsoleDockBeingClosed()));
-        //the managerView needs to check information about the parameter file before being able to launch a program or a script.
-        connect(managerView, SIGNAL(checkBeforeLaunchingPrograms()), this, SLOT(checkBeforeLaunchingPrograms()));
-        connect(managerView, SIGNAL(checkBeforeLaunchingScripts()), this, SLOT(checkBeforeLaunchingScripts()));
-
-        manager->setWidget(managerView);//assign the widget
-        manager->manualDock(mainDock,QDockWidget::DockBottom,25);
-        manager->setEnableDocking(QDockWidget::DockCorner);
-        manager->setDockSite(QDockWidget::DockCorner);
-    }
-    else{
-        managerView->addKonsole(doc->url(),parameterView->getNbGroups(),parameterView->getFileExtensions(),parameterView->getFileScriptNames());
-        QDockWidget* manager = dockManager->findWidgetParentDock(managerView);
-        manager->manualDock(mainDock,QDockWidget::DockBottom,25);
-        manager->setEnableDocking(QDockWidget::DockCorner);
-        manager->setDockSite(QDockWidget::DockCorner);
-    }
-
-    //show all the encapsulated widgets of all controlled dockwidgets
-    dockManager->activate();
-    slotStateChanged("hideManger");
-#endif
-}
-
-void ndManager::konsoleDockBeingClosed(){
-#if KDAB_PENDING
-    QDockWidget* dock = dockManager->findWidgetParentDock(managerView);
-    dock->undock();
-    dock->hide();
-#endif
-    slotStateChanged("showManager");
-}
 
 
 void ndManager::slotImport(){
