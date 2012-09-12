@@ -129,8 +129,10 @@ void ndManager::setupActions()
     connect(viewStatusBar,SIGNAL(triggered()), this,SLOT(slotViewStatusBar()));
 
 
+    /*
     mPreferenceAction = settingsMenu->addAction(tr("Preferences"));
     connect(mPreferenceAction,SIGNAL(triggered()), this,SLOT(executePreferencesDlg()));
+*/
 
     //Custom actions and menus
     //File menu
