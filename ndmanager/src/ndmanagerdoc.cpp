@@ -41,7 +41,9 @@
 
 using namespace ndmanager;
 
-ndManagerDoc::ndManagerDoc(QWidget* parent):parent(parent){
+ndManagerDoc::ndManagerDoc(QWidget* parent)
+    :parent(parent)
+{
 }
 
 
@@ -49,7 +51,7 @@ ndManagerDoc::~ndManagerDoc(){
 }
 
 void ndManagerDoc::closeDocument(){
-    docUrl = QString();
+    docUrl.clear();
 }
 
 ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::openDocument(const QString& url){

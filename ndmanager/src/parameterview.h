@@ -258,14 +258,14 @@ private:
    * @param programName name of the program to add.
    * @return a pointer on the added ProgramPage.
    */
-    ProgramPage* addProgram(QString programName);
+    ProgramPage* addProgram(const QString &programName);
 
     /**Adds a program to the subtree under the node Program.
    * @param programName name of the program to add.
    * @param show true if the added program page has to been shown, false otherwise.
    * @return a pointer on the added ProgramPage.
    */
-    ProgramPage* addProgram(QString programName,bool show);
+    ProgramPage* addProgram(const QString &programName, bool show);
 
     /** The document connected to the view, specified in the constructor */
     ndManagerDoc& doc;

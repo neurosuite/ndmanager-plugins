@@ -30,6 +30,7 @@
 #include <qstringlist.h>
 #include <q3table.h>
 #include <QTextEdit>
+#include <QDebug>
 //Added by qt3to4:
 #include <QTextStream>
 #include <QList>
@@ -79,9 +80,6 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
     item->setIcon(QIcon(":/icons/acquisition"));
     addPage(item);
 
-
-
-
     //adding page "Video"
     w = new QWidget(this);
     video = new VideoPage(w);
@@ -89,8 +87,6 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
     item->setHeader(tr("Video"));
     item->setIcon(QIcon(":/icons/video"));
     addPage(item);
-
-
 
     //adding page "Local Field Potentials "
     w = new QWidget(this);
@@ -240,23 +236,21 @@ void ParameterView::addNewProgram(){
     emit scriptListHasBeenModified(programNames);
 }
 
-ProgramPage* ParameterView::addProgram(QString programName){
+ProgramPage* ParameterView::addProgram(const QString& programName){
     ProgramPage* program = addProgram(programName,true);
     return program;
 }
 
-ProgramPage* ParameterView::addProgram(QString programName,bool show){
-#if KDAB_PENDING
+ProgramPage* ParameterView::addProgram(const QString& programName,bool show){
     QStringList programPath;
-    programPath.append("Scripts");
+    programPath.append(tr("Scripts"));
     programPath.append(programName);
 
-    QFrame* frame = addPage(programPath);
-    QVBoxLayout* frameLayout = new QVBoxLayout(frame);
-    frameLayout->setMargin(0);
-    frameLayout->setSpacing(0);
-    ProgramPage* program = new ProgramPage(expertMode,frame,programName);
-    frameLayout->addWidget(program);
+    //adding page "Video"
+    QWidget *w = new QWidget(this);
+    ProgramPage* program = new ProgramPage(expertMode,w,programName);
+    QPageWidgetItem *item = new QPageWidgetItem(program,programName);
+    addPage(item);
 
     programDict.insert(programName,program);
     programNames.append(programName);
@@ -271,12 +265,10 @@ ProgramPage* ParameterView::addProgram(QString programName,bool show){
     connect(program,SIGNAL(scriptHidden()),this,SLOT(scriptHidden()));
 
     //Show the new page
-    if(show) showPage(pageIndex(frame));
+    if(show)
+        setCurrentPage(item);
 
     return program;
-#else
-    return 0;
-#endif
 }
 
 void ParameterView::changeProgramName(ProgramPage* programPage,const QString& newName,QString message,QString title){
@@ -455,7 +447,7 @@ void ParameterView::initialize(QMap<int, QList<int> >& anatomicalGroups,QMap<QSt
     for(programIterator = programList.begin(); programIterator != programList.end(); ++programIterator){
         ProgramInformation programInformation = static_cast<ProgramInformation>(*programIterator);
         ProgramPage* programPage = addProgram(programInformation.getProgramName(),false);
-
+        qDebug()<<" ddddddddddddddddddddddddd"<<programPage;
         //set the parameters
         ParameterPage* parameterPage = programPage->getParameterPage();
         QString name = programInformation.getProgramName();

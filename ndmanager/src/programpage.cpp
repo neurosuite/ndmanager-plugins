@@ -31,6 +31,7 @@
 #include <QTextStream>
 #include <qapplication.h>
 #include <qregexp.h>
+#include <QDebug>
 #include <qtextedit.h>
 //Added by qt3to4:
 #include <Q3GridLayout>
@@ -51,14 +52,15 @@ ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const QString& name)
     QVBoxLayout* frameLayout = new QVBoxLayout(this);
     frameLayout->setMargin(0);
     frameLayout->setSpacing(0);
-
+    qDebug()<<" ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const QString& name)";
     //Creat the upper part containing a tabWidget with 3 tabs, one with the parameters (ParameterPage), one with the script and one with the help.
     //In expert mode, the script tab does not exist.
 
     tabWidget = new QTabWidget(this);
     // script = new KTextEdit(tabWidget);
     help = new QTextEdit(tabWidget);
-    if(!expertMode) help->setReadOnly(true);
+    if(!expertMode)
+        help->setReadOnly(true);
     parameters = new ParameterPage(expertMode,tabWidget);
     tabWidget->addTab(parameters,tr("Parameters"));
 

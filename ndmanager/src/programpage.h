@@ -52,7 +52,7 @@ public:
     ~ProgramPage();
 
     /**Returns the parameterPage contained in the page.*/
-    inline ParameterPage* getParameterPage(){return parameters;}
+    inline ParameterPage* getParameterPage() const {return parameters;}
 
 
     /**Returns the script view contained in the page.*/
