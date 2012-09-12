@@ -253,7 +253,7 @@ void ndManager::slotNewFile(){
     }
     //Open a new instance of the application.
     else{
-        //KDAB_PENDING QProcess::startDetached("ndmanager", QStringList()<<command);
+        QProcess::startDetached("ndmanager");
     }
     QApplication::restoreOverrideCursor();
     slotStatusMsg(tr("Ready."));
