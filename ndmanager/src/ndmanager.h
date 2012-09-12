@@ -247,7 +247,6 @@ private:
     QAction* viewMainToolBar;
     QAction* viewToolBar;
     QAction* viewStatusBar;
-    QAction* expertMode;
     QAction* mOpenAction;
     QAction* mCloseAction;
     QAction* mSaveAction;

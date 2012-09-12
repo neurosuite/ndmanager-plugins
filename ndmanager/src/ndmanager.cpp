@@ -341,7 +341,7 @@ void ndManager::createParameterView(QMap<int, QList<int> >& anatomicalGroups,QMa
             // createDockWidget( "1", QPixmap(), 0L, tr("Parameters"), tr("Parameters"));
     //KDAB_PENDING mainDock->setDockWindowTransient(this,true);
 
-    parameterView = new ParameterView(this,*doc,mainDock,tr("ParameterView"),expertMode->isChecked());
+    parameterView = new ParameterView(this,*doc,mainDock,tr("ParameterView"),mExpertMode->isChecked());
 
     //connect(parameterView,SIGNAL(partShown(Kate::View*)),this,SLOT(updateGUI(Kate::View*)));
     //connect(parameterView,SIGNAL(partHidden()),this,SLOT(updateGUI()));
@@ -527,7 +527,7 @@ bool ndManager::queryClose()
 #if KDAB_PENDING
     //Save the current mode
     config->setGroup("General");
-    config->writeEntry("expertMode",expertMode->isChecked());
+    config->writeEntry("expertMode",mExpertMode->isChecked());
 #endif
     if(doc == 0 || mainDock == 0L)
         return true;
