@@ -88,7 +88,7 @@ void ndManager::setupActions()
 
     mNewAction = fileMenu->addAction(tr("&New..."));
     mNewAction->setShortcut(QKeySequence::New);
-    connect(mNewAction, SIGNAL(triggered()), this, SLOT(slotNewOpen()));
+    connect(mNewAction, SIGNAL(triggered()), this, SLOT(slotNewFile()));
 
 
     mOpenAction = fileMenu->addAction(tr("&Open..."));

@@ -80,7 +80,8 @@ ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::openDocument(const QStri
         reader.getGeneralInformation(generalInformation);
         //if the experimenters are not defined use the current user
         QString experimenter = generalInformation.getExperimenters().simplified();
-        if(experimenter == "" || experimenter == " ") generalInformation.setExperimenters(getenv("USER"));
+        if(experimenter.isEmpty() || experimenter == " ")
+            generalInformation.setExperimenters(getenv("USER"));
 
         reader.getAcquisitionSystemInfo(acquisitionSystemInfo);
         reader.getVideoInfo(videoInformation);
@@ -130,7 +131,8 @@ ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::openDocument(const QStri
         //Call the parent to create a ParameterView to display the information loaded from the file.
         dynamic_cast<ndManager*>(parent)->createParameterView(anatomicalGroups,attributes,spikeGroups,spikeGroupsInformation,units,generalInformation,acquisitionSystemInfo,videoInformation,files,channelColors,channelDefaultOffsets,neuroscopeVideoInfo,programs,lfpRate,screenGain,nbSamples,peakSampleIndex,traceBackgroundImage);
     }
-    else return PARSE_ERROR;
+    else
+        return PARSE_ERROR;
 
 
     return OK;
