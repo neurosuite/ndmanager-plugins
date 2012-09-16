@@ -113,7 +113,7 @@ void DescriptionWriter::setProgramInformation(ProgramInformation& programInforma
     program.appendChild(parameters);
 
     QDomElement helpElement = doc.createElement(HELP);
-    if(help != ""){
+    if(!help.isEmpty()){
         QDomText helpValue = doc.createTextNode(help);
         helpElement.appendChild(helpValue);
     }

@@ -173,8 +173,8 @@ void ManagerView::stopScript(){
 }
 
 
-void ManagerView::updateDocUrl(const QString url){
-    parameterUrl = QString(url);
+void ManagerView::updateDocUrl(const QString &url){
+    parameterUrl = url;
 }
 
 void ManagerView::updateDocumentInformation(const QString url,bool isUptoDate){

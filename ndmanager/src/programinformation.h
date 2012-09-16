@@ -44,7 +44,7 @@ public:
     /**Sets the help available on the program.
   * @param help help about the program.
   */
-    inline void setHelp(QString help){this->help = help;}
+    inline void setHelp(const QString& help){this->help = help;}
 
     /** Initializes the parameter table.
  * @param parameters map containing the list of parameters.

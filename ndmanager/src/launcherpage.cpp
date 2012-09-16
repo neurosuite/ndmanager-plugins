@@ -30,7 +30,7 @@
 
 
 
-LauncherPage::LauncherPage(const QString url,QWidget* parent,const char* name)
+LauncherPage::LauncherPage(const QString& url,QWidget* parent)
     : LauncherLayout(parent){
     QDir dir(url);
     qDebug()<<"currentPath "<<url;

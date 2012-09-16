@@ -47,9 +47,6 @@ class ManagerView : public QFrame/*QSplitter*/
 public:
     ManagerView(QWidget *parent = 0);
     ~ManagerView();
-
-    /**Information retun after a call to addKonsole*/
-    enum returnMessage {OK=0,NO_KPART=1,PART_LOADING_ERROR=2};
     
     /** Updates the dropdown list containing the spike groups used to launch Klusters.
   * @param nbGroups the new number of spike groups.
@@ -69,7 +66,7 @@ public:
     /** Updates the parameter file url.
   * @param url url of the currently open parameter file.
   */
-    void updateDocUrl(const QString url);
+    void updateDocUrl(const QString& url);
 
     /** Updates the parameter file information.
   * @param url url of the currently open parameter file.
