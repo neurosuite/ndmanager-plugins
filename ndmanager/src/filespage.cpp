@@ -29,7 +29,7 @@
 #include <QVBoxLayout>
 #include <QList>
 #include <QFrame>
-#include <Q3PtrList>
+#include <QList>
 
 //General C++ include files
 
@@ -109,8 +109,9 @@ void FilesPage::changeCaption(const QString& caption,FilePage* filePage){
     emit fileModification(getFileExtensions());
 }
 
-void FilesPage::getFilePages(Q3PtrList<FilePage>& fileList){
-    for(int i = 0; i<tabWidget->count();++i) fileList.append(static_cast<FilePage*>(tabWidget->page(i)));
+void FilesPage::getFilePages(QList<FilePage*>& fileList){
+    for(int i = 0; i<tabWidget->count();++i)
+      fileList.append(static_cast<FilePage*>(tabWidget->page(i)));
 }
 
 bool FilesPage::isModified()const{

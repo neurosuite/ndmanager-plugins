@@ -34,7 +34,6 @@
 //Added by qt3to4:
 #include <QTextStream>
 #include <QList>
-#include <Q3PtrList>
 #include <QFrame>
 #include <QVBoxLayout>
 #include <QMessageBox>
@@ -566,11 +565,11 @@ void ParameterView::nbChannelsModified(int nbChannels){
     //the files page
     //remove any channel mapping
     QMap<int, QList<int> > mapping;
-    Q3PtrList<FilePage> fileList;
+    QList<FilePage*> fileList;
     files->getFilePages(fileList);
-    FilePage* filePage;
-    for(filePage = fileList.first(); filePage!=0; filePage = fileList.next()){
-        filePage->setChannelMapping(mapping);
+    for(int i= 0 ; i < fileList.count();++i)
+    {
+        fileList.at(i)->setChannelMapping(mapping);
     }
 
     //the anatomical groups page
@@ -710,10 +709,11 @@ void ParameterView::getInformation(QMap<int, QList<int> >& anatomicalGroups,QMap
     this->channelColors->getColors(channelColors);
     this->channelDefaultOffsets->getOffsets(channelDefaultOffsets);
 
-    Q3PtrList<FilePage> fileList;
+    QList<FilePage*> fileList;
     this->files->getFilePages(fileList);
     FilePage* filePage;
-    for(filePage = fileList.first(); filePage!=0; filePage = fileList.next()){
+    for(int i = 0; i <fileList.count(); ++i) {
+        filePage = fileList.at(i);
         FileInformation fileInformation;
         fileInformation.setSamplingRate(filePage->getSamplingRate());
         fileInformation.setExtension(filePage->getExtension());

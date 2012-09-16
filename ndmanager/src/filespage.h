@@ -26,7 +26,6 @@
 // include files for QT
 #include <qwidget.h>
 #include <QFrame>
-#include <q3ptrlist.h>
 //Added by qt3to4:
 #include <QList>
 
@@ -56,7 +55,7 @@ public:
     /**Fills the list @p fileList with pointers to the FilePage.
  * @param fileList list to be filled with the current FilePage.
  */
-    void getFilePages(Q3PtrList<FilePage>& fileList);
+    void getFilePages(QList<FilePage*>& fileList);
 
     /**Returns a list containing the extensions of the all specific files.
  * @return extension list.
