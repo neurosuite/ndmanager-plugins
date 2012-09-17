@@ -84,4 +84,4 @@ add_executable(ndmanager ${ndmanager_SRCS} )
 
 target_link_libraries(ndmanager ${QT_LIBRARIES} ${LIBXML2_LIBRARIES} ${QT_QT3SUPPORT_LIBRARY} ${QT_QTXML_LIBRARY} ${QT_QTWEBKIT_LIBRARY} ${LIBKLUSTERSSHARED_LIBRARY})
 
-install(PROGRAMS ndmanager DESTINATION bin)
+install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/ndmanager DESTINATION bin)
