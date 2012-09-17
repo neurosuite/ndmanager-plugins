@@ -2,7 +2,4 @@
 Makefile
 *.moc
 *.moc.cpp
-autom4te.cache/
-config.h.in~
 doc/en/index.cache.bz2
-src/.deps/
