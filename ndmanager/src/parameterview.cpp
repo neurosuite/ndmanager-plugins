@@ -57,6 +57,7 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
     ,doc(doc),counter(0),programsModified(false),programId(0),expertMode(expertMode){
 
     setCaption(tr("Parameter View"));
+    setButtons(QExtendDialog::None);
     setFaceType(Tree);
     //Show the icones next to the name in the list
     //setShowIconsInTreeList(true);
