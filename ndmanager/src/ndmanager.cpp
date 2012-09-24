@@ -100,10 +100,10 @@ void ndManager::setupActions()
     fileMenu->addAction(mFileOpenRecent);
     connect(mFileOpenRecent, SIGNAL(recentFileSelected(QString)), this, SLOT(slotFileOpenRecent(QString)));
 
-    mCloseAction = fileMenu->addAction(tr("Close"));
-    mCloseAction->setShortcut(QKeySequence::Close);
-    connect(mCloseAction, SIGNAL(triggered()), this, SLOT(slotFileClose()));
+    mUseTemplateAction = fileMenu->addAction(tr("Use &Template..."));
+    connect(mUseTemplateAction, SIGNAL(triggered()), this, SLOT(slotImport()));
 
+    fileMenu->addSeparator();
     mSaveAction = fileMenu->addAction(tr("Save..."));
     mSaveAction->setShortcut(QKeySequence::Save);
     connect(mSaveAction, SIGNAL(triggered()), this, SLOT(slotSave()));
@@ -113,11 +113,48 @@ void ndManager::setupActions()
     connect(mSaveAsAction, SIGNAL(triggered()), this, SLOT(slotSaveAs()));
 
 
+    mSaveAsDefaultAction = fileMenu->addAction(tr("Save as &Default"));
+    connect(mSaveAsDefaultAction, SIGNAL(triggered()), this, SLOT(slotSaveDefault()));
+
+    mReloadAction = fileMenu->addAction(tr("&Reload"));
+    mReloadAction->setShortcut(Qt::Key_F5);
+    connect(mReloadAction, SIGNAL(triggered()), this, SLOT(slotReload()));
+
+
+    fileMenu->addSeparator();
+
+
+    mCloseAction = fileMenu->addAction(tr("Close"));
+    mCloseAction->setShortcut(QKeySequence::Close);
+    connect(mCloseAction, SIGNAL(triggered()), this, SLOT(slotFileClose()));
+
+
+    fileMenu->addSeparator();
+
     mQuitAction = fileMenu->addAction(tr("Quit"));
     mQuitAction->setShortcut(QKeySequence::Quit);
     connect(mQuitAction, SIGNAL(triggered()), this, SLOT(close()));
 
+
+    QMenu *actionMenu = menuBar()->addMenu(tr("&Actions"));
+    mQueryAction = actionMenu->addAction(tr("&Query"));
+    connect(mQueryAction, SIGNAL(triggered()), this, SLOT(slotQuery()));
+
+    mProcessingManager = actionMenu->addAction(tr("Show Processing Manager"));
+    //FIXME !
+
+
+
     QMenu *settingsMenu = menuBar()->addMenu(tr("&Settings"));
+
+    //Settings
+    mExpertMode = settingsMenu->addAction(tr("&Expert Mode"));
+    settingsMenu->addSeparator();
+
+#if KDAB_PENDING
+    config->setGroup("General");
+    expertMode->setChecked(config->readBoolEntry("expertMode"));
+#endif
 
     viewMainToolBar = settingsMenu->addAction(tr("Show Main Toolbar"));
 
@@ -136,40 +173,14 @@ void ndManager::setupActions()
     connect(mPreferenceAction,SIGNAL(triggered()), this,SLOT(executePreferencesDlg()));
 */
 
-    //Custom actions and menus
-    //File menu
 
-    mUseTemplateAction = fileMenu->addAction(tr("Use &Template..."));
-    connect(mUseTemplateAction, SIGNAL(triggered()), this, SLOT(slotImport()));
-
-    mReloadAction = fileMenu->addAction(tr("&Reload"));
-    mReloadAction->setShortcut(Qt::Key_F5);
-    connect(mReloadAction, SIGNAL(triggered()), this, SLOT(slotReload()));
-
-    mSaveAsDefaultAction = fileMenu->addAction(tr("Save as &Default"));
-    connect(mSaveAsDefaultAction, SIGNAL(triggered()), this, SLOT(slotSaveDefault()));
-
-
-    QMenu *actionMenu = menuBar()->addMenu(tr("&Actions"));
-    mQueryAction = actionMenu->addAction(tr("&Query"));
-    connect(mQueryAction, SIGNAL(triggered()), this, SLOT(slotQuery()));
-
-
-    //Processing menu
-    QMenu *processingMenu = menuBar()->addMenu(tr("&Processing"));
-    mProcessingManager = processingMenu->addAction(tr("Show Processing Manager"));
-
-    //Settings
-    mExpertMode = settingsMenu->addAction(tr("&Expert Mode"));
-#if KDAB_PENDING
-    config->setGroup("General");
-    expertMode->setChecked(config->readBoolEntry("expertMode"));
-#endif
 
     QMenu *helpMenu = menuBar()->addMenu(tr("Help"));
     QAction *about = helpMenu->addAction(tr("About"));
     connect(about,SIGNAL(triggered()), this,SLOT(slotAbout()));
 
+    mMainToolBar->addAction(mOpenAction);
+    mMainToolBar->addAction(mSaveAction);
 
 }
 
@@ -803,10 +814,30 @@ void ndManager::checkBeforeLaunchingScripts(){
 void ndManager::slotStateChanged(const QString& state)
 {
     if(state == QLatin1String("initState")) {
+        mReloadAction->setEnabled(false);
+        mSaveAsAction->setEnabled(false);
+        mSaveAction->setEnabled(false);
+        mCloseAction->setEnabled(false);
+        mSaveAsDefaultAction->setEnabled(false);
+        mProcessingManager->setEnabled(false);
+        mExpertMode->setEnabled(false);
+        mOpenAction->setEnabled(true);
+        mNewAction->setEnabled(true);
+        mFileOpenRecent->setEnabled(true);
+        mUseTemplateAction->setEnabled(true);
+        mQueryAction->setEnabled(true);
     } else if(state == QLatin1String("documentState")) {
+        mReloadAction->setEnabled(true);
+        mSaveAsAction->setEnabled(true);
+        mSaveAction->setEnabled(true);
+        mCloseAction->setEnabled(true);
+        mSaveAsDefaultAction->setEnabled(true);
+        mProcessingManager->setEnabled(true);
+        mExpertMode->setEnabled(true);
     } else if(state == QLatin1String("showManager")) {
+        mProcessingManager->setEnabled(false);
     } else if(state == QLatin1String("hideManger")) {
-
+        mProcessingManager->setEnabled(false);
     } else {
         qDebug()<<" state unknown"<<state;
     }
