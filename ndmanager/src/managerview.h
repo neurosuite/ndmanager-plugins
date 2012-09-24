@@ -33,7 +33,7 @@
 //Include for the application
 #include "launcherpage.h"
 
-//Include files for KDE
+
 #include <QToolBar>
 #include <QDockWidget>
 

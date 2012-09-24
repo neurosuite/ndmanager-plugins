@@ -19,7 +19,7 @@
  ***************************************************************************/
 #include "managerview.h"
 
-//Include files for KDE
+
 
 
 
@@ -37,10 +37,6 @@
 #include <QMessageBox>
 
 //General C++ include files
-
-
-
-
 
 ManagerView::ManagerView(QWidget *parent)
     : QFrame(parent),isUptoDate(true){

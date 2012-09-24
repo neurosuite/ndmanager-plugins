@@ -23,7 +23,7 @@
 //Include for the application
 #include <launcherlayout.h>
 
-//Include files for KDE
+
 
 
 /**

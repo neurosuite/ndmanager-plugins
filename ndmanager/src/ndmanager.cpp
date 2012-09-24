@@ -636,8 +636,6 @@ void ndManager::slotReload(){
     //Get the current active page index
     QPageWidgetItem* activePage = parameterView->currentPage();
 
-    //config->writePathEntry("openFile",filePath);
-
     //close the current document
     doc->closeDocument();
     //Delete the main view
