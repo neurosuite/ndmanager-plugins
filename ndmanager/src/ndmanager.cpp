@@ -149,6 +149,8 @@ void ndManager::setupActions()
 
     //Settings
     mExpertMode = settingsMenu->addAction(tr("&Expert Mode"));
+    mExpertMode->setCheckable(true);
+    connect(mQueryAction, SIGNAL(triggered(bool)), this, SLOT(slotExpertMode()));
     settingsMenu->addSeparator();
 
     QSettings settings;
@@ -452,14 +454,6 @@ void ndManager::slotFileClose(){
             //Delete the main view
             delete mainDock;
             mainDock = 0L;
-            if(managerView != 0L){
-#if KDAB_PENDING
-                QDockWidget* dock = dockManager->findWidgetParentDock(managerView);
-                //KDAB_PENDING dock->undock();
-                dock->hide();
-                delete dock;
-#endif
-            }
             resetState();
         }
     }
@@ -469,11 +463,11 @@ void ndManager::slotFileClose(){
 bool ndManager::queryClose()
 {
 
-#if KDAB_PENDING
-    //Save the current mode
-    config->setGroup("General");
-    config->writeEntry("expertMode",mExpertMode->isChecked());
-#endif
+    QSettings settings;
+    settings.beginGroup("General");
+    settings.setValue("expertMode",mExpertMode->isChecked());
+    settings.endGroup();
+
     if(doc == 0 || mainDock == 0L)
         return true;
     else{
@@ -647,14 +641,6 @@ void ndManager::slotReload(){
     //Delete the main view
     delete mainDock;
     mainDock = 0L;
-    if(managerView != 0L){
-#if KDAB_PENDING
-        QDockWidget* dock = dockManager->findWidgetParentDock(managerView);
-        dock->undock();
-        dock->hide();
-        delete dock;
-#endif
-    }
     resetState();
 
     //Reopen the document
@@ -851,4 +837,3 @@ void ndManager::slotAbout()
 
 
 #include "ndmanager.moc"
-#include <QSettings>
