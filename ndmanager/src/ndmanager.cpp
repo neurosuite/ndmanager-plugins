@@ -52,6 +52,7 @@ ndManager::ndManager()
 
     mMainToolBar = new QToolBar();
 
+    addToolBar(mMainToolBar);
     //Apply the user settings.
     initializePreferences();
 
@@ -121,6 +122,7 @@ void ndManager::setupActions()
     viewMainToolBar = settingsMenu->addAction(tr("Show Main Toolbar"));
 
     viewMainToolBar->setCheckable(true);
+    viewMainToolBar->setChecked(true);
     connect(viewMainToolBar,SIGNAL(triggered()), this,SLOT(slotViewMainToolBar()));
 
 
@@ -188,13 +190,7 @@ void ndManager::slotStatusMsg(const QString &text)
 void ndManager::slotViewMainToolBar()
 {
     slotStatusMsg(tr("Toggle the main toolbar..."));
-
-    // turn Toolbar on or off
-    if(!viewMainToolBar->isChecked())
-        mMainToolBar->hide();
-    else
-        mMainToolBar->show();
-
+    mMainToolBar->setVisible(viewMainToolBar->isChecked());
     slotStatusMsg(tr("Ready."));
 }
 
