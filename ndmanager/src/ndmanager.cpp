@@ -213,10 +213,7 @@ void ndManager::slotViewStatusBar()
     slotStatusMsg(tr("Toggle the statusbar..."));
     ///////////////////////////////////////////////////////////////////
     //turn Statusbar on or off
-    if(!viewStatusBar->isChecked())
-        statusBar()->hide();
-    else
-        statusBar()->show();
+    statusBar()->setVisible(viewStatusBar->isChecked());
 
     slotStatusMsg(tr("Ready."));
 }
@@ -677,7 +674,6 @@ void ndManager::slotReload(){
 }
 
 void ndManager::slotQuery(){
-#if KDAB_PENDING
     slotStatusMsg(tr("Processing query..."));
     queryResult.clear();
     QueryInputDialog *queryInputDialog = new QueryInputDialog();
@@ -718,7 +714,6 @@ void ndManager::slotQuery(){
     }
     delete queryInputDialog;
     slotStatusMsg(tr("Ready."));
-#endif
 }
 
 void ndManager::slotQueryResult(QString message){
