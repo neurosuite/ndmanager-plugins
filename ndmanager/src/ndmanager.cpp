@@ -93,6 +93,7 @@ void ndManager::setupActions()
 
 
     mOpenAction = fileMenu->addAction(tr("&Open..."));
+    mOpenAction->setIcon(QPixmap(":/shared-icons/document-open"));
     mOpenAction->setShortcut(QKeySequence::Open);
     connect(mOpenAction, SIGNAL(triggered()), this, SLOT(slotFileOpen()));
 
@@ -105,10 +106,12 @@ void ndManager::setupActions()
 
     fileMenu->addSeparator();
     mSaveAction = fileMenu->addAction(tr("Save..."));
+    mSaveAction->setIcon(QPixmap(":/shared-icons/document-save"));
     mSaveAction->setShortcut(QKeySequence::Save);
     connect(mSaveAction, SIGNAL(triggered()), this, SLOT(slotSave()));
 
     mSaveAsAction = fileMenu->addAction(tr("&Save As..."));
+    mSaveAsAction->setIcon(QPixmap(":/shared-icons/document-save-as"));
     mSaveAsAction->setShortcut(QKeySequence::SaveAs);
     connect(mSaveAsAction, SIGNAL(triggered()), this, SLOT(slotSaveAs()));
 
@@ -125,6 +128,7 @@ void ndManager::setupActions()
 
 
     mCloseAction = fileMenu->addAction(tr("Close"));
+    mCloseAction->setIcon(QPixmap(":/shared-icons/document-close"));
     mCloseAction->setShortcut(QKeySequence::Close);
     connect(mCloseAction, SIGNAL(triggered()), this, SLOT(slotFileClose()));
 
@@ -184,6 +188,7 @@ void ndManager::setupActions()
     mMainToolBar->addAction(mOpenAction);
     mMainToolBar->addAction(mSaveAction);
 
+    resize(800,600);
 }
 
 void ndManager::initStatusBar()
