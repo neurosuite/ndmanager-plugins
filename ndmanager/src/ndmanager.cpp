@@ -32,7 +32,7 @@
 #include <QMenu>
 #include <QMenuBar>
 #include <QDebug>
-
+#include <QSettings>
 
 // application specific includes
 #include "ndmanager.h"
@@ -151,10 +151,10 @@ void ndManager::setupActions()
     mExpertMode = settingsMenu->addAction(tr("&Expert Mode"));
     settingsMenu->addSeparator();
 
-#if KDAB_PENDING
-    config->setGroup("General");
-    expertMode->setChecked(config->readBoolEntry("expertMode"));
-#endif
+    QSettings settings;
+    settings.beginGroup("General");
+    mExpertMode->setChecked(settings.value("expertMode").toBool());
+    settings.endGroup();
 
     viewMainToolBar = settingsMenu->addAction(tr("Show Main Toolbar"));
 
@@ -851,3 +851,4 @@ void ndManager::slotAbout()
 
 
 #include "ndmanager.moc"
+#include <QSettings>
