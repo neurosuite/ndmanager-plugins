@@ -24,11 +24,9 @@
 #include <qlineedit.h>
 #include <qlabel.h>
 #include <qcheckbox.h>
-#include <q3header.h>
 #include <qpixmap.h>
 #include <qobject.h>
 #include <qstringlist.h>
-#include <q3table.h>
 #include <QTextEdit>
 #include <QDebug>
 //Added by qt3to4:
