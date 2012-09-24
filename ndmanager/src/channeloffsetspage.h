@@ -42,8 +42,9 @@ public:
  */
     inline void setNbChannels(int nbChannels){
         this->nbChannels = nbChannels;
-        for(int i =0; i<offsetTable->numRows();++i) offsetTable->removeRow(i);
-        offsetTable->setNumRows(nbChannels);
+        for(int i =0; i<offsetTable->rowCount();++i)
+            offsetTable->removeRow(i);
+        offsetTable->setRowCount(nbChannels);
     }
     
     /** Returns the offsets associated with the channels.
@@ -57,14 +58,14 @@ public:
     void setOffsets(QMap<int,int>& offsets);
 
     /**True if at least one property has been modified, false otherwise.*/
-    inline bool isModified()const{return modified;}
+    bool isModified()const{return modified;}
 
 public slots: 
     /** Will be called when any properties is modified.*/
-    inline void propertyModified(){modified = true;}
+    void propertyModified(){modified = true;}
 
     /**Resets the internal modification status to false.*/
-    inline void resetModificationStatus(){modified = false;}
+    void resetModificationStatus(){modified = false;}
 
 private:
     int nbChannels;

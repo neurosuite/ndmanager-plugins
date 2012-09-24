@@ -32,10 +32,12 @@
 
 ChannelOffsetsPage::ChannelOffsetsPage(QWidget* parent)
     : ChannelOffsetsLayout(parent),nbChannels(0),modified(false){
-    for(int i = 0;i<offsetTable->numCols();++i) offsetTable->setColumnStretchable(i,true);
-
-    connect(offsetTable, SIGNAL(valueChanged(int,int)),this, SLOT(propertyModified()));
-    connect(offsetTable, SIGNAL(doubleClicked(int,int,int,const QPoint&)),this, SLOT(propertyModified()));
+    /*
+    for(int i = 0;i<offsetTable->rowCount();++i)
+        offsetTable->setColumnStretchable(i,true);
+*/
+    connect(offsetTable, SIGNAL(itemChanged (QTableWidgetItem *)),this, SLOT(propertyModified()));
+    connect(offsetTable, SIGNAL(itemDoubleClicked ( QTableWidgetItem *)),this, SLOT(propertyModified()));
 
 }
 
@@ -43,20 +45,21 @@ ChannelOffsetsPage::~ChannelOffsetsPage(){}
 
 void ChannelOffsetsPage::getOffsets(QMap<int,int>& offsets){
     for(int i =0; i<nbChannels;++i){
-        offsets.insert(i,offsetTable->text(i,0).toInt());
+        offsets.insert(i,offsetTable->item(i,0)->text().toInt());
     }
 }
 
 void ChannelOffsetsPage::setOffsets(QMap<int,int>& offsets){
     QMap<int,int>::Iterator iterator;
+    QStringList lst;
     //The iterator gives the keys sorted.
     for(iterator = offsets.begin(); iterator != offsets.end(); ++iterator){
         int channelId = iterator.key();
-        offsetTable->verticalHeader()->setLabel(channelId,QString::fromLatin1("%1").arg(channelId));
-        Q3TableItem* item = new Q3TableItem(offsetTable,Q3TableItem::OnTyping,QString::fromLatin1("%1").arg(iterator.data()));
-        item->setWordWrap(true);
+        lst<<(channelId,QString::fromLatin1("%1").arg(channelId));
+        QTableWidgetItem *item = new QTableWidgetItem(QString::fromLatin1("%1").arg(iterator.data()));
         offsetTable->setItem(channelId,0,item);
     }
+    offsetTable->setVerticalHeaderLabels(lst);
 }
 
 
