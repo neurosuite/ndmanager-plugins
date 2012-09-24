@@ -113,7 +113,7 @@ void ndManager::setupActions()
 
 
     mQuitAction = fileMenu->addAction(tr("Quit"));
-    mQuitAction->setShortcut(QKeySequence::Print);
+    mQuitAction->setShortcut(QKeySequence::Quit);
     connect(mQuitAction, SIGNAL(triggered()), this, SLOT(close()));
 
     QMenu *settingsMenu = menuBar()->addMenu(tr("&Settings"));
@@ -340,8 +340,6 @@ void ndManager::createParameterView(QMap<int, QList<int> >& anatomicalGroups,QMa
 
     //Create the mainDock (parameter view)
     mainDock = new QDockWidget(tr("Parameters"));
-            // createDockWidget( "1", QPixmap(), 0L, tr("Parameters"), tr("Parameters"));
-    //KDAB_PENDING mainDock->setDockWindowTransient(this,true);
 
     parameterView = new ParameterView(this,*doc,mainDock,tr("ParameterView"),mExpertMode->isChecked());
 
@@ -358,15 +356,7 @@ void ndManager::createParameterView(QMap<int, QList<int> >& anatomicalGroups,QMa
 
     mainDock->setWidget(parameterView);
     //allow dock on the Bottom side only
-    //KDAB_PENDING mainDock->setDockSite(QDockWidget::DockBottom);
-    setCentralWidget(mainDock); // central widget in a KDE mainwindow <=> setMainWidget
-    //KDAB_PENDING setMainDockWidget(mainDock);
-    //disable docking abilities of mainDock itself
-    //KDAB_PENDING mainDock->setEnableDocking(Qt::NoDockWidgetArea);
-
-    //show all the encapsulated widgets of all controlled dockwidgets
-    //KDAB_PENDING dockManager->activate();
-
+    setCentralWidget(parameterView); // central widget in a KDE mainwindow <=> setMainWidget
     //Enable some actions now that a document is open (see the klustersui.rc file)
     slotStateChanged("documentState");
 
