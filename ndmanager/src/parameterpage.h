@@ -69,12 +69,12 @@ public:
  * @param parameters map containing the list of parameters.
  Each entry contains the name of the parameter, its value and its status (optional, mandatory or dynamic).
  */
-    void setParameterInformation(QMap<int, QList<QString> >& parameters);
+    void setParameterInformation(QMap<int, QStringList >& parameters);
 
     /**Returns the information for each parameter.
  * @return map containing the list of parameters. Each entry contains the name of the parameter, its value and its status (optional, mandatory or dynamic).
  */
-    QMap<int, QList<QString> > getParameterInformation();
+    QMap<int, QStringList > getParameterInformation();
 
     /**True if at least one of the description property has been modified, false otherwise.*/
     inline bool isDescriptionModified()const{return descriptionModified;}

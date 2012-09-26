@@ -108,7 +108,7 @@ public:
   * @param traceBackgroundImage background image for the trace view in NeuroScope.
   */
     void initialize(QMap<int, QList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes,
-                    QMap<int, QList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& spikeGroupsInformation,QMap<int, QList<QString> >& units,
+                    QMap<int, QList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& spikeGroupsInformation,QMap<int, QStringList >& units,
                     GeneralInformation& generalInformation,QMap<QString,double>& acquisitionSystemInfo,QMap<QString,double>& videoInformation,
                     QList<FileInformation>& files,QList<ChannelColors>& channelColors,QMap<int,int>& channelDefaultOffsets,
                     NeuroscopeVideoInfo& neuroscopeVideoInfo,QList<ProgramInformation>& programs,
@@ -137,7 +137,7 @@ public:
   * @param traceBackgroundImage background image for the trace view in NeuroScope
   */
     void getInformation(QMap<int, QList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes,
-                        QMap<int, QList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& spikeGroupsInformation,QMap<int, QList<QString> >& units,
+                        QMap<int, QList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& spikeGroupsInformation,QMap<int, QStringList >& units,
                         GeneralInformation& generalInformation,QMap<QString,double>& acquisitionSystemInfo,QMap<QString,double>& videoInformation,
                         QList<FileInformation>& files,QList<ChannelColors>& channelColors,QMap<int,int>& channelDefaultOffsets,
                         NeuroscopeVideoInfo& neuroscopeVideoInfo,QList<ProgramInformation>& programs,
@@ -149,14 +149,14 @@ public:
     /**Returns the list of the names of the programs for which the script is currently modified.
  * @return list of the names of the programs having their script modified.
  */
-    QList<QString> modifiedScripts();
+    QStringList modifiedScripts();
 
     /**Returns the list of the names of the programs for which the program description is currently modified.
  * The program description includes the program name, the number of parameters, their name and status,
  * and the help.
  * @return list of the names of the programs having their description modified.
  */
-    QList<QString> modifiedProgramDescription();
+    QStringList modifiedProgramDescription();
 
 
     /**Warns all the pages that the current state has been saved.*/
@@ -180,12 +180,12 @@ public:
     /**Returns a list containing all the extensions of the specific files.
  * @return extension list.
  */
-    inline QList<QString> getFileExtensions()const{return files->getFileExtensions();}
+    inline QStringList getFileExtensions()const{return files->getFileExtensions();}
 
     /**Returns a list containing all the script names.
  * @return script name list.
  */
-    inline const QList<QString>& getFileScriptNames()const{return programNames;}
+    inline const QStringList& getFileScriptNames()const{return programNames;}
 
 signals:
     /**
@@ -203,10 +203,10 @@ signals:
     void nbSpikeGroupsHasBeenModified(int nbGroups);
 
     /**This signal is used to update of the dropdown list containing the file extensions in the managerView.*/
-    void fileHasBeenModified(QList<QString> extensions);
+    void fileHasBeenModified(QStringList extensions);
 
     /**This signal is used to update of the dropdown list containing the script names in the managerView.*/
-    void scriptListHasBeenModified(const QList<QString>& scriptNames);
+    void scriptListHasBeenModified(const QStringList& scriptNames);
 
 public slots:
 
@@ -245,7 +245,7 @@ public slots:
     /**Triggers the update of the dropdown list containing the file extensions in the managerView.
   * @param extensions list containing the extensions of all the specific files.
   */
-    inline void fileModification(QList<QString> extensions){emit fileHasBeenModified(extensions);}
+    inline void fileModification(QStringList extensions){emit fileHasBeenModified(extensions);}
 
 private slots:
 
@@ -319,7 +319,7 @@ private:
     Q3Dict<ProgramPage> programDict;
 
     /**List containg all the program names.*/
-    QList<QString> programNames;
+    QStringList programNames;
 
     /**Counter given the number existing programs. */
     int counter;

@@ -130,8 +130,8 @@ void FilesPage::resetModificationStatus(){
     }
 }
 
-QList<QString> FilesPage::getFileExtensions(){
-    QList<QString> extensionList;
+QStringList FilesPage::getFileExtensions(){
+    QStringList extensionList;
 
     for(int i = 0; i<tabWidget->count();++i) extensionList.append(static_cast<FilePage*>(tabWidget->page(i))->getExtension());
 

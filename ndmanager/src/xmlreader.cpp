@@ -275,7 +275,7 @@ void XmlReader::getSpikeDescription(int nbChannels,QMap<int, QList<int> >& spike
     xmlXPathFreeObject(result);
 }
 
-void XmlReader::getUnits(QMap<int, QList<QString> >& units) const{
+void XmlReader::getUnits(QMap<int, QStringList >& units) const{
 
     xmlXPathObjectPtr result;
     xmlChar* searchPath = xmlCharStrdup("//" + UNITS + "/" + UNIT);
@@ -289,7 +289,7 @@ void XmlReader::getUnits(QMap<int, QList<QString> >& units) const{
             int nbUnits = nodeset->nodeNr;
 
             for(int i = 0; i < nbUnits; ++i){
-                QList<QString> unitInfo;
+                QStringList unitInfo;
                 xmlNodePtr child;
                 for(child = nodeset->nodeTab[i]->children;child != NULL;child = child->next){
                     //skip the carriage return (text node named text and containing /n)
@@ -775,7 +775,7 @@ void XmlReader::getProgramsInformation(QList<ProgramInformation>& programs) cons
             for(int i = 0; i < nbPrograms; ++i){
                 xmlNodePtr child;
                 ProgramInformation programInformation;
-                QMap<int, QList<QString> > parameters;
+                QMap<int, QStringList > parameters;
                 int parameterId = 0;
                 for(child = nodeset->nodeTab[i]->children;child != NULL;child = child->next){
                     //skip the carriage return (text node named text and containing /n)
@@ -803,7 +803,7 @@ void XmlReader::getProgramsInformation(QList<ProgramInformation>& programs) cons
                             if(child->type == XML_TEXT_NODE) continue;
 
                             if(QString((char*)parametersNode->name) == PARAMETER){
-                                QList<QString> parameterInfo;
+                                QStringList parameterInfo;
                                 //loop on the children of the parameter tag: name, status and value
                                 xmlNodePtr parameter;
                                 for(parameter = parametersNode->children;parameter != NULL;parameter = parameter->next){
@@ -830,7 +830,7 @@ void XmlReader::getProgramsInformation(QList<ProgramInformation>& programs) cons
                                         xmlFree(sValue);
                                         if(parameterInfo.size() == 1) parameterInfo.append(value);
                                         else{
-                                            QList<QString>::iterator it = parameterInfo.begin();
+                                            QStringList::iterator it = parameterInfo.begin();
                                             parameterInfo.insert(++it,value);
                                         }
                                     }
@@ -861,7 +861,7 @@ void XmlReader::getProgramInformation(ProgramInformation& programInformation) co
     if(result != NULL){
         xmlNodeSetPtr nodeset = result->nodesetval;
         if(!xmlXPathNodeSetIsEmpty(nodeset)){
-            QMap<int, QList<QString> > parameters;
+            QMap<int, QStringList > parameters;
             int parameterId = 0;
             xmlNodePtr child;
             //There should be only one child, so take the first one.
@@ -891,7 +891,7 @@ void XmlReader::getProgramInformation(ProgramInformation& programInformation) co
                         if(child->type == XML_TEXT_NODE) continue;
 
                         if(QString((char*)parametersNode->name) == PARAMETER){
-                            QList<QString> parameterInfo;
+                            QStringList parameterInfo;
                             //loop on the children of the parameter tag: name, status and value
                             xmlNodePtr parameter;
                             for(parameter = parametersNode->children;parameter != NULL;parameter = parameter->next){
@@ -918,7 +918,7 @@ void XmlReader::getProgramInformation(ProgramInformation& programInformation) co
                                     xmlFree(sValue);
                                     if(parameterInfo.size() == 1) parameterInfo.append(value);
                                     else{
-                                        QList<QString>::iterator it = parameterInfo.begin();
+                                        QStringList::iterator it = parameterInfo.begin();
                                         parameterInfo.insert(++it,value);
                                     }
                                 }

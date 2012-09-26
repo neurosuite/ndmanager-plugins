@@ -86,7 +86,7 @@ public:
  * If a piece of information is not present, empty string is used as the value.
  * @param generalInformation a GeneralInformation to be filled.
  */
-    void getUnits(QMap< int,QList<QString> >& units)const;
+    void getUnits(QMap< int,QStringList >& units)const;
     /** Gets a GeneralInformation containing all the general information.
  * If a piece of information is not present, empty string is used as the value.
  * @param generalInformation a GeneralInformation to be filled.

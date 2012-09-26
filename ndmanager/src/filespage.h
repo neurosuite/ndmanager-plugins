@@ -60,7 +60,7 @@ public:
     /**Returns a list containing the extensions of the all specific files.
  * @return extension list.
  */
-    QList<QString> getFileExtensions();
+    QStringList getFileExtensions();
 
     /**True if at least one the FilePage has been modified, false otherwise.*/
     bool isModified()const;
@@ -85,7 +85,7 @@ signals:
     /** This signal is used to update the dropdown list containing the file extensions in the managerView.
  * @param extensions list containing the extensions of all the specific files.
  */
-    void fileModification(QList<QString> extensions);
+    void fileModification(QStringList extensions);
 
 private:
     QTabWidget* tabWidget;

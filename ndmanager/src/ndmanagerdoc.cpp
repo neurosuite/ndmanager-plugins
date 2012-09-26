@@ -64,7 +64,7 @@ ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::openDocument(const QStri
         QMap<QString, QMap<int,QString> > attributes;
         QMap<int, QList<int> > spikeGroups;
         QMap<int, QMap<QString,QString> > spikeGroupsInformation;
-        QMap<int, QList<QString> > units;
+        QMap<int, QStringList > units;
         GeneralInformation generalInformation;
         QMap<QString,double> acquisitionSystemInfo;
         QMap<QString,double> videoInformation;
@@ -159,7 +159,7 @@ ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::save(QString url){
     QMap<QString, QMap<int,QString> > attributes;
     QMap<int, QList<int> > spikeGroups;
     QMap<int, QMap<QString,QString> > spikeGroupsInformation;
-    QMap<int, QList<QString> > units;
+    QMap<int, QStringList > units;
     GeneralInformation generalInformation;
     QMap<QString,double> acquisitionSystemInfo;
     QMap<QString,double> videoInformation;

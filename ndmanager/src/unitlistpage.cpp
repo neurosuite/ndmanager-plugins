@@ -84,16 +84,16 @@ bool UnitListPage::eventFilter(QObject* object,QEvent* event)
     else return QWidget::eventFilter(object,event);
 }
 
-void UnitListPage::setUnits(const QMap<int, QList<QString> >& units)
+void UnitListPage::setUnits(const QMap<int, QStringList >& units)
 {
     for (int i =0; i<unitTable->numRows();++i) unitTable->removeRow(i);
     unitTable->setNumRows(units.count());
 
-    QMap<int,QList<QString> >::const_iterator iterator;
+    QMap<int,QStringList >::const_iterator iterator;
     //The iterator gives the keys sorted.
     for (iterator = units.begin(); iterator != units.end(); ++iterator)
     {
-        QList<QString> info = iterator.data();
+        QStringList info = iterator.data();
         for (uint i=0;i<info.count();++i)
         {
             UnitTableItem* item = new UnitTableItem(unitTable,Q3TableItem::OnTyping,info[i]);
@@ -103,12 +103,12 @@ void UnitListPage::setUnits(const QMap<int, QList<QString> >& units)
     }//end of units loop
 }
 
-void UnitListPage::getUnits(QMap<int, QList<QString> >& units)const
+void UnitListPage::getUnits(QMap<int, QStringList >& units)const
 { 
     int unitId = 1;
     for(int i =0; i<unitTable->numRows();++i)
     {
-        QList<QString> info;
+        QStringList info;
         for(int j = 0;j < unitTable->numCols(); ++j)
         {
             QString text = unitTable->text(i,j);

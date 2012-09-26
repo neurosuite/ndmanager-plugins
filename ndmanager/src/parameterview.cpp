@@ -198,7 +198,7 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
     connect(programs,SIGNAL(programToLoad(QString)),this,SLOT(loadProgram(QString)));
     connect(this,SIGNAL(aboutToShowPage(QWidget *)),this,SLOT(pageWillBeShown(QWidget *)));
     connect(spike,SIGNAL(nbGroupsModified(int)),this,SLOT(nbSpikeGroupsModified(int)));
-    connect(files,SIGNAL(fileModification(QList<QString>)),this,SLOT(fileModification(QList<QString>)));
+    connect(files,SIGNAL(fileModification(QStringList)),this,SLOT(fileModification(QStringList)));
 
 
 
@@ -290,7 +290,7 @@ void ParameterView::changeProgramName(ProgramPage* programPage,const QString& ne
     QFrame* programFrame;
 
     //To change the name in the treeview, this one has to be rebuilt
-    QList<QString>::iterator iterator;
+    QStringList::iterator iterator;
     for(iterator = programNames.begin(); iterator != programNames.end(); ++iterator){
         QString name = *iterator;
 
@@ -357,7 +357,7 @@ void ParameterView::removeProgram(ProgramPage* programPage){
 }
 
 void ParameterView::initialize(QMap<int, QList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes,
-                               QMap<int, QList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& spikeGroupsInformation,QMap<int, QList<QString> >& units,
+                               QMap<int, QList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& spikeGroupsInformation,QMap<int, QStringList >& units,
                                GeneralInformation& generalInformation,QMap<QString,double>& acquisitionSystemInfo,QMap<QString,double>& videoInformation,
                                QList<FileInformation>& fileList,QList<ChannelColors>& channelColors,QMap<int,int>& channelDefaultOffsets,
                                NeuroscopeVideoInfo& neuroscopeVideoInfo,QList<ProgramInformation>& programList,
@@ -451,7 +451,7 @@ void ParameterView::initialize(QMap<int, QList<int> >& anatomicalGroups,QMap<QSt
         parameterPage->setProgramName(name);
         //set the help
         programPage->setHelp(programInformation.getHelp());
-        QMap<int, QList<QString> > info = programInformation.getParameterInformation();
+        QMap<int, QStringList > info = programInformation.getParameterInformation();
         parameterPage->setParameterInformation(info);
         if(expertMode){
             //set the script if any
@@ -521,7 +521,7 @@ void ParameterView::loadProgram(QString programUrl){
     //Set the parameters
     ParameterPage* parameterPage = program->getParameterPage();
     parameterPage->setProgramName(name);
-    QMap<int, QList<QString> > info = programInformation.getParameterInformation();
+    QMap<int, QStringList > info = programInformation.getParameterInformation();
     parameterPage->setParameterInformation(info);
 
     //set the help
@@ -609,10 +609,10 @@ void ParameterView::nbChannelsModified(int nbChannels){
 
 }
 
-QList<QString> ParameterView::modifiedScripts(){
-    QList<QString> programModified;
+QStringList ParameterView::modifiedScripts(){
+    QStringList programModified;
 
-    QList<QString>::iterator iterator;
+    QStringList::iterator iterator;
     for(iterator = programNames.begin(); iterator != programNames.end(); ++iterator){
         QString name = *iterator;
         ProgramPage* program = programDict[name];
@@ -623,10 +623,10 @@ QList<QString> ParameterView::modifiedScripts(){
     return programModified;
 }
 
-QList<QString> ParameterView::modifiedProgramDescription(){
-    QList<QString> programModified;
+QStringList ParameterView::modifiedProgramDescription(){
+    QStringList programModified;
 
-    QList<QString>::iterator iterator;
+    QStringList::iterator iterator;
     for(iterator = programNames.begin(); iterator != programNames.end(); ++iterator){
         QString name = *iterator;
         ProgramPage* program = programDict[name];
@@ -642,7 +642,7 @@ bool ParameterView::isModified(){
     bool parameterModified = false;
     bool descriptionModified = false;
 
-    QList<QString>::iterator iterator;
+    QStringList::iterator iterator;
     for(iterator = programNames.begin(); iterator != programNames.end(); ++iterator){
         QString name = *iterator;
         ProgramPage* program = programDict[name];
@@ -658,7 +658,7 @@ bool ParameterView::isModified(){
 }
 
 void ParameterView::getInformation(QMap<int, QList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes,
-                                   QMap<int, QList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& spikeGroupsInformation,QMap<int, QList<QString> >& units,
+                                   QMap<int, QList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& spikeGroupsInformation,QMap<int, QStringList >& units,
                                    GeneralInformation& generalInformation,QMap<QString,double>& acquisitionSystemInfo,QMap<QString,double>& videoInformation,
                                    QList<FileInformation>& files,QList<ChannelColors>& channelColors,QMap<int,int>& channelDefaultOffsets,
                                    NeuroscopeVideoInfo& neuroscopeVideoInfo,QList<ProgramInformation>& programs,
@@ -722,7 +722,7 @@ void ParameterView::getInformation(QMap<int, QList<int> >& anatomicalGroups,QMap
     }
 
 
-    QList<QString>::iterator iterator;
+    QStringList::iterator iterator;
     for(iterator = programNames.begin(); iterator != programNames.end(); ++iterator){
         QString name = *iterator;
         ProgramPage* program = programDict[name];
@@ -730,7 +730,7 @@ void ParameterView::getInformation(QMap<int, QList<int> >& anatomicalGroups,QMap
         programInformation.setProgramName(name);
         programInformation.setHelp(program->getHelp());
         ParameterPage* parameterPage = program->getParameterPage();
-        QMap<int, QList<QString> > parameterInformation = parameterPage->getParameterInformation();
+        QMap<int, QStringList > parameterInformation = parameterPage->getParameterInformation();
         programInformation.setParameterInformation(parameterInformation);
         programs.append(programInformation);
     }
@@ -742,7 +742,7 @@ void ParameterView::hasBeenSave(){
     emit resetModificationStatus();
 
     //This object has a track of all the programPage
-    QList<QString>::iterator iterator;
+    QStringList::iterator iterator;
     for(iterator = programNames.begin(); iterator != programNames.end(); ++iterator){
         QString name = *iterator;
         ProgramPage* program = programDict[name];

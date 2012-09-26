@@ -83,12 +83,12 @@ void ParameterPage::propertyModified(int, int column){
     else descriptionModified = true;
 }
 
-QMap<int, QList<QString> > ParameterPage::getParameterInformation(){
-    QMap<int, QList<QString> > parameterInformation;
+QMap<int, QStringList > ParameterPage::getParameterInformation(){
+    QMap<int, QStringList > parameterInformation;
 
     int paramNb = 1;
     for(int i =0; i<parameterTable->numRows();++i){
-        QList<QString> information;
+        QStringList information;
         QString item = parameterTable->text(i,0);
         QString name = item.simplified();
         if(name == " ") continue;
@@ -108,15 +108,15 @@ QMap<int, QList<QString> > ParameterPage::getParameterInformation(){
     return parameterInformation;
 }
 
-void ParameterPage::setParameterInformation(QMap<int, QList<QString> >& parameters){
+void ParameterPage::setParameterInformation(QMap<int, QStringList >& parameters){
     //Clean the parameterTable, just in case, before creating empty rows.
     for(int i =0; i<parameterTable->numRows();++i) parameterTable->removeRow(i);
     parameterTable->setNumRows(parameters.count());
 
-    QMap<int,QList<QString> >::Iterator iterator;
+    QMap<int,QStringList >::Iterator iterator;
     //The iterator gives the keys sorted.
     for(iterator = parameters.begin(); iterator != parameters.end(); ++iterator){
-        QList<QString> parameterInfo = iterator.data();
+        QStringList parameterInfo = iterator.data();
 
         for(uint i=0;i<parameterInfo.count();++i){
             if(ddList.contains(i)){

@@ -63,12 +63,12 @@ void ManagerView::updateSpikeGroupList(int nbGroups){
     klustersComboBox->insertStringList(klustersFiles);
 }
 
-void ManagerView::updateFileList(QList<QString> extensions){
+void ManagerView::updateFileList(QStringList extensions){
     neuroscopeComboBox->clear();
     QStringList neuroscopeFiles;
     neuroscopeFiles<<".dat"<<".eeg";
 
-    QList<QString>::iterator iterator;
+    QStringList::iterator iterator;
     for(iterator = extensions.begin(); iterator != extensions.end(); ++iterator){
         QString extension = QString(".%1").arg(static_cast<QString>(*iterator));
         neuroscopeFiles<<extension;
@@ -76,11 +76,11 @@ void ManagerView::updateFileList(QList<QString> extensions){
     neuroscopeComboBox->insertStringList(neuroscopeFiles);
 }
 
-void ManagerView::updateScriptList(const QList<QString>& scriptNames){
+void ManagerView::updateScriptList(const QStringList& scriptNames){
     scriptsComboBox->clear();
     QStringList scripts;
 
-    QList<QString>::const_iterator iterator;
+    QStringList::const_iterator iterator;
     for(iterator = scriptNames.begin(); iterator != scriptNames.end(); ++iterator){
         scripts<<static_cast<QString>(*iterator);
     }

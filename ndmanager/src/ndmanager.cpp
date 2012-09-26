@@ -343,7 +343,7 @@ void ndManager::openDocumentFile(const QString& url)
 }
 
 void ndManager::createParameterView(QMap<int, QList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes,
-                                    QMap<int, QList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& spikeGroupsInformation,QMap<int, QList<QString> >& units,
+                                    QMap<int, QList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& spikeGroupsInformation,QMap<int, QStringList >& units,
                                     GeneralInformation& generalInformation,QMap<QString,double>& acquisitionSystemInfo,QMap<QString,double>& videoInformation,
                                     QList<FileInformation>& files,QList<ChannelColors>& channelColors,QMap<int,int>& channelOffsets,
                                     NeuroscopeVideoInfo& neuroscopeVideoInfo,QList<ProgramInformation>& programs,
@@ -357,8 +357,8 @@ void ndManager::createParameterView(QMap<int, QList<int> >& anatomicalGroups,QMa
     //connect(parameterView,SIGNAL(partShown(Kate::View*)),this,SLOT(updateGUI(Kate::View*)));
     //connect(parameterView,SIGNAL(partHidden()),this,SLOT(updateGUI()));
     connect(parameterView,SIGNAL(nbSpikeGroupsHasBeenModified(int)),this,SLOT(nbSpikeGroupsModified(int)));
-    connect(parameterView,SIGNAL(fileHasBeenModified(QList<QString>)),this,SLOT(fileModification(QList<QString>)));
-    connect(parameterView,SIGNAL(scriptListHasBeenModified(const QList<QString>&)),this,SLOT(scriptModification(const QList<QString>&)));
+    connect(parameterView,SIGNAL(fileHasBeenModified(QStringList)),this,SLOT(fileModification(QStringList)));
+    connect(parameterView,SIGNAL(scriptListHasBeenModified(const QStringList&)),this,SLOT(scriptModification(const QStringList&)));
 
 
 
@@ -398,9 +398,9 @@ void ndManager::slotFileClose(){
         bool hasBeenCancel = false;
 
         //check first if some scripts have been modified
-        QList<QString> scriptModified = parameterView->modifiedScripts();
+        QStringList scriptModified = parameterView->modifiedScripts();
         if(scriptModified.size() != 0){
-            QList<QString>::iterator iterator;
+            QStringList::iterator iterator;
             for(iterator = scriptModified.begin(); iterator != scriptModified.end(); ++iterator){
                 QString name = *iterator;
                 switch(QMessageBox::question(0,tr("Script modification"),tr("The script %1 has been modified, do you want to save the it?").arg(name),QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
@@ -417,9 +417,9 @@ void ndManager::slotFileClose(){
         }
 
         //check if some descriptions have been modified
-        QList<QString> programModified = parameterView->modifiedProgramDescription();
+        QStringList programModified = parameterView->modifiedProgramDescription();
         if(programModified.size() != 0){
-            QList<QString>::iterator iterator;
+            QStringList::iterator iterator;
             for(iterator = programModified.begin(); iterator != programModified.end(); ++iterator){
                 QString name = *iterator;
                 switch(QMessageBox::question(0,tr("Program description modification"),tr("The description of the program %1 has been modified, do you want to save the it?").arg(name),QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
@@ -474,9 +474,9 @@ bool ndManager::queryClose()
         return true;
     else{
         //check first if some scripts have been modified
-        QList<QString> scriptModified = parameterView->modifiedScripts();
+        QStringList scriptModified = parameterView->modifiedScripts();
         if(scriptModified.size() != 0){
-            QList<QString>::iterator iterator;
+            QStringList::iterator iterator;
             for(iterator = scriptModified.begin(); iterator != scriptModified.end(); ++iterator){
                 QString name = *iterator;
                 switch(QMessageBox::question(0,tr("Script modification"),tr("The script %1 has been modified, do you want to save the it?").arg(name),QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
@@ -493,9 +493,9 @@ bool ndManager::queryClose()
         }
 
         //check if some descriptions have been modified
-        QList<QString> programModified = parameterView->modifiedProgramDescription();
+        QStringList programModified = parameterView->modifiedProgramDescription();
         if(programModified.size() != 0){
-            QList<QString>::iterator iterator;
+            QStringList::iterator iterator;
             for(iterator = programModified.begin(); iterator != programModified.end(); ++iterator){
                 QString name = *iterator;
                 switch(QMessageBox::question(0,tr("Program description modification"),tr("The description of the program %1 has been modified, do you want to save the it?").arg(name),QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
@@ -750,13 +750,13 @@ void ndManager::nbSpikeGroupsModified(int nbGroups){
     }
 }
 
-void ndManager::fileModification(QList<QString> extensions){
+void ndManager::fileModification(QStringList extensions){
     if(managerView != 0L){
         managerView->updateFileList(extensions);
     }
 }
 
-void ndManager::scriptModification(const QList<QString>& scriptNames){
+void ndManager::scriptModification(const QStringList& scriptNames){
     if(managerView != 0L){
         managerView->updateScriptList(scriptNames);
     }
@@ -768,7 +768,7 @@ void ndManager::checkBeforeLaunchingPrograms(){
         else{
             if(parameterView->isModified()) managerView->updateDocumentInformation(doc->url(),false);
             else{
-                QList<QString> programModified = parameterView->modifiedProgramDescription();
+                QStringList programModified = parameterView->modifiedProgramDescription();
                 if(programModified.size()!= 0) managerView->updateDocumentInformation(doc->url(),false);
                 else managerView->updateDocumentInformation(doc->url(),true);
             }
@@ -782,10 +782,10 @@ void ndManager::checkBeforeLaunchingScripts(){
         else{
             if(parameterView->isModified()) managerView->updateDocumentInformation(doc->url(),false);
             else{
-                QList<QString> programModified = parameterView->modifiedProgramDescription();
+                QStringList programModified = parameterView->modifiedProgramDescription();
                 if(programModified.size()!= 0) managerView->updateDocumentInformation(doc->url(),false);
                 else{
-                    QList<QString> scriptModified = parameterView->modifiedScripts();
+                    QStringList scriptModified = parameterView->modifiedScripts();
                     if(scriptModified.size()!= 0) managerView->updateDocumentInformation(doc->url(),false);
                     else managerView->updateDocumentInformation(doc->url(),true);
                 }

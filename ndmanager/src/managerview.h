@@ -56,12 +56,12 @@ public:
     /**Triggers the update of the dropdown list containing the file extensions.
   * @param extensions list containing the extensions of all the specific files.
   */
-    void updateFileList(QList<QString> extensions);
+    void updateFileList(QStringList extensions);
 
     /**Triggers the update of the dropdown list containing the script names.
   * @param scriptNames list containing the script names.
   */
-    void updateScriptList(const QList<QString>& scriptNames);
+    void updateScriptList(const QStringList& scriptNames);
 
     /** Updates the parameter file url.
   * @param url url of the currently open parameter file.

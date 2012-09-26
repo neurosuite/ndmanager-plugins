@@ -23,7 +23,7 @@
 // include files for QT
 #include <qmap.h>
 //Added by qt3to4:
-#include <QList>
+#include <QStringList>
 #include <QString>
 /**
 * Class storing the information describing a program to be used to process the raw data.
@@ -50,7 +50,7 @@ public:
  * @param parameters map containing the list of parameters.
  * Each entry is a list containing the name of the parameter its status (optional, mandatory or dynamic) and its value if any.
  */
-    inline void setParameterInformation(QMap<int, QList<QString> >& parameters){
+    inline void setParameterInformation(QMap<int, QStringList >& parameters){
         this->parameters = parameters;
     }
 
@@ -63,11 +63,11 @@ public:
     /**Returns the information for each parameter.
  * @return map containing the list of parameters. Each entry contains the name of the parameter, its value and its status (optional, mandatory or dynamic).
  */
-    QMap<int, QList<QString> > getParameterInformation(){return parameters;}
+    QMap<int, QStringList > getParameterInformation(){return parameters;}
 
 private:
     QString name;
-    QMap<int, QList<QString> > parameters;
+    QMap<int, QStringList > parameters;
     QString help;
 };
 

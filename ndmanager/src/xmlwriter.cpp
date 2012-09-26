@@ -427,7 +427,7 @@ void XmlWriter::setProgramsInformation(QList<ProgramInformation>& programList){
     for(iterator = programList.begin(); iterator != programList.end(); ++iterator){
         //Get the program information
         QString name = static_cast<ProgramInformation>(*iterator).getProgramName();
-        QMap<int, QList<QString> > parametersInfo = static_cast<ProgramInformation>(*iterator).getParameterInformation();
+        QMap<int, QStringList > parametersInfo = static_cast<ProgramInformation>(*iterator).getParameterInformation();
         QString help = static_cast<ProgramInformation>(*iterator).getHelp();
 
         QDomElement programElement = doc.createElement(PROGRAM);
@@ -439,11 +439,11 @@ void XmlWriter::setProgramsInformation(QList<ProgramInformation>& programList){
 
         //Take care of the parameters
         QDomElement parameters = doc.createElement(PARAMETERS);
-        QMap<int,QList<QString> >::Iterator parameterIterator;
+        QMap<int,QStringList >::Iterator parameterIterator;
         //The iterator gives the keys sorted.
         for(parameterIterator = parametersInfo.begin(); parameterIterator != parametersInfo.end(); ++parameterIterator){
             QDomElement parameter = doc.createElement(PARAMETER);
-            QList<QString> parameterInfo = parameterIterator.data();
+            QStringList parameterInfo = parameterIterator.data();
 
             for(uint i = 0; i< parameterInfo.count();++i){
                 //the info are NAME, VALUE and STATUS
@@ -486,16 +486,16 @@ void XmlWriter::setProgramsInformation(QList<ProgramInformation>& programList){
 
 
 
-void  XmlWriter::setUnitsInformation(QMap<int, QList<QString> >& units){
+void  XmlWriter::setUnitsInformation(QMap<int, QStringList >& units){
     this->units = doc.createElement(UNITS);
 
     //Create the unit elements
-    QMap<int,QList<QString> >::Iterator iterator;
+    QMap<int,QStringList >::Iterator iterator;
 
     //The iterator gives the keys sorted.
     for(iterator = units.begin(); iterator != units.end(); ++iterator){
-        QList<QString> unit = iterator.data();
-        QList<QString>::iterator unitIterator;
+        QStringList unit = iterator.data();
+        QStringList::iterator unitIterator;
 
         QDomElement unitElement = doc.createElement(UNIT);
 

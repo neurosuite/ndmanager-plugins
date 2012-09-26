@@ -96,7 +96,7 @@ public:
   * @param traceBackgroundImage background image for the trace view in NeuroScope
   */
     void createParameterView(QMap<int, QList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes,
-                             QMap<int, QList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& spikeGroupsInformation,QMap<int, QList<QString> >& units,
+                             QMap<int, QList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& spikeGroupsInformation,QMap<int, QStringList >& units,
                              GeneralInformation& generalInformation,QMap<QString,double>& acquisitionSystemInfo,QMap<QString,double>& videoInformation,
                              QList<FileInformation>& files,QList<ChannelColors>& channelColors,QMap<int,int>& channelOffsets,
                              NeuroscopeVideoInfo& neuroscopeVideoInfo,QList<ProgramInformation>& programs,
@@ -120,7 +120,7 @@ public slots:
     /**Triggers the update of the dropdown list containing the file extensions in the managerView.
   * @param extensions list containing the extensions of all the specific files.
   */
-    void fileModification(QList<QString> extensions);
+    void fileModification(QStringList extensions);
 
     /**Checks that everything is ok before launching a program. This includes that the
   * modifications to the parameter file have been saved.
@@ -135,7 +135,7 @@ public slots:
     /**Triggers the update of the dropdown list containing the script names in the managerView.
   * @param scriptNames list containing the names.
   */
-    void scriptModification(const QList<QString>& scriptNames);
+    void scriptModification(const QStringList& scriptNames);
 
 private slots:
 

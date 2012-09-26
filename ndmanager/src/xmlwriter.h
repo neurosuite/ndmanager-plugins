@@ -135,7 +135,7 @@ public:
     /** Creates the elements containing the information for units.
  * @param units a reference to a map providing the units information.
  */
-    void setUnitsInformation(QMap<int, QList<QString> >& units);
+    void setUnitsInformation(QMap<int, QStringList >& units);
 
 private:
 

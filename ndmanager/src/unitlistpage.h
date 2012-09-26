@@ -62,11 +62,11 @@ public:
     /** Initializes the unit table.
         * @param units map containing the info for each unit.
         */
-    void setUnits(const QMap<int, QList<QString> >& units);
+    void setUnits(const QMap<int, QStringList >& units);
     /**Returns the composition of the unit table.
         * @param units map containing the info for each unit.
         */
-    void getUnits(QMap<int, QList<QString> >& units)const;
+    void getUnits(QMap<int, QStringList >& units)const;
     /**Initializes the number of units classified.
         * @param nbUnits number of units.
         */
