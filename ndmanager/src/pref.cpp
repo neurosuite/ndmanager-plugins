@@ -37,7 +37,7 @@ ndManagerPreferences::ndManagerPreferences(QWidget* parent,const char* name, Qt:
     setButtons(Help | Default | Ok | Apply | Cancel);
     setDefaultButton(Ok);
     setFaceType(Tree);
-    setCaption(tr("ndManager Preferences"));
+    setWindowTitle(tr("ndManager Preferences"));
 
 
     QWidget * w = new QWidget(this);

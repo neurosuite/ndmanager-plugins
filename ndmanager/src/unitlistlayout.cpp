@@ -49,14 +49,14 @@ UnitListLayout::UnitListLayout( QWidget* parent, const char* name, Qt::WFlags fl
     layout19->addItem( spacer10_2_3, 0, 4 );
 
     addUnitButton = new QPushButton( this, "addUnitButton" );
-    addUnitButton->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)0, (QSizePolicy::SizeType)0, 0, 0, addUnitButton->sizePolicy().hasHeightForWidth() ) );
+    addUnitButton->setSizePolicy( QSizePolicy( (QSizePolicy::Policy)0, (QSizePolicy::Policy)0, 0, 0, addUnitButton->sizePolicy().hasHeightForWidth() ) );
     addUnitButton->setMinimumSize( QSize( 104, 0 ) );
     addUnitButton->setMaximumSize( QSize( 104, 32767 ) );
 
     layout19->addWidget( addUnitButton, 0, 1 );
 
     removeUnitButton = new QPushButton( this, "removeUnitButton" );
-    removeUnitButton->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)0, (QSizePolicy::SizeType)0, 0, 0, removeUnitButton->sizePolicy().hasHeightForWidth() ) );
+    removeUnitButton->setSizePolicy( QSizePolicy( (QSizePolicy::Policy)0, (QSizePolicy::Policy)0, 0, 0, removeUnitButton->sizePolicy().hasHeightForWidth() ) );
     removeUnitButton->setMinimumSize( QSize( 104, 0 ) );
     removeUnitButton->setMaximumSize( QSize( 104, 32767 ) );
 
@@ -79,7 +79,7 @@ UnitListLayout::UnitListLayout( QWidget* parent, const char* name, Qt::WFlags fl
     unitTable->horizontalHeader()->setLabel( unitTable->numCols() - 1, tr( "Quality" ) );
     unitTable->setNumCols( unitTable->numCols() + 1 );
     unitTable->horizontalHeader()->setLabel( unitTable->numCols() - 1, tr( "Notes" ) );
-    unitTable->setSizePolicy( QSizePolicy( (QSizePolicy::SizeType)7, (QSizePolicy::SizeType)7, 0, 0, unitTable->sizePolicy().hasHeightForWidth() ) );
+    unitTable->setSizePolicy( QSizePolicy( (QSizePolicy::Policy)7, (QSizePolicy::Policy)7, 0, 0, unitTable->sizePolicy().hasHeightForWidth() ) );
     unitTable->setMinimumSize( QSize( 200, 100 ) );
     unitTable->setVScrollBarMode( Q3Table::Auto );
     unitTable->setNumRows( 0 );
@@ -121,7 +121,7 @@ UnitListLayout::~UnitListLayout()
  */
 void UnitListLayout::languageChange()
 {
-    setCaption( tr( "Unit List" ) );
+    setWindowTitle( tr( "Unit List" ) );
     addUnitButton->setText( tr( "&Add" ) );
     removeUnitButton->setText( tr( "Rem&ove" ) );
     unitTable->horizontalHeader()->setLabel( 0, tr( "Group" ) );

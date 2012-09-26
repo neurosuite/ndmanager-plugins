@@ -50,13 +50,13 @@ FilesPage::FilesPage(QWidget* parent)
     frameLayout->addWidget(buttons);
 
     addButton = new QPushButton(tr("Add File"),buttons);
-    addButton->setSizePolicy(QSizePolicy((QSizePolicy::SizeType)0,(QSizePolicy::SizeType)0,0,0,addButton->sizePolicy().hasHeightForWidth()));
+    addButton->setSizePolicy(QSizePolicy((QSizePolicy::Policy)0,(QSizePolicy::Policy)0,0,0,addButton->sizePolicy().hasHeightForWidth()));
     addButton->setMinimumSize(QSize(124,0));
     addButton->setMaximumSize(QSize(124,32767));
     gridLayout->addWidget(addButton,0,1);
 
     removeButton = new QPushButton(tr("Remove File"),buttons);
-    removeButton->setSizePolicy(QSizePolicy((QSizePolicy::SizeType)0,(QSizePolicy::SizeType)0,0,0,removeButton->sizePolicy().hasHeightForWidth()));
+    removeButton->setSizePolicy(QSizePolicy((QSizePolicy::Policy)0,(QSizePolicy::Policy)0,0,0,removeButton->sizePolicy().hasHeightForWidth()));
     removeButton->setMinimumSize(QSize(124,0));
     removeButton->setMaximumSize(QSize(124,32767));
     gridLayout->addWidget(removeButton,0,3);

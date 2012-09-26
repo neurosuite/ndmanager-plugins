@@ -68,7 +68,7 @@ bool FilePage::eventFilter(QObject* object,QEvent* event){
             int row = mappingTable->currentRow();
             int column = mappingTable->currentColumn();
             QWidget* widget = mappingTable->cellWidget(row,column);
-            if(widget != 0 && widget->isA("QLineEdit")){
+            if(widget != 0 && widget->metaObject()->className() == ("QLineEdit")){
                 Q3TableItem* item = mappingTable->item(row,column);
                 item->setContentFromEditor(widget);
                 return true;

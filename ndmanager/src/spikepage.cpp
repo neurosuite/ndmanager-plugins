@@ -67,7 +67,7 @@ bool SpikePage::eventFilter(QObject* object,QEvent* event){
             int row = groupTable->currentRow();
             int column = groupTable->currentColumn();
             QWidget* widget = groupTable->cellWidget(row,column);
-            if(widget != 0 && widget->isA("QLineEdit")){
+            if(widget != 0 && widget->metaObject()->className() == ("QLineEdit")){
                 Q3TableItem* item = groupTable->item(row,column);
                 if(item == NULL){
                     item = new Q3TableItem(groupTable,Q3TableItem::WhenCurrent,static_cast<QLineEdit*>(widget)->text());

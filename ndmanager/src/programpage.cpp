@@ -82,20 +82,20 @@ ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const QString& name)
     if(expertMode){
         saveParametersButton = new QPushButton(tr("Save Script Description As ..."),buttons);
         saveParametersButton->setSizePolicy(
-                    QSizePolicy((QSizePolicy::SizeType)0,(QSizePolicy::SizeType)0,0,0,saveParametersButton->sizePolicy().hasHeightForWidth()));
+                    QSizePolicy((QSizePolicy::Policy)0,(QSizePolicy::Policy)0,0,0,saveParametersButton->sizePolicy().hasHeightForWidth()));
         saveParametersButton->setMinimumSize(QSize(200,0));
         saveParametersButton->setMaximumSize(QSize(300,32767));
         gridLayout->addWidget(saveParametersButton,0,1);
 
         saveScriptButton = new QPushButton(tr("Save Script As ..."),buttons);
         saveScriptButton->setSizePolicy(
-                    QSizePolicy((QSizePolicy::SizeType)0,(QSizePolicy::SizeType)0,0,0,saveScriptButton->sizePolicy().hasHeightForWidth()));
+                    QSizePolicy((QSizePolicy::Policy)0,(QSizePolicy::Policy)0,0,0,saveScriptButton->sizePolicy().hasHeightForWidth()));
         saveScriptButton->setMinimumSize(QSize(124,0));
         saveScriptButton->setMaximumSize(QSize(130,32767));
         gridLayout->addWidget(saveScriptButton,0,3);
 
         removeButton = new QPushButton(tr("Remove Script"),buttons);
-        removeButton->setSizePolicy(QSizePolicy((QSizePolicy::SizeType)0,(QSizePolicy::SizeType)0,0,0,removeButton->sizePolicy().hasHeightForWidth()));
+        removeButton->setSizePolicy(QSizePolicy((QSizePolicy::Policy)0,(QSizePolicy::Policy)0,0,0,removeButton->sizePolicy().hasHeightForWidth()));
         removeButton->setMinimumSize(QSize(124,0));
         removeButton->setMaximumSize(QSize(124,32767));
         gridLayout->addWidget(removeButton,0,5);
@@ -116,7 +116,7 @@ ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const QString& name)
     }
     else{
         removeButton = new QPushButton(tr("Remove Script"),buttons);
-        removeButton->setSizePolicy(QSizePolicy((QSizePolicy::SizeType)0,(QSizePolicy::SizeType)0,0,0,removeButton->sizePolicy().hasHeightForWidth()));
+        removeButton->setSizePolicy(QSizePolicy((QSizePolicy::Policy)0,(QSizePolicy::Policy)0,0,0,removeButton->sizePolicy().hasHeightForWidth()));
         removeButton->setMinimumSize(QSize(124,0));
         removeButton->setMaximumSize(QSize(124,32767));
         gridLayout->addWidget(removeButton,0,1);

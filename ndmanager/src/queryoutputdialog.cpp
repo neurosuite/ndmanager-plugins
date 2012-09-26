@@ -35,7 +35,7 @@ QueryOutputDialog::QueryOutputDialog(const QString& htmlText,const QString& quer
     setButtons(Ok|User1|User2);
     setDefaultButton(Ok);
     setFaceType(Plain);
-    setCaption(caption);
+    setWindowTitle(caption);
 
     setButtonText( User1, tr("Save As Text") );
     setButtonText( User2, tr("Save As HTML") );

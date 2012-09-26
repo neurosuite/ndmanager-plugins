@@ -262,7 +262,7 @@ void ndManager::slotNewFile(){
         QString url = QDir::currentPath()+QDir::separator() + "Untitled";
         doc->rename(url);
         filePath = url;
-        setCaption(url);
+        setWindowTitle(url);
     }
     //Open a new instance of the application.
     else{
@@ -317,7 +317,7 @@ void ndManager::openDocumentFile(const QString& url)
         }
 
 
-        setCaption(url);
+        setWindowTitle(url);
         QApplication::restoreOverrideCursor();
     }
     // check, if this document is already open. If yes, do not do anything
@@ -388,7 +388,7 @@ void ndManager::slotImport(){
 
     doc->rename(url);
     filePath = url;
-    setCaption(url);
+    setWindowTitle(url);
 
     slotStatusMsg(tr("Ready."));
 }
@@ -553,7 +553,7 @@ void ndManager::slotSave(){
             }
             if(importedFile || newFile){
                 filePath = url;
-                setCaption(url);
+                setWindowTitle(url);
             }
             importedFile = false;
             newFile = false;
@@ -582,7 +582,7 @@ void ndManager::slotSaveAs(){
             QMessageBox::critical(0,tr("The current file could not be saved possibly because of insufficient file access permissions."), tr("I/O Error !"));
         }
         filePath = url;
-        setCaption(url);
+        setWindowTitle(url);
 
         importedFile = false;
         newFile = false;
@@ -592,7 +592,7 @@ void ndManager::slotSaveAs(){
 void ndManager::resetState(){
     //Disable some actions when no document is open (see the klustersui.rc file)
     slotStateChanged("initState");
-    setCaption("");
+    setWindowTitle("");
     importedFile = false;
     newFile = false;
     managerView = 0L;
@@ -667,7 +667,7 @@ void ndManager::slotReload(){
         return;
     }
 
-    setCaption(filePath);
+    setWindowTitle(filePath);
     QApplication::restoreOverrideCursor();
 
     //Raise the previously active page
@@ -737,7 +737,7 @@ void ndManager::slotExpertMode(){
         url+= QDir::separator() + tr("Untitled");
         doc->rename(url);
         filePath = url;
-        setCaption(url);
+        setWindowTitle(url);
     }
     else{
         openDocumentFile(filePath);

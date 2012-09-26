@@ -64,7 +64,7 @@ bool AnatomyPage::eventFilter(QObject* object,QEvent* event){
    int row = groupTable->currentRow();
    int column = groupTable->currentColumn();
    QWidget* widget = groupTable->cellWidget(row,column);
-   if(widget != 0 && widget->isA("QLineEdit")){
+   if(widget != 0 && widget->metaObject()->className() == ("QLineEdit")){
     Q3TableItem* item = groupTable->item(row,column);
     item->setContentFromEditor(widget);
     return true;

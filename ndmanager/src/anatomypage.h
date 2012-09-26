@@ -127,7 +127,7 @@ public slots:
   if(isIncorrectRow){
     QWidget* widget = groupTable->cellWidget(incorrectRow,0);
     QString incorrectGroup;
-    if(widget != 0 && widget->isA("QLineEdit")) incorrectGroup = static_cast<QLineEdit*>(widget)->text();
+    if(widget != 0 && widget->metaObject()->className() == ("QLineEdit")) incorrectGroup = static_cast<QLineEdit*>(widget)->text();
     else if(widget == 0) incorrectGroup = groupTable->item(incorrectRow,0)->text();
     if(incorrectGroup.contains(QRegExp("[^\\d\\s]")) != 0){
      groupTable->selectRow(incorrectRow);
