@@ -95,12 +95,12 @@ public:
   * @param peakSampleIndex the sample index corresponding to the peak of the spike; value used dby NeuroScope
   * @param traceBackgroundImage background image for the trace view in NeuroScope
   */
-    void createParameterView(QMap<int, QList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes,
-                             QMap<int, QList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& spikeGroupsInformation,QMap<int, QStringList >& units,
-                             GeneralInformation& generalInformation,QMap<QString,double>& acquisitionSystemInfo,QMap<QString,double>& videoInformation,
-                             QList<FileInformation>& files,QList<ChannelColors>& channelColors,QMap<int,int>& channelOffsets,
-                             NeuroscopeVideoInfo& neuroscopeVideoInfo,QList<ProgramInformation>& programs,
-                             double lfpRate,float screenGain,int nbSamples,int peakSampleIndex,QString traceBackgroundImage);
+    void createParameterView(QMap<int, QList<int> >& anatomicalGroups, QMap<QString, QMap<int,QString> >& attributes,
+                             QMap<int, QList<int> >& spikeGroups, QMap<int, QMap<QString,QString> >& spikeGroupsInformation, QMap<int, QStringList >& units,
+                             GeneralInformation& generalInformation, QMap<QString,double>& acquisitionSystemInfo, QMap<QString,double>& videoInformation,
+                             QList<FileInformation>& files, QList<ChannelColors>& channelColors, QMap<int,int>& channelOffsets,
+                             NeuroscopeVideoInfo& neuroscopeVideoInfo, QList<ProgramInformation>& programs,
+                             double lfpRate, float screenGain, int nbSamples, int peakSampleIndex, const QString &traceBackgroundImage);
 
     /**returns a pointer on the ParameterView containing the parameter information.
  * @return pointer on the ParameterView.

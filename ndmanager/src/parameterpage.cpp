@@ -35,7 +35,8 @@ ParameterPage::ParameterPage(bool expertMode,QWidget *parent)
 
     status<<tr("Mandatory")<<tr("Optional")<<tr("Dynamic");
 
-    for(int i = 0;i<parameterTable->numCols();++i) parameterTable->setColumnStretchable(i,true);
+    for(int i = 0;i<parameterTable->numCols();++i)
+        parameterTable->setColumnStretchable(i,true);
 
     ddList.append(2);
 
@@ -91,7 +92,8 @@ QMap<int, QStringList > ParameterPage::getParameterInformation(){
         QStringList information;
         QString item = parameterTable->text(i,0);
         QString name = item.simplified();
-        if(name == " ") continue;
+        if(name == " ")
+            continue;
         information.append(name);
         for(int j = 1;j < parameterTable->numCols(); ++j){
             Q3TableItem* item = parameterTable->item(i,j);

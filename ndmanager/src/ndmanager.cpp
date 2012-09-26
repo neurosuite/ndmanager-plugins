@@ -348,15 +348,13 @@ void ndManager::createParameterView(QMap<int, QList<int> >& anatomicalGroups,QMa
                                     GeneralInformation& generalInformation,QMap<QString,double>& acquisitionSystemInfo,QMap<QString,double>& videoInformation,
                                     QList<FileInformation>& files,QList<ChannelColors>& channelColors,QMap<int,int>& channelOffsets,
                                     NeuroscopeVideoInfo& neuroscopeVideoInfo,QList<ProgramInformation>& programs,
-                                    double lfpRate,float screenGain,int nbSamples,int peakSampleIndex,QString traceBackgroundImage){
+                                    double lfpRate,float screenGain,int nbSamples,int peakSampleIndex,const QString& traceBackgroundImage){
 
     //Create the mainDock (parameter view)
     mainDock = new QDockWidget(tr("Parameters"));
 
     parameterView = new ParameterView(this,*doc,mainDock,tr("ParameterView"),mExpertMode->isChecked());
 
-    //connect(parameterView,SIGNAL(partShown(Kate::View*)),this,SLOT(updateGUI(Kate::View*)));
-    //connect(parameterView,SIGNAL(partHidden()),this,SLOT(updateGUI()));
     connect(parameterView,SIGNAL(nbSpikeGroupsHasBeenModified(int)),this,SLOT(nbSpikeGroupsModified(int)));
     connect(parameterView,SIGNAL(fileHasBeenModified(QStringList)),this,SLOT(fileModification(QStringList)));
     connect(parameterView,SIGNAL(scriptListHasBeenModified(const QStringList&)),this,SLOT(scriptModification(const QStringList&)));
@@ -383,7 +381,8 @@ void ndManager::slotImport(){
 
     QString url = QFileDialog::getOpenFileName(this, tr("Import file as model..."),QString(),
                                                tr("*.xml|Parameter File (*.xml)\n*|All files") );
-    if(!url.isEmpty()) openDocumentFile(url);
+    if(!url.isEmpty())
+        openDocumentFile(url);
 
     importedFileUrl = url + QDir::separator() + "Untitled";
 
