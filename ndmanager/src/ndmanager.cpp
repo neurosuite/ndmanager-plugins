@@ -47,7 +47,8 @@ ndManager::ndManager()
       mainDock(0),
       importedFile(false),
       newFile(false),
-      managerView(0L)
+      managerView(0L),
+      parameterView(0)
 {
 
     mMainToolBar = new QToolBar();
@@ -394,12 +395,12 @@ void ndManager::slotImport(){
 }
 
 void ndManager::slotFileClose(){
-    if(doc != 0){
+    if(doc != 0 && parameterView){
         bool hasBeenCancel = false;
 
         //check first if some scripts have been modified
         QStringList scriptModified = parameterView->modifiedScripts();
-        if(scriptModified.size() != 0){
+        if(!scriptModified.isEmpty()){
             QStringList::iterator iterator;
             for(iterator = scriptModified.begin(); iterator != scriptModified.end(); ++iterator){
                 QString name = *iterator;
