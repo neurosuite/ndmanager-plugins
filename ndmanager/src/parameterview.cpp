@@ -498,7 +498,7 @@ void ParameterView::loadProgram(QString programUrl){
 
     QString name = programInformation.getProgramName();
     //If the description file was incorrect, no name was supplied
-    if(name=="")
+    if(name.isEmpty())
         name = QString::fromLatin1("Untitled-%1").arg(programId);
 
     if(programNames.contains(name)){
@@ -582,7 +582,8 @@ void ParameterView::nbChannelsModified(int nbChannels){
     //For the moment the attribute names and values are hard coded (there is only the skip attribut with a default at 0)
     QMap<QString, QMap<int,QString> > attributes;
     QMap<int,QString> skip;
-    for(int i = 0; i<nbChannels;++i) skip.insert(i,"0");
+    for(int i = 0; i<nbChannels;++i)
+        skip.insert(i,"0");
     attributes.insert("Skip",skip);
     anatomy->setAttributes(attributes);
 
@@ -612,9 +613,8 @@ void ParameterView::nbChannelsModified(int nbChannels){
 QStringList ParameterView::modifiedScripts(){
     QStringList programModified;
 
-    QStringList::iterator iterator;
-    for(iterator = programNames.begin(); iterator != programNames.end(); ++iterator){
-        QString name = *iterator;
+    for(int i = 0; i <programNames.count();++i) {
+        QString name =programNames.at(i);
         ProgramPage* program = programDict[name];
         if(program->isScriptModified()) {
             programModified.append(name);
@@ -626,9 +626,8 @@ QStringList ParameterView::modifiedScripts(){
 QStringList ParameterView::modifiedProgramDescription(){
     QStringList programModified;
 
-    QStringList::iterator iterator;
-    for(iterator = programNames.begin(); iterator != programNames.end(); ++iterator){
-        QString name = *iterator;
+    for(int i = 0; i <programNames.count();++i) {
+        QString name =programNames.at(i);
         ProgramPage* program = programDict[name];
         if(program->isDescriptionModifiedAndNotSaved()) {
             programModified.append(name);
@@ -642,9 +641,8 @@ bool ParameterView::isModified(){
     bool parameterModified = false;
     bool descriptionModified = false;
 
-    QStringList::iterator iterator;
-    for(iterator = programNames.begin(); iterator != programNames.end(); ++iterator){
-        QString name = *iterator;
+    for(int i = 0; i <programNames.count();++i) {
+        QString name =programNames.at(i);
         ProgramPage* program = programDict[name];
         parameterModified = program->areParametersModified();
         descriptionModified = program->isDescriptionModified();
@@ -722,9 +720,8 @@ void ParameterView::getInformation(QMap<int, QList<int> >& anatomicalGroups,QMap
     }
 
 
-    QStringList::iterator iterator;
-    for(iterator = programNames.begin(); iterator != programNames.end(); ++iterator){
-        QString name = *iterator;
+    for(int i = 0; i <programNames.count();++i) {
+        QString name =programNames.at(i);
         ProgramPage* program = programDict[name];
         ProgramInformation programInformation;
         programInformation.setProgramName(name);
@@ -742,9 +739,8 @@ void ParameterView::hasBeenSave(){
     emit resetModificationStatus();
 
     //This object has a track of all the programPage
-    QStringList::iterator iterator;
-    for(iterator = programNames.begin(); iterator != programNames.end(); ++iterator){
-        QString name = *iterator;
+    for(int i = 0; i <programNames.count();++i) {
+        QString name =programNames.at(i);
         ProgramPage* program = programDict[name];
         program->resetModificationStatus();
     }
