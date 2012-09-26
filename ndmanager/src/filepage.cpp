@@ -59,11 +59,11 @@ FilePage::~FilePage(){
 
 bool FilePage::eventFilter(QObject* object,QEvent* event){
     QString name = object->name();
-    if(name.find("mappingTable") != -1 && isIncorrectRow){
+    if(name.indexOf("mappingTable") != -1 && isIncorrectRow){
         mappingTable->editCell(incorrectRow,0);
         return true;
     }
-    else if(name.find("mappingTable") != -1 && event->type() == QEvent::Leave){
+    else if(name.indexOf("mappingTable") != -1 && event->type() == QEvent::Leave){
         if(mappingTable->currentRow() != -1){
             int row = mappingTable->currentRow();
             int column = mappingTable->currentColumn();

@@ -130,7 +130,7 @@ void ProgramsPage::loadProgram(){
             else{
                 QTextStream stream(&file);
                 QString firstLine = stream.readLine();
-                int i = firstLine.find(QRegExp("^<\\?xml version"));
+                int i = firstLine.indexOf(QRegExp("^<\\?xml version"));
                 file.close();
                 if(i == -1){
                     QString message = tr("The file %1 is not an xml file.").arg(filePath);

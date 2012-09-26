@@ -69,7 +69,7 @@ bool ParameterPage::eventFilter(QObject* object,QEvent* event){
     QString name = object->name();
 
     //hack, if the event is KeyRelease this means that there was a modification
-    if(name.find("parameterTable") != -1 && event->type() == QEvent::KeyRelease){
+    if(name.indexOf("parameterTable") != -1 && event->type() == QEvent::KeyRelease){
         if(parameterTable->currentColumn() == 1) valueModified = true;
         else descriptionModified = true;
 

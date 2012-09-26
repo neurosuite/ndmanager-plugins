@@ -57,13 +57,13 @@ bool UnitListPage::eventFilter(QObject* object,QEvent* event)
 {
     QString name = object->name();
 
-    if (name.find("unitTable") != -1 && isIncorrect)
+    if (name.indexOf("unitTable") != -1 && isIncorrect)
     {
         unitTable->selectRow(incorrectRow);
         unitTable->setCurrentCell(incorrectRow,incorrectColumn);
         return true;
     }
-    else if (name.find("unitTable") != -1 && event->type() == QEvent::Leave)
+    else if (name.indexOf("unitTable") != -1 && event->type() == QEvent::Leave)
     {
         if(unitTable->currentRow() != -1)
         {

@@ -467,7 +467,7 @@ void ParameterView::initialize(QMap<int, QList<int> >& anatomicalGroups,QMap<QSt
                 else{
                     QTextStream stream(&file);
                     QString firstLine = stream.readLine();
-                    int i = firstLine.find(QRegExp("^#!"));
+                    int i = firstLine.indexOf(QRegExp("^#!"));
 
                     if(i != -1){
                         //KDAB_PORTING scriptDoc->openURL(path);
@@ -540,7 +540,7 @@ void ParameterView::loadProgram(QString programUrl){
             else{
                 QTextStream stream(&file);
                 QString firstLine = stream.readLine();
-                int i = firstLine.find(QRegExp("^#!"));
+                int i = firstLine.indexOf(QRegExp("^#!"));
 
                 if(i != -1){
                     //KDAB_PENDING scriptDoc->openURL(path);

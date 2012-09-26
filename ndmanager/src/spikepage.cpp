@@ -56,13 +56,13 @@ SpikePage::~SpikePage(){}
 
 bool SpikePage::eventFilter(QObject* object,QEvent* event){
     QString name = object->name();
-    if(name.find("groupTable") != -1 && isIncorrectRow){
+    if(name.indexOf("groupTable") != -1 && isIncorrectRow){
         groupTable->selectRow(incorrectRow);
         //groupTable->selectColumn(incorrectColumn);
         groupTable->setCurrentCell(incorrectRow,incorrectColumn);
         return true;
     }
-    else if(name.find("groupTable") != -1 && event->type() == QEvent::Leave){
+    else if(name.indexOf("groupTable") != -1 && event->type() == QEvent::Leave){
         if(groupTable->currentRow() != -1){
             int row = groupTable->currentRow();
             int column = groupTable->currentColumn();

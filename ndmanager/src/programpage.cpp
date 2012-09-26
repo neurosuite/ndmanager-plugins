@@ -261,7 +261,7 @@ void ProgramPage::nameChanged(const QString& name){
                 else{
                     QTextStream stream(&file);
                     QString firstLine = stream.readLine();
-                    int i = firstLine.find(QRegExp("^#!"));
+                    int i = firstLine.indexOf(QRegExp("^#!"));
                     if(i != -1){
                         file.close();
                         //Setting the content of the KTextEdit (named script) will trigger a scriptModified and therefore set sciptIsModified to true. The initial load of the script

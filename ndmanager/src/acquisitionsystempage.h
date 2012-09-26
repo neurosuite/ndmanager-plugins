@@ -29,7 +29,6 @@
 #include <qcombobox.h>
 #include <qspinbox.h>
 #include <qpushbutton.h>
-#include <qlineedit.h>
 #include <qvalidator.h>
 
 
