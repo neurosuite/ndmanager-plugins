@@ -29,7 +29,6 @@
 
 // include files for QT
 #include <qwidget.h>
-#include <q3table.h>
 #include <qpushbutton.h>
 #include <qmap.h>
 #include <qregexp.h>

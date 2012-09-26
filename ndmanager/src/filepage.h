@@ -26,7 +26,6 @@
 
 // include files for QT
 #include <qwidget.h>
-#include <q3table.h>
 #include <qlineedit.h>
 #include <qregexp.h>
 //Added by qt3to4:
