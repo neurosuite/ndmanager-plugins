@@ -24,7 +24,7 @@
 #include <qpushbutton.h>
 //Added by qt3to4:
 #include <QEvent>
-#include <Q3MemArray>
+#include <QVector>
 #include <QList>
 
 FilePage::FilePage(QWidget *parent)
@@ -97,14 +97,14 @@ void FilePage::removeChannel(){
     modified = true;
     int nbSelections = mappingTable->numSelections();
     if(nbSelections > 0){
-        QList< Q3MemArray<int> > rowsToRemove;
+        QList< QVector<int> > rowsToRemove;
         //Look up the rows to be removed
         for(int j = 0; j < nbSelections;++j){
             Q3TableSelection selection = mappingTable->selection(j);
             bool active = selection.isActive();
             if(active){
                 int nbRows = selection.bottomRow() - selection.topRow() + 1;
-                Q3MemArray<int> rows(nbRows);
+                QVector<int> rows(nbRows);
                 for(int i = 0; i < nbRows;++i){
                     rows[i] = selection.topRow() + i;
                 }
@@ -112,7 +112,7 @@ void FilePage::removeChannel(){
             }
         }
         //Actually remove the rows
-        QList< Q3MemArray<int> >::iterator iterator;
+        QList< QVector<int> >::iterator iterator;
         for(iterator = rowsToRemove.begin(); iterator != rowsToRemove.end(); ++iterator) mappingTable->removeRows(*iterator);
     }
 }

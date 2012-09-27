@@ -25,7 +25,7 @@
 #include <qlabel.h> 
 //Added by qt3to4:
 #include <QEvent>
-#include <Q3MemArray>
+#include <QVector>
 #include <QList>
 
 //General C++ include files
@@ -174,14 +174,14 @@ void SpikePage::removeGroup(){
     modified = true;
     int nbSelections = groupTable->numSelections();
     if(nbSelections > 0){
-        QList< Q3MemArray<int> > rowsToRemove;
+        QList< QVector<int> > rowsToRemove;
         //Look up the rows to be removed
         for(int j = 0; j < nbSelections;++j){
             Q3TableSelection selection = groupTable->selection(j);
             bool active = selection.isActive();
             if(active){
                 int nbRows = selection.bottomRow() - selection.topRow() + 1;
-                Q3MemArray<int> rows(nbRows);
+                QVector<int> rows(nbRows);
                 for(int i = 0; i < nbRows;++i){
                     rows[i] = selection.topRow() + i;
                 }
@@ -189,7 +189,7 @@ void SpikePage::removeGroup(){
             }
         }
         //Actually remove the rows
-        QList< Q3MemArray<int> >::iterator iterator;
+        QList< QVector<int> >::iterator iterator;
         for(iterator = rowsToRemove.begin(); iterator != rowsToRemove.end(); ++iterator) groupTable->removeRows(*iterator);
     }
     emit nbGroupsModified(groupTable->numRows());
