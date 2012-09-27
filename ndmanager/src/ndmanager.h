@@ -36,7 +36,6 @@
 
 // application specific includes
 #include "parameterview.h"
-#include "pref.h"
 #include "ndmanagerdoc.h"
 #include "generalinformation.h"
 #include "fileinformation.h"
@@ -180,11 +179,6 @@ private slots:
     void slotStatusMsg(const QString &text);
 
 
-    /** Executes the preferences dialog.*/
-    void executePreferencesDlg();
-
-    /** Updates the widgets so that new user settings take effect.*/
-    void applyPreferences();
 
     /**Initializes some of the variables defined in the settings (preferences).*/
     void initializePreferences();
@@ -223,9 +217,6 @@ private:
   * information such as filename and does the serialization of your files.
   */
     ndManagerDoc* doc;
-
-    /**Settings dialog.*/
-    ndManagerPreferences* prefDialog;
 
     /** mainDock is the main DockWidget to which all other dockWidget will be dock. Inititalized in
   * initDisplay()

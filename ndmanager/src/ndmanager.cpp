@@ -43,7 +43,6 @@
 
 ndManager::ndManager()
     :QMainWindow(0, "NDManager"),
-      prefDialog(0L),
       mainDock(0),
       importedFile(false),
       newFile(false),
@@ -596,29 +595,6 @@ void ndManager::resetState(){
     importedFile = false;
     newFile = false;
     managerView = 0L;
-}
-
-void ndManager::executePreferencesDlg(){
-    if(prefDialog == 0L){
-        prefDialog = new ndManagerPreferences(this);
-        // connect to the "settingsChanged" signal
-        connect(prefDialog,SIGNAL(settingsChanged()),this,SLOT(applyPreferences()));
-    }
-
-    // update the dialog widgets.
-    prefDialog->updateDialog();
-
-    if(prefDialog->exec() == QDialog::Accepted){  // execute the dialog
-        //if the user did not click the applyButton, save the new settings.
-        if(prefDialog->isApplyEnable()){
-            prefDialog->updateConfiguration();        // store settings in config object
-            applyPreferences();                      // let settings take effect
-        }
-    }
-}
-
-void ndManager::applyPreferences() {
-    configuration().write();
 }
 
 void ndManager::slotSaveDefault(){

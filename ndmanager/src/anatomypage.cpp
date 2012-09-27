@@ -137,7 +137,7 @@ void AnatomyPage::getGroups(QMap<int, QList<int> >& groups)const{
   QString item = groupTable->text(i,0);
   QString channelList = item.simplified();
   if(channelList == " ") continue;
-  QStringList channelParts = QStringList::split(" ", channelList);
+  QStringList channelParts = channelList.split(" ", QString::SkipEmptyParts);
   for(uint j = 0;j < channelParts.count(); ++j)
    channels.append(channelParts[j].toInt());
   groups.insert(groupId,channels);

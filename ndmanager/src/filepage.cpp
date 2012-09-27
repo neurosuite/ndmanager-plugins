@@ -151,7 +151,7 @@ QMap<int, QList<int> > FilePage::getChannelMapping()const{
         QString item = mappingTable->text(i,0);
         QString channelList = item.simplified();
         if(channelList == " " || channelList == "") continue;
-        QStringList channelParts = QStringList::split(" ", channelList);
+        QStringList channelParts = channelList.split(" ", QString::SkipEmptyParts);
         for(uint j = 0;j < channelParts.count(); ++j)
             channels.append(channelParts[j].toInt());
         channelMapping.insert(channelId,channels);
