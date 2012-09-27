@@ -181,7 +181,7 @@ private slots:
             pixmap.fill(Qt::black);
             backgroundPixmap2->setPixmap(pixmap);
         }
-    };
+    }
 
     void updateDisplayedImage();
 

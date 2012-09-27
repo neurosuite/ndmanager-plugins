@@ -79,7 +79,7 @@ void NeuroscopeVideoPage::updateDisplayedImage(){
                 horizontal = true;
                 vertical = false;
             }
-            flippedImage = rotatedImage.mirror(horizontal,vertical);
+            flippedImage = rotatedImage.mirrored(horizontal,vertical);
         }
         if(pixmap.convertFromImage(flippedImage))
             backgroundPixmap2->setPixmap(pixmap);
