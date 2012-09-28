@@ -136,6 +136,7 @@ void ndManager::setupActions()
     fileMenu->addSeparator();
 
     mQuitAction = fileMenu->addAction(tr("Quit"));
+    mQuitAction->setIcon(QPixmap(":/shared-icons/window-close"));
     mQuitAction->setShortcut(QKeySequence::Quit);
     connect(mQuitAction, SIGNAL(triggered()), this, SLOT(close()));
 

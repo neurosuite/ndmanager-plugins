@@ -26,7 +26,7 @@ class UnitListLayout : public QWidget
     Q_OBJECT
 
 public:
-    UnitListLayout( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
+    UnitListLayout( QWidget* parent = 0, const char* name = 0 );
     ~UnitListLayout();
 
     QPushButton* addUnitButton;
