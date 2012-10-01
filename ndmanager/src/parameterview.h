@@ -332,6 +332,7 @@ private:
 
     /**True if the file is opened in expert mode, false otherwise*/
     bool expertMode;
+    QPageWidgetItem *mScriptsItem;
 };
 
 #endif // _NDPARAMETERVIEW_H_

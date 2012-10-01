@@ -185,10 +185,10 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
 
     w = new QWidget(this);
     programs = new ProgramsPage(expertMode,w);
-    item = new QPageWidgetItem(programs,tr("Scripts"));
-    item->setHeader(tr("Scripts"));
-    item->setIcon(QIcon(":/icons/units"));
-    addPage(item);
+    mScriptsItem = new QPageWidgetItem(programs,tr("Scripts"));
+    mScriptsItem->setHeader(tr("Scripts"));
+    mScriptsItem->setIcon(QIcon(":/icons/units"));
+    addPage(mScriptsItem);
 
 
 
@@ -246,8 +246,10 @@ ProgramPage* ParameterView::addProgram(const QString& programName,bool show){
     //adding page "Video"
     QWidget *w = new QWidget(this);
     ProgramPage* program = new ProgramPage(expertMode,w,programName);
+
+
     QPageWidgetItem *item = new QPageWidgetItem(program,programName);
-    addPage(item);
+    addSubPage(mScriptsItem,item);
 
     programDict.insert(programName,program);
     programNames.append(programName);
