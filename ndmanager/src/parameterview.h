@@ -311,9 +311,6 @@ private:
     /**Pointer on the page containing information for the programs.*/
     ProgramsPage* programs;
 
-    /**Pointer on the frame containing the page with the information for the programs.*/
-    QFrame* programsFrame;
-
     /**Dictionary containing all the programs.*/
     Q3Dict<ProgramPage> programDict;
 

@@ -287,16 +287,14 @@ void ParameterView::changeProgramName(ProgramPage* programPage,const QString& ne
 
         return;
     }
-
-    QFrame* programFrame;
-#if KDAB_PENDING
+    QPageWidgetItem * programFrame = 0;
     //To change the name in the treeview, this one has to be rebuilt
     QStringList::iterator iterator;
-    for(iterator = programNames.begin(); iterator != programNames.end(); ++iterator){
-        QString name = *iterator;
+    for(int i = 0; i < programNames.count(); ++i){
+        QString name = programNames.at(i);
 
         ProgramPage* program = programDict[name];
-        QFrame* parentFrame = static_cast<QFrame*>(program->parent());
+        QPageWidgetItem* parentFrame = static_cast<QPageWidgetItem*>(program->parent());
         removePage(parentFrame);
 
         bool isTobeModified = false;
@@ -311,26 +309,27 @@ void ParameterView::changeProgramName(ProgramPage* programPage,const QString& ne
         programPath.append("Scripts");
         programPath.append(name);
 
-        QFrame* frame = addPage(programPath);
-        QVBoxLayout* frameLayout = new QVBoxLayout(frame);
+
+        QWidget *w = new QWidget(this);
+
+        QPageWidgetItem *item = new QPageWidgetItem(program,name);
+
+        addSubPage(mScriptsItem,item);
+        QVBoxLayout* frameLayout = new QVBoxLayout(w);
         frameLayout->setMargin(0);
         frameLayout->setSpacing(0);
-        program->reparent(frame,QPoint(0,0));
+        program->reparent(w,QPoint(0,0));
         frameLayout->addWidget(program);
 
         delete parentFrame;
         if(isTobeModified)
-            programFrame = frame;
+            programFrame = item;
     }
-#endif
     //remove the old name from the programNames and programDict
     programNames.remove(oldName);
     programDict.remove(oldName);
     programDict.insert(newName,programPage);
-#if KDAB_PENDING
-    //Show the page
-    showPage(pageIndex(programFrame));
-#endif
+    setCurrentPage(programFrame);
     //If the message if not empty show a message box with it
     if(!message.isEmpty())
         QMessageBox::critical (this,tr(title),tr(message) );
@@ -340,18 +339,17 @@ void ParameterView::changeProgramName(ProgramPage* programPage,const QString& ne
 
 
 void ParameterView::removeProgram(ProgramPage* programPage){
-#if KDAB_PENDING
     programsModified = true;
-    QFrame* parentFrame = static_cast<QFrame*>(programPage->parent());
+    QPageWidgetItem* parentFrame = static_cast<QPageWidgetItem*>(programPage->parent());
     removePage(parentFrame);
-    QString name = programPage->name();
+    const QString name = programPage->name();
     programNames.remove(name);
     programDict.remove(name);
     delete parentFrame;
 
     /*if(name.contains("New Program-") || name.contains("Untitled-"))*/ counter--;
     emit scriptListHasBeenModified(programNames);
-
+#if KDAB_PENDING
     //Show the program page
     showPage(pageIndex(programsFrame));
 #endif
