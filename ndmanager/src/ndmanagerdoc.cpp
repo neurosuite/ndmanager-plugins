@@ -153,7 +153,7 @@ ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::newDocument(){
 }
 
 
-ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::save(QString url){
+ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::save(const QString& url){
     //first gather the information
     QMap<int, QList<int> > anatomicalGroups;
     QMap<QString, QMap<int,QString> > attributes;

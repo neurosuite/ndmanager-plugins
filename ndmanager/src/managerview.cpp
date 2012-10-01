@@ -63,13 +63,13 @@ void ManagerView::updateSpikeGroupList(int nbGroups){
     klustersComboBox->insertStringList(klustersFiles);
 }
 
-void ManagerView::updateFileList(QStringList extensions){
+void ManagerView::updateFileList(const QStringList& extensions){
     neuroscopeComboBox->clear();
     QStringList neuroscopeFiles;
     neuroscopeFiles<<".dat"<<".eeg";
 
-    QStringList::iterator iterator;
-    for(iterator = extensions.begin(); iterator != extensions.end(); ++iterator){
+    QStringList::ConstIterator iterator;
+    for(iterator = extensions.constBegin(); iterator != extensions.constEnd(); ++iterator){
         QString extension = QString(".%1").arg(static_cast<QString>(*iterator));
         neuroscopeFiles<<extension;
     }

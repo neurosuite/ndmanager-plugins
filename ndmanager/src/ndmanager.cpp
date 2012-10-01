@@ -696,7 +696,7 @@ void ndManager::slotQuery(){
     slotStatusMsg(tr("Ready."));
 }
 
-void ndManager::slotQueryResult(QString message){
+void ndManager::slotQueryResult(const QString& message){
     queryResult += message;
 }
 
@@ -707,16 +707,16 @@ void ndManager::slotExpertMode(){
     //close the file and reopen it in the new mode
     slotFileClose();
 
-    if(isNewFile && filePath.contains("Untitled")) slotNewFile();
-    else if(isImportedFile && filePath.contains("Untitled")){
+    if(isNewFile && filePath.contains("Untitled")) {
+        slotNewFile();
+    } else if(isImportedFile && filePath.contains("Untitled")){
         QString url = importedFileUrl;
         openDocumentFile(url);
         url+= QDir::separator() + tr("Untitled");
         doc->rename(url);
         filePath = url;
         setWindowTitle(url);
-    }
-    else{
+    } else {
         openDocumentFile(filePath);
     }
 }

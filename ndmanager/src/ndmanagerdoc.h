@@ -74,7 +74,7 @@ public:
  * @param url url of the file where to save the parameter information.
  * @return an OpenSaveCreateReturnMessage enum giving the saving status.
  */
-    OpenSaveCreateReturnMessage save(QString url);
+    OpenSaveCreateReturnMessage save(const QString &url);
 
     /**Saves the parameter file.
  * @param newUrl new url where to write the parameter fil to.

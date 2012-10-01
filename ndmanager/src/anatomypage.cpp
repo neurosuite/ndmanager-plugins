@@ -167,7 +167,8 @@ void AnatomyPage::getGroups(QMap<int, QList<int> >& groups)const{
    }
    //Actually remove the rows
    QList< QVector<int> >::iterator iterator;
-   for(iterator = rowsToRemove.begin(); iterator != rowsToRemove.end(); ++iterator) groupTable->removeRows(*iterator);
+   for(iterator = rowsToRemove.begin(); iterator != rowsToRemove.end(); ++iterator)
+       groupTable->removeRows(*iterator);
   }  
  }
 

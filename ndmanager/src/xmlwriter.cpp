@@ -183,11 +183,11 @@ void XmlWriter::setLfpInformation(double lfpSamplingRate){
     lfp.appendChild(lfpElement);
 }
 
-void XmlWriter::setFilesInformation(QList<FileInformation>& fileList){
+void XmlWriter::setFilesInformation(const QList<FileInformation>& fileList){
     files = doc.createElement(FILES);
 
-    QList<FileInformation>::iterator iterator;
-    for(iterator = fileList.begin(); iterator != fileList.end(); ++iterator){
+    QList<FileInformation>::ConstIterator iterator;
+    for(iterator = fileList.constBegin(); iterator != fileList.constEnd(); ++iterator){
         //Get the file information
         double samplingRate = static_cast<FileInformation>(*iterator).getSamplingRate();
         QString extension = static_cast<FileInformation>(*iterator).getExtension();

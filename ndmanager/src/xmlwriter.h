@@ -81,7 +81,7 @@ public:
  *  Creates the elements containing the information for the additional files derive from the original raw data file (.dat file).
  * @param files a reference to a list of FileInformation.
  */
-    void setFilesInformation(QList<FileInformation>& files);
+    void setFilesInformation(const QList<FileInformation> &files);
 
     /**
   * Creates the elements related to the anatomical description.

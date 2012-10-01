@@ -357,7 +357,7 @@ void ParameterView::initialize(QMap<int, QList<int> >& anatomicalGroups,QMap<QSt
                                GeneralInformation& generalInformation,QMap<QString,double>& acquisitionSystemInfo,QMap<QString,double>& videoInformation,
                                QList<FileInformation>& fileList,QList<ChannelColors>& channelColors,QMap<int,int>& channelDefaultOffsets,
                                NeuroscopeVideoInfo& neuroscopeVideoInfo,QList<ProgramInformation>& programList,
-                               double lfpRate,float screenGain,int nbSamples,int peakSampleIndex,QString traceBackgroundImage){
+                               double lfpRate,float screenGain,int nbSamples,int peakSampleIndex,const QString& traceBackgroundImage){
 
     //Initialize the general page
     generalInfo->setDate(generalInformation.getDate());
@@ -743,12 +743,12 @@ void ParameterView::hasBeenSave(){
     counter = 0; /// added by MZ
 }
 
-bool ParameterView::saveScript(QString programName){
+bool ParameterView::saveScript(const QString& programName){
     ProgramPage* program = programDict[programName];
     return program->saveProgramScript();
 }
 
-void ParameterView::saveProgramDescription(QString programName){
+void ParameterView::saveProgramDescription(const QString& programName){
     ProgramPage* program = programDict[programName];
     program->saveProgramParameters();
 }

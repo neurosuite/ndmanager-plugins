@@ -107,12 +107,12 @@ public:
   * @param peakSampleIndex the sample index corresponding to the peak of the spike; value use dby NeuroScope.
   * @param traceBackgroundImage background image for the trace view in NeuroScope.
   */
-    void initialize(QMap<int, QList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes,
-                    QMap<int, QList<int> >& spikeGroups,QMap<int, QMap<QString,QString> >& spikeGroupsInformation,QMap<int, QStringList >& units,
-                    GeneralInformation& generalInformation,QMap<QString,double>& acquisitionSystemInfo,QMap<QString,double>& videoInformation,
-                    QList<FileInformation>& files,QList<ChannelColors>& channelColors,QMap<int,int>& channelDefaultOffsets,
-                    NeuroscopeVideoInfo& neuroscopeVideoInfo,QList<ProgramInformation>& programs,
-                    double lfpRate,float screenGain,int nbSamples,int peakSampleIndex,QString traceBackgroundImage);
+    void initialize(QMap<int, QList<int> >& anatomicalGroups, QMap<QString, QMap<int,QString> >& attributes,
+                    QMap<int, QList<int> >& spikeGroups, QMap<int, QMap<QString,QString> >& spikeGroupsInformation, QMap<int, QStringList >& units,
+                    GeneralInformation& generalInformation, QMap<QString,double>& acquisitionSystemInfo, QMap<QString,double>& videoInformation,
+                    QList<FileInformation>& files, QList<ChannelColors>& channelColors, QMap<int,int>& channelDefaultOffsets,
+                    NeuroscopeVideoInfo& neuroscopeVideoInfo, QList<ProgramInformation>& programs,
+                    double lfpRate, float screenGain, int nbSamples, int peakSampleIndex, const QString &traceBackgroundImage);
 
     /**Gets the information from the parameter pages.
   * @param anatomicalGroups map given the composition of the anatomical groups. The trash group is not included, channels which are not part of
@@ -166,12 +166,12 @@ public:
  * @param programName name of the script to save.
  * @return the saving status.
  */
-    bool saveScript(QString programName);
+    bool saveScript(const QString &programName);
 
     /**Saves the description of the program @p programName.
  * @param programName name of the program description to save.
  */
-    void saveProgramDescription(QString programName);
+    void saveProgramDescription(const QString &programName);
 
     /**Returns the current number of group of spikes.
  */

@@ -56,7 +56,7 @@ public:
     /**Triggers the update of the dropdown list containing the file extensions.
   * @param extensions list containing the extensions of all the specific files.
   */
-    void updateFileList(QStringList extensions);
+    void updateFileList(const QStringList &extensions);
 
     /**Triggers the update of the dropdown list containing the script names.
   * @param scriptNames list containing the script names.
