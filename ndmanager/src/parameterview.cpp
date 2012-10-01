@@ -271,7 +271,7 @@ ProgramPage* ParameterView::addProgram(const QString& programName,bool show){
 }
 
 void ParameterView::changeProgramName(ProgramPage* programPage,const QString& newName,QString message,QString title){
-#if KDAB_PENDING
+
     QString oldName = programPage->name();
     if(newName == oldName) return;
 
@@ -282,14 +282,14 @@ void ParameterView::changeProgramName(ProgramPage* programPage,const QString& ne
         //this method will be call anyway but by calling it now a first time, we ensure that the text display in the script tab in consistent with the program (the old program which is kept)
         programPage->nameChanged(oldName);
 
-        QString currentMessage =  QString("There is already a script with the name %1.").arg(newName);
-        QMessageBox::critical (this, tr("script name conflict"),tr(currentMessage));
+        QString currentMessage =  tr("There is already a script with the name %1.").arg(newName);
+        QMessageBox::critical (this, tr("script name conflict"),currentMessage);
 
         return;
     }
 
     QFrame* programFrame;
-
+#if KDAB_PENDING
     //To change the name in the treeview, this one has to be rebuilt
     QStringList::iterator iterator;
     for(iterator = programNames.begin(); iterator != programNames.end(); ++iterator){
@@ -319,23 +319,23 @@ void ParameterView::changeProgramName(ProgramPage* programPage,const QString& ne
         frameLayout->addWidget(program);
 
         delete parentFrame;
-        if(isTobeModified) programFrame = frame;
+        if(isTobeModified)
+            programFrame = frame;
     }
-
+#endif
     //remove the old name from the programNames and programDict
     programNames.remove(oldName);
     programDict.remove(oldName);
     programDict.insert(newName,programPage);
-
+#if KDAB_PENDING
     //Show the page
     showPage(pageIndex(programFrame));
-
+#endif
     //If the message if not empty show a message box with it
     if(!message.isEmpty())
         QMessageBox::critical (this,tr(title),tr(message) );
 
     emit scriptListHasBeenModified(programNames);
-#endif
 }
 
 
