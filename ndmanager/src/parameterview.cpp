@@ -349,10 +349,7 @@ void ParameterView::removeProgram(ProgramPage* programPage){
 
     /*if(name.contains("New Program-") || name.contains("Untitled-"))*/ counter--;
     emit scriptListHasBeenModified(programNames);
-#if KDAB_PENDING
-    //Show the program page
-    showPage(pageIndex(programsFrame));
-#endif
+    setCurrentPage(mScriptsItem);
 }
 
 void ParameterView::initialize(QMap<int, QList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes,
