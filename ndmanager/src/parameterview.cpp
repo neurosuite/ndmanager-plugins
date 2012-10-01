@@ -196,7 +196,6 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
     connect(acquisitionSystem,SIGNAL(nbChannelsModified(int)),this,SLOT(nbChannelsModified(int)));
     connect(programs,SIGNAL(addNewProgram()),this,SLOT(addNewProgram()));
     connect(programs,SIGNAL(programToLoad(QString)),this,SLOT(loadProgram(QString)));
-    connect(this,SIGNAL(aboutToShowPage(QWidget *)),this,SLOT(pageWillBeShown(QWidget *)));
     connect(spike,SIGNAL(nbGroupsModified(int)),this,SLOT(nbSpikeGroupsModified(int)));
     connect(files,SIGNAL(fileModification(QStringList)),this,SLOT(fileModification(QStringList)));
 
@@ -755,13 +754,6 @@ bool ParameterView::saveScript(QString programName){
 void ParameterView::saveProgramDescription(QString programName){
     ProgramPage* program = programDict[programName];
     program->saveProgramParameters();
-}
-
-void ParameterView::pageWillBeShown(QWidget *){
-#if KDAB_PENDING
-    //There are 8 main pages, everything else is an additional program
-    if(activePageIndex() < 9) emit partHidden();
-#endif
 }
 
 

@@ -250,7 +250,6 @@ public slots:
 private slots:
 
     void scriptHidden();
-    void pageWillBeShown(QWidget * page);
 
 private:
 
