@@ -54,11 +54,11 @@ public:
     ~FilePage();
 
     /**Sets the sampling rate.*/
-    inline void setSamplingRate(double rate){
+    void setSamplingRate(double rate){
         samplingRateLineEdit->setText(Helper::doubleToString(rate));}
 
     /**Sets the file extension.*/
-    inline void setExtension(QString extension){
+    void setExtension(const QString& extension){
         this->extension = extension;
         extensionLineEdit->setText(extension);
     }
@@ -99,7 +99,7 @@ protected:
 public slots:
 
     /**Notifies that the file extension has changed.*/
-    inline void changeCaption(){
+    void changeCaption(){
         if(extensionLineEdit->text() != extension){
             extension = extensionLineEdit->text();
             emit extensionChanged(extension,this);
@@ -113,42 +113,19 @@ public slots:
     void removeChannel();
 
     /**Validates the current entry in the mapping table.*/
-    inline void slotValidate(){
-        modified = true;
-        if(isIncorrectRow){
-            mappingTable->selectRow(incorrectRow);
-            mappingTable->editCell(incorrectRow,0);
-        }
-    }
+    void slotValidate();
 
     /**Validates the current entry in the mapping table.*/
-    inline void mappingChanged(int row,int column){
-        modified = true;
-        QString channel = mappingTable->text(row,column);
-        //the group entry should only contain digits and whitespaces
-        if(channel.contains(QRegExp("[^\\d\\s]")) != 0){
-            isIncorrectRow = true;
-            incorrectRow = row;
-            mappingTable->selectRow(row);
-        }
-        else{
-            if(isIncorrectRow){
-                QString incorrectMapping = mappingTable->text(incorrectRow,0);
-                if(incorrectMapping.contains(QRegExp("[^\\d\\s]")) != 0) return;
-            }
-            isIncorrectRow = false;
-            mappingTable->adjustColumn(column);
-        }
-    }
+    void mappingChanged(int row,int column);
 
     /** Will be called when any properties is modified.*/
-    inline void propertyModified(){if(!isInit) modified = true;}
+    void propertyModified(){if(!isInit) modified = true;}
 
     /**Indicates that the initialisation is finished.*/
-    inline void initialisationOver(){isInit = false;}
+    void initialisationOver(){isInit = false;}
 
     /**Resets the internal modification status to false.*/
-    inline void resetModificationStatus(){modified = false;}
+    void resetModificationStatus(){modified = false;}
 
 private:
     bool isIncorrectRow;

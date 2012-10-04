@@ -38,6 +38,9 @@ FilePage::FilePage(QWidget *parent)
     connect(addChannelButton,SIGNAL(clicked()),this,SLOT(addChannel()));
     connect(removeChannelButton,SIGNAL(clicked()),this,SLOT(removeChannel()));
 
+    connect(extensionLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
+    connect(samplingRateLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
+
     //install a filter on the mappingTable in order to validate the entries
     mappingTable->installEventFilter(this);
 
@@ -47,8 +50,6 @@ FilePage::FilePage(QWidget *parent)
     connect(mappingTable, SIGNAL(clicked(int,int,int,const QPoint&)),this, SLOT(slotValidate()));
     connect(mappingTable, SIGNAL(doubleClicked(int,int,int,const QPoint&)),this, SLOT(slotValidate()));
 
-    connect(extensionLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
-    connect(samplingRateLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
 }
 
 
@@ -150,7 +151,9 @@ QMap<int, QList<int> > FilePage::getChannelMapping()const{
         QList<int> channels;
         QString item = mappingTable->text(i,0);
         QString channelList = item.simplified();
-        if(channelList == " " || channelList == "") continue;
+        if(channelList == " " || channelList.isEmpty())
+            continue;
+
         QStringList channelParts = channelList.split(" ", QString::SkipEmptyParts);
         for(uint j = 0;j < channelParts.count(); ++j)
             channels.append(channelParts[j].toInt());
@@ -159,6 +162,34 @@ QMap<int, QList<int> > FilePage::getChannelMapping()const{
     }
 
     return channelMapping;
+}
+
+void FilePage::slotValidate(){
+    modified = true;
+    if(isIncorrectRow){
+        mappingTable->selectRow(incorrectRow);
+        mappingTable->editCell(incorrectRow,0);
+    }
+}
+
+/**Validates the current entry in the mapping table.*/
+void FilePage::mappingChanged(int row,int column){
+    modified = true;
+    QString channel = mappingTable->text(row,column);
+    //the group entry should only contain digits and whitespaces
+    if(channel.contains(QRegExp("[^\\d\\s]")) != 0){
+        isIncorrectRow = true;
+        incorrectRow = row;
+        mappingTable->selectRow(row);
+    }
+    else{
+        if(isIncorrectRow){
+            QString incorrectMapping = mappingTable->text(incorrectRow,0);
+            if(incorrectMapping.contains(QRegExp("[^\\d\\s]")) != 0) return;
+        }
+        isIncorrectRow = false;
+        mappingTable->adjustColumn(column);
+    }
 }
 
 
