@@ -83,7 +83,7 @@ void XmlReader::getAcquisitionSystemInfo(QMap<QString,double>& acquisitionSystem
     //acquisitionSystemInfo will contain the number of bits, number of channels, the sampling rate, the voltage range, the amplification and the offset.
 
     xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup("//" + ACQUISITION);
+    xmlChar* searchPath = xmlCharStrdup(QString("//" + ACQUISITION));
 
     //Evaluate xpath expression
     result = xmlXPathEvalExpression(searchPath,xpathContex);
@@ -151,7 +151,7 @@ void XmlReader::getAnatomicalDescription(int nbChannels,QMap<int, QList<int> >& 
     }
 
     xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup("//" + ANATOMY + "/" + CHANNEL_GROUPS + "/" + GROUP);
+    xmlChar* searchPath = xmlCharStrdup(QString("//" + ANATOMY + "/" + CHANNEL_GROUPS + "/" + GROUP));
 
     //Evaluate xpath expression
     result = xmlXPathEvalExpression(searchPath,xpathContex);
@@ -208,7 +208,7 @@ void XmlReader::getSpikeDescription(int nbChannels,QMap<int, QList<int> >& spike
     }
 
     xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup("//" + SPIKE + "/" + CHANNEL_GROUPS + "/" + GROUP);
+    xmlChar* searchPath = xmlCharStrdup(QString("//" + SPIKE + "/" + CHANNEL_GROUPS + "/" + GROUP));
 
     //Evaluate xpath expression
     result = xmlXPathEvalExpression(searchPath,xpathContex);
@@ -278,7 +278,7 @@ void XmlReader::getSpikeDescription(int nbChannels,QMap<int, QList<int> >& spike
 void XmlReader::getUnits(QMap<int, QStringList >& units) const{
 
     xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup("//" + UNITS + "/" + UNIT);
+    xmlChar* searchPath = xmlCharStrdup(QString("//" + UNITS + "/" + UNIT));
 
     //Evaluate xpath expression
     result = xmlXPathEvalExpression(searchPath,xpathContex);
@@ -356,7 +356,7 @@ void XmlReader::getUnits(QMap<int, QStringList >& units) const{
 
 void XmlReader::getChannelColors(QList<ChannelColors>& list)const{
     xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup("//" + CHANNELS + "/" + CHANNEL_COLORS);
+    xmlChar* searchPath = xmlCharStrdup(QString("//" + CHANNELS + "/" + CHANNEL_COLORS));
 
     //Evaluate xpath expression
     result = xmlXPathEvalExpression(searchPath,xpathContex);
@@ -408,7 +408,7 @@ void XmlReader::getChannelColors(QList<ChannelColors>& list)const{
 
 void XmlReader::getChannelDefaultOffset(QMap<int,int>& channelDefaultOffsets)const{
     xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup("//" + CHANNELS + "/" + CHANNEL_OFFSET);
+    xmlChar* searchPath = xmlCharStrdup(QString("//" + CHANNELS + "/" + CHANNEL_OFFSET));
 
     //Evaluate xpath expression
     result = xmlXPathEvalExpression(searchPath,xpathContex);
@@ -448,7 +448,7 @@ void XmlReader::getChannelDefaultOffset(QMap<int,int>& channelDefaultOffsets)con
 
 void XmlReader::getGeneralInformation(GeneralInformation& generalInformation)const{
     xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup("//" + GENERAL);
+    xmlChar* searchPath = xmlCharStrdup(QString("//" + GENERAL));
 
     //Evaluate xpath expression
     result = xmlXPathEvalExpression(searchPath,xpathContex);
@@ -498,7 +498,7 @@ void XmlReader::getGeneralInformation(GeneralInformation& generalInformation)con
 void XmlReader::getVideoInfo(QMap<QString,double>& videoInformation)const{
     //videoInformation will contain the sampling rate of the video recording system, the width and the heigth of the image.
     xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup("/" + PARAMETERS + "/" + VIDEO );
+    xmlChar* searchPath = xmlCharStrdup(QString("/" + PARAMETERS + "/" + VIDEO ));
 
     //Evaluate xpath expression
     result = xmlXPathEvalExpression(searchPath,xpathContex);
@@ -539,7 +539,7 @@ void XmlReader::getVideoInfo(QMap<QString,double>& videoInformation)const{
 double XmlReader::getLfpInformation()const{
     double lfpSamplingRate = 0;
     xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup("//" + FIELD_POTENTIALS + "/" + LFP_SAMPLING_RATE);
+    xmlChar* searchPath = xmlCharStrdup(QString("//" + FIELD_POTENTIALS + "/" + LFP_SAMPLING_RATE));
 
     //Evaluate xpath expression
     result = xmlXPathEvalExpression(searchPath,xpathContex);
@@ -561,7 +561,7 @@ double XmlReader::getLfpInformation()const{
 float XmlReader::getScreenGain() const{
     float gain = 0;
     xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup("//" + MISCELLANEOUS + "/" + SCREENGAIN);
+    xmlChar* searchPath = xmlCharStrdup(QString("//" + MISCELLANEOUS + "/" + SCREENGAIN));
 
     //Evaluate xpath expression
     result = xmlXPathEvalExpression(searchPath,xpathContex);
@@ -583,7 +583,7 @@ float XmlReader::getScreenGain() const{
 QString XmlReader::getTraceBackgroundImage() const{
     QString traceBackgroundImage = 0;
     xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup("//" + MISCELLANEOUS + "/" + TRACE_BACKGROUND_IMAGE);
+    xmlChar* searchPath = xmlCharStrdup(QString("//" + MISCELLANEOUS + "/" + TRACE_BACKGROUND_IMAGE));
 
     //Evaluate xpath expression
     result = xmlXPathEvalExpression(searchPath,xpathContex);
@@ -605,7 +605,7 @@ QString XmlReader::getTraceBackgroundImage() const{
 int XmlReader::getNbSamples() const{
     int nbSamples = 0;
     xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup("//" + NEUROSCOPE + "/" + SPIKES + "/" + NB_SAMPLES);
+    xmlChar* searchPath = xmlCharStrdup(QString("//" + NEUROSCOPE + "/" + SPIKES + "/" + NB_SAMPLES));
 
     //Evaluate xpath expression
     result = xmlXPathEvalExpression(searchPath,xpathContex);
@@ -627,7 +627,7 @@ int XmlReader::getNbSamples() const{
 int XmlReader::getPeakSampleIndex()const{
     int index = 0;
     xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup("//" + NEUROSCOPE + "/" + SPIKES + "/" + PEAK_SAMPLE_INDEX);
+    xmlChar* searchPath = xmlCharStrdup(QString("//" + NEUROSCOPE + "/" + SPIKES + "/" + PEAK_SAMPLE_INDEX));
 
     //Evaluate xpath expression
     result = xmlXPathEvalExpression(searchPath,xpathContex);
@@ -648,7 +648,7 @@ int XmlReader::getPeakSampleIndex()const{
 
 void XmlReader::getNeuroscopeVideoInfo(NeuroscopeVideoInfo& videoInfo) const{
     xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup("//" + NEUROSCOPE + "/" + VIDEO);
+    xmlChar* searchPath = xmlCharStrdup(QString("//" + NEUROSCOPE + "/" + VIDEO));
 
     //Evaluate xpath expression
     result = xmlXPathEvalExpression(searchPath,xpathContex);
@@ -694,7 +694,7 @@ void XmlReader::getNeuroscopeVideoInfo(NeuroscopeVideoInfo& videoInfo) const{
 
 void XmlReader::getFilesInformation(QList<FileInformation>& files)const{
     xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup("//" + FILES + "/" + ndmanager::FILE);
+    xmlChar* searchPath = xmlCharStrdup(QString("//" + FILES + "/" + ndmanager::FILE));
 
     //Evaluate xpath expression
     result = xmlXPathEvalExpression(searchPath,xpathContex);
@@ -763,7 +763,7 @@ void XmlReader::getFilesInformation(QList<FileInformation>& files)const{
 
 void XmlReader::getProgramsInformation(QList<ProgramInformation>& programs) const{
     xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup("//" + PROGRAMS + "/" + PROGRAM);
+    xmlChar* searchPath = xmlCharStrdup(QString("//" + PROGRAMS + "/" + PROGRAM));
 
     //Evaluate xpath expression
     result = xmlXPathEvalExpression(searchPath,xpathContex);
@@ -854,7 +854,7 @@ void XmlReader::getProgramsInformation(QList<ProgramInformation>& programs) cons
 
 void XmlReader::getProgramInformation(ProgramInformation& programInformation) const{
     xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup("//" + PROGRAM);
+    xmlChar* searchPath = xmlCharStrdup(QString("//" + PROGRAM));
 
     //Evaluate xpath expression
     result = xmlXPathEvalExpression(searchPath,xpathContex);
@@ -923,7 +923,8 @@ void XmlReader::getProgramInformation(ProgramInformation& programInformation) co
                                     }
                                 }
                             }
-                            if(parameterInfo.size() != 0) parameters.insert(parameterId,parameterInfo);
+                            if(!parameterInfo.isEmpty())
+                                parameters.insert(parameterId,parameterInfo);
                             parameterId++;
                         }
                     }

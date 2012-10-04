@@ -121,6 +121,7 @@ if (MSVC)
    set (KDE4_ENABLE_EXCEPTIONS -EHsc)
 endif()   
 
+add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 
 add_definitions(${KDE4_ENABLE_EXCEPTIONS})
 add_definitions(-DQT3_SUPPORT)
