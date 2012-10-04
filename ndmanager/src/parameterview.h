@@ -24,7 +24,7 @@
 // include files for QT
 #include <qwidget.h>
 #include <qvalidator.h>
-#include <q3dict.h>
+#include <QHash>
 #include <qwidget.h>
 #include <QList>
 //Added by qt3to4:
@@ -312,7 +312,7 @@ private:
     ProgramsPage* programs;
 
     /**Dictionary containing all the programs.*/
-    Q3Dict<ProgramPage> programDict;
+    QHash<QString,ProgramPage*> programDict;
 
     /**List containg all the program names.*/
     QStringList programNames;
