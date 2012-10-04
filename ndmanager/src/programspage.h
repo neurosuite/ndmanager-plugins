@@ -53,7 +53,7 @@ signals:
     void programToLoad(QString programUrl);
 
 public slots:
-    inline void addProgram(){emit addNewProgram();}
+    void addProgram(){emit addNewProgram();}
     void loadProgram();
     
 private:

@@ -97,7 +97,7 @@ public:
     /**Renames the parameter file.
  * @param newUrl new url where to write the parameter fil to.
  */
-    inline void rename(QString newUrl){
+    void rename(QString newUrl){
         docUrl = newUrl;
     }
 

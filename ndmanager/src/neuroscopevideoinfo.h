@@ -62,23 +62,23 @@ public:
     /**Sets the video image rotation angle (0,90,180,270). The angle is counted counterclockwise.
   * @param angle the rotation angle.
   */
-    inline void setRotation(int angle){rotation = angle;}
+    void setRotation(int angle){rotation = angle;}
 
     /**Sets the video image flip orientation. 0 stands for none, 1 for vertical and 2 for horizontal.
   * @param flip flip orientation.
   */
-    inline void setFlip(int flip){this->flip = flip;}
+    void setFlip(int flip){this->flip = flip;}
 
     /**All the positions contained in a position file can be used to create a background image for the PositionView.
   * The value set by this function tells if such background has to be created.
   * @param trajectory 1 if the all the positions contain in the position file have to be drawn on the background, 0 otherwise.
    */
-    inline void setTrajectory(int trajectory){this->trajectory = trajectory;}
+    void setTrajectory(int trajectory){this->trajectory = trajectory;}
 
     /**Sets the url of the background image.
   * @param background the url of the background image.
   */
-    inline void setBackgroundImage(QString background){backgroundImage = background;}
+    void setBackgroundImage(QString background){backgroundImage = background;}
     
 private:
     int flip;

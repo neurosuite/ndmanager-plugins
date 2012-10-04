@@ -41,22 +41,22 @@ public:
     ~GeneralInfoPage();
     
     /**Sets the date.*/
-    inline void setDate(QDate date){
+    void setDate(QDate date){
         kDatePicker->setSelectedDate(date);
     }
     
     /**Sets the experimenters.*/
-    inline void setExperimenters(QString experimenters){
+    void setExperimenters(QString experimenters){
         experimentersLineEdit->setText(experimenters);
     }
     
     /**SSets the description.*/
-    inline void setDescription(QString description){
+    void setDescription(QString description){
         descriptionTextEdit->setText(description);
     }
     
     /**Sets the notes.*/
-    inline void setNotes(QString notes){
+    void setNotes(QString notes){
         notesTextEdit->setText(notes);
     }
     
@@ -85,15 +85,15 @@ public:
     inline bool isModified()const{return modified;}
     
     /**Indicates that the initialisation is finished.*/
-    inline void initialisationOver(){isInit = false;}
+    void initialisationOver(){isInit = false;}
 
 public slots:
 
     /** Will be called when any properties is modified.*/
-    inline void propertyModified(){if(!isInit) modified = true;}
+    void propertyModified(){if(!isInit) modified = true;}
 
     /**Resets the internal modification status to false.*/
-    inline void resetModificationStatus(){modified = false;}
+    void resetModificationStatus(){modified = false;}
 
 private:
     bool modified;

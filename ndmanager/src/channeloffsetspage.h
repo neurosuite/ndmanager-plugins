@@ -39,7 +39,7 @@ public:
     /**Sets the number of channels, creating the correspondent number of lines in the table.
  * @param nbChannels number of channels.
  */
-    inline void setNbChannels(int nbChannels){
+    void setNbChannels(int nbChannels){
         this->nbChannels = nbChannels;
         for(int i =0; i<offsetTable->rowCount();++i)
             offsetTable->removeRow(i);

@@ -83,7 +83,7 @@ public:
     inline bool isScriptModified()const{return sciptIsModified;}
 
     /**Indicates that the initialisation is finished.*/
-    inline void initialisationOver(){isInit = false;}
+    void initialisationOver(){isInit = false;}
 
 signals:
     void programToRemove(ProgramPage* programPage);
@@ -92,7 +92,7 @@ signals:
     void scriptShown(QTextEdit* scriptView);
 
 public slots:
-    inline void removeProgram(){
+    void removeProgram(){
         emit programToRemove(this);
     }
     /**Saves the program parameters.*/
@@ -109,13 +109,13 @@ public slots:
     void nameChanged(const QString& name);
     
     /** Will be called when the script is modified.*/
-    inline void scriptModified(){if(!isInit) sciptIsModified = true;}
+    void scriptModified(){if(!isInit) sciptIsModified = true;}
 
     /** Will be called when the help is modified.*/
-    inline void helpModified(){if(!isInit) helpIsModified = true;}
+    void helpModified(){if(!isInit) helpIsModified = true;}
 
     /**Resets the internal modification status to false.*/
-    inline void resetModificationStatus(){
+    void resetModificationStatus(){
         sciptIsModified = false;
         helpIsModified = false;
         parameters->resetModificationStatus();

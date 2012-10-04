@@ -42,16 +42,16 @@ public:
 inline ~GeneralInformation(){}
 
   /**Sets the date.*/
-  inline void setDate(const QDate& date){this->date = date;}
+  void setDate(const QDate& date){this->date = date;}
   
   /**Sets the experimenters.*/
-  inline void setExperimenters(const QString& experimenters){this->experimenters = experimenters;}
+  void setExperimenters(const QString& experimenters){this->experimenters = experimenters;}
   
  /**Sets the description.*/
-  inline void setDescription(const QString& description){this->description = description;}
+  void setDescription(const QString& description){this->description = description;}
   
  /**Sets the notes.*/
- inline void setNotes(const QString& notes){this->notes = notes;}
+ void setNotes(const QString& notes){this->notes = notes;}
   
   /**Gets the date.*/
   inline QDate getDate() const{return date;}

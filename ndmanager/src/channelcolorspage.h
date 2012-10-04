@@ -43,7 +43,7 @@ public:
     /**Sets the number of channels, creating the correspondent number of lines in the table.
  * @param nbChannels number of channels.
  */
-    inline void setNbChannels(int nbChannels){
+    void setNbChannels(int nbChannels){
         this->nbChannels = nbChannels;
         for(int i =0; i<colorTable->numRows();++i) colorTable->removeRow(i);
         colorTable->setNumRows(nbChannels);
@@ -71,10 +71,10 @@ public slots:
     void chooseColor(int row,int column,int button);
 
     /** Will be called when any properties is modified.*/
-    inline void propertyModified(){modified = true;}
+    void propertyModified(){modified = true;}
 
     /**Resets the internal modification status to false.*/
-    inline void resetModificationStatus(){modified = false;}
+    void resetModificationStatus(){modified = false;}
 
 private:
     int nbChannels;

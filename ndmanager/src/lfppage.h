@@ -42,7 +42,7 @@ public:
     ~LfpPage();
 
     /**Sets the sampling rate.*/
-    inline void setSamplingRate(double rate){samplingRateLineEdit->setText(Helper::doubleToString(rate));}
+    void setSamplingRate(double rate){samplingRateLineEdit->setText(Helper::doubleToString(rate));}
 
     /**Returns the sampling rate.*/
     inline double getSamplingRate() const{return samplingRateLineEdit->text().toDouble();}
@@ -51,15 +51,15 @@ public:
     inline bool isModified()const{return modified;}
 
     /**Indicates that the initialisation is finished.*/
-    inline void initialisationOver(){isInit = false;}
+    void initialisationOver(){isInit = false;}
     
 public slots:
 
     /** Will be called when any properties is modified.*/
-    inline void propertyModified(){if(!isInit) modified = true;}
+    void propertyModified(){if(!isInit) modified = true;}
 
     /**Resets the internal modification status to false.*/
-    inline void resetModificationStatus(){modified = false;}
+    void resetModificationStatus(){modified = false;}
 
 private:
     QDoubleValidator doubleValidator;

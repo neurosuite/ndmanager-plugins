@@ -47,12 +47,12 @@ public:
     
     /**Sets the screen gain in milivolts by centimeters used to display the field potentiels..
   */
-    inline void setScreenGain(float gain){
+    void setScreenGain(float gain){
         screenGainLineEdit->setText(QString::fromLatin1("%1").arg(gain));
     }
 
     /**Sets the background image used for the trace view.*/
-    inline void setTraceBackgroundImage(QString image){
+    void setTraceBackgroundImage(QString image){
         traceBackgroundLineEdit->setText(image);
     }
 
@@ -70,24 +70,24 @@ public:
     inline bool isModified()const{return modified;}
 
     /**Indicates that the initialisation is finished.*/
-    inline void initialisationOver(){isInit = false;}
+    void initialisationOver(){isInit = false;}
     
 public slots:
 
     /** Will be called when any properties is modified.*/
-    inline void propertyModified(){if(!isInit) modified = true;}
+    void propertyModified(){if(!isInit) modified = true;}
 
     /**Resets the internal modification status to false.*/
-    inline void resetModificationStatus(){modified = false;}
+    void resetModificationStatus(){modified = false;}
 
 private slots:
-    inline void updateTraceBackgroundImage(){
+    void updateTraceBackgroundImage(){
         QString image = QFileDialog::getOpenFileName(this, tr("Select the background image..."));
 
         setTraceBackgroundImage(image);
     }
 
-    inline void updateTraceBackgroundImage(const QString& image){
+    void updateTraceBackgroundImage(const QString& image){
         setTraceBackgroundImage(image);
     }
 

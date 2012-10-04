@@ -80,7 +80,7 @@ signals:
     void checkBeforeLaunchingScripts();
 
 public slots:  
-    inline void konsoleBeingDestroyed(){emit beingDestroyed();}
+    void konsoleBeingDestroyed(){emit beingDestroyed();}
     void neuroscopeFileChange(int index);
 
 private slots: 

@@ -78,7 +78,7 @@ public:
  /**Initializes the number of channels used.
  * @param nbChannels number of channels.
  */
- inline void setNbChannels(int nbChannels){
+ void setNbChannels(int nbChannels){
   this->nbChannels = nbChannels;
   for(int i =0; i<attributesTable->numRows();++i) attributesTable->removeRow(i);
   attributesTable->setNumRows(nbChannels);
@@ -96,7 +96,7 @@ protected:
  
 public slots:
  /**Adds a new line to the group table.*/
- inline void addGroup(){  
+ void addGroup(){  
   if(isIncorrectRow) return;
   modified = true;
   groupTable->insertRows(groupTable->numRows());
@@ -110,7 +110,7 @@ public slots:
  void removeGroup();
  
  /**Validates the current entry in the group table.*/
- inline void slotValidate(){ 
+ void slotValidate(){ 
   modified = true;
   if(isIncorrectRow){ 
    groupTable->selectRow(incorrectRow);
@@ -119,7 +119,7 @@ public slots:
  }
  
   /**Validates the current entry in the group table.*/
- inline void groupChanged(int row,int column){
+ void groupChanged(int row,int column){
   modified = true;
   QString group = groupTable->text(row,column); 
 
@@ -149,7 +149,7 @@ public slots:
  }
  
   /**Validates the current entry in the attribute table.*/
- inline void attributeChanged(int row,int column){
+ void attributeChanged(int row,int column){
   modified = true;
   //hard coded that the skip attribut is an int, later it can be made more dynamic
   Q3Header* header = attributesTable->horizontalHeader();
@@ -168,10 +168,10 @@ public slots:
  }
  
   /** Will be called when any properties is modified.*/
-  inline void propertyModified(){modified = true;}
+  void propertyModified(){modified = true;}
 
  /**Resets the internal modification status to false.*/
- inline void resetModificationStatus(){modified = false;}
+ void resetModificationStatus(){modified = false;}
    
 private:
  int nbChannels; 

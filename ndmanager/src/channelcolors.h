@@ -54,22 +54,22 @@ public:
     /**Sets the channel id.
   * @param channelId channel id.
   */
-    inline void setId(int channelId){id = channelId;}
+    void setId(int channelId){id = channelId;}
 
     /**Sets the color used to display the channel.
   * @param colorName name of the color in the format "#RRGGBB".
   */
-    inline void setColor(QString colorName){color = QColor(colorName);}
+    void setColor(QString colorName){color = QColor(colorName);}
 
     /**Sets the group color (anatomical group) for the channel.
   * @param colorName name of the color in the format "#RRGGBB".
   */
-    inline void setGroupColor(QString colorName){groupColor = QColor(colorName);}
+    void setGroupColor(QString colorName){groupColor = QColor(colorName);}
 
     /**Sets the spike group color for the channel.
   * @param colorName name of the color in the format "#RRGGBB".
   */
-    inline void setSpikeGroupColor(QString colorName){spikeGroupColor = QColor(colorName);}
+    void setSpikeGroupColor(QString colorName){spikeGroupColor = QColor(colorName);}
 
     /**Gets the channel id.
   * @return channel id.

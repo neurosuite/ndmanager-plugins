@@ -46,18 +46,18 @@ public:
     ~AcquisitionSystemPage();
     
   /**Sets the number of channels.*/
-  inline void setNbChannels(int nb){
+  void setNbChannels(int nb){
    nbChannels = nb;
    nbChannelsLineEdit->setText(QString::fromLatin1("%1").arg(nb));
   }
 
   /**Sets the sampling rate.*/
-  inline void setSamplingRate(double rate){ 
+  void setSamplingRate(double rate){ 
   samplingRateLineEdit->setText(Helper::doubleToString(rate));
   }
 
   /**Sets the resolution of the acquisition system.*/
-   inline void setResolution(int res){
+   void setResolution(int res){
     switch(res){
        case 12:
          resolutionComboBox->setCurrentIndex(0);
@@ -78,17 +78,17 @@ public:
    }
    
   /**Sets the initial offset for all the field potentials.*/
-  inline void setOffset(int offset){offsetLineEdit->setText(QString::fromLatin1("%1").arg(offset));}
+  void setOffset(int offset){offsetLineEdit->setText(QString::fromLatin1("%1").arg(offset));}
 
   /**Sets the voltage range of the acquisition system in milivolts.
   */
-  inline void setVoltageRange(int value){
+  void setVoltageRange(int value){
    voltageRangeLineEdit->setText(QString::fromLatin1("%1").arg(value));
   }
 
   /**Sets the amplification of the acquisition system.
   */
-  inline void setAmplification(int value){
+  void setAmplification(int value){
    amplificationLineEdit->setText(QString::fromLatin1("%1").arg(value));
   }
 
@@ -143,13 +143,13 @@ public:
    void nbChannelsLineEditLostFocus(); 
   
    /** Will be called when any properties except the number of channels has been modified.*/
-  inline void propertyModified(){if(!isInit) modified = true;}
+  void propertyModified(){if(!isInit) modified = true;}
 
   /**Indicates that the initialisation is finished.*/
-  inline void initialisationOver(){isInit = false;}
+  void initialisationOver(){isInit = false;}
     
   /**Resets the internal modification status to false.*/
-  inline void resetModificationStatus(){modified = false;}
+  void resetModificationStatus(){modified = false;}
    
   signals:
    /*Signals that the number of channels has been modified.

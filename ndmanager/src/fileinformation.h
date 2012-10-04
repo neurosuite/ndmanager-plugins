@@ -50,17 +50,17 @@ public:
     inline QMap<int, QList<int> > getChannelMapping(){return channelMapping;}
 
     /**Sets the sampling rate.*/
-    inline void setSamplingRate(double rate){samplingRate = rate;}
+    void setSamplingRate(double rate){samplingRate = rate;}
 
     /**Sets the file extension.
  * @param ext file extension.
  */
-    inline void setExtension(const QString& ext){extension = ext;}
+    void setExtension(const QString& ext){extension = ext;}
 
     /**Sets the mapping between the original channels and the ones in the file.
  * @param mapping the channel mapping map.
  */
-    inline void setChannelMapping(QMap<int, QList<int> >& mapping){channelMapping = mapping;}
+    void setChannelMapping(QMap<int, QList<int> >& mapping){channelMapping = mapping;}
 
 private:
     double samplingRate;

@@ -41,10 +41,10 @@ public:
     ~ClustersPage();
 
     /**Sets the number of samples per spike waveform.*/
-    inline void setNbSamples(int nb){nbSamplesLineEdit->setText(QString::fromLatin1("%1").arg(nb));}
+    void setNbSamples(int nb){nbSamplesLineEdit->setText(QString::fromLatin1("%1").arg(nb));}
 
     /**Sets the index of the peak sample in the spike waveform.*/
-    inline void setPeakIndex(int index){peakIndexLineEdit->setText(QString::fromLatin1("%1").arg(index));}
+    void setPeakIndex(int index){peakIndexLineEdit->setText(QString::fromLatin1("%1").arg(index));}
 
     /**Returns the number of samples per spike waveform.*/
     inline int getNbSamples()const{return nbSamplesLineEdit->text().toInt();}
@@ -56,15 +56,15 @@ public:
     inline bool isModified()const{return modified;}
 
     /**Indicates that the initialisation is finished.*/
-    inline void initialisationOver(){isInit = false;}
+    void initialisationOver(){isInit = false;}
 
 public slots:
 
     /** Will be called when any properties is modified.*/
-    inline void propertyModified(){if(!isInit) modified = true;}
+    void propertyModified(){if(!isInit) modified = true;}
 
     /**Resets the internal modification status to false.*/
-    inline void resetModificationStatus(){modified = false;}
+    void resetModificationStatus(){modified = false;}
 
 private:
     QIntValidator intValidator;

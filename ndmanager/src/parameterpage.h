@@ -55,14 +55,14 @@ public:
     /**Sets the name of the program.
   * @param name name of the program.
   */
-    inline void setProgramName(QString name){nameLineEdit->setText(name);}
+    void setProgramName(QString name){nameLineEdit->setText(name);}
 
     /**Gets the name of the program.*/
     inline QString getProgramName() const{return nameLineEdit->text();}
 
     /**Updates an internal status to reflect the change in program name.
   */
-    inline void programNameChanged(){descriptionModified = true;}
+    void programNameChanged(){descriptionModified = true;}
 
 
     /** Initializes the parameter table.
@@ -87,7 +87,7 @@ signals:
 
 public slots:
     /**Handles the change of the program's name.*/
-    inline void changeCaption(){
+    void changeCaption(){
         QString name = nameLineEdit->text();
         if(name == "" && !name.contains("New Script-")) emit nameChanged(tr("Unknown"));
         else emit nameChanged(name);
@@ -102,7 +102,7 @@ public slots:
     void propertyModified(int row, int column);
 
     /**Resets the internal modification status to false.*/
-    inline void resetModificationStatus(){
+    void resetModificationStatus(){
         valueModified = false;
         descriptionModified = false;
     }

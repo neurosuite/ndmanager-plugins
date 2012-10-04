@@ -54,7 +54,7 @@ public:
     ~NeuroscopeVideoPage();
 
     /**Sets the background image.*/
-    inline void setBackgroundImage(QString image){
+    void setBackgroundImage(QString image){
         backgroundLineEdit->setText(image);
         if(!image.isEmpty()){
             backgroungImage.load(image);
@@ -74,10 +74,10 @@ public:
     /**All the positions contained in a position file can be used to create a background image for the PositionView.
   * This function sets if such background has to be created.
   */
-    inline void setPositionsBackground(bool draw){checkBoxBackground->setChecked(draw);}
+    void setPositionsBackground(bool draw){checkBoxBackground->setChecked(draw);}
 
     /**Sets the video image rotation angle.*/
-    inline void setRotation(int angle){
+    void setRotation(int angle){
         switch(angle){
         case 0:
             rotateComboBox->setCurrentIndex(0);
@@ -100,7 +100,7 @@ public:
     /**Sets the video image flip orientation.
   * 0 stands for none, 1 for vertical and 2 for horizontal.
   */
-    inline void setFlip(int orientation){
+    void setFlip(int orientation){
         switch(orientation){
         case 0:
             filpComboBox->setCurrentIndex(0);
@@ -163,17 +163,17 @@ public:
     inline bool isModified()const{return modified;}
 
     /**Indicates that the initialisation is finished.*/
-    inline void initialisationOver(){isInit = false;}
+    void initialisationOver(){isInit = false;}
 
 private slots:
-    inline void updateBackgroundImage(){
+    void updateBackgroundImage(){
         QString image = QFileDialog::getOpenFileName(this, tr("Select the background image..."));
 
         if(image != "")
             setBackgroundImage(image);
     }
 
-    inline void updateBackgroundImage(const QString& image){
+    void updateBackgroundImage(const QString& image){
         if(image != "")  setBackgroundImage(image);
         else{
             QPixmap pixmap;
@@ -186,10 +186,10 @@ private slots:
     void updateDisplayedImage();
 
     /** Will be called when any properties.*/
-    inline void propertyModified(){if(!isInit) modified = true;}
+    void propertyModified(){if(!isInit) modified = true;}
 
     /**Resets the internal modification status to false.*/
-    inline void resetModificationStatus(){modified = false;}
+    void resetModificationStatus(){modified = false;}
 
 private:
     QImage backgroungImage;

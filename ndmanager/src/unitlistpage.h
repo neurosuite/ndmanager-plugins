@@ -70,7 +70,7 @@ public:
     /**Initializes the number of units classified.
         * @param nbUnits number of units.
         */
-    inline void setNbUnits(int nbUnits)
+    void setNbUnits(int nbUnits)
     {
         this->nbUnits = nbUnits;
         for(int i =0; i<unitTable->numRows();++i) unitTable->removeRow(i);
@@ -88,7 +88,7 @@ protected:
 
 public slots:
     /**Adds a new line to the unit table.*/
-    inline void addUnit()
+    void addUnit()
     {
         if(isIncorrect) return;
         modified = true;
@@ -105,7 +105,7 @@ public slots:
     /**Removes the selected lines from the unit table.*/
     void removeUnit();
     /**selection moved to a different entry in the unit table.*/
-    inline void currentChanged()
+    void currentChanged()
     {
         if(isIncorrect)
         {
@@ -114,7 +114,7 @@ public slots:
         }
     }
     /**Validates an entry in the unit table.*/
-    inline void unitChanged(int row,int column)
+    void unitChanged(int row,int column)
     {
         QString unit = unitTable->text(row,column);
         //the group and cluster entries should only contain digits
@@ -134,9 +134,9 @@ public slots:
         }
     }
     /** Will be called when any properties is modified.*/
-    inline void propertyModified(){modified = true;}
+    void propertyModified(){modified = true;}
     /**Resets the internal modification status to false.*/
-    inline void resetModificationStatus(){modified = false;}
+    void resetModificationStatus(){modified = false;}
 
 private:
 

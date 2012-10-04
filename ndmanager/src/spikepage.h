@@ -86,7 +86,7 @@ protected:
 
 public slots:
     /**Adds a new line to the group table.*/
-    inline void addGroup(){
+    void addGroup(){
         if(isIncorrectRow) return;
         modified = true;
         groupTable->insertRows(groupTable->numRows());
@@ -103,17 +103,17 @@ public slots:
     void removeGroup();
 
     /**Validates the current entry in the group table.*/
-    inline void slotValidate(){
+    void slotValidate(){
         modified = true;
         if(isIncorrectRow){
             groupTable->selectRow(incorrectRow);
             // groupTable->selectColumn(incorrectColumn);
             groupTable->setCurrentCell(incorrectRow,incorrectColumn);
         }
-    };
+    }
 
     /**Validates the current entry in the group table.*/
-    inline void groupChanged(int row,int column){
+    void groupChanged(int row,int column){
         modified = true;
         QString group = groupTable->text(row,column);
 
@@ -142,13 +142,13 @@ public slots:
             groupTable->selectRow(incorrectRow);
             groupTable->setCurrentCell(incorrectRow,incorrectColumn);
         }
-    };
+    }
 
     /** Will be called when any properties is modified.*/
-    inline void propertyModified(){modified = true;}
+    void propertyModified(){modified = true;}
 
     /**Resets the internal modification status to false.*/
-    inline void resetModificationStatus(){modified = false;}
+    void resetModificationStatus(){modified = false;}
 
 private:
     bool isIncorrectRow;

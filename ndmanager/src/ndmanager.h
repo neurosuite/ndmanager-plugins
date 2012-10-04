@@ -197,7 +197,7 @@ private slots:
     void slotQuery();
     /**Process query.*/
     void slotQueryResult(const QString &message);
-    inline void slotQueryResult(QProcess*,char* buffer,int buflen){
+    void slotQueryResult(QProcess*,char* buffer,int buflen){
         slotQueryResult(QString::fromLocal8Bit(buffer,buflen));
     }
 private:
