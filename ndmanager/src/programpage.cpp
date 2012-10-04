@@ -128,7 +128,7 @@ ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const QString& name)
     }
 
     connect(removeButton,SIGNAL(clicked()),this,SLOT(removeProgram()));
-    connect(parameters,SIGNAL(nameChanged(const QString&)),this,SLOT(nameChanged(const QString&)));
+    connect(parameters,SIGNAL(nameChanged(QString)),this,SLOT(nameChanged(QString)));
 }
 
 

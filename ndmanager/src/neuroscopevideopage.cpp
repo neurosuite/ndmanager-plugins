@@ -29,11 +29,11 @@ NeuroscopeVideoPage::NeuroscopeVideoPage(QWidget* parent)
     : NeuroscopeVideoLayout(parent),height(100),width(100),modified(false),isInit(true){
 
     connect(backgroundButton,SIGNAL(clicked()),this,SLOT(updateBackgroundImage()));
-    connect(backgroundLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(updateBackgroundImage(const QString&)));
+    connect(backgroundLineEdit,SIGNAL(textChanged(QString)),this,SLOT(updateBackgroundImage(QString)));
     connect(rotateComboBox,SIGNAL(activated(int)),this,SLOT(updateDisplayedImage()));
     connect(filpComboBox,SIGNAL(activated(int)),this,SLOT(updateDisplayedImage()));
 
-    connect(backgroundLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
+    connect(backgroundLineEdit,SIGNAL(textChanged(QString)),this,SLOT(propertyModified()));
     connect(rotateComboBox,SIGNAL(activated(int)),this,SLOT(propertyModified()));
     connect(filpComboBox,SIGNAL(activated(int)),this,SLOT(propertyModified()));
     connect(checkBoxBackground,SIGNAL(clicked()),this,SLOT(propertyModified()));

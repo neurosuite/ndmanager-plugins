@@ -30,10 +30,10 @@ MiscellaneousPage::MiscellaneousPage(QWidget* parent)
     screenGainLineEdit->setValidator(&doubleValidator);
 
     connect(traceBackgroundButton,SIGNAL(clicked()),this,SLOT(updateTraceBackgroundImage()));
-    connect(traceBackgroundLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(updateTraceBackgroundImage(const QString&)));
+    connect(traceBackgroundLineEdit,SIGNAL(textChanged(QString)),this,SLOT(updateTraceBackgroundImage(QString)));
 
-    connect(screenGainLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
-    connect(traceBackgroundLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
+    connect(screenGainLineEdit,SIGNAL(textChanged(QString)),this,SLOT(propertyModified()));
+    connect(traceBackgroundLineEdit,SIGNAL(textChanged(QString)),this,SLOT(propertyModified()));
 
     //Set an icon on the backgroundButton button
 

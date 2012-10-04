@@ -26,7 +26,7 @@ LfpPage::LfpPage(QWidget* parent)
     //Set a validator on the line edits, the values have to be integers.
     samplingRateLineEdit->setValidator(&doubleValidator);
 
-    connect(samplingRateLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
+    connect(samplingRateLineEdit,SIGNAL(textChanged(QString)),this,SLOT(propertyModified()));
 }
 
 LfpPage::~LfpPage(){}

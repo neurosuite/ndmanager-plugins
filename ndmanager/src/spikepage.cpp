@@ -45,9 +45,9 @@ SpikePage::SpikePage(QWidget* parent)
     connect(removeGroupButton,SIGNAL(clicked()),this,SLOT(removeGroup()));
     connect(groupTable, SIGNAL(valueChanged(int,int)),this, SLOT(groupChanged(int,int)));
     connect(groupTable, SIGNAL(currentChanged(int,int)),this, SLOT(slotValidate()));
-    connect(groupTable, SIGNAL(pressed(int,int,int,const QPoint&)),this, SLOT(slotValidate()));
-    connect(groupTable, SIGNAL(clicked(int,int,int,const QPoint&)),this, SLOT(slotValidate()));
-    connect(groupTable, SIGNAL(doubleClicked(int,int,int,const QPoint&)),this, SLOT(slotValidate()));
+    connect(groupTable, SIGNAL(pressed(int,int,int,QPoint)),this, SLOT(slotValidate()));
+    connect(groupTable, SIGNAL(clicked(int,int,int,QPoint)),this, SLOT(slotValidate()));
+    connect(groupTable, SIGNAL(doubleClicked(int,int,int,QPoint)),this, SLOT(slotValidate()));
 }
 
 

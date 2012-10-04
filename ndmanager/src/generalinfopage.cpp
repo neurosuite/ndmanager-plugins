@@ -24,7 +24,7 @@ GeneralInfoPage::GeneralInfoPage(QWidget *parent)
     descriptionTextEdit->setTextFormat(Qt::PlainText);
     notesTextEdit->setTextFormat(Qt::PlainText);
 
-    connect(experimentersLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
+    connect(experimentersLineEdit,SIGNAL(textChanged(QString)),this,SLOT(propertyModified()));
     connect(descriptionTextEdit,SIGNAL(textChanged()),this,SLOT(propertyModified()));
     connect(notesTextEdit,SIGNAL(textChanged()),this,SLOT(propertyModified()));
     connect(kDatePicker,SIGNAL(clicked(QDate)),this,SLOT(propertyModified()));

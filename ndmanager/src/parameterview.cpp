@@ -197,7 +197,7 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
     connect(programs,SIGNAL(addNewProgram()),this,SLOT(addNewProgram()));
     connect(programs,SIGNAL(programToLoad(QString)),this,SLOT(loadProgram(QString)));
     connect(spike,SIGNAL(nbGroupsModified(int)),this,SLOT(nbSpikeGroupsModified(int)));
-    connect(files,SIGNAL(fileModification(const QStringList&)),this,SLOT(fileModification(const QStringList&)));
+    connect(files,SIGNAL(fileModification(QStringList)),this,SLOT(fileModification(QStringList)));
 
 
 
@@ -259,7 +259,7 @@ ProgramPage* ParameterView::addProgram(const QString& programName,bool show){
     parameterPage->setProgramName(programName);
 
     //set connections
-    connect(program,SIGNAL(programNameChanged(ProgramPage*,const QString&,QString,QString)),this,SLOT(changeProgramName(ProgramPage*,const QString&,QString,QString)));
+    connect(program,SIGNAL(programNameChanged(ProgramPage*,QString,QString,QString)),this,SLOT(changeProgramName(ProgramPage*,QString,QString,QString)));
     connect(program,SIGNAL(programToRemove(ProgramPage*)),this,SLOT(removeProgram(ProgramPage*)));
     connect(program,SIGNAL(scriptHidden()),this,SLOT(scriptHidden()));
 

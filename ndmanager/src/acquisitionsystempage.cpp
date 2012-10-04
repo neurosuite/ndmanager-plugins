@@ -42,10 +42,10 @@ AcquisitionSystemPage::AcquisitionSystemPage(QWidget *parent)
  
  
  connect(resolutionComboBox,SIGNAL(activated(int)),this,SLOT(propertyModified()));
- connect(voltageRangeLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
- connect(amplificationLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
- connect(samplingRateLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
- connect(offsetLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
+ connect(voltageRangeLineEdit,SIGNAL(textChanged(QString)),this,SLOT(propertyModified()));
+ connect(amplificationLineEdit,SIGNAL(textChanged(QString)),this,SLOT(propertyModified()));
+ connect(samplingRateLineEdit,SIGNAL(textChanged(QString)),this,SLOT(propertyModified()));
+ connect(offsetLineEdit,SIGNAL(textChanged(QString)),this,SLOT(propertyModified()));
 }
 
 

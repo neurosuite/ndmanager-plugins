@@ -28,9 +28,9 @@ VideoPage::VideoPage(QWidget* parent)
     widthLineEdit->setValidator(&intValidator);
     heightLineEdit->setValidator(&intValidator);
 
-    connect(widthLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
-    connect(heightLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
-    connect(samplingRateLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
+    connect(widthLineEdit,SIGNAL(textChanged(QString)),this,SLOT(propertyModified()));
+    connect(heightLineEdit,SIGNAL(textChanged(QString)),this,SLOT(propertyModified()));
+    connect(samplingRateLineEdit,SIGNAL(textChanged(QString)),this,SLOT(propertyModified()));
 
 }
 

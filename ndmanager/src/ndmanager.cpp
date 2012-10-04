@@ -356,8 +356,8 @@ void ndManager::createParameterView(QMap<int, QList<int> >& anatomicalGroups,QMa
     parameterView = new ParameterView(this,*doc,mainDock,tr("ParameterView"),mExpertMode->isChecked());
 
     connect(parameterView,SIGNAL(nbSpikeGroupsHasBeenModified(int)),this,SLOT(nbSpikeGroupsModified(int)));
-    connect(parameterView,SIGNAL(fileHasBeenModified(QStringList)),this,SLOT(fileModification(const QStringList&)));
-    connect(parameterView,SIGNAL(scriptListHasBeenModified(const QStringList&)),this,SLOT(scriptModification(const QStringList&)));
+    connect(parameterView,SIGNAL(fileHasBeenModified(QStringList)),this,SLOT(fileModification(QStringList)));
+    connect(parameterView,SIGNAL(scriptListHasBeenModified(QStringList)),this,SLOT(scriptModification(QStringList)));
 
 
 

@@ -38,17 +38,17 @@ FilePage::FilePage(QWidget *parent)
     connect(addChannelButton,SIGNAL(clicked()),this,SLOT(addChannel()));
     connect(removeChannelButton,SIGNAL(clicked()),this,SLOT(removeChannel()));
 
-    connect(extensionLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
-    connect(samplingRateLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
+    connect(extensionLineEdit,SIGNAL(textChanged(QString)),this,SLOT(propertyModified()));
+    connect(samplingRateLineEdit,SIGNAL(textChanged(QString)),this,SLOT(propertyModified()));
 
     //install a filter on the mappingTable in order to validate the entries
     mappingTable->installEventFilter(this);
 
     //For validation
     connect(mappingTable, SIGNAL(valueChanged(int,int)),this, SLOT(mappingChanged(int,int)));
-    connect(mappingTable, SIGNAL(pressed(int,int,int,const QPoint&)),this, SLOT(slotValidate()));
-    connect(mappingTable, SIGNAL(clicked(int,int,int,const QPoint&)),this, SLOT(slotValidate()));
-    connect(mappingTable, SIGNAL(doubleClicked(int,int,int,const QPoint&)),this, SLOT(slotValidate()));
+    connect(mappingTable, SIGNAL(pressed(int,int,int,QPoint)),this, SLOT(slotValidate()));
+    connect(mappingTable, SIGNAL(clicked(int,int,int,QPoint)),this, SLOT(slotValidate()));
+    connect(mappingTable, SIGNAL(doubleClicked(int,int,int,QPoint)),this, SLOT(slotValidate()));
 
 }
 

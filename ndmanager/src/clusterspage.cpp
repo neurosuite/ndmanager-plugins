@@ -27,8 +27,8 @@ ClustersPage::ClustersPage(QWidget* parent)
     nbSamplesLineEdit->setValidator(&intValidator);
     peakIndexLineEdit->setValidator(&intValidator);
 
-    connect(nbSamplesLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
-    connect(peakIndexLineEdit,SIGNAL(textChanged(const QString&)),this,SLOT(propertyModified()));
+    connect(nbSamplesLineEdit,SIGNAL(textChanged(QString)),this,SLOT(propertyModified()));
+    connect(peakIndexLineEdit,SIGNAL(textChanged(QString)),this,SLOT(propertyModified()));
 }
 
 

@@ -79,7 +79,7 @@ void FilesPage::addNewFile(){
     tabWidget->addTab(filePage,tr("New File"));
 
     //set the connection
-    connect(filePage,SIGNAL(extensionChanged(const QString&,FilePage*)),this,SLOT(changeCaption(const QString&,FilePage*)));
+    connect(filePage,SIGNAL(extensionChanged(QString,FilePage*)),this,SLOT(changeCaption(QString,FilePage*)));
     filePage->initialisationOver();
 
     //make sure to show the content of the new page
@@ -91,7 +91,7 @@ FilePage* FilesPage::addFile(const QString &title){
     tabWidget->addTab(filePage,title);
 
     //set the connection
-    connect(filePage,SIGNAL(extensionChanged(const QString&,FilePage*)),this,SLOT(changeCaption(const QString&,FilePage*)));
+    connect(filePage,SIGNAL(extensionChanged(QString,FilePage*)),this,SLOT(changeCaption(QString,FilePage*)));
 
     return filePage;
 }

@@ -45,9 +45,9 @@ UnitListPage::UnitListPage(QWidget* parent) :
     connect(removeUnitButton,SIGNAL(clicked()),this,SLOT(removeUnit()));
     connect(unitTable, SIGNAL(currentChanged(int,int)),this, SLOT(currentChanged()));
     connect(unitTable, SIGNAL(valueChanged(int,int)),this, SLOT(unitChanged(int,int)));
-    connect(unitTable, SIGNAL(pressed(int,int,int,const QPoint&)),this, SLOT(currentChanged()));
-    connect(unitTable, SIGNAL(clicked(int,int,int,const QPoint&)),this,SLOT(currentChanged()));
-    connect(unitTable, SIGNAL(doubleClicked(int,int,int,const QPoint&)),this,SLOT(currentChanged()));
+    connect(unitTable, SIGNAL(pressed(int,int,int,QPoint)),this, SLOT(currentChanged()));
+    connect(unitTable, SIGNAL(clicked(int,int,int,QPoint)),this,SLOT(currentChanged()));
+    connect(unitTable, SIGNAL(doubleClicked(int,int,int,QPoint)),this,SLOT(currentChanged()));
 }
 
 UnitListPage::~UnitListPage(){}

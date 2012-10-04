@@ -36,8 +36,8 @@ ChannelOffsetsPage::ChannelOffsetsPage(QWidget* parent)
     for(int i = 0;i<offsetTable->rowCount();++i)
         offsetTable->setColumnStretchable(i,true);
 */
-    connect(offsetTable, SIGNAL(itemChanged (QTableWidgetItem *)),this, SLOT(propertyModified()));
-    connect(offsetTable, SIGNAL(itemDoubleClicked ( QTableWidgetItem *)),this, SLOT(propertyModified()));
+    connect(offsetTable, SIGNAL(itemChanged(QTableWidgetItem*)),this, SLOT(propertyModified()));
+    connect(offsetTable, SIGNAL(itemDoubleClicked(QTableWidgetItem*)),this, SLOT(propertyModified()));
 
 }
 

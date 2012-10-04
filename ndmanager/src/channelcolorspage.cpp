@@ -37,9 +37,9 @@ ChannelColorsPage::ChannelColorsPage(QWidget* parent)
     : ChannelColorsLayout(parent),nbChannels(0),modified(false){
     for(int i = 0;i<colorTable->numCols();++i) colorTable->setColumnStretchable(i,true);
 
-    connect(colorTable, SIGNAL(pressed(int,int,int,const QPoint&)),this, SLOT(chooseColor(int,int,int)));
+    connect(colorTable, SIGNAL(pressed(int,int,int,QPoint)),this, SLOT(chooseColor(int,int,int)));
     connect(colorTable, SIGNAL(valueChanged(int,int)),this, SLOT(propertyModified()));
-    connect(colorTable, SIGNAL(doubleClicked(int,int,int,const QPoint&)),this, SLOT(propertyModified()));
+    connect(colorTable, SIGNAL(doubleClicked(int,int,int,QPoint)),this, SLOT(propertyModified()));
 }
 
 ChannelColorsPage::~ChannelColorsPage(){}

@@ -61,7 +61,7 @@ QueryInputDialog::QueryInputDialog(QWidget *parent,const QString& caption,const 
     layout->addStretch(10);
 
     //connections
-    connect(path,SIGNAL(textChanged (const QString &)),this,SLOT(pathChanged(const QString &)));
+    connect(path,SIGNAL(textChanged(QString)),this,SLOT(pathChanged(QString)));
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok
                                      | QDialogButtonBox::Cancel);
     layout->addWidget(buttonBox);
