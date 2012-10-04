@@ -43,7 +43,7 @@ class FilesPage : public QFrame
 {
     Q_OBJECT
 public:
-    FilesPage(QWidget* parent = 0);
+    explicit FilesPage(QWidget* parent = 0);
     ~FilesPage();
 
     /**Adds a tab containg a new file.
@@ -85,7 +85,7 @@ signals:
     /** This signal is used to update the dropdown list containing the file extensions in the managerView.
  * @param extensions list containing the extensions of all the specific files.
  */
-    void fileModification(QStringList extensions);
+    void fileModification(const QStringList& extensions);
 
 private:
     QTabWidget* tabWidget;

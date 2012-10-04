@@ -119,7 +119,7 @@ public slots:
     /**Triggers the update of the dropdown list containing the file extensions in the managerView.
   * @param extensions list containing the extensions of all the specific files.
   */
-    void fileModification(QStringList extensions);
+    void fileModification(const QStringList& extensions);
 
     /**Checks that everything is ok before launching a program. This includes that the
   * modifications to the parameter file have been saved.

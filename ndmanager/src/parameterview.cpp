@@ -197,7 +197,7 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
     connect(programs,SIGNAL(addNewProgram()),this,SLOT(addNewProgram()));
     connect(programs,SIGNAL(programToLoad(QString)),this,SLOT(loadProgram(QString)));
     connect(spike,SIGNAL(nbGroupsModified(int)),this,SLOT(nbSpikeGroupsModified(int)));
-    connect(files,SIGNAL(fileModification(QStringList)),this,SLOT(fileModification(QStringList)));
+    connect(files,SIGNAL(fileModification(const QStringList&)),this,SLOT(fileModification(const QStringList&)));
 
 
 

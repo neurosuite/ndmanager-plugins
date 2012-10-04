@@ -245,7 +245,7 @@ public slots:
     /**Triggers the update of the dropdown list containing the file extensions in the managerView.
   * @param extensions list containing the extensions of all the specific files.
   */
-    inline void fileModification(QStringList extensions){emit fileHasBeenModified(extensions);}
+    inline void fileModification(const QStringList& extensions){emit fileHasBeenModified(extensions);}
 
 private slots:
 
