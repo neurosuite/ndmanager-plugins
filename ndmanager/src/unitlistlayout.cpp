@@ -20,7 +20,7 @@
 #include <qimage.h>
 #include <qpixmap.h>
 //Added by qt3to4:
-#include <Q3GridLayout>
+#include <QGridLayout>
 
 
 /*
@@ -32,15 +32,15 @@ UnitListLayout::UnitListLayout(QWidget* parent, const char* name)
 {
     if ( !name )
         setName( "UnitListLayout" );
-    UnitListLayoutLayout = new Q3GridLayout( this, 1, 1, 11, 6, "UnitListLayoutLayout");
+    UnitListLayoutLayout = new QGridLayout( this);
 
-    layout21 = new Q3GridLayout( 0, 1, 1, 0, 6, "layout21");
+    layout21 = new QGridLayout;
 
-    layout20 = new Q3GridLayout( 0, 1, 1, 0, 6, "layout20");
+    layout20 = new QGridLayout;
     spacer10_2_3_2 = new QSpacerItem( 354, 16, QSizePolicy::Expanding, QSizePolicy::Minimum );
     layout20->addItem( spacer10_2_3_2, 0, 1 );
 
-    layout19 = new Q3GridLayout( 0, 1, 1, 0, 6, "layout19");
+    layout19 = new QGridLayout;
     spacer10_2_2 = new QSpacerItem( 20, 16, QSizePolicy::Fixed, QSizePolicy::Minimum );
     layout19->addItem( spacer10_2_2, 0, 0 );
     spacer10_2_2_2 = new QSpacerItem( 20, 16, QSizePolicy::Fixed, QSizePolicy::Minimum );
