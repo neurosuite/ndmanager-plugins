@@ -155,7 +155,7 @@ void ndManager::setupActions()
     //Settings
     mExpertMode = settingsMenu->addAction(tr("&Expert Mode"));
     mExpertMode->setCheckable(true);
-    connect(mQueryAction, SIGNAL(triggered(bool)), this, SLOT(slotExpertMode()));
+    connect(mExpertMode, SIGNAL(triggered(bool)), this, SLOT(slotExpertMode()));
     settingsMenu->addSeparator();
 
     QSettings settings;
@@ -394,7 +394,7 @@ void ndManager::slotImport(){
 }
 
 void ndManager::slotFileClose(){
-    if(doc != 0 && parameterView){
+    if(doc != 0 ){
         bool hasBeenCancel = false;
 
         //check first if some scripts have been modified
@@ -415,10 +415,9 @@ void ndManager::slotFileClose(){
                 }
             }
         }
-
         //check if some descriptions have been modified
         QStringList programModified = parameterView->modifiedProgramDescription();
-        if(programModified.size() != 0){
+        if(!programModified.isEmpty()){
             QStringList::iterator iterator;
             for(iterator = programModified.begin(); iterator != programModified.end(); ++iterator){
                 QString name = *iterator;
@@ -451,8 +450,6 @@ void ndManager::slotFileClose(){
 
             //close the document
             doc->closeDocument();
-            //update gui in case of Kate kparte added
-            //updateGUI();
             //Delete the main view
             delete mainDock;
             mainDock = 0L;
