@@ -27,7 +27,7 @@
 #include <qlabel.h>
 #include <qregexp.h> 
 //Added by qt3to4:
-#include <Q3GridLayout>
+#include <QGridLayout>
 #include <QTextStream>
 #include <QVBoxLayout>
 #include <QList>
@@ -56,7 +56,7 @@ ProgramsPage::ProgramsPage(bool expertMode,QWidget *parent)
 
     //Add the buttons
     QWidget* buttons = new QWidget(this);
-    Q3GridLayout* gridLayout = new Q3GridLayout(buttons,1,1,0,6);
+    QGridLayout* gridLayout = new QGridLayout(buttons);
     frameLayout->addWidget(buttons);
 
     if(expertMode){
