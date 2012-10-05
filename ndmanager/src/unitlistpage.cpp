@@ -147,5 +147,58 @@ void UnitListPage::removeUnit()
     }
 }
 
+void UnitListPage::setNbUnits(int nbUnits)
+{
+    this->nbUnits = nbUnits;
+    for(int i =0; i<unitTable->numRows();++i)
+        unitTable->removeRow(i);
+    unitTable->setNumRows(nbUnits);
+}
+
+void UnitListPage::addUnit()
+{
+    if(isIncorrect)
+        return;
+    modified = true;
+    unitTable->insertRows(unitTable->numRows());
+
+    //Use of the the 3 parameter constructor to be qt 3.1 compatible
+    for(int i=0;i<unitTable->numCols();++i)
+    {
+        UnitTableItem* item = new UnitTableItem(unitTable,Q3TableItem::WhenCurrent,"");
+        item->setWordWrap(true);
+        unitTable->setItem(unitTable->numRows() - 1,i,item);
+    }
+}
+
+void UnitListPage::currentChanged()
+{
+    if(isIncorrect)
+    {
+        unitTable->selectRow(incorrectRow);
+        unitTable->setCurrentCell(incorrectRow,incorrectColumn);
+    }
+}
+
+void UnitListPage::unitChanged(int row,int column)
+{
+    QString unit = unitTable->text(row,column);
+    //the group and cluster entries should only contain digits
+    //the I.D. entry should only contain digits and '.'
+    if((column==0||column==1)&&(unit.contains(QRegExp("[^\\d]"))!=0)||(column==4&&(unit.contains(QRegExp("[^\\d.]"))!=0)))
+    {
+        isIncorrect = true;
+        incorrectRow = row;
+        incorrectColumn = column;
+        /*				unitTable->selectRow(row);
+            unitTable->setCurrentCell(row,column);*/
+    }
+    else
+    {
+        isIncorrect = false;
+        unitTable->adjustRow(row);
+    }
+}
+
 
 #include "unitlistpage.moc"

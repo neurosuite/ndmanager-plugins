@@ -38,14 +38,6 @@
 #include <QEvent>
 #include <QList>
 
-// include files for KDE
-
-
-//General C++ include files
-
-
-
-
 /**
 * Class used to represent the information linked to the list of units.
 * @author Michael Zugaro
@@ -56,7 +48,7 @@ class UnitListPage : public UnitListLayout
 
 public:
     /**Constructor.*/
-    UnitListPage(QWidget* parent = 0);
+    explicit UnitListPage(QWidget* parent = 0);
     /**Destructor.*/
     ~UnitListPage();
     /** Initializes the unit table.
@@ -70,12 +62,8 @@ public:
     /**Initializes the number of units classified.
         * @param nbUnits number of units.
         */
-    void setNbUnits(int nbUnits)
-    {
-        this->nbUnits = nbUnits;
-        for(int i =0; i<unitTable->numRows();++i) unitTable->removeRow(i);
-        unitTable->setNumRows(nbUnits);
-    }
+    void setNbUnits(int nbUnits);
+
     /**True if at least one property has been modified, false otherwise.*/
     inline bool isModified()const{return modified;}
 
@@ -88,51 +76,16 @@ protected:
 
 public slots:
     /**Adds a new line to the unit table.*/
-    void addUnit()
-    {
-        if(isIncorrect) return;
-        modified = true;
-        unitTable->insertRows(unitTable->numRows());
+    void addUnit();
 
-        //Use of the the 3 parameter constructor to be qt 3.1 compatible
-        for(int i=0;i<unitTable->numCols();++i)
-        {
-            UnitTableItem* item = new UnitTableItem(unitTable,Q3TableItem::WhenCurrent,"");
-            item->setWordWrap(true);
-            unitTable->setItem(unitTable->numRows() - 1,i,item);
-        }
-    }
     /**Removes the selected lines from the unit table.*/
     void removeUnit();
     /**selection moved to a different entry in the unit table.*/
-    void currentChanged()
-    {
-        if(isIncorrect)
-        {
-            unitTable->selectRow(incorrectRow);
-            unitTable->setCurrentCell(incorrectRow,incorrectColumn);
-        }
-    }
+    void currentChanged();
+
     /**Validates an entry in the unit table.*/
-    void unitChanged(int row,int column)
-    {
-        QString unit = unitTable->text(row,column);
-        //the group and cluster entries should only contain digits
-        //the I.D. entry should only contain digits and '.'
-        if((column==0||column==1)&&(unit.contains(QRegExp("[^\\d]"))!=0)||(column==4&&(unit.contains(QRegExp("[^\\d.]"))!=0)))
-        {
-            isIncorrect = true;
-            incorrectRow = row;
-            incorrectColumn = column;
-            /*				unitTable->selectRow(row);
-                unitTable->setCurrentCell(row,column);*/
-        }
-        else
-        {
-            isIncorrect = false;
-            unitTable->adjustRow(row);
-        }
-    }
+    void unitChanged(int row,int column);
+
     /** Will be called when any properties is modified.*/
     void propertyModified(){modified = true;}
     /**Resets the internal modification status to false.*/
