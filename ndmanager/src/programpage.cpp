@@ -298,5 +298,9 @@ void ProgramPage::tabChange(QWidget * page){
     }
 }
 
+void ProgramPage::removeProgram(){
+    emit programToRemove(this);
+}
+
 
 #include "programpage.moc"

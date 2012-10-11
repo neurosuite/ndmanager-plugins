@@ -92,9 +92,8 @@ signals:
     void scriptShown(QTextEdit* scriptView);
 
 public slots:
-    void removeProgram(){
-        emit programToRemove(this);
-    }
+    void removeProgram();
+
     /**Saves the program parameters.*/
     void saveProgramParameters();
 
