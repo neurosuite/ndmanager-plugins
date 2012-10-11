@@ -311,8 +311,17 @@ private:
     /**Pointer on the page containing information for the programs.*/
     ProgramsPage* programs;
 
+    struct ProgramPageId {
+        ProgramPageId() {
+            page = 0;
+            item = 0;
+        }
+        ProgramPage *page;
+        QPageWidgetItem *item;
+    };
+
     /**Dictionary containing all the programs.*/
-    QMap<QString,ProgramPage*> programDict;
+    QMap<QString,ProgramPageId> programDict;
 
     /**Counter given the number existing programs. */
     int counter;

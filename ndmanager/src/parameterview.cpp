@@ -247,7 +247,11 @@ ProgramPage* ParameterView::addProgram(const QString& programName,bool show){
     QPageWidgetItem *item = new QPageWidgetItem(program,programName);
     addSubPage(mScriptsItem,item);
 
-    programDict.insert(programName,program);
+    ProgramPageId pageId;
+    pageId.item = item;
+    pageId.page = program;
+
+    programDict.insert(programName,pageId);
 
     //set the parameterPage program name
     ParameterPage* parameterPage = program->getParameterPage();
@@ -283,45 +287,15 @@ void ParameterView::changeProgramName(ProgramPage* programPage, const QString& n
 
         return;
     }
-    QPageWidgetItem * programFrame = 0;
-    //To change the name in the treeview, this one has to be rebuilt
+    ProgramPageId id = programDict[oldName];
+    id.item->setName(newName);
+    id.page->setName(newName);
 
-    QMapIterator<QString, ProgramPage*> i(programDict);
-    while (i.hasNext())  {
-        i.next();
-        QString name = i.key();
-
-        ProgramPage* program = i.value();
-        QPageWidgetItem* parentFrame = static_cast<QPageWidgetItem*>(program->parent());
-        removePage(parentFrame);
-
-        bool isTobeModified = false;
-        if(name == oldName){
-            //programNames.insert(iterator,newName);
-            program->setName(newName);
-            name = newName;
-            isTobeModified = true;
-        }
-
-        QWidget *w = new QWidget(this);
-
-        QPageWidgetItem *item = new QPageWidgetItem(program,name);
-
-        addSubPage(mScriptsItem,item);
-        QVBoxLayout* frameLayout = new QVBoxLayout(w);
-        frameLayout->setMargin(0);
-        frameLayout->setSpacing(0);
-        program->reparent(w,QPoint(0,0));
-        frameLayout->addWidget(program);
-
-        delete parentFrame;
-        if(isTobeModified)
-            programFrame = item;
-    }
-    //remove the old name from the programNames and programDict
     programDict.remove(oldName);
-    programDict.insert(newName,programPage);
-    setCurrentPage(programFrame);
+    programDict.insert(newName,id);
+
+
+    setCurrentPage(id.item);
     //If the message if not empty show a message box with it
     if(!message.isEmpty())
         QMessageBox::critical (this,title,message );
@@ -332,11 +306,11 @@ void ParameterView::changeProgramName(ProgramPage* programPage, const QString& n
 
 void ParameterView::removeProgram(ProgramPage* programPage){
     programsModified = true;
-    QPageWidgetItem* parentFrame = static_cast<QPageWidgetItem*>(programPage->parent());
-    removePage(parentFrame);
+
     const QString name = programPage->name();
+    ProgramPageId id = programDict[name];
+    removePage(id.item);
     programDict.remove(name);
-    delete parentFrame;
 
     /*if(name.contains("New Program-") || name.contains("Untitled-"))*/ counter--;
     emit scriptListHasBeenModified(QStringList()<<programDict.keys());
@@ -495,7 +469,7 @@ void ParameterView::loadProgram(const QString &programUrl) {
             counter--;
             return;
         } else {
-            ProgramPage* programPage = programDict[name];
+            ProgramPage* programPage = programDict[name].page;
             removeProgram(programPage);
         }
     }
@@ -598,10 +572,10 @@ void ParameterView::nbChannelsModified(int nbChannels){
 QStringList ParameterView::modifiedScripts(){
     QStringList programModified;
 
-    QMapIterator<QString, ProgramPage*> i(programDict);
+    QMapIterator<QString, ProgramPageId> i(programDict);
     while (i.hasNext())  {
         i.next();
-        ProgramPage* program = i.value();
+        ProgramPage* program = i.value().page;
         if(program->isScriptModified()) {
             programModified.append(i.key());
         }
@@ -612,10 +586,10 @@ QStringList ParameterView::modifiedScripts(){
 QStringList ParameterView::modifiedProgramDescription(){
     QStringList programModified;
 
-    QMapIterator<QString, ProgramPage*> i(programDict);
+    QMapIterator<QString, ProgramPageId> i(programDict);
     while (i.hasNext())  {
         i.next();
-        ProgramPage* program = i.value();
+        ProgramPage* program = i.value().page;
         if(program->isDescriptionModifiedAndNotSaved()) {
             programModified.append(i.key());
         }
@@ -628,10 +602,10 @@ bool ParameterView::isModified(){
     bool parameterModified = false;
     bool descriptionModified = false;
 
-    QMapIterator<QString, ProgramPage*> i(programDict);
+    QMapIterator<QString, ProgramPageId> i(programDict);
     while (i.hasNext())  {
         i.next();
-        ProgramPage* program = i.value();
+        ProgramPage* program = i.value().page;
         parameterModified = program->areParametersModified();
         descriptionModified = program->isDescriptionModified();
         if(parameterModified || descriptionModified)
@@ -708,11 +682,11 @@ void ParameterView::getInformation(QMap<int, QList<int> >& anatomicalGroups,QMap
         files.append(fileInformation);
     }
 
-    QMapIterator<QString, ProgramPage*> i(programDict);
+    QMapIterator<QString, ProgramPageId> i(programDict);
     while (i.hasNext())  {
         i.next();
         const QString name = i.key();
-        ProgramPage* program = i.value();
+        ProgramPage* program = i.value().page;
         ProgramInformation programInformation;
         programInformation.setProgramName(name);
         programInformation.setHelp(program->getHelp());
@@ -729,22 +703,22 @@ void ParameterView::hasBeenSave(){
     emit resetModificationStatus();
 
     //This object has a track of all the programPage
-    QMapIterator<QString, ProgramPage*> i(programDict);
+    QMapIterator<QString, ProgramPageId> i(programDict);
     while (i.hasNext())  {
         i.next();
-        ProgramPage* program = i.value();
+        ProgramPage* program = i.value().page;
         program->resetModificationStatus();
     }
     counter = 0; /// added by MZ
 }
 
 bool ParameterView::saveScript(const QString& programName){
-    ProgramPage* program = programDict[programName];
+    ProgramPage* program = programDict[programName].page;
     return program->saveProgramScript();
 }
 
 void ParameterView::saveProgramDescription(const QString& programName){
-    ProgramPage* program = programDict[programName];
+    ProgramPage* program = programDict[programName].page;
     program->saveProgramParameters();
 }
 
