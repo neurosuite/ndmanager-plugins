@@ -286,7 +286,7 @@ void ParameterView::changeProgramName(ProgramPage* programPage, const QString& n
     QPageWidgetItem * programFrame = 0;
     //To change the name in the treeview, this one has to be rebuilt
 
-    QHashIterator<QString, ProgramPage*> i(programDict);
+    QMapIterator<QString, ProgramPage*> i(programDict);
     while (i.hasNext())  {
         i.next();
         QString name = i.key();
@@ -598,7 +598,7 @@ void ParameterView::nbChannelsModified(int nbChannels){
 QStringList ParameterView::modifiedScripts(){
     QStringList programModified;
 
-    QHashIterator<QString, ProgramPage*> i(programDict);
+    QMapIterator<QString, ProgramPage*> i(programDict);
     while (i.hasNext())  {
         i.next();
         ProgramPage* program = i.value();
@@ -612,7 +612,7 @@ QStringList ParameterView::modifiedScripts(){
 QStringList ParameterView::modifiedProgramDescription(){
     QStringList programModified;
 
-    QHashIterator<QString, ProgramPage*> i(programDict);
+    QMapIterator<QString, ProgramPage*> i(programDict);
     while (i.hasNext())  {
         i.next();
         ProgramPage* program = i.value();
@@ -628,7 +628,7 @@ bool ParameterView::isModified(){
     bool parameterModified = false;
     bool descriptionModified = false;
 
-    QHashIterator<QString, ProgramPage*> i(programDict);
+    QMapIterator<QString, ProgramPage*> i(programDict);
     while (i.hasNext())  {
         i.next();
         ProgramPage* program = i.value();
@@ -708,7 +708,7 @@ void ParameterView::getInformation(QMap<int, QList<int> >& anatomicalGroups,QMap
         files.append(fileInformation);
     }
 
-    QHashIterator<QString, ProgramPage*> i(programDict);
+    QMapIterator<QString, ProgramPage*> i(programDict);
     while (i.hasNext())  {
         i.next();
         const QString name = i.key();
@@ -729,7 +729,7 @@ void ParameterView::hasBeenSave(){
     emit resetModificationStatus();
 
     //This object has a track of all the programPage
-    QHashIterator<QString, ProgramPage*> i(programDict);
+    QMapIterator<QString, ProgramPage*> i(programDict);
     while (i.hasNext())  {
         i.next();
         ProgramPage* program = i.value();
