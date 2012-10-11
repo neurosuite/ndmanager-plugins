@@ -63,13 +63,13 @@ public:
   * Creates the elements related to the acquisition system.
   * @param acquisitionSystemInfo reference to a map acquisitionSystemInfo providing the acquisition system information.
   */
-    void setAcquisitionSystemInformation(QMap<QString,double>& acquisitionSystemInfo);
+    void setAcquisitionSystemInformation(const QMap<QString, double> &acquisitionSystemInfo);
 
     /**
   * Creates the elements containing the video information.
   * @param videoInformation reference to the map providing the video system information.
   */
-    void setVideoInformation(QMap<QString,double>& videoInformation);
+    void setVideoInformation(const QMap<QString,double>& videoInformation);
 
     /**
   * Creates the element related to the field potentials.
@@ -125,17 +125,17 @@ public:
   * color of the spike group to which the channel belongs).
   * @param channelDefaultOffsets reference to a map providing channel default offsets.
   */
-    void setChannelDisplayInformation(QList<ChannelColors>& colorList,QMap<int,int>& channelDefaultOffsets);
+    void setChannelDisplayInformation(const QList<ChannelColors>& colorList,const QMap<int,int>& channelDefaultOffsets);
     
     /** Creates the elements containing the information for all the programs used to process the data link to the current parameter file.
  * @param programs a reference to a list of ProgramInformation.
  */
-    void setProgramsInformation(QList<ProgramInformation>& programs);
+    void setProgramsInformation(const QList<ProgramInformation>& programs);
 
     /** Creates the elements containing the information for units.
  * @param units a reference to a map providing the units information.
  */
-    void setUnitsInformation(QMap<int, QStringList >& units);
+    void setUnitsInformation(const QMap<int, QStringList >& units);
 
 private:
 

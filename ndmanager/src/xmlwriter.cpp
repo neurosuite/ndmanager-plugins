@@ -56,8 +56,9 @@ XmlWriter::~XmlWriter(){}
 
 bool XmlWriter::writeTofile(const QString& url){ 
     QFile parameterFile(url);
-    bool status = parameterFile.open(QIODevice::WriteOnly);
-    if(!status) return status;
+    const bool status = parameterFile.open(QIODevice::WriteOnly);
+    if(!status)
+        return status;
 
     QDomElement neuroscope = doc.createElement(NEUROSCOPE);
     neuroscope.setAttribute(DOC__VERSION,"1.2.5");
@@ -69,16 +70,19 @@ bool XmlWriter::writeTofile(const QString& url){
 
     root.appendChild(generalInfo);
     root.appendChild(acquisitionSystem);
-    if(!video.isNull())root.appendChild(video);
+    if(!video.isNull())
+        root.appendChild(video);
     root.appendChild(lfp);
-    if(!files.isNull()) root.appendChild(files);
+    if(!files.isNull())
+        root.appendChild(files);
     root.appendChild(anatomicalDescription);
     root.appendChild(spikeDetection);
     root.appendChild(units);
     root.appendChild(neuroscope);
-    if(!programs.isNull()) root.appendChild(programs);
+    if(!programs.isNull())
+        root.appendChild(programs);
 
-    QString xmlDocument = doc.toString();
+    const QString xmlDocument = doc.toString();
 
     QTextStream stream(&parameterFile);
     stream.setEncoding(QTextStream::UnicodeUTF8);
@@ -119,7 +123,7 @@ void XmlWriter::setGeneralInformation(GeneralInformation& generalInformation){
     generalInfo.appendChild(notesElement);
 }
 
-void XmlWriter::setAcquisitionSystemInformation(QMap<QString,double>& acquisitionSystemInfo){
+void XmlWriter::setAcquisitionSystemInformation(const QMap<QString,double>& acquisitionSystemInfo){
     acquisitionSystem = doc.createElement(ACQUISITION);
 
     QDomElement resolutionElement = doc.createElement(BITS);
@@ -154,7 +158,7 @@ void XmlWriter::setAcquisitionSystemInformation(QMap<QString,double>& acquisitio
     acquisitionSystem.appendChild(offsetElement);
 }
 
-void XmlWriter::setVideoInformation(QMap<QString,double>& videoInformation){
+void XmlWriter::setVideoInformation(const QMap<QString,double>& videoInformation){
     video = doc.createElement(VIDEO);
 
     QDomElement samplingRateElement = doc.createElement(SAMPLING_RATE);
@@ -283,7 +287,7 @@ void  XmlWriter::setSpikeDetectionInformation(QMap<int, QList<int> >& spikeGroup
         groupElement.appendChild(channelListElement);
         //Add the other information if need it
         QString nbSamples = information[iterator.key()][NB_SAMPLES];
-        if(nbSamples != ""){
+        if(!nbSamples.isEmpty()){
             QDomElement nbSamplesElement = doc.createElement(NB_SAMPLES);
             QDomText nbSamplesValue = doc.createTextNode(nbSamples);
             nbSamplesElement.appendChild(nbSamplesValue);
@@ -291,7 +295,7 @@ void  XmlWriter::setSpikeDetectionInformation(QMap<int, QList<int> >& spikeGroup
         }
 
         QString peak = information[iterator.key()][PEAK_SAMPLE_INDEX];
-        if(peak != ""){
+        if(!peak.isEmpty()){
             QDomElement peakElement = doc.createElement(PEAK_SAMPLE_INDEX);
             QDomText peakValue = doc.createTextNode(peak);
             peakElement.appendChild(peakValue);
@@ -299,7 +303,7 @@ void  XmlWriter::setSpikeDetectionInformation(QMap<int, QList<int> >& spikeGroup
         }
 
         QString nbFeatures = information[iterator.key()][NB_FEATURES];
-        if(nbFeatures != ""){
+        if(!nbFeatures.isEmpty()){
             QDomElement nbFeaturesElement = doc.createElement(NB_FEATURES);
             QDomText nbFeaturesValue = doc.createTextNode(nbFeatures);
             nbFeaturesElement.appendChild(nbFeaturesValue);
@@ -368,11 +372,11 @@ void XmlWriter::setNeuroscopeSpikeInformation(int nbSamples,int peakSampleIndex)
     spikes.appendChild(peakElement);
 }
 
-void XmlWriter::setChannelDisplayInformation(QList<ChannelColors>& colorList,QMap<int,int>& channelDefaultOffsets){
+void XmlWriter::setChannelDisplayInformation(const QList<ChannelColors> &colorList, const QMap<int, int> &channelDefaultOffsets){
     channels = doc.createElement(CHANNELS);
 
-    QList<ChannelColors>::iterator iterator;
-    for(iterator = colorList.begin(); iterator != colorList.end(); ++iterator){
+    QList<ChannelColors>::ConstIterator iterator;
+    for(iterator = colorList.constBegin(); iterator != colorList.constEnd(); ++iterator){
         //Get the channel information (id and colors)
         int channelId = static_cast<ChannelColors>(*iterator).getId();
         QColor color = static_cast<ChannelColors>(*iterator).getColor();
@@ -420,11 +424,11 @@ void XmlWriter::setChannelDisplayInformation(QList<ChannelColors>& colorList,QMa
 }
 
 
-void XmlWriter::setProgramsInformation(QList<ProgramInformation>& programList){
+void XmlWriter::setProgramsInformation(const QList<ProgramInformation> &programList){
     programs = doc.createElement(PROGRAMS);
 
-    QList<ProgramInformation>::iterator iterator;
-    for(iterator = programList.begin(); iterator != programList.end(); ++iterator){
+    QList<ProgramInformation>::ConstIterator iterator;
+    for(iterator = programList.constBegin(); iterator != programList.constEnd(); ++iterator){
         //Get the program information
         QString name = static_cast<ProgramInformation>(*iterator).getProgramName();
         QMap<int, QStringList > parametersInfo = static_cast<ProgramInformation>(*iterator).getParameterInformation();
@@ -486,14 +490,15 @@ void XmlWriter::setProgramsInformation(QList<ProgramInformation>& programList){
 
 
 
-void  XmlWriter::setUnitsInformation(QMap<int, QStringList >& units){
+void  XmlWriter::setUnitsInformation(const QMap<int, QStringList> &units)
+{
     this->units = doc.createElement(UNITS);
 
     //Create the unit elements
-    QMap<int,QStringList >::Iterator iterator;
+    QMap<int,QStringList >::ConstIterator iterator;
 
     //The iterator gives the keys sorted.
-    for(iterator = units.begin(); iterator != units.end(); ++iterator){
+    for(iterator = units.constBegin(); iterator != units.constEnd(); ++iterator){
         QStringList unit = iterator.data();
         QStringList::iterator unitIterator;
 

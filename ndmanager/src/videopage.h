@@ -39,7 +39,7 @@ class VideoPage : public VideoLayout
 {
     Q_OBJECT
 public:
-    VideoPage(QWidget* parent = 0);
+    explicit VideoPage(QWidget* parent = 0);
     ~VideoPage();
     
     /**Sets the sampling rate.*/
@@ -52,16 +52,16 @@ public:
     void setHeight(int height){heightLineEdit->setText(QString::fromLatin1("%1").arg(height));}
 
     /**Returns the sampling rate.*/
-    inline double getSamplingRate() const{return samplingRateLineEdit->text().toDouble();}
+    double getSamplingRate() const{return samplingRateLineEdit->text().toDouble();}
 
     /**Returns the video image width.*/
-    inline int getWidth()const{return widthLineEdit->text().toInt();}
+    int getWidth()const{return widthLineEdit->text().toInt();}
 
     /**Returns the video image height.*/
-    inline int getHeight()const{return heightLineEdit->text().toInt();}
+    int getHeight()const{return heightLineEdit->text().toInt();}
 
     /**True if at least one property has been modified, false otherwise.*/
-    inline bool isModified()const{return modified;}
+    bool isModified()const{return modified;}
 
     /**Indicates that the initialisation is finished.*/
     void initialisationOver(){isInit = false;}

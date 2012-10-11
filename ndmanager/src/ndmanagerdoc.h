@@ -80,7 +80,7 @@ public:
  * @param newUrl new url where to write the parameter fil to.
  * @return an OpenSaveCreateReturnMessage enum giving the saving status.
  */
-    inline OpenSaveCreateReturnMessage saveAs(QString newUrl){
+    inline OpenSaveCreateReturnMessage saveAs(const QString& newUrl){
         docUrl = newUrl;
         return save(docUrl);
     }
@@ -92,12 +92,12 @@ public:
  * @param scriptName name of the script to save.
  * @return an OpenSaveCreateReturnMessage enum giving the saving status.
  */
-    OpenSaveCreateReturnMessage saveScript(QString scriptName);
+    OpenSaveCreateReturnMessage saveScript(const QString& scriptName);
 
     /**Renames the parameter file.
  * @param newUrl new url where to write the parameter fil to.
  */
-    void rename(QString newUrl){
+    void rename(const QString& newUrl){
         docUrl = newUrl;
     }
 

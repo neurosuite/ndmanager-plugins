@@ -34,9 +34,15 @@
 using namespace ndmanager;
 
 SpikePage::SpikePage(QWidget* parent)
-    : SpikeLayout(parent),isIncorrectRow(false),incorrectRow(0),incorrectColumn(0),modified(false){
+    : SpikeLayout(parent),
+      isIncorrectRow(false),
+      incorrectRow(0),
+      incorrectColumn(0),
+      modified(false)
+{
 
-    for(int i = 0;i<groupTable->numCols();++i) groupTable->setColumnStretchable(i,true);
+    for(int i = 0;i<groupTable->numCols();++i)
+        groupTable->setColumnStretchable(i,true);
 
     //install a filter on the groupTable in order to validate the entries
     groupTable->installEventFilter(this);
@@ -139,7 +145,8 @@ void SpikePage::getGroups(QMap<int, QList<int> >& groups)const{
         QList<int> channels;
         QString item = groupTable->text(i,0);
         QString channelList = item.simplified();
-        if(channelList == " ") continue;
+        if(channelList == " ")
+            continue;
         QStringList channelParts = channelList.split(" ", QString::SkipEmptyParts);
         for(uint j = 0;j < channelParts.count(); ++j)
             channels.append(channelParts[j].toInt());
@@ -159,10 +166,14 @@ void SpikePage::getGroupInformation(QMap<int,  QMap<QString,QString> >& groupInf
         //The positions of the information in the table are hard coded
         for(int j = 1;j <= groupTable->numCols(); ++j){
             QString infoItem = groupTable->text(i,j).simplified();
-            if(infoItem == " ") continue;
-            if(j == 1)information.insert(NB_SAMPLES,infoItem);
-            else if(j == 2)information.insert(PEAK_SAMPLE_INDEX,infoItem);
-            else if(j == 3)information.insert(NB_FEATURES,infoItem);
+            if(infoItem == " ")
+                continue;
+            if(j == 1)
+                information.insert(NB_SAMPLES,infoItem);
+            else if(j == 2)
+                information.insert(PEAK_SAMPLE_INDEX,infoItem);
+            else if(j == 3)
+                information.insert(NB_FEATURES,infoItem);
         }
         groupInformation.insert(groupId,information);
         groupId++;
@@ -190,7 +201,8 @@ void SpikePage::removeGroup(){
         }
         //Actually remove the rows
         QList< QVector<int> >::iterator iterator;
-        for(iterator = rowsToRemove.begin(); iterator != rowsToRemove.end(); ++iterator) groupTable->removeRows(*iterator);
+        for(iterator = rowsToRemove.begin(); iterator != rowsToRemove.end(); ++iterator)
+            groupTable->removeRows(*iterator);
     }
     emit nbGroupsModified(groupTable->numRows());
 }

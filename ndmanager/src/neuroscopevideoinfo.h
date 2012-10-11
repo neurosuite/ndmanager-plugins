@@ -29,14 +29,14 @@
 */
 class NeuroscopeVideoInfo{
 public:
-    inline NeuroscopeVideoInfo(){
+    NeuroscopeVideoInfo(){
         flip = 0;
         rotation = 0;
         trajectory = 0;
         backgroundImage = "";
     }
 
-    inline ~NeuroscopeVideoInfo(){}
+    ~NeuroscopeVideoInfo(){}
 
     /**Returns the video image rotation angle (0,90,180,270). The angle is counted counterclockwise.
   * @return rotation angle.
@@ -78,7 +78,7 @@ public:
     /**Sets the url of the background image.
   * @param background the url of the background image.
   */
-    void setBackgroundImage(QString background){backgroundImage = background;}
+    void setBackgroundImage(const QString& background){backgroundImage = background;}
     
 private:
     int flip;

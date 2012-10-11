@@ -174,7 +174,7 @@ ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::save(const QString& url)
     int nbSamples;
     int peakSampleIndex;
 
-    ParameterView* view = dynamic_cast<ndManager*>(parent)->getParameterView();
+    ParameterView* view = static_cast<ndManager*>(parent)->getParameterView();
 
     view->getInformation(anatomicalGroups,attributes,spikeGroups,spikeGroupsInformation,units,generalInformation,
                          acquisitionSystemInfo,videoInformation,files,channelColors,channelDefaultOffsets,neuroscopeVideoInfo,programs,lfpRate,screenGain,nbSamples,peakSampleIndex,traceBackgroundImage);
@@ -185,10 +185,12 @@ ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::save(const QString& url)
     writer.setGeneralInformation(generalInformation);
     writer.setAcquisitionSystemInformation(acquisitionSystemInfo);
     //If no video information has been provided the map would not have been filled and no information is store in the parameter file.
-    if(videoInformation.size() != 0) writer.setVideoInformation(videoInformation);
+    if(!videoInformation.isEmpty())
+        writer.setVideoInformation(videoInformation);
     writer.setLfpInformation(lfpRate);
     //If no file mapping has been provided, the list would not have been filled and no information is store in the parameter file.
-    if(files.size() != 0) writer.setFilesInformation(files);
+    if(!files.isEmpty())
+        writer.setFilesInformation(files);
     writer.setAnatomicalDescription(anatomicalGroups,attributes);
     //If no spike group has been defined, the spikeGroups map would not have been filled and an empty tag is store in the parameter file.
     writer.setSpikeDetectionInformation(spikeGroups,spikeGroupsInformation);
@@ -198,11 +200,13 @@ ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::save(const QString& url)
     writer.setNeuroscopeSpikeInformation(nbSamples,peakSampleIndex);
     writer.setChannelDisplayInformation(channelColors,channelDefaultOffsets);
     //If no program has been defined, the list would not have been filled and no information is store in the parameter file.
-    if(programs.size() != 0) writer.setProgramsInformation(programs);
+    if(!programs.isEmpty())
+        writer.setProgramsInformation(programs);
 
 
-    bool status = writer.writeTofile(url);
-    if(!status) return CREATION_ERROR;
+    const bool status = writer.writeTofile(url);
+    if(!status)
+        return CREATION_ERROR;
 
     //reset the state of the page as saved state
     view->hasBeenSave();
@@ -223,8 +227,8 @@ ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::saveDefault(){
     return save(url);
 }
 
-ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::saveScript(QString scriptName){
-    ParameterView* view = dynamic_cast<ndManager*>(parent)->getParameterView();
+ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::saveScript(const QString &scriptName){
+    ParameterView* view = static_cast<ndManager*>(parent)->getParameterView();
     bool status = view->saveScript(scriptName);
     if(status)
         return OK;
