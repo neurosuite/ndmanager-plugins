@@ -719,49 +719,55 @@ void ndManager::slotExpertMode(){
 }
 
 void ndManager::nbSpikeGroupsModified(int nbGroups){
-    if(managerView != 0L){
+    if(managerView){
         managerView->updateSpikeGroupList(nbGroups);
     }
 }
 
 void ndManager::fileModification(const QStringList& extensions){
-    if(managerView != 0L){
+    if(managerView){
         managerView->updateFileList(extensions);
     }
 }
 
 void ndManager::scriptModification(const QStringList& scriptNames){
-    if(managerView != 0L){
+    if(managerView){
         managerView->updateScriptList(scriptNames);
     }
 }
 
 void ndManager::checkBeforeLaunchingPrograms(){
-    if(managerView != 0L){
+    if(managerView){
         if(importedFile || newFile) managerView->updateDocumentInformation(doc->url(),false);
         else{
             if(parameterView->isModified()) managerView->updateDocumentInformation(doc->url(),false);
             else{
                 QStringList programModified = parameterView->modifiedProgramDescription();
-                if(programModified.size()!= 0) managerView->updateDocumentInformation(doc->url(),false);
-                else managerView->updateDocumentInformation(doc->url(),true);
+                if(!programModified.isEmpty())
+                    managerView->updateDocumentInformation(doc->url(),false);
+                else
+                    managerView->updateDocumentInformation(doc->url(),true);
             }
         }
     }
 }
 
 void ndManager::checkBeforeLaunchingScripts(){
-    if(managerView != 0L){
-        if(importedFile || newFile) managerView->updateDocumentInformation(doc->url(),false);
+    if(managerView){
+        if(importedFile || newFile)
+            managerView->updateDocumentInformation(doc->url(),false);
         else{
             if(parameterView->isModified()) managerView->updateDocumentInformation(doc->url(),false);
             else{
                 QStringList programModified = parameterView->modifiedProgramDescription();
-                if(programModified.size()!= 0) managerView->updateDocumentInformation(doc->url(),false);
+                if(!programModified.isEmpty())
+                    managerView->updateDocumentInformation(doc->url(),false);
                 else{
                     QStringList scriptModified = parameterView->modifiedScripts();
-                    if(scriptModified.size()!= 0) managerView->updateDocumentInformation(doc->url(),false);
-                    else managerView->updateDocumentInformation(doc->url(),true);
+                    if(!scriptModified.isEmpty())
+                        managerView->updateDocumentInformation(doc->url(),false);
+                    else
+                        managerView->updateDocumentInformation(doc->url(),true);
                 }
             }
         }

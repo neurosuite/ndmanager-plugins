@@ -239,10 +239,6 @@ ProgramPage* ParameterView::addProgram(const QString& programName){
 }
 
 ProgramPage* ParameterView::addProgram(const QString& programName,bool show){
-    QStringList programPath;
-    programPath.append(tr("Scripts"));
-    programPath.append(programName);
-
     //adding page "Video"
     QWidget *w = new QWidget(this);
     ProgramPage* program = new ProgramPage(expertMode,w,programName);
@@ -289,7 +285,6 @@ void ParameterView::changeProgramName(ProgramPage* programPage, const QString& n
     }
     QPageWidgetItem * programFrame = 0;
     //To change the name in the treeview, this one has to be rebuilt
-    QStringList::iterator iterator;
 
     QHashIterator<QString, ProgramPage*> i(programDict);
     while (i.hasNext())  {
@@ -307,12 +302,6 @@ void ParameterView::changeProgramName(ProgramPage* programPage, const QString& n
             name = newName;
             isTobeModified = true;
         }
-
-        /*
-        QStringList programPath;
-        programPath.append("Scripts");
-        programPath.append(name);
-*/
 
         QWidget *w = new QWidget(this);
 
