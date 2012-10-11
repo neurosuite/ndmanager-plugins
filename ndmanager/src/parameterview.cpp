@@ -324,7 +324,7 @@ void ParameterView::changeProgramName(ProgramPage* programPage, const QString& n
     setCurrentPage(programFrame);
     //If the message if not empty show a message box with it
     if(!message.isEmpty())
-        QMessageBox::critical (this,tr(title),tr(message) );
+        QMessageBox::critical (this,title,message );
 
     emit scriptListHasBeenModified(QStringList()<<programDict.keys());
 }
