@@ -39,31 +39,29 @@ public:
     /**Sets the name of the program.
   * @param name name of the program.
   */
-    void setProgramName(QString name){this->name = name;}
+    void setProgramName(const QString& name);
     
     /**Sets the help available on the program.
   * @param help help about the program.
   */
-    void setHelp(const QString& help){this->help = help;}
+    void setHelp(const QString& help);
 
     /** Initializes the parameter table.
  * @param parameters map containing the list of parameters.
  * Each entry is a list containing the name of the parameter its status (optional, mandatory or dynamic) and its value if any.
  */
-    void setParameterInformation(QMap<int, QStringList >& parameters){
-        this->parameters = parameters;
-    }
+    void setParameterInformation(const QMap<int, QStringList >& parameters);
 
     /**Gets the name of the program.*/
-    inline QString getProgramName() const{return name;}
+    QString getProgramName() const;
 
     /**Gets the help about the program.*/
-    inline QString getHelp() const{return help;}
+    QString getHelp() const;
 
     /**Returns the information for each parameter.
  * @return map containing the list of parameters. Each entry contains the name of the parameter, its value and its status (optional, mandatory or dynamic).
  */
-    QMap<int, QStringList > getParameterInformation(){return parameters;}
+    QMap<int, QStringList > getParameterInformation() const;
 
 private:
     QString name;

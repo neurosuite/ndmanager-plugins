@@ -21,3 +21,32 @@
 
 
 
+void ProgramInformation::setProgramName(const QString& name)
+{
+    this->name = name;
+}
+
+void ProgramInformation::setHelp(const QString& help)
+{
+    this->help = help;
+}
+
+void ProgramInformation::setParameterInformation(const QMap<int, QStringList >& parameters)
+{
+    this->parameters = parameters;
+}
+
+QString ProgramInformation::getProgramName() const
+{
+    return name;
+}
+
+QString ProgramInformation::getHelp() const
+{
+    return help;
+}
+
+QMap<int, QStringList > ProgramInformation::getParameterInformation() const
+{
+    return parameters;
+}
