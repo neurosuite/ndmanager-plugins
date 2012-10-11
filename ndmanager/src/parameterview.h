@@ -180,12 +180,12 @@ public:
     /**Returns a list containing all the extensions of the specific files.
  * @return extension list.
  */
-    inline QStringList getFileExtensions()const{return files->getFileExtensions();}
+    inline QStringList getFileExtensions() const {return files->getFileExtensions();}
 
     /**Returns a list containing all the script names.
  * @return script name list.
  */
-    inline const QStringList& getFileScriptNames()const{return programNames;}
+    QStringList getFileScriptNames() const;
 
 signals:
     /**
@@ -217,7 +217,7 @@ public slots:
     /**Loads a program to the subtree under the node Program.
   * @param programUrl url of the file describing the program to load.
   */
-    void loadProgram(QString programUrl);
+    void loadProgram(const QString& programUrl);
 
     /**Removes a program from the subtree under the node Program.
   * @param programPage the ProgramPage to remove.
@@ -230,7 +230,7 @@ public slots:
   * @param message error message to use in case of an error while loading a new script.
   * @param title title of the possible error message box.
   */
-    void changeProgramName(ProgramPage* programPage,const QString& newName,QString message,QString title);
+    void changeProgramName(ProgramPage* programPage,const QString& newName,const QString& message,const QString& title);
 
     /**Triggers the changes in the different pages due to a modification of the number of channels.
   * @param nbChannels the new number of channels.
@@ -313,9 +313,6 @@ private:
 
     /**Dictionary containing all the programs.*/
     QHash<QString,ProgramPage*> programDict;
-
-    /**List containg all the program names.*/
-    QStringList programNames;
 
     /**Counter given the number existing programs. */
     int counter;

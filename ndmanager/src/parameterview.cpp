@@ -269,7 +269,7 @@ ProgramPage* ParameterView::addProgram(const QString& programName,bool show){
     return program;
 }
 
-void ParameterView::changeProgramName(ProgramPage* programPage,const QString& newName,QString message,QString title){
+void ParameterView::changeProgramName(ProgramPage* programPage, const QString& newName, const QString &message, const QString &title){
 
     QString oldName = programPage->name();
     if(newName == oldName)
@@ -302,7 +302,7 @@ void ParameterView::changeProgramName(ProgramPage* programPage,const QString& ne
 
         bool isTobeModified = false;
         if(name == oldName){
-            programNames.insert(iterator,newName);
+            //programNames.insert(iterator,newName);
             program->setName(newName);
             name = newName;
             isTobeModified = true;
@@ -483,8 +483,8 @@ void ParameterView::initialize(QMap<int, QList<int> >& anatomicalGroups,QMap<QSt
     }
 }
 
-void ParameterView::loadProgram(QString programUrl){
-    QString programDecriptionName = QFileInfo(programUrl).fileName();
+void ParameterView::loadProgram(const QString &programUrl) {
+    //QString programDecriptionName = QFileInfo(programUrl).fileName();
     counter++;
     programId++;
 
@@ -505,8 +505,7 @@ void ParameterView::loadProgram(QString programUrl){
         if(answer == QMessageBox::No){
             counter--;
             return;
-        }
-        else{
+        } else {
             ProgramPage* programPage = programDict[name];
             removeProgram(programPage);
         }
@@ -543,8 +542,7 @@ void ParameterView::loadProgram(QString programUrl){
                 if(i != -1){
                     //KDAB_PENDING scriptDoc->openURL(path);
                     file.close();
-                }
-                else{
+                } else {
                     QString message =  tr("The file %1  does not appear to be a script file (a script file should begin with #!).").arg(name);
                     QMessageBox::critical (this,tr("IO Error!"),message);
                     scriptView->clear();
@@ -766,5 +764,9 @@ void ParameterView::scriptHidden(){
     emit partHidden();
 }
 
+QStringList ParameterView::getFileScriptNames()const
+{
+    return QStringList()<<programDict.keys();
+}
 
 #include "parameterview.moc"
