@@ -78,12 +78,6 @@ void ManagerView::updateFileList(const QStringList& extensions){
 
 void ManagerView::updateScriptList(const QStringList& scriptNames){
     scriptsComboBox->clear();
-    QStringList scripts;
-
-    QStringList::const_iterator iterator;
-    for(iterator = scriptNames.begin(); iterator != scriptNames.end(); ++iterator){
-        scripts<<static_cast<QString>(*iterator);
-    }
     scriptsComboBox->insertStringList(scriptNames);
 }
 
