@@ -125,8 +125,7 @@ void ParameterPage::setParameterInformation(const QMap<int, QStringList >& param
                 Q3ComboTableItem* comboStatus = new Q3ComboTableItem(parameterTable,status);
                 comboStatus->setCurrentItem(parameterInfo[i]);
                 parameterTable->setItem(iterator.key(),i,comboStatus);
-            }
-            else{
+            } else {
                 Q3TableItem* item = new Q3TableItem(parameterTable,Q3TableItem::OnTyping,parameterInfo[i]);
                 item->setWordWrap(true);
                 parameterTable->setItem(iterator.key(),i,item);
