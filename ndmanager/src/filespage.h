@@ -29,7 +29,7 @@
 //Added by qt3to4:
 #include <QList>
 
-// include files for KDE
+
 
 //forward declaration
 class QTabWidget;

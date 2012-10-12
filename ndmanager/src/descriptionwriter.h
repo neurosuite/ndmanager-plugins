@@ -20,7 +20,7 @@
 #ifndef DESCRIPTIONWRITER_H
 #define DESCRIPTIONWRITER_H
 
-// include files for KDE
+
 
 
 //include files for the application

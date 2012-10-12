@@ -34,7 +34,7 @@
 #include <QEvent>
 #include <QList>
 
-// include files for KDE
+
 
 
 //General C++ include files

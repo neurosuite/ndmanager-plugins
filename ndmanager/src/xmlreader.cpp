@@ -20,7 +20,7 @@
 // application specific includes
 #include "xmlreader.h"
 
-// include files for KDE
+
 
 
 

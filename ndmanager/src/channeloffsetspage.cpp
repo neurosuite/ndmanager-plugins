@@ -24,7 +24,7 @@
 #include <qwidget.h>
 #include <QList>
 
-// include files for KDE
+
 
 //General C++ include files
 

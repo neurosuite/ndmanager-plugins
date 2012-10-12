@@ -29,7 +29,7 @@
 #include <qlineedit.h>
 #include <qvalidator.h>
 
-// include files for KDE
+
 
 /**
 @author Lynn Hazan

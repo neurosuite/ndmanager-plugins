@@ -23,7 +23,7 @@
 // include files for QT
 #include <qstring.h>
 
-// include files for KDE
+
 #include <QWidget>
 
 //include files for the application

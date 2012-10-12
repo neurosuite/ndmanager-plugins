@@ -20,7 +20,7 @@
 #ifndef XMLWRITER_H
 #define XMLWRITER_H
 
-// include files for KDE
+
 
 
 //include files for the application

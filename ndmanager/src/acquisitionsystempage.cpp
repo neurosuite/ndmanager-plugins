@@ -21,14 +21,17 @@
 #include "acquisitionsystempage.h"
 #include <QMessageBox>
 
-//General C++ include files
-
-
-
-
 AcquisitionSystemPage::AcquisitionSystemPage(QWidget *parent)
- : AcquisitionSystemLayout(parent),doubleValidator(this),intValidator(this),isInit(true),reset(false),isLostFocus(false),
- isReturnPressed(false),modified(false),isCheckAsked(false){
+ : AcquisitionSystemLayout(parent),
+   doubleValidator(this),
+   intValidator(this),
+   isInit(true),
+   reset(false),
+   isLostFocus(false),
+   isReturnPressed(false),
+   modified(false),
+   isCheckAsked(false)
+{
 
  //Set a validator on the line edits, the values have to be integers.
  nbChannelsLineEdit->setValidator(&intValidator);

@@ -20,7 +20,7 @@
 //include files for the application
 #include "miscellaneouspage.h"
 
-// include files for KDE
+
 
 
 MiscellaneousPage::MiscellaneousPage(QWidget* parent)

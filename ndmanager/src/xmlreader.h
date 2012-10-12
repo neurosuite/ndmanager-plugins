@@ -29,7 +29,7 @@
 #include "fileinformation.h"
 #include "programinformation.h"
 
-// include files for KDE
+
 
 
 //include files for QT

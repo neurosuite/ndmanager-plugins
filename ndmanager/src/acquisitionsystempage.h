@@ -31,9 +31,6 @@
 #include <qpushbutton.h>
 #include <qvalidator.h>
 
-
-
-
 /**
 @author Lynn Hazan
 */

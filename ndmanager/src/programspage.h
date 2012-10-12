@@ -27,7 +27,7 @@
 #include <QFrame>
 
 
-// include files for KDE
+
 
 
 //forward declaration

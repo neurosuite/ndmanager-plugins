@@ -26,7 +26,7 @@
 //Added by qt3to4:
 #include <QList>
 
-// include files for KDE
+
 #include <QDockWidget>
 
 #include <QProcess>
