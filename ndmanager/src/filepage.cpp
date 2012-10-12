@@ -26,6 +26,7 @@
 #include <QEvent>
 #include <QVector>
 #include <QList>
+#include <QTableWidgetItem>
 
 FilePage::FilePage(QWidget *parent)
     : FileLayout(parent),
@@ -129,10 +130,8 @@ void FilePage::removeChannel(){
 }
 
 void FilePage::setChannelMapping(const QMap<int, QList<int> >& channels){
-#if KDAB_PENDING
-    for(int i =0; i<mappingTable->numRows();++i)
-        mappingTable->removeRow(i);
-    mappingTable->setNumRows(channels.count());
+    mappingTable->clearContents();
+    mappingTable->setRowCount(channels.count());
 
     QMap<int,QList<int> >::const_iterator iterator;
     //The iterator gives the keys sorted.
@@ -147,13 +146,10 @@ void FilePage::setChannelMapping(const QMap<int, QList<int> >& channels){
             newChannel.append(" ");
         }
 
-        Q3TableItem* item = new Q3TableItem(mappingTable,Q3TableItem::WhenCurrent,newChannel);
-        item->setWordWrap(true);
-        mappingTable->setItem(iterator.key() - 1,0,item);
+        mappingTable->setItem(iterator.key() - 1,0,new QTableWidgetItem(newChannel));
 
-        mappingTable->adjustColumn(iterator.key() - 1);
+        mappingTable->resizeColumnToContents(iterator.key() - 1);
     }//end of groups loop
-#endif
 }
 
 QMap<int, QList<int> > FilePage::getChannelMapping()const{
@@ -215,4 +211,4 @@ void FilePage::changeCaption(){
 }
 
 #include "filepage.moc"
-#include <QTableWidgetItem>
+
