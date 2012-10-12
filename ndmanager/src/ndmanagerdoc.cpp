@@ -35,8 +35,7 @@
 #include "programinformation.h"
 #include "parameterview.h"
 
-
-
+#include <qstandardpaths.h>
 
 
 using namespace ndmanager;
@@ -142,14 +141,12 @@ ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::openDocument(const QStri
 
 ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::newDocument(){
     //If the user has no local version of the file the system default is used
-#if KDAB_PENDING
-    QString path = locate("appdata","ndManagerDefault.xml");
-#endif
-    QString url;
-#if KDAB_PENDING    
-    url.setPath(path);
-#endif
-    return openDocument(url);
+    QString path = QStandardPaths::writableLocation(QStandardPaths::ApplicationsLocation);
+    QDir dir(path);
+    bool ok = dir.mkpath(path);
+    path = path + QDir::separator() + QLatin1String("ndManagerDefault.xml");
+
+    return openDocument(path);
 }
 
 
@@ -215,16 +212,13 @@ ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::save(const QString& url)
 }
 
 ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::saveDefault(){
-#if KDAB_PENDING	
-    //The file is save in the user local directory (.kde))
-    QString path = locateLocal("appdata","ndManagerDefault.xml");
-#endif
-    QString url;
-#if KDAB_PENDING
-    url.setPath(path);
-#endif
 
-    return save(url);
+    QString path = QStandardPaths::writableLocation(QStandardPaths::ApplicationsLocation);
+    QDir dir(path);
+    bool ok = dir.mkpath(path);
+    path = path + QDir::separator() + QLatin1String("ndManagerDefault.xml");
+
+    return save(path);
 }
 
 ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::saveScript(const QString &scriptName){

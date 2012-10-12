@@ -42,7 +42,7 @@
 
 
 ndManager::ndManager()
-    :QMainWindow(0, "NDManager"),
+    :QMainWindow(0),
       mainDock(0),
       importedFile(false),
       newFile(false),
@@ -50,6 +50,7 @@ ndManager::ndManager()
       parameterView(0)
 {
 
+    setObjectName("NDManager");
     mMainToolBar = new QToolBar();
 
     addToolBar(mMainToolBar);
@@ -173,14 +174,6 @@ void ndManager::setupActions()
     viewStatusBar = settingsMenu->addAction(tr("Show StatusBar"));
     viewStatusBar->setCheckable(true);
     connect(viewStatusBar,SIGNAL(triggered()), this,SLOT(slotViewStatusBar()));
-
-
-    /*
-    mPreferenceAction = settingsMenu->addAction(tr("Preferences"));
-    connect(mPreferenceAction,SIGNAL(triggered()), this,SLOT(executePreferencesDlg()));
-*/
-
-
 
     QMenu *helpMenu = menuBar()->addMenu(tr("Help"));
     QAction *about = helpMenu->addAction(tr("About"));
