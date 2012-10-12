@@ -57,7 +57,7 @@ void ManagerView::updateSpikeGroupList(int nbGroups){
     klustersComboBox->clear();
     QStringList klustersFiles;
     for (int i = 0; i < nbGroups;++i){
-        klustersFiles<<QString::fromLatin1("%1").arg(i+1);
+        klustersFiles<<QString::number(i+1);
     }
 
     klustersComboBox->insertStringList(klustersFiles);

@@ -54,7 +54,7 @@ void ChannelColorsPage::setColors(const QList<ChannelColors>& colors){
     QList<ChannelColors>::ConstIterator iterator;
     for(iterator = colors.constBegin(); iterator != colors.constEnd(); ++iterator){
         int id = (*iterator).getId();
-        colorTable->verticalHeader()->setLabel(id,QString::fromLatin1("%1").arg(id));
+        colorTable->verticalHeader()->setLabel(id,QString::number(id));
         Q3TableItem* itemColor = new Q3TableItem(colorTable,Q3TableItem::OnTyping,(*iterator).getColor().name());
         itemColor->setWordWrap(true);
         colorTable->setItem(id,0,itemColor);

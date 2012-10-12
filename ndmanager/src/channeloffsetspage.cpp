@@ -49,8 +49,8 @@ void ChannelOffsetsPage::setOffsets(const QMap<int,int>& offsets){
     //The iterator gives the keys sorted.
     for(iterator = offsets.constBegin(); iterator != offsets.constEnd(); ++iterator){
         int channelId = iterator.key();
-        lst<<(channelId,QString::fromLatin1("%1").arg(channelId));
-        QTableWidgetItem *item = new QTableWidgetItem(QString::fromLatin1("%1").arg(iterator.data()));
+        lst<<(channelId,QString::number(channelId));
+        QTableWidgetItem *item = new QTableWidgetItem(QString::number(iterator.data()));
         offsetTable->setItem(channelId,0,item);
     }
     offsetTable->setVerticalHeaderLabels(lst);

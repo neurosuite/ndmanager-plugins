@@ -104,7 +104,7 @@ void SpikePage::setGroups(const QMap<int, QList<int> >& groups,const QMap<int, Q
         //create the string containing the channel ids
         QString group;
         for(channelIterator = channelIds.begin(); channelIterator != channelIds.end(); ++channelIterator){
-            group.append(QString::fromLatin1("%1").arg(*channelIterator));
+            group.append(QString::number(*channelIterator));
             group.append(" ");
         }
 

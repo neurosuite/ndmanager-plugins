@@ -48,7 +48,7 @@ public:
     /**Sets the screen gain in milivolts by centimeters used to display the field potentiels..
   */
     void setScreenGain(float gain){
-        screenGainLineEdit->setText(QString::fromLatin1("%1").arg(gain));
+        screenGainLineEdit->setText(QString::number(gain));
     }
 
     /**Sets the background image used for the trace view.*/

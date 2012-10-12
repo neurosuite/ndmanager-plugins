@@ -134,7 +134,7 @@ void FilePage::setChannelMapping(const QMap<int, QList<int> >& channels){
         //create the string containing the channel ids
         QString newChannel;
         for(channelIterator = channelIds.begin(); channelIterator != channelIds.end(); ++channelIterator){
-            newChannel.append(QString::fromLatin1("%1").arg(*channelIterator));
+            newChannel.append(QString::number(*channelIterator));
             newChannel.append(" ");
         }
 

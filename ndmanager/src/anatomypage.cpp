@@ -86,7 +86,7 @@ void AnatomyPage::setAttributes(const QMap<QString, QMap<int,QString> >& attribu
    Q3TableItem* item = new Q3TableItem(attributesTable,Q3TableItem::WhenCurrent,values[j]);
    item->setWordWrap(true);
    attributesTable->setItem(j,i,item);
-   attributesTable->verticalHeader()->setLabel(j,QString::fromLatin1("%1").arg(j));
+   attributesTable->verticalHeader()->setLabel(j,QString::number(j));
   } 
   attributesTable->adjustColumn(i);
  }
@@ -118,7 +118,7 @@ void AnatomyPage::setGroups(const QMap<int, QList<int> >& groups){
   //create the string containing the channel ids
   QString group;
   for(channelIterator = channelIds.begin(); channelIterator != channelIds.end(); ++channelIterator){
-   group.append(QString::fromLatin1("%1").arg(*channelIterator));
+   group.append(QString::number(*channelIterator));
    group.append(" ");
   }
   
