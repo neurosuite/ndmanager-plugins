@@ -22,7 +22,7 @@
 #include "tags.h"
 #include "descriptionwriter.h"
 
-//General C++ include files
+
 
 #include <fstream>
 //Added by qt3to4:

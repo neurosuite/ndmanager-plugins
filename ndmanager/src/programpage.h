@@ -32,7 +32,7 @@ class QTabWidget;
 class QPushButton;
 class QTextEdit;
 
-//General C++ include files
+
 
 
 

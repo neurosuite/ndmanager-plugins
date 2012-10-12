@@ -24,7 +24,7 @@
 #include <qdatetime.h>
 #include <qstring.h> 
 
-//General C++ include files
+
 
 
 

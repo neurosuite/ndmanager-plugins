@@ -24,7 +24,7 @@
 #include <qcombobox.h>
 #include <qstringlist.h> 
 
-//General C++ include files
+
 
 #include <QDebug>
 

@@ -30,7 +30,7 @@
 //Added by qt3to4:
 #include <QList>
 
-//General C++ include files
+
 
 
 

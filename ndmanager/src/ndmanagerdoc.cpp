@@ -35,7 +35,7 @@
 #include "programinformation.h"
 #include "parameterview.h"
 
-//General C++ include files
+
 
 
 

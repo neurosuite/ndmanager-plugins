@@ -28,7 +28,7 @@
 #include <QVector>
 #include <QList>
 
-//General C++ include files
+
 
 
 using namespace ndmanager;

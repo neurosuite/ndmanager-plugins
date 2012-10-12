@@ -27,7 +27,7 @@
 #include <qcolor.h>
 #include <qcolordialog.h>
 
-//General C++ include files
+
 
 
 
