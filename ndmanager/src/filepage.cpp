@@ -28,9 +28,14 @@
 #include <QList>
 
 FilePage::FilePage(QWidget *parent)
-    : FileLayout(parent),isIncorrectRow(false),modified(false),isInit(true),extension(""){
+    : FileLayout(parent),
+      isIncorrectRow(false),
+      modified(false),
+      isInit(true),
+      extension("")
+{
 
-    mappingTable->setColumnStretchable(0,true);
+    //KDAB_PENDING mappingTable->setColumnStretchable(0,true);
 
     connect(extensionLineEdit,SIGNAL(returnPressed()),this,SLOT(changeCaption()));
     connect(extensionLineEdit,SIGNAL(lostFocus()),this,SLOT(changeCaption()));
@@ -45,10 +50,10 @@ FilePage::FilePage(QWidget *parent)
     mappingTable->installEventFilter(this);
 
     //For validation
-    connect(mappingTable, SIGNAL(valueChanged(int,int)),this, SLOT(mappingChanged(int,int)));
-    connect(mappingTable, SIGNAL(pressed(int,int,int,QPoint)),this, SLOT(slotValidate()));
-    connect(mappingTable, SIGNAL(clicked(int,int,int,QPoint)),this, SLOT(slotValidate()));
-    connect(mappingTable, SIGNAL(doubleClicked(int,int,int,QPoint)),this, SLOT(slotValidate()));
+    connect(mappingTable, SIGNAL(cellChanged(int,int)),this, SLOT(mappingChanged(int,int)));
+    connect(mappingTable, SIGNAL(cellPressed(int,int)),this, SLOT(slotValidate()));
+    connect(mappingTable, SIGNAL(cellClicked(int,int)),this, SLOT(slotValidate()));
+    connect(mappingTable, SIGNAL(cellDoubleClicked(int,int)),this, SLOT(slotValidate()));
 
 }
 
@@ -59,7 +64,8 @@ FilePage::~FilePage(){
 }
 
 bool FilePage::eventFilter(QObject* object,QEvent* event){
-    QString name = object->name();
+#if KDAB_PENDING
+    QString name = object->objectName();
     if(name.indexOf("mappingTable") != -1 && isIncorrectRow){
         mappingTable->editCell(incorrectRow,0);
         return true;
@@ -78,24 +84,26 @@ bool FilePage::eventFilter(QObject* object,QEvent* event){
         }
         else return QWidget::eventFilter(object,event);
     }
-    else return QWidget::eventFilter(object,event);
+    else
+#endif
+        return QWidget::eventFilter(object,event);
 }
 
 void FilePage::addChannel(){
-    if(isIncorrectRow) return;
+    if(isIncorrectRow)
+        return;
     modified = true;
-    mappingTable->insertRows(mappingTable->numRows());
-    //Use of the the 3 parameter constructor to be qt 3.1 compatible
-    Q3TableItem* item = new Q3TableItem(mappingTable,Q3TableItem::WhenCurrent,"");
-    item->setWordWrap(true);
-    int rowId = mappingTable->numRows() - 1;
-    mappingTable->setItem(rowId,0,item);
-    mappingTable->verticalHeader()->setLabel(rowId,QString::fromLatin1("%1").arg(rowId));
+
+    mappingTable->setRowCount(mappingTable->rowCount()+1);
+    mappingTable->setItem(mappingTable->rowCount()-1,0,new QTableWidgetItem());
+    mappingTable->setVerticalHeaderItem(mappingTable->rowCount()-1,new QTableWidgetItem(QString::number(mappingTable->rowCount()-1)));
 }
 
 void FilePage::removeChannel(){
-    if(isIncorrectRow) return;
+    if(isIncorrectRow)
+        return;
     modified = true;
+#if KDAB_PENDING
     int nbSelections = mappingTable->numSelections();
     if(nbSelections > 0){
         QList< QVector<int> > rowsToRemove;
@@ -114,12 +122,16 @@ void FilePage::removeChannel(){
         }
         //Actually remove the rows
         QList< QVector<int> >::iterator iterator;
-        for(iterator = rowsToRemove.begin(); iterator != rowsToRemove.end(); ++iterator) mappingTable->removeRows(*iterator);
+        for(iterator = rowsToRemove.begin(); iterator != rowsToRemove.end(); ++iterator)
+            mappingTable->removeRows(*iterator);
     }
+#endif
 }
 
 void FilePage::setChannelMapping(const QMap<int, QList<int> >& channels){
-    for(int i =0; i<mappingTable->numRows();++i) mappingTable->removeRow(i);
+#if KDAB_PENDING
+    for(int i =0; i<mappingTable->numRows();++i)
+        mappingTable->removeRow(i);
     mappingTable->setNumRows(channels.count());
 
     QMap<int,QList<int> >::const_iterator iterator;
@@ -141,16 +153,17 @@ void FilePage::setChannelMapping(const QMap<int, QList<int> >& channels){
 
         mappingTable->adjustColumn(iterator.key() - 1);
     }//end of groups loop
+#endif
 }
 
 QMap<int, QList<int> > FilePage::getChannelMapping()const{
     QMap<int, QList<int> > channelMapping;
 
     int channelId = 1;
-    for(int i =0; i<mappingTable->numRows();++i){
+    for(int i =0; i<mappingTable->rowCount();++i){
         QList<int> channels;
-        QString item = mappingTable->text(i,0);
-        QString channelList = item.simplified();
+        const QString item = mappingTable->item(i,0)->text();
+        const QString channelList = item.simplified();
         if(channelList == " " || channelList.isEmpty())
             continue;
 
@@ -168,14 +181,14 @@ void FilePage::slotValidate(){
     modified = true;
     if(isIncorrectRow){
         mappingTable->selectRow(incorrectRow);
-        mappingTable->editCell(incorrectRow,0);
+        mappingTable->editItem(mappingTable->item(incorrectRow,0));
     }
 }
 
 /**Validates the current entry in the mapping table.*/
 void FilePage::mappingChanged(int row,int column){
     modified = true;
-    QString channel = mappingTable->text(row,column);
+    QString channel = mappingTable->item(row,column)->text();
     //the group entry should only contain digits and whitespaces
     if(channel.contains(QRegExp("[^\\d\\s]")) != 0){
         isIncorrectRow = true;
@@ -184,11 +197,12 @@ void FilePage::mappingChanged(int row,int column){
     }
     else{
         if(isIncorrectRow){
-            QString incorrectMapping = mappingTable->text(incorrectRow,0);
-            if(incorrectMapping.contains(QRegExp("[^\\d\\s]")) != 0) return;
+            QString incorrectMapping = mappingTable->item(incorrectRow,0)->text();
+            if(incorrectMapping.contains(QRegExp("[^\\d\\s]")) != 0)
+                return;
         }
         isIncorrectRow = false;
-        mappingTable->adjustColumn(column);
+        mappingTable->resizeColumnToContents(column);
     }
 }
 
@@ -201,3 +215,4 @@ void FilePage::changeCaption(){
 }
 
 #include "filepage.moc"
+#include <QTableWidgetItem>
