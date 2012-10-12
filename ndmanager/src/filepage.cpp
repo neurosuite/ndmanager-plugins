@@ -104,29 +104,21 @@ void FilePage::removeChannel(){
     if(isIncorrectRow)
         return;
     modified = true;
-#if KDAB_PENDING
-    int nbSelections = mappingTable->numSelections();
-    if(nbSelections > 0){
-        QList< QVector<int> > rowsToRemove;
-        //Look up the rows to be removed
-        for(int j = 0; j < nbSelections;++j){
-            Q3TableSelection selection = mappingTable->selection(j);
-            bool active = selection.isActive();
-            if(active){
-                int nbRows = selection.bottomRow() - selection.topRow() + 1;
-                QVector<int> rows(nbRows);
-                for(int i = 0; i < nbRows;++i){
-                    rows[i] = selection.topRow() + i;
-                }
-                rowsToRemove.append(rows);
+    QList<QTableWidgetSelectionRange> range = mappingTable->selectedRanges ();
+    if(!range.isEmpty()) {
+        QList<int> rowsToRemove;
+        Q_FOREACH(const QTableWidgetSelectionRange& selection, range) {
+            int nbRows = selection.bottomRow() - selection.topRow() + 1;
+            for(int i = 0; i < nbRows;++i){
+                rowsToRemove.append(selection.topRow() + i);
             }
         }
         //Actually remove the rows
-        QList< QVector<int> >::iterator iterator;
-        for(iterator = rowsToRemove.begin(); iterator != rowsToRemove.end(); ++iterator)
-            mappingTable->removeRows(*iterator);
+        for(int i = 0; i <rowsToRemove.count();++i) {
+            mappingTable->removeRow(rowsToRemove.at(i));
+        }
+
     }
-#endif
 }
 
 void FilePage::setChannelMapping(const QMap<int, QList<int> >& channels){
