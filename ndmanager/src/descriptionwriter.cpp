@@ -63,7 +63,7 @@ bool DescriptionWriter::writeTofile(const QString& url){
     return true;
 }
 
-void DescriptionWriter::setProgramInformation(ProgramInformation& programInformation){
+void DescriptionWriter::setProgramInformation(const ProgramInformation& programInformation){
     //Get the program information
     QString name = programInformation.getProgramName();
     QMap<int, QStringList > parametersInfo = programInformation.getParameterInformation();
@@ -94,7 +94,7 @@ void DescriptionWriter::setProgramInformation(ProgramInformation& programInforma
             }
             if(i == 1){
                 QDomElement valueElement = doc.createElement(VALUE);
-                if(parameterInfo[i] != ""){
+                if(!parameterInfo[i].isEmpty()){
                     QDomText valueValue = doc.createTextNode(parameterInfo[i]);
                     valueElement.appendChild(valueValue);
                 }

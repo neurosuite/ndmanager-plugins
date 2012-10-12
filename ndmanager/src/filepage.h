@@ -33,12 +33,6 @@
 #include <QList>
 
 
-
-
-
-
-
-
 /**
 * Class used to represent a new file created out of the raw data contained in the .dat file.
 * @author Lynn Hazan
@@ -99,12 +93,7 @@ protected:
 public slots:
 
     /**Notifies that the file extension has changed.*/
-    void changeCaption(){
-        if(extensionLineEdit->text() != extension){
-            extension = extensionLineEdit->text();
-            emit extensionChanged(extension,this);
-        }
-    }
+    void changeCaption();
 
     /**Adds a new line to the mapping table.*/
     void addChannel();

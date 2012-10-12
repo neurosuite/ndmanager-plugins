@@ -54,7 +54,7 @@ public:
     /**Sets the offsets associated with the channels.
  * @param offsets map given the channel default offsets.
  */
-    void setOffsets(QMap<int,int>& offsets);
+    void setOffsets(const QMap<int,int>& offsets);
 
     /**True if at least one property has been modified, false otherwise.*/
     bool isModified()const{return modified;}

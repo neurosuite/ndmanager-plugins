@@ -57,7 +57,7 @@ public:
     /** Sets the colors associated with the channels.
  * @param colors list of ChannelColors given the 3 color used by each channel.
  */
-    void setColors(QList<ChannelColors>& colors);
+    void setColors(const QList<ChannelColors> &colors);
 
     /**True if at least one property has been modified, false otherwise.*/
     inline bool isModified()const{return modified;}

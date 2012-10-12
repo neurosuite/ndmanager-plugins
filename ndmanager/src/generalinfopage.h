@@ -41,43 +41,43 @@ public:
     ~GeneralInfoPage();
     
     /**Sets the date.*/
-    void setDate(QDate date){
+    void setDate(const QDate& date){
         kDatePicker->setSelectedDate(date);
     }
     
     /**Sets the experimenters.*/
-    void setExperimenters(QString experimenters){
+    void setExperimenters(const QString& experimenters){
         experimentersLineEdit->setText(experimenters);
     }
     
     /**SSets the description.*/
-    void setDescription(QString description){
+    void setDescription(const QString& description){
         descriptionTextEdit->setText(description);
     }
     
     /**Sets the notes.*/
-    void setNotes(QString notes){
+    void setNotes(const QString& notes){
         notesTextEdit->setText(notes);
     }
     
     
     /**Gets the date.*/
-    inline QDate getDate(){
+    inline QDate getDate() const {
         return kDatePicker->selectedDate();
     }
     
     /**Gets the experimenters.*/
-    inline QString getExperimenters(){
+    inline QString getExperimenters() const {
         return experimentersLineEdit->text();
     }
     
     /**Gets the description.*/
-    inline QString getDescription(){
+    inline QString getDescription() const {
         return descriptionTextEdit->text();
     }
     
     /**Gets the notes.*/
-    inline QString getNotes(){
+    inline QString getNotes() const {
         return notesTextEdit->text();
     }
     

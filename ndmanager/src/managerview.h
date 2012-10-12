@@ -41,11 +41,11 @@ class QVBoxLayout;
 /**
 @author Lynn Hazan
 */
-class ManagerView : public QFrame/*QSplitter*/
+class ManagerView : public QFrame
 {
     Q_OBJECT
 public:
-    ManagerView(QWidget *parent = 0);
+    explicit ManagerView(QWidget *parent = 0);
     ~ManagerView();
     
     /** Updates the dropdown list containing the spike groups used to launch Klusters.
@@ -72,7 +72,7 @@ public:
   * @param url url of the currently open parameter file.
   * @param isUptoDate true if the parameter file is up to date, false if there are unsaved changes.
   */
-    void updateDocumentInformation(const QString url,bool isUptoDate);
+    void updateDocumentInformation(const QString &url, bool isUptoDate);
 
 signals:
     void beingDestroyed();

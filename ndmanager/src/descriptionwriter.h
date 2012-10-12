@@ -48,7 +48,7 @@ public:
     /** Creates the elements containing the information for a program used to process the data link to the current parameter file.
  * @param programInformation a ProgramInformation containing the program parameter description.
  */
-    void setProgramInformation(ProgramInformation& programInformation);
+    void setProgramInformation(const ProgramInformation &programInformation);
 
 private:
 

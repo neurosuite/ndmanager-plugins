@@ -32,9 +32,6 @@
 #include <QList>
 
 
-
-
-
 FilesPage::FilesPage(QWidget* parent)
     : QFrame(parent){
 
@@ -110,15 +107,17 @@ void FilesPage::changeCaption(const QString& caption,FilePage* filePage){
 }
 
 void FilesPage::getFilePages(QList<FilePage*>& fileList){
-    for(int i = 0; i<tabWidget->count();++i)
-      fileList.append(static_cast<FilePage*>(tabWidget->page(i)));
+    for(int i = 0; i<tabWidget->count();++i){
+        fileList.append(static_cast<FilePage*>(tabWidget->page(i)));
+    }
 }
 
 bool FilesPage::isModified()const{
     bool modified = false;
     for(int i = 0; i<tabWidget->count();++i){
         modified = static_cast<FilePage*>(tabWidget->page(i))->isModified();
-        if(modified) break;
+        if(modified)
+            break;
     }
 
     return modified;
@@ -133,7 +132,8 @@ void FilesPage::resetModificationStatus(){
 QStringList FilesPage::getFileExtensions(){
     QStringList extensionList;
 
-    for(int i = 0; i<tabWidget->count();++i) extensionList.append(static_cast<FilePage*>(tabWidget->page(i))->getExtension());
+    for(int i = 0; i<tabWidget->count();++i)
+        extensionList.append(static_cast<FilePage*>(tabWidget->page(i))->getExtension());
 
 
     return extensionList;

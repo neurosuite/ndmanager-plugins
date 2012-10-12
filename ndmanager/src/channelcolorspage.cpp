@@ -27,15 +27,10 @@
 #include <qcolor.h>
 #include <qcolordialog.h>
 
-
-
-
-
-
-
 ChannelColorsPage::ChannelColorsPage(QWidget* parent)
     : ChannelColorsLayout(parent),nbChannels(0),modified(false){
-    for(int i = 0;i<colorTable->numCols();++i) colorTable->setColumnStretchable(i,true);
+    for(int i = 0;i<colorTable->numCols();++i)
+        colorTable->setColumnStretchable(i,true);
 
     connect(colorTable, SIGNAL(pressed(int,int,int,QPoint)),this, SLOT(chooseColor(int,int,int)));
     connect(colorTable, SIGNAL(valueChanged(int,int)),this, SLOT(propertyModified()));
@@ -55,9 +50,9 @@ void ChannelColorsPage::getColors(QList<ChannelColors>& colors){
     }
 }
 
-void ChannelColorsPage::setColors(QList<ChannelColors>& colors){
-    QList<ChannelColors>::iterator iterator;
-    for(iterator = colors.begin(); iterator != colors.end(); ++iterator){
+void ChannelColorsPage::setColors(const QList<ChannelColors>& colors){
+    QList<ChannelColors>::ConstIterator iterator;
+    for(iterator = colors.constBegin(); iterator != colors.constEnd(); ++iterator){
         int id = (*iterator).getId();
         colorTable->verticalHeader()->setLabel(id,QString::fromLatin1("%1").arg(id));
         Q3TableItem* itemColor = new Q3TableItem(colorTable,Q3TableItem::OnTyping,(*iterator).getColor().name());

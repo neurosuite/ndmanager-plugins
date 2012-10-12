@@ -36,7 +36,7 @@ class ChannelColors {
 public:
 
     /*Constructor*/
-    inline ChannelColors(){
+    ChannelColors(){
         id = 0;
         color = QColor(Qt::black);
     }
@@ -45,11 +45,11 @@ public:
   * @param id chanel id.
   * @param color channel color.
   */
-    inline ChannelColors(int id,QString color):id(id){
+    ChannelColors(int id,const QString& color):id(id){
         setColor(color);
     }
 
-    inline ~ChannelColors(){}
+    ~ChannelColors(){}
 
     /**Sets the channel id.
   * @param channelId channel id.
@@ -59,37 +59,37 @@ public:
     /**Sets the color used to display the channel.
   * @param colorName name of the color in the format "#RRGGBB".
   */
-    void setColor(QString colorName){color = QColor(colorName);}
+    void setColor(const QString& colorName){color = QColor(colorName);}
 
     /**Sets the group color (anatomical group) for the channel.
   * @param colorName name of the color in the format "#RRGGBB".
   */
-    void setGroupColor(QString colorName){groupColor = QColor(colorName);}
+    void setGroupColor(const QString& colorName){groupColor = QColor(colorName);}
 
     /**Sets the spike group color for the channel.
   * @param colorName name of the color in the format "#RRGGBB".
   */
-    void setSpikeGroupColor(QString colorName){spikeGroupColor = QColor(colorName);}
+    void setSpikeGroupColor(const QString& colorName){spikeGroupColor = QColor(colorName);}
 
     /**Gets the channel id.
   * @return channel id.
   */
-    inline int getId() const{return id;}
+    int getId() const{return id;}
 
     /**Gets the color used to display the channel.
   * @return name of the color in the format "#RRGGBB".
   */
-    inline QColor getColor() const{return color;}
+    QColor getColor() const{return color;}
 
     /**Gets the group color (anatomical group) for the channel.
   * @return name of the color in the format "#RRGGBB".
   */
-    inline QColor getGroupColor() const{return groupColor;}
+    QColor getGroupColor() const{return groupColor;}
 
     /**Gets the spike group color for the channel.
   * @return name of the color in the format "#RRGGBB".
   */
-    inline QColor getSpikeGroupColor() const{return spikeGroupColor;}
+    QColor getSpikeGroupColor() const{return spikeGroupColor;}
     
 private:
     /**Channel id*/

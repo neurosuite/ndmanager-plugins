@@ -32,9 +32,9 @@
 class FileInformation{
 public:
     /**Constructor.*/
-    inline FileInformation(){}
+    FileInformation(){}
     /**Destructor.*/
-    inline ~FileInformation(){}
+    ~FileInformation(){}
 
     /**Gets the file sampling rate.*/
     inline double getSamplingRate()const{return samplingRate;}
@@ -60,7 +60,7 @@ public:
     /**Sets the mapping between the original channels and the ones in the file.
  * @param mapping the channel mapping map.
  */
-    void setChannelMapping(QMap<int, QList<int> >& mapping){channelMapping = mapping;}
+    void setChannelMapping(const QMap<int, QList<int> >& mapping){channelMapping = mapping;}
 
 private:
     double samplingRate;

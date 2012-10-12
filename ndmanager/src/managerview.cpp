@@ -67,12 +67,7 @@ void ManagerView::updateFileList(const QStringList& extensions){
     neuroscopeComboBox->clear();
     QStringList neuroscopeFiles;
     neuroscopeFiles<<".dat"<<".eeg";
-
-    QStringList::ConstIterator iterator;
-    for(iterator = extensions.constBegin(); iterator != extensions.constEnd(); ++iterator){
-        QString extension = QString(".%1").arg(static_cast<QString>(*iterator));
-        neuroscopeFiles<<extension;
-    }
+    neuroscopeFiles<<extensions;
     neuroscopeComboBox->insertStringList(neuroscopeFiles);
 }
 
@@ -167,7 +162,7 @@ void ManagerView::updateDocUrl(const QString &url){
     parameterUrl = url;
 }
 
-void ManagerView::updateDocumentInformation(const QString url,bool isUptoDate){
+void ManagerView::updateDocumentInformation(const QString& url,bool isUptoDate){
     parameterUrl = QString(url);
     this->isUptoDate = isUptoDate;
 }

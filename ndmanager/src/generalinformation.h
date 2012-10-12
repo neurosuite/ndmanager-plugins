@@ -24,10 +24,6 @@
 #include <qdatetime.h>
 #include <qstring.h> 
 
-
-
-
-
 /**
 * Class storing the information contained in the General Information part of the parameter file.
 @author Lynn Hazan
@@ -35,11 +31,11 @@
 class GeneralInformation{
 public:
 
- inline GeneralInformation(){
+ GeneralInformation(){
   date = QDate::currentDate();
  }
 
-inline ~GeneralInformation(){}
+ ~GeneralInformation(){}
 
   /**Sets the date.*/
   void setDate(const QDate& date){this->date = date;}

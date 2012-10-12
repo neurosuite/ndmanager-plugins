@@ -193,4 +193,11 @@ void FilePage::mappingChanged(int row,int column){
 }
 
 
+void FilePage::changeCaption(){
+    if(extensionLineEdit->text() != extension){
+        extension = extensionLineEdit->text();
+        emit extensionChanged(extension,this);
+    }
+}
+
 #include "filepage.moc"

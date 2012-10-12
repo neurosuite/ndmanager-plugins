@@ -24,12 +24,6 @@
 #include <qwidget.h>
 #include <QList>
 
-
-
-
-
-
-
 ChannelOffsetsPage::ChannelOffsetsPage(QWidget* parent)
     : ChannelOffsetsLayout(parent),nbChannels(0),modified(false){
     /*
@@ -49,11 +43,11 @@ void ChannelOffsetsPage::getOffsets(QMap<int,int>& offsets){
     }
 }
 
-void ChannelOffsetsPage::setOffsets(QMap<int,int>& offsets){
-    QMap<int,int>::Iterator iterator;
+void ChannelOffsetsPage::setOffsets(const QMap<int,int>& offsets){
+    QMap<int,int>::ConstIterator iterator;
     QStringList lst;
     //The iterator gives the keys sorted.
-    for(iterator = offsets.begin(); iterator != offsets.end(); ++iterator){
+    for(iterator = offsets.constBegin(); iterator != offsets.constEnd(); ++iterator){
         int channelId = iterator.key();
         lst<<(channelId,QString::fromLatin1("%1").arg(channelId));
         QTableWidgetItem *item = new QTableWidgetItem(QString::fromLatin1("%1").arg(iterator.data()));
