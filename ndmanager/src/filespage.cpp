@@ -25,7 +25,7 @@
 #include <qtabwidget.h> 
 #include <qpushbutton.h> 
 //Added by qt3to4:
-#include <Q3GridLayout>
+#include <QGridLayout>
 #include <QVBoxLayout>
 #include <QList>
 #include <QFrame>
@@ -43,7 +43,7 @@ FilesPage::FilesPage(QWidget* parent)
 
     //Add the buttons
     QWidget* buttons = new QWidget(this);
-    Q3GridLayout* gridLayout = new Q3GridLayout(buttons,1,1,0,6);
+    QGridLayout* gridLayout = new QGridLayout(buttons,1,1,0,6);
     frameLayout->addWidget(buttons);
 
     addButton = new QPushButton(tr("Add File"),buttons);

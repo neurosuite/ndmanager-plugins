@@ -34,7 +34,7 @@
 #include <QDebug>
 #include <qtextedit.h>
 //Added by qt3to4:
-#include <Q3GridLayout>
+#include <QGridLayout>
 #include <QFrame>
 #include <QList>
 #include <QVBoxLayout>
@@ -76,7 +76,7 @@ ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const QString& name)
 
     //Add the buttons
     QWidget* buttons = new QWidget(this);
-    Q3GridLayout* gridLayout = new Q3GridLayout(buttons,1,1,0,6);
+    QGridLayout* gridLayout = new QGridLayout(buttons,1,1,0,6);
     frameLayout->addWidget(buttons);
 
     if(expertMode){
