@@ -110,14 +110,14 @@ QMap<int, QStringList > ParameterPage::getParameterInformation(){
     return parameterInformation;
 }
 
-void ParameterPage::setParameterInformation(QMap<int, QStringList >& parameters){
+void ParameterPage::setParameterInformation(const QMap<int, QStringList >& parameters){
     //Clean the parameterTable, just in case, before creating empty rows.
     for(int i =0; i<parameterTable->numRows();++i) parameterTable->removeRow(i);
     parameterTable->setNumRows(parameters.count());
 
-    QMap<int,QStringList >::Iterator iterator;
+    QMap<int,QStringList >::ConstIterator iterator;
     //The iterator gives the keys sorted.
-    for(iterator = parameters.begin(); iterator != parameters.end(); ++iterator){
+    for(iterator = parameters.constBegin(); iterator != parameters.constEnd(); ++iterator){
         QStringList parameterInfo = iterator.data();
 
         for(uint i=0;i<parameterInfo.count();++i){
@@ -179,6 +179,15 @@ void ParameterPage::removeParameter(){
         QList< QVector<int> >::iterator iterator;
         for(iterator = rowsToRemove.begin(); iterator != rowsToRemove.end(); ++iterator) parameterTable->removeRows(*iterator);
     }
+}
+
+void ParameterPage::changeCaption()
+{
+    QString name = nameLineEdit->text();
+    if(name.isEmpty() && !name.contains("New Script-"))
+        emit nameChanged(tr("Unknown"));
+    else
+        emit nameChanged(name);
 }
 
 

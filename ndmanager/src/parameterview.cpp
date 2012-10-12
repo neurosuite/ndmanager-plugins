@@ -569,7 +569,7 @@ void ParameterView::nbChannelsModified(int nbChannels){
 
 }
 
-QStringList ParameterView::modifiedScripts(){
+QStringList ParameterView::modifiedScripts() const{
     QStringList programModified;
 
     QMapIterator<QString, ProgramPageId> i(programDict);
@@ -583,7 +583,7 @@ QStringList ParameterView::modifiedScripts(){
     return programModified;
 }
 
-QStringList ParameterView::modifiedProgramDescription(){
+QStringList ParameterView::modifiedProgramDescription() const{
     QStringList programModified;
 
     QMapIterator<QString, ProgramPageId> i(programDict);

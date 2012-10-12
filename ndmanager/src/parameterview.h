@@ -78,7 +78,7 @@ public:
   * @param name name of the widget (can be used for introspection).
   * @param expertMode true if the file is opened in expert mode, false otherwise.
   */
-    ParameterView(ndManager* mainWindow,ndManagerDoc& doc,QWidget *parent, const char* name, bool expertMode);
+    explicit ParameterView(ndManager* mainWindow,ndManagerDoc& doc,QWidget *parent, const char* name, bool expertMode);
 
     /**
   * Destructor
@@ -149,14 +149,14 @@ public:
     /**Returns the list of the names of the programs for which the script is currently modified.
  * @return list of the names of the programs having their script modified.
  */
-    QStringList modifiedScripts();
+    QStringList modifiedScripts() const;
 
     /**Returns the list of the names of the programs for which the program description is currently modified.
  * The program description includes the program name, the number of parameters, their name and status,
  * and the help.
  * @return list of the names of the programs having their description modified.
  */
-    QStringList modifiedProgramDescription();
+    QStringList modifiedProgramDescription() const;
 
 
     /**Warns all the pages that the current state has been saved.*/
@@ -203,7 +203,7 @@ signals:
     void nbSpikeGroupsHasBeenModified(int nbGroups);
 
     /**This signal is used to update of the dropdown list containing the file extensions in the managerView.*/
-    void fileHasBeenModified(QStringList extensions);
+    void fileHasBeenModified(const QStringList& extensions);
 
     /**This signal is used to update of the dropdown list containing the script names in the managerView.*/
     void scriptListHasBeenModified(const QStringList& scriptNames);

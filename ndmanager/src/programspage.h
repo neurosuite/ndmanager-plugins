@@ -50,7 +50,7 @@ public:
 
 signals:
     void addNewProgram();
-    void programToLoad(QString programUrl);
+    void programToLoad(const QString& programUrl);
 
 public slots:
     void addProgram(){emit addNewProgram();}

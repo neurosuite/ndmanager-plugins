@@ -135,7 +135,7 @@ ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const QString& name)
 ProgramPage::~ProgramPage(){
 }
 
-QString ProgramPage::getHelp()
+QString ProgramPage::getHelp() const
 {
     return help->text();
 }

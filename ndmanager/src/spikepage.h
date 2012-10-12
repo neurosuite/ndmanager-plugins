@@ -33,11 +33,6 @@
 #include <QList>
 
 
-
-
-
-
-
 /**
 * Class used to represent the information linked to the spike groups.
 *@author Lynn Hazan
@@ -47,7 +42,7 @@ class SpikePage : public SpikeLayout
     Q_OBJECT
 public:
     /**Constructor.*/
-    SpikePage(QWidget*parent = 0);
+    explicit SpikePage(QWidget*parent = 0);
     /**Destructor.*/
     ~SpikePage();
 
@@ -68,11 +63,11 @@ public:
     void getGroupInformation(QMap<int,  QMap<QString,QString> >& groupInformation)const;
 
     /**True if at least one property has been modified, false otherwise.*/
-    inline bool isModified()const{return modified;}
+    inline bool isModified() const {return modified;}
 
     /**Returns the current number of group of spikes.
 */
-    inline int getNbGroups(){return groupTable->numRows();}
+    inline int getNbGroups() const {return groupTable->numRows();}
 
 signals:
     void nbGroupsModified(int nbGroups);

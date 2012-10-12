@@ -69,7 +69,7 @@ public:
  * @param parameters map containing the list of parameters.
  Each entry contains the name of the parameter, its value and its status (optional, mandatory or dynamic).
  */
-    void setParameterInformation(QMap<int, QStringList >& parameters);
+    void setParameterInformation(const QMap<int, QStringList >& parameters);
 
     /**Returns the information for each parameter.
  * @return map containing the list of parameters. Each entry contains the name of the parameter, its value and its status (optional, mandatory or dynamic).
@@ -87,12 +87,7 @@ signals:
 
 public slots:
     /**Handles the change of the program's name.*/
-    void changeCaption(){
-        QString name = nameLineEdit->text();
-        if(name == "" && !name.contains("New Script-")) emit nameChanged(tr("Unknown"));
-        else emit nameChanged(name);
-    }
-
+    void changeCaption();
     /**Adds a new line in the parameter table.*/
     void addParameter();
     /**Removes the selected lines from the parameter table.*/

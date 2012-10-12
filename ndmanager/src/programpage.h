@@ -32,10 +32,6 @@ class QTabWidget;
 class QPushButton;
 class QTextEdit;
 
-
-
-
-
 /**
 @author Lynn Hazan
 */
@@ -59,7 +55,7 @@ public:
     inline QTextEdit* getScriptView(){return scriptView;}
 
     /**Returns the content of the help.*/
-    QString getHelp();
+    QString getHelp() const;
 
     /**Sets the content of the help.*/
     void setHelp(const QString& helpContent);
@@ -87,7 +83,7 @@ public:
 
 signals:
     void programToRemove(ProgramPage* programPage);
-    void programNameChanged(ProgramPage* programPage,const QString& name,QString message,QString title);
+    void programNameChanged(ProgramPage* programPage,const QString& name,const QString& message,const QString& title);
     void scriptHidden();
     void scriptShown(QTextEdit* scriptView);
 
