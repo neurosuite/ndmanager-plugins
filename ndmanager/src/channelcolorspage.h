@@ -59,18 +59,13 @@ public:
     inline bool isModified()const{return modified;}
 
 public slots:
-    /**Will be called when the user wants to change a channel color.
- * @param row row in the table corresponding to the channel color to modified.
- * @param column rcolumn in the table corresponding to the type of channel color to modified.
- * @param button mouse button which has been pressed..
- */
-    void chooseColor(int row,int column,int button);
-
     /** Will be called when any properties is modified.*/
     void propertyModified(){modified = true;}
 
     /**Resets the internal modification status to false.*/
     void resetModificationStatus(){modified = false;}
+protected:
+    void mousePressEvent ( QMouseEvent * event );
 
 private:
     int nbChannels;

@@ -26,29 +26,33 @@
 #include <qcolor.h>
 #include <qcolor.h>
 #include <qcolordialog.h>
+#include <QMouseEvent>
+#include <QTableWidget>
+#include <QTableWidgetItem>
 
 ChannelColorsPage::ChannelColorsPage(QWidget* parent)
     : ChannelColorsLayout(parent)
     ,nbChannels(0)
     ,modified(false)
 {
+    /*
     for(int i = 0;i<colorTable->numCols();++i)
         colorTable->setColumnStretchable(i,true);
 
-    connect(colorTable, SIGNAL(pressed(int,int,int,QPoint)),this, SLOT(chooseColor(int,int,int)));
-    connect(colorTable, SIGNAL(valueChanged(int,int)),this, SLOT(propertyModified()));
-    connect(colorTable, SIGNAL(doubleClicked(int,int,int,QPoint)),this, SLOT(propertyModified()));
+        */
+    connect(colorTable, SIGNAL(cellChanged(int,int)),this, SLOT(propertyModified()));
+    connect(colorTable, SIGNAL(cellDoubleClicked(int,int)),this, SLOT(propertyModified()));
 }
 
 ChannelColorsPage::~ChannelColorsPage(){}
 
 void ChannelColorsPage::getColors(QList<ChannelColors>& colors){
-    for(int i =0; i<nbChannels;++i){
+    for(int i = 0; i < colorTable->rowCount();++i) {
         ChannelColors channelColors;
         channelColors.setId(i);
-        channelColors.setColor(colorTable->text(i,0));
-        channelColors.setGroupColor(colorTable->text(i,1));
-        channelColors.setSpikeGroupColor(colorTable->text(i,2));
+        channelColors.setColor(colorTable->item(i,0)->text());
+        channelColors.setGroupColor(colorTable->item(i,1)->text());
+        channelColors.setSpikeGroupColor(colorTable->item(i,2)->text());
         colors.append(channelColors);
     }
 }
@@ -57,39 +61,35 @@ void ChannelColorsPage::setColors(const QList<ChannelColors>& colors){
     QList<ChannelColors>::ConstIterator iterator;
     for(iterator = colors.constBegin(); iterator != colors.constEnd(); ++iterator){
         int id = (*iterator).getId();
-        colorTable->verticalHeader()->setLabel(id,QString::number(id));
-        Q3TableItem* itemColor = new Q3TableItem(colorTable,Q3TableItem::OnTyping,(*iterator).getColor().name());
-        itemColor->setWordWrap(true);
-        colorTable->setItem(id,0,itemColor);
+        colorTable->setHorizontalHeaderItem(id,new QTableWidgetItem(QString::number(id)));
 
-        Q3TableItem* itemGroupColor = new Q3TableItem(colorTable,Q3TableItem::OnTyping,(*iterator).getGroupColor().name());
-        itemGroupColor->setWordWrap(true);
-        colorTable->setItem(id,1,itemGroupColor);
 
-        Q3TableItem* itemSpikeGroupColor = new Q3TableItem(colorTable,Q3TableItem::OnTyping,(*iterator).getSpikeGroupColor().name());
-        itemSpikeGroupColor->setWordWrap(true);
-        colorTable->setItem(id,2,itemSpikeGroupColor);
+        colorTable->setItem(id,0,new QTableWidgetItem((*iterator).getColor().name()));
+        colorTable->setItem(id,1,new QTableWidgetItem((*iterator).getGroupColor().name()));
+        colorTable->setItem(id,2,new QTableWidgetItem((*iterator).getSpikeGroupColor().name()));
     }
 }
 
-void ChannelColorsPage::chooseColor(int row,int column,int button){
-    if(button == Qt::MidButton){
-        //Get the color associated with the item
-        QColor color(colorTable->text(row,column));
+void ChannelColorsPage::mousePressEvent ( QMouseEvent * event )
+{
+    if(event->button() == Qt::MidButton) {
+        QTableWidgetItem *item = colorTable->itemAt(event->pos());
+        if(item) {
+            const QColor color(item->text());
 
-        QColor result = QColorDialog::getColor(color,0);
-        if (result.isValid()) {
-            colorTable->setText(row,column,result.name());
-            modified = true;
+            const QColor result = QColorDialog::getColor(color,0);
+            if (result.isValid()) {
+                item->setText(result.name());
+                modified = true;
+            }
         }
     }
-} 
+}
 
 void ChannelColorsPage::setNbChannels(int nbChannels){
-    this->nbChannels = nbChannels;
-    for(int i =0; i<colorTable->numRows();++i)
+    for(int i =0; i<colorTable->rowCount();++i)
         colorTable->removeRow(i);
-    colorTable->setNumRows(nbChannels);
+    colorTable->setRowCount(nbChannels);
 }
 
 

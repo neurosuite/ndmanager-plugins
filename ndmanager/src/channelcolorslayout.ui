@@ -20,17 +20,17 @@
       <item row="0" column="0">
         <layout class="QGridLayout">
           <item row="1" column="0" rowspan="1" colspan="2">
-            <widget class="Q3Table" name="colorTable">
+            <widget class="QTableWidget" name="colorTable">
               <property name="minimumSize">
                 <size>
                   <width>350</width>
                   <height>0</height>
                 </size>
               </property>
-              <property name="numRows">
+              <property name="rowCount">
                 <number>0</number>
               </property>
-              <property name="numCols">
+              <property name="columnCount">
                 <number>3</number>
               </property>
               <column>
