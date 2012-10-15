@@ -25,13 +25,17 @@
 #include <q3table.h>
 #include <qpushbutton.h>
 #include <qlineedit.h>
+#include <QComboBox>
 //Added by qt3to4:
 #include <QEvent>
 #include <QVector>
 #include <QList>
 
 ParameterPage::ParameterPage(bool expertMode,QWidget *parent)
-    : ParameterLayout(parent),valueModified(false),descriptionModified(false){
+    : ParameterLayout(parent),
+      valueModified(false),
+      descriptionModified(false)
+{
 #ifdef KDAB_PENDING
     status<<tr("Mandatory")<<tr("Optional")<<tr("Dynamic");
 
@@ -92,17 +96,18 @@ QMap<int, QStringList > ParameterPage::getParameterInformation(){
     QMap<int, QStringList > parameterInformation;
 #ifdef KDAB_PENDING
     int paramNb = 1;
-    for(int i =0; i<parameterTable->numRows();++i){
+    for(int i =0; i<parameterTable->rowCount();++i){
         QStringList information;
-        QString item = parameterTable->text(i,0);
+        QString item = parameterTable->item(i,0)->text();
         QString name = item.simplified();
         if(name == " ")
             continue;
         information.append(name);
-        for(int j = 1;j < parameterTable->numCols(); ++j){
-            Q3TableItem* item = parameterTable->item(i,j);
+        for(int j = 1;j < parameterTable->columnCount(); ++j){
+            QTableWidget* item = parameterTable->item(i,j);
             QString text;
-            if(ddList.contains(j)) text = static_cast<Q3ComboTableItem*>(item)->currentText();
+            if(ddList.contains(j))
+                text = static_cast<Q3ComboTableItem*>(item)->currentText();
             else text = parameterTable->text(i,j);
             information.append(text.simplified());
         }
@@ -115,31 +120,27 @@ QMap<int, QStringList > ParameterPage::getParameterInformation(){
 }
 
 void ParameterPage::setParameterInformation(const QMap<int, QStringList >& parameters){
-    #ifdef KDAB_PENDING
     //Clean the parameterTable, just in case, before creating empty rows.
-    for(int i =0; i<parameterTable->numRows();++i) parameterTable->removeRow(i);
-    parameterTable->setNumRows(parameters.count());
+    parameterTable->clearContents();
+    parameterTable->setRowCount(parameters.count());
 
     QMap<int,QStringList >::ConstIterator iterator;
     //The iterator gives the keys sorted.
     for(iterator = parameters.constBegin(); iterator != parameters.constEnd(); ++iterator){
-        QStringList parameterInfo = iterator.data();
+        const QStringList parameterInfo = iterator.data();
 
         for(uint i=0;i<parameterInfo.count();++i){
             if(ddList.contains(i)){
-                Q3ComboTableItem* comboStatus = new Q3ComboTableItem(parameterTable,status);
-                comboStatus->setCurrentItem(parameterInfo[i]);
-                parameterTable->setItem(iterator.key(),i,comboStatus);
+                QComboBox *combo = new QComboBox;
+                combo->addItems(status);
+                parameterTable->setCellWidget(iterator.key(),i,combo);
             } else {
-                Q3TableItem* item = new Q3TableItem(parameterTable,Q3TableItem::OnTyping,parameterInfo[i]);
-                item->setWordWrap(true);
-                parameterTable->setItem(iterator.key(),i,item);
+                parameterTable->setItem(iterator.key(),i,new QTableWidgetItem(parameterInfo[i]));
             }
 
-            parameterTable->adjustColumn(i);
+            //parameterTable->adjustColumn(i);
         }
     }//end of parameters loop
-#endif
 }
 
 
