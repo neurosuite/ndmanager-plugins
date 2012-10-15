@@ -32,7 +32,6 @@
 
 ChannelColorsPage::ChannelColorsPage(QWidget* parent)
     : ChannelColorsLayout(parent)
-    ,nbChannels(0)
     ,modified(false)
 {
     /*
@@ -60,10 +59,7 @@ void ChannelColorsPage::getColors(QList<ChannelColors>& colors){
 void ChannelColorsPage::setColors(const QList<ChannelColors>& colors){
     QList<ChannelColors>::ConstIterator iterator;
     for(iterator = colors.constBegin(); iterator != colors.constEnd(); ++iterator){
-        int id = (*iterator).getId();
-        colorTable->setHorizontalHeaderItem(id,new QTableWidgetItem(QString::number(id)));
-
-
+        const int id = (*iterator).getId();
         colorTable->setItem(id,0,new QTableWidgetItem((*iterator).getColor().name()));
         colorTable->setItem(id,1,new QTableWidgetItem((*iterator).getGroupColor().name()));
         colorTable->setItem(id,2,new QTableWidgetItem((*iterator).getSpikeGroupColor().name()));

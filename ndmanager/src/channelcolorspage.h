@@ -68,7 +68,6 @@ protected:
     void mousePressEvent ( QMouseEvent * event );
 
 private:
-    int nbChannels;
     bool modified;
 };
 
