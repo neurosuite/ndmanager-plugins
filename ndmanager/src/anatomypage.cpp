@@ -96,17 +96,15 @@ void AnatomyPage::setAttributes(const QMap<QString, QMap<int,QString> >& attribu
 }
 
 void AnatomyPage::getAttributes(QMap<QString, QMap<int,QString> >& attributesMap)const{
-#ifdef KDAB_PENDING
-    Q3Header* header = attributesTable->horizontalHeader();
     for(int i =0; i<attributesTable->columnCount();++i){
         QMap<int,QString> values;
         for(int j = 0;j<nbChannels;++j){
             QString attribut = attributesTable->item(j,i)->text().simplified();
-            if(attribut != " ") values.insert(j,attribut);
+            if(attribut != " ")
+                values.insert(j,attribut);
         }
-        attributesMap.insert(header->label(i),values);
+        attributesMap.insert(attributesTable->horizontalHeaderItem(i)->text(),values);
     }
-#endif
 }
 
 void AnatomyPage::setGroups(const QMap<int, QList<int> >& groups){
