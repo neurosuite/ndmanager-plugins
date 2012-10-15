@@ -44,13 +44,13 @@ ParameterPage::ParameterPage(bool expertMode,QWidget *parent)
 
     for(int i = 0;i<parameterTable->numCols();++i)
         parameterTable->setColumnStretchable(i,true);
-
+#endif
 
 
     //If the export mode is not set, only the value column is editable
     if(!expertMode){
-        parameterTable->setColumnReadOnly(0,true);
-        parameterTable->setColumnReadOnly(2,true);
+       //KDAB_PENDING parameterTable->setColumnReadOnly(0,true);
+        //KDAB_PENDING parameterTable->setColumnReadOnly(2,true);
 
         addButton->setEnabled(false);
         removeButton->setEnabled(false);
@@ -67,20 +67,21 @@ ParameterPage::ParameterPage(bool expertMode,QWidget *parent)
     parameterTable->installEventFilter(this);
 
 
-    connect(parameterTable, SIGNAL(valueChanged(int,int)),this, SLOT(propertyModified(int,int)));//does not seem to work (see the hack with the eventfiler)
-#endif
+    connect(parameterTable, SIGNAL(cellChanged(int,int)),this, SLOT(propertyModified(int,int)));//does not seem to work (see the hack with the eventfiler)
 }
 
 
 ParameterPage::~ParameterPage(){}
 
 bool ParameterPage::eventFilter(QObject* object,QEvent* event){
-    QString name = object->name();
+    QString name = object->objectName();
 #ifdef KDAB_PENDING
     //hack, if the event is KeyRelease this means that there was a modification
     if(name.indexOf("parameterTable") != -1 && event->type() == QEvent::KeyRelease){
-        if(parameterTable->currentColumn() == 1) valueModified = true;
-        else descriptionModified = true;
+        if(parameterTable->currentColumn() == 1)
+            valueModified = true;
+        else
+            descriptionModified = true;
 
         return true;
     }
@@ -147,24 +148,17 @@ void ParameterPage::setParameterInformation(const QMap<int, QStringList >& param
 
 
 void ParameterPage::addParameter(){
-#ifdef KDAB_PENDING
     descriptionModified = true;
-    parameterTable->insertRows(parameterTable->numRows());
+    parameterTable->insertRow(parameterTable->rowCount());
 
-    //Use of the the 3 parameter constructor to be qt 3.1 compatible
-    Q3TableItem* name = new Q3TableItem(parameterTable,Q3TableItem::OnTyping,"");//WhenCurrent
-    name->setWordWrap(true);
-    parameterTable->setItem(parameterTable->numRows() - 1,0,name);
+    parameterTable->setItem(parameterTable->rowCount() - 1,0,new QTableWidgetItem());
 
-    //Use of the the 3 parameter constructor to be qt 3.1 compatible
-    Q3TableItem* value = new Q3TableItem(parameterTable,Q3TableItem::OnTyping,"");
-    value->setWordWrap(true);
-    parameterTable->setItem(parameterTable->numRows() - 1,1,value);
+    parameterTable->setItem(parameterTable->rowCount() - 1,1,new QTableWidgetItem());
 
     //Add the comboxItem in the status column
-    Q3ComboTableItem* comboStatus = new Q3ComboTableItem(parameterTable,status);
-    parameterTable->setItem(parameterTable->numRows() - 1,2,comboStatus);
-#endif
+    QComboBox *combo = new QComboBox;
+    combo->addItems(status);
+    parameterTable->setCellWidget(parameterTable->rowCount() - 1,2,combo);
 }
 
 void ParameterPage::removeParameter(){
