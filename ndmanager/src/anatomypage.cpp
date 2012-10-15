@@ -28,8 +28,13 @@
 #include <QVector>
 
 AnatomyPage::AnatomyPage(QWidget* parent)
-    : AnatomyLayout(parent),nbChannels(0),isIncorrectRow(false),incorrectRow(0),modified(false){
-
+    : AnatomyLayout(parent),
+      nbChannels(0),
+      isIncorrectRow(false),
+      incorrectRow(0),
+      modified(false)
+{
+#ifdef KDAB_PENDING
     for(int i = 0;i<attributesTable->numCols();++i)
         attributesTable->setColumnStretchable(i,true);
     for(int i = 0;i<groupTable->numCols();++i)
@@ -47,13 +52,14 @@ AnatomyPage::AnatomyPage(QWidget* parent)
     connect(groupTable, SIGNAL(doubleClicked(int,int,int,QPoint)),this,SLOT(slotValidate()));
 
     connect(attributesTable, SIGNAL(valueChanged(int,int)),this, SLOT(attributeChanged(int,int)));
+#endif
 }
 
 AnatomyPage::~AnatomyPage(){}
 
 bool AnatomyPage::eventFilter(QObject* object,QEvent* event){
     QString name = object->name();
-
+#ifdef KDAB_PENDING
     if(name.indexOf("groupTable") != -1 && isIncorrectRow){
         groupTable->selectRow(incorrectRow);
         groupTable->setCurrentCell(incorrectRow,0);
@@ -74,9 +80,11 @@ bool AnatomyPage::eventFilter(QObject* object,QEvent* event){
         else return QWidget::eventFilter(object,event);
     }
     else return QWidget::eventFilter(object,event);
+#endif
 }
 
 void AnatomyPage::setAttributes(const QMap<QString, QMap<int,QString> >& attributes){
+    #ifdef KDAB_PENDING
     Q3Header* header = attributesTable->horizontalHeader();
     for(int i =0; i<attributesTable->numCols();++i){
         QMap<int,QString> values = attributes[header->label(i)];//the headers have been set in the ui file and the corresponding entries in the map in the xmlreader
@@ -90,10 +98,11 @@ void AnatomyPage::setAttributes(const QMap<QString, QMap<int,QString> >& attribu
         }
         attributesTable->adjustColumn(i);
     }
+#endif
 }
 
 void AnatomyPage::getAttributes(QMap<QString, QMap<int,QString> >& attributesMap)const{
-
+#ifdef KDAB_PENDING
     Q3Header* header = attributesTable->horizontalHeader();
     for(int i =0; i<attributesTable->numCols();++i){
         QMap<int,QString> values;
@@ -103,9 +112,11 @@ void AnatomyPage::getAttributes(QMap<QString, QMap<int,QString> >& attributesMap
         }
         attributesMap.insert(header->label(i),values);
     }
+#endif
 }
 
 void AnatomyPage::setGroups(const QMap<int, QList<int> >& groups){
+    #ifdef KDAB_PENDING
     for(int i =0; i<groupTable->numRows();++i) groupTable->removeRow(i);
     groupTable->setNumRows(groups.count());
 
@@ -127,14 +138,15 @@ void AnatomyPage::setGroups(const QMap<int, QList<int> >& groups){
         groupTable->setItem(iterator.key() - 1,0,item);
         groupTable->adjustRow(iterator.key() - 1);
     }//end of groups loop
+#endif
 }
 
 void AnatomyPage::getGroups(QMap<int, QList<int> >& groups)const{
 
     int groupId = 1;
-    for(int i =0; i<groupTable->numRows();++i){
+    for(int i =0; i<groupTable->rowCount();++i){
         QList<int> channels;
-        QString item = groupTable->text(i,0);
+        QString item = groupTable->item(i,0)->text();
         QString channelList = item.simplified();
         if(channelList == " ") continue;
         QStringList channelParts = channelList.split(" ", QString::SkipEmptyParts);
@@ -147,6 +159,7 @@ void AnatomyPage::getGroups(QMap<int, QList<int> >& groups)const{
 
 void AnatomyPage::removeGroup(){
     if(isIncorrectRow) return;
+    #ifdef KDAB_PENDING
     modified = true;
     int nbSelections = groupTable->numSelections();
     
@@ -170,19 +183,23 @@ void AnatomyPage::removeGroup(){
         for(iterator = rowsToRemove.begin(); iterator != rowsToRemove.end(); ++iterator)
             groupTable->removeRows(*iterator);
     }
+#endif
 }
 
 void AnatomyPage::addGroup(){
     if(isIncorrectRow) return;
+    #ifdef KDAB_PENDING
     modified = true;
     groupTable->insertRows(groupTable->numRows());
     //Use of the the 3 parameter constructor to be qt 3.1 compatible
     Q3TableItem* item = new Q3TableItem(groupTable,Q3TableItem::WhenCurrent,"");
     item->setWordWrap(true);
     groupTable->setItem(groupTable->numRows() - 1,0,item);
+#endif
 }
 
 void AnatomyPage::groupChanged(int row,int column){
+    #ifdef KDAB_PENDING
     modified = true;
     QString group = groupTable->text(row,column);
 
@@ -208,10 +225,12 @@ void AnatomyPage::groupChanged(int row,int column){
         groupTable->selectRow(incorrectRow);
         groupTable->setCurrentCell(incorrectRow,0);
     }
+#endif
 
 }
 
 void AnatomyPage::attributeChanged(int row,int column){
+    #ifdef KDAB_PENDING
     modified = true;
     //hard coded that the skip attribut is an int, later it can be made more dynamic
     Q3Header* header = attributesTable->horizontalHeader();
@@ -227,21 +246,26 @@ void AnatomyPage::attributeChanged(int row,int column){
         }
     }
     else attributesTable->adjustRow(row);
+     #endif
 }
 
 void AnatomyPage::slotValidate(){
+    #ifdef KDAB_PENDING
     modified = true;
     if(isIncorrectRow){
         groupTable->selectRow(incorrectRow);
         groupTable->setCurrentCell(incorrectRow,0);
     }
+#endif
 }
 
 void AnatomyPage::setNbChannels(int nbChannels){
+    #ifdef KDAB_PENDING
     this->nbChannels = nbChannels;
     for(int i =0; i<attributesTable->numRows();++i)
         attributesTable->removeRow(i);
     attributesTable->setNumRows(nbChannels);
+#endif
 }
 
 
