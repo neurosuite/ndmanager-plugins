@@ -67,7 +67,7 @@ ParameterPage::ParameterPage(bool expertMode,QWidget *parent)
     parameterTable->installEventFilter(this);
 
 
-    connect(parameterTable, SIGNAL(cellChanged(int,int)),this, SLOT(propertyModified(int,int)));//does not seem to work (see the hack with the eventfiler)
+    connect(parameterTable, SIGNAL(currentCellChanged(int,int,int,int)),this, SLOT(propertyModified(int,int)));//does not seem to work (see the hack with the eventfiler)
 }
 
 
@@ -75,7 +75,7 @@ ParameterPage::~ParameterPage(){}
 
 bool ParameterPage::eventFilter(QObject* object,QEvent* event){
     QString name = object->objectName();
-#ifdef KDAB_PENDING
+
     //hack, if the event is KeyRelease this means that there was a modification
     if(name.indexOf("parameterTable") != -1 && event->type() == QEvent::KeyRelease){
         if(parameterTable->currentColumn() == 1)
@@ -86,7 +86,6 @@ bool ParameterPage::eventFilter(QObject* object,QEvent* event){
         return true;
     }
     else return QWidget::eventFilter(object,event);
-#endif
 }
 
 void ParameterPage::propertyModified(int, int column){
