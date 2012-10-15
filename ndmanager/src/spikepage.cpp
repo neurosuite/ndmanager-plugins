@@ -207,4 +207,59 @@ void SpikePage::removeGroup(){
     emit nbGroupsModified(groupTable->numRows());
 }
 
+void SpikePage::groupChanged(int row,int column){
+    modified = true;
+    QString group = groupTable->text(row,column);
+
+    if(isIncorrectRow){
+        QWidget* widget = groupTable->cellWidget(incorrectRow,incorrectColumn);
+        QString incorrectGroup;
+        if(widget != 0 && widget->metaObject()->className() == ("QLineEdit")) incorrectGroup = static_cast<QLineEdit*>(widget)->text();
+        else if(widget == 0) incorrectGroup = groupTable->item(incorrectRow,incorrectColumn)->text();
+        if(incorrectGroup.contains(QRegExp("[^\\d\\s]")) != 0){
+            groupTable->selectRow(incorrectRow);
+            groupTable->setCurrentCell(incorrectRow,incorrectColumn);
+            return;
+        }
+    }
+
+    isIncorrectRow = false;
+    incorrectRow = 0;
+    incorrectColumn = column;
+    groupTable->adjustRow(row);
+
+    //the group entry should only contain digits and whitespaces
+    if(group.contains(QRegExp("[^\\d\\s]")) != 0){
+        isIncorrectRow = true;
+        incorrectRow = row;
+        incorrectColumn = column;
+        groupTable->selectRow(incorrectRow);
+        groupTable->setCurrentCell(incorrectRow,incorrectColumn);
+    }
+}
+
+void SpikePage::slotValidate(){
+    modified = true;
+    if(isIncorrectRow){
+        groupTable->selectRow(incorrectRow);
+        // groupTable->selectColumn(incorrectColumn);
+        groupTable->setCurrentCell(incorrectRow,incorrectColumn);
+    }
+}
+
+void SpikePage::addGroup(){
+    if(isIncorrectRow)
+        return;
+    modified = true;
+    groupTable->insertRows(groupTable->numRows());
+    for(int i = 0;i<groupTable->numCols();++i){
+        //Use of the the 3 parameter constructor to be qt 3.1 compatible
+        Q3TableItem* item = new Q3TableItem(groupTable,Q3TableItem::WhenCurrent,"");
+        item->setWordWrap(true);
+        groupTable->setItem(groupTable->numRows() - 1,i,item);
+    }
+    emit nbGroupsModified(groupTable->numRows());
+}
+
+
 #include "spikepage.moc"
