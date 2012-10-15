@@ -39,7 +39,7 @@ AnatomyPage::AnatomyPage(QWidget* parent)
         attributesTable->setColumnStretchable(i,true);
     for(int i = 0;i<groupTable->numCols();++i)
         groupTable->setColumnStretchable(i,true);
-
+#endif
     //install a filter on the groupTable in order to validate the entries
     groupTable->installEventFilter(this);
 
@@ -47,12 +47,11 @@ AnatomyPage::AnatomyPage(QWidget* parent)
     connect(removeGroupButton,SIGNAL(clicked()),this,SLOT(removeGroup()));
     connect(groupTable, SIGNAL(currentChanged(int,int)),this, SLOT(slotValidate()));
     connect(groupTable, SIGNAL(valueChanged(int,int)),this, SLOT(groupChanged(int,int)));
-    connect(groupTable, SIGNAL(pressed(int,int,int,QPoint)),this, SLOT(slotValidate()));
-    connect(groupTable, SIGNAL(clicked(int,int,int,QPoint)),this,SLOT(slotValidate()));
-    connect(groupTable, SIGNAL(doubleClicked(int,int,int,QPoint)),this,SLOT(slotValidate()));
+    connect(groupTable, SIGNAL(cellPressed(int,int)),this, SLOT(slotValidate()));
+    connect(groupTable, SIGNAL(cellClicked(int,int)),this,SLOT(slotValidate()));
+    connect(groupTable, SIGNAL(cellDoubleClicked(int,int)),this,SLOT(slotValidate()));
 
     connect(attributesTable, SIGNAL(valueChanged(int,int)),this, SLOT(attributeChanged(int,int)));
-#endif
 }
 
 AnatomyPage::~AnatomyPage(){}
@@ -180,14 +179,9 @@ void AnatomyPage::removeGroup(){
 
 void AnatomyPage::addGroup(){
     if(isIncorrectRow) return;
-    #ifdef KDAB_PENDING
     modified = true;
-    groupTable->insertRows(groupTable->numRows());
-    //Use of the the 3 parameter constructor to be qt 3.1 compatible
-    Q3TableItem* item = new Q3TableItem(groupTable,Q3TableItem::WhenCurrent,"");
-    item->setWordWrap(true);
-    groupTable->setItem(groupTable->numRows() - 1,0,item);
-#endif
+    groupTable->insertRow(groupTable->rowCount());
+    groupTable->setItem(groupTable->rowCount() - 1,0,new QTableWidgetItem());
 }
 
 void AnatomyPage::groupChanged(int row,int column){
