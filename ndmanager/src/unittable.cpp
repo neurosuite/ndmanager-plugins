@@ -20,13 +20,15 @@
 #include "unittable.h"
 
 UnitTable::UnitTable(QWidget * parent)
-    : Q3Table(parent)
+    : QTableWidget(parent)
 {
 }
 
 UnitTable::UnitTable( int numRows, int numCols, QWidget * parent)
-    : Q3Table(numRows,numCols,parent)
+    : QTableWidget(parent)
 {
+   setColumnCount(numCols);
+   setRowCount(numRows);
 }
 
 UnitTable::~UnitTable()
@@ -34,10 +36,12 @@ UnitTable::~UnitTable()
 }
 
 void UnitTable::columnClicked ( int col ){
+    #ifdef KDAB_PENDING
     static bool ascending = TRUE;
     if (!sorting()) return;
     ascending=!ascending;
     sortColumn( col, ascending, TRUE);
+#endif
 }
 
 

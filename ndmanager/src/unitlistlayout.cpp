@@ -65,26 +65,26 @@ UnitListLayout::UnitListLayout(QWidget* parent, const char* name)
     layout20->addMultiCellLayout( layout19, 3, 3, 0, 1 );
 
     unitTable = new UnitTable( this );
-    unitTable->setNumCols( unitTable->numCols() + 1 );
-    unitTable->horizontalHeader()->setLabel( unitTable->numCols() - 1, tr( "Group" ) );
-    unitTable->setNumCols( unitTable->numCols() + 1 );
-    unitTable->horizontalHeader()->setLabel( unitTable->numCols() - 1, tr( "Cluster" ) );
-    unitTable->setNumCols( unitTable->numCols() + 1 );
-    unitTable->horizontalHeader()->setLabel( unitTable->numCols() - 1, tr( "Structure" ) );
-    unitTable->setNumCols( unitTable->numCols() + 1 );
-    unitTable->horizontalHeader()->setLabel( unitTable->numCols() - 1, tr( "Type" ) );
-    unitTable->setNumCols( unitTable->numCols() + 1 );
-    unitTable->horizontalHeader()->setLabel( unitTable->numCols() - 1, tr( "I.D." ) );
-    unitTable->setNumCols( unitTable->numCols() + 1 );
-    unitTable->horizontalHeader()->setLabel( unitTable->numCols() - 1, tr( "Quality" ) );
-    unitTable->setNumCols( unitTable->numCols() + 1 );
-    unitTable->horizontalHeader()->setLabel( unitTable->numCols() - 1, tr( "Notes" ) );
+    unitTable->setColumnCount( unitTable->columnCount() + 1 );
+    unitTable->horizontalHeaderItem(unitTable->columnCount() - 1)->setText( tr( "Group" ) );
+    unitTable->setColumnCount( unitTable->columnCount() + 1 );
+    unitTable->horizontalHeaderItem(unitTable->columnCount() - 1)->setText(tr( "Cluster" ) );
+    unitTable->setColumnCount( unitTable->columnCount() + 1 );
+    unitTable->horizontalHeaderItem(unitTable->columnCount() - 1)->setText(tr( "Structure" ) );
+    unitTable->setColumnCount( unitTable->columnCount() + 1 );
+    unitTable->horizontalHeaderItem(unitTable->columnCount() - 1)->setText(tr( "Type" ) );
+    unitTable->setColumnCount( unitTable->columnCount() + 1 );
+    unitTable->horizontalHeaderItem(unitTable->columnCount() - 1)->setText(tr( "I.D." ) );
+    unitTable->setColumnCount( unitTable->columnCount() + 1 );
+    unitTable->horizontalHeaderItem(unitTable->columnCount() - 1)->setText(tr( "Quality" ) );
+    unitTable->setColumnCount( unitTable->columnCount() + 1 );
+    unitTable->horizontalHeaderItem(unitTable->columnCount() - 1)->setText(tr( "Notes" ) );
     unitTable->setSizePolicy( QSizePolicy( (QSizePolicy::Policy)7, (QSizePolicy::Policy)7, 0, 0, unitTable->sizePolicy().hasHeightForWidth() ) );
     unitTable->setMinimumSize( QSize( 200, 100 ) );
-    unitTable->setVScrollBarMode( Q3Table::Auto );
-    unitTable->setNumRows( 0 );
-    unitTable->setNumCols( 7 );
-    unitTable->setSelectionMode( Q3Table::Multi );
+    unitTable->setVerticalScrollBarPolicy( Qt::ScrollBarAsNeeded );
+    unitTable->setRowCount( 0 );
+    unitTable->setColumnCount( 7 );
+    unitTable->setSelectionMode( QAbstractItemView::MultiSelection );
 
     layout20->addMultiCellWidget( unitTable, 1, 1, 0, 1 );
 
@@ -124,13 +124,13 @@ void UnitListLayout::languageChange()
     setWindowTitle( tr( "Unit List" ) );
     addUnitButton->setText( tr( "&Add" ) );
     removeUnitButton->setText( tr( "Rem&ove" ) );
-    unitTable->horizontalHeader()->setLabel( 0, tr( "Group" ) );
-    unitTable->horizontalHeader()->setLabel( 1, tr( "Cluster" ) );
-    unitTable->horizontalHeader()->setLabel( 2, tr( "Structure" ) );
-    unitTable->horizontalHeader()->setLabel( 3, tr( "Type" ) );
-    unitTable->horizontalHeader()->setLabel( 4, tr( "I.D." ) );
-    unitTable->horizontalHeader()->setLabel( 5, tr( "Quality" ) );
-    unitTable->horizontalHeader()->setLabel( 6, tr( "Notes" ) );
+    unitTable->horizontalHeaderItem(0)->setText(tr( "Group" ) );
+    unitTable->horizontalHeaderItem(1)->setText(tr( "Cluster" ) );
+    unitTable->horizontalHeaderItem(2)->setText(tr( "Structure" ) );
+    unitTable->horizontalHeaderItem(3)->setText(tr( "Type" ) );
+    unitTable->horizontalHeaderItem(4)->setText(tr( "I.D." ) );
+    unitTable->horizontalHeaderItem(5)->setText(tr( "Quality" ) );
+    unitTable->horizontalHeaderItem(6)->setText(tr( "Notes" ) );
     textLabel4_2_2_4_2_2_2->setText( tr( "Units" ) );
 }
 

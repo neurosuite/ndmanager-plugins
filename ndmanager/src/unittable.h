@@ -20,12 +20,12 @@
 #ifndef UNITTABLE_H
 #define UNITTABLE_H
 
-#include <q3table.h>
+#include <QTableWidget>
 
 /**
     @author Lynn Hazan <lynn.hazan@myrealbox.com>
 */
-class UnitTable : public Q3Table
+class UnitTable : public QTableWidget
 {
 public:
     UnitTable(QWidget * parent = 0 );

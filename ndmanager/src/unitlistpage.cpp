@@ -33,7 +33,9 @@
 UnitListPage::UnitListPage(QWidget* parent) :
     UnitListLayout(parent),nbUnits(0),isIncorrect(false),incorrectRow(0),modified(false)
 {
-    for(int i = 0;i<unitTable->numCols();++i) unitTable->setColumnStretchable(i,true);
+#ifdef KDAB_PENDING
+    for(int i = 0;i<unitTable->numCols();++i)
+        unitTable->setColumnStretchable(i,true);
 
     //install a filter on the unitTable in order to validate the entries
     unitTable->installEventFilter(this);
@@ -48,6 +50,7 @@ UnitListPage::UnitListPage(QWidget* parent) :
     connect(unitTable, SIGNAL(pressed(int,int,int,QPoint)),this, SLOT(currentChanged()));
     connect(unitTable, SIGNAL(clicked(int,int,int,QPoint)),this,SLOT(currentChanged()));
     connect(unitTable, SIGNAL(doubleClicked(int,int,int,QPoint)),this,SLOT(currentChanged()));
+#endif
 }
 
 UnitListPage::~UnitListPage(){}
@@ -55,6 +58,7 @@ UnitListPage::~UnitListPage(){}
 
 bool UnitListPage::eventFilter(QObject* object,QEvent* event)
 {
+    #ifdef KDAB_PENDING
     QString name = object->name();
 
     if (name.indexOf("unitTable") != -1 && isIncorrect)
@@ -82,10 +86,12 @@ bool UnitListPage::eventFilter(QObject* object,QEvent* event)
         else return QWidget::eventFilter(object,event);
     }
     else return QWidget::eventFilter(object,event);
+    #endif
 }
 
 void UnitListPage::setUnits(const QMap<int, QStringList >& units)
 {
+    #ifdef KDAB_PENDING
     for (int i =0; i<unitTable->numRows();++i) unitTable->removeRow(i);
     unitTable->setNumRows(units.count());
 
@@ -101,10 +107,12 @@ void UnitListPage::setUnits(const QMap<int, QStringList >& units)
             unitTable->setItem(iterator.key(),i,item);
         }
     }//end of units loop
+    #endif
 }
 
 void UnitListPage::getUnits(QMap<int, QStringList >& units)const
 { 
+    #ifdef KDAB_PENDING
     int unitId = 1;
     for(int i =0; i<unitTable->numRows();++i)
     {
@@ -117,10 +125,12 @@ void UnitListPage::getUnits(QMap<int, QStringList >& units)const
         units.insert(unitId,info);
         unitId++;
     }
+#endif
 }
 
 void UnitListPage::removeUnit()
 {
+    #ifdef KDAB_PENDING
     if (isIncorrect) return;
     modified = true;
     int nbSelections = unitTable->numSelections();
@@ -145,14 +155,17 @@ void UnitListPage::removeUnit()
         QList< QVector<int> >::iterator iterator;
         for (iterator = rowsToRemove.begin(); iterator != rowsToRemove.end(); ++iterator) unitTable->removeRows(*iterator);
     }
+    #endif
 }
 
 void UnitListPage::setNbUnits(int nbUnits)
 {
+    #ifdef KDAB_PENDING
     this->nbUnits = nbUnits;
     for(int i =0; i<unitTable->numRows();++i)
         unitTable->removeRow(i);
     unitTable->setNumRows(nbUnits);
+#endif
 }
 
 void UnitListPage::addUnit()
@@ -160,6 +173,7 @@ void UnitListPage::addUnit()
     if(isIncorrect)
         return;
     modified = true;
+    #ifdef KDAB_PENDING
     unitTable->insertRows(unitTable->numRows());
 
     //Use of the the 3 parameter constructor to be qt 3.1 compatible
@@ -169,6 +183,7 @@ void UnitListPage::addUnit()
         item->setWordWrap(true);
         unitTable->setItem(unitTable->numRows() - 1,i,item);
     }
+#endif
 }
 
 void UnitListPage::currentChanged()
@@ -182,6 +197,7 @@ void UnitListPage::currentChanged()
 
 void UnitListPage::unitChanged(int row,int column)
 {
+    #ifdef KDAB_PENDING
     QString unit = unitTable->text(row,column);
     //the group and cluster entries should only contain digits
     //the I.D. entry should only contain digits and '.'
@@ -198,6 +214,7 @@ void UnitListPage::unitChanged(int row,int column)
         isIncorrect = false;
         unitTable->adjustRow(row);
     }
+#endif
 }
 
 
