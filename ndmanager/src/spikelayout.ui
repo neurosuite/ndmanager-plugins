@@ -20,7 +20,7 @@
       <item row="0" column="0">
         <layout class="QGridLayout">
           <item row="1" column="0">
-            <widget class="Q3Table" name="groupTable">
+            <widget class="QTableWidget" name="groupTable">
               <property name="sizePolicy">
                 <sizepolicy>
                   <hsizetype>7</hsizetype>
@@ -41,14 +41,14 @@
                   <height>32767</height>
                 </size>
               </property>
-              <property name="numRows">
+              <property name="rowCount">
                 <number>0</number>
               </property>
-              <property name="numCols">
+              <property name="columnCount">
                 <number>4</number>
               </property>
               <property name="selectionMode">
-                <enum>Multi</enum>
+                <enum>QAbstractItemView::MultiSelection</enum>
               </property>
               <column>
                 <property name="text">

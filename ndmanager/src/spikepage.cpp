@@ -40,20 +40,28 @@ SpikePage::SpikePage(QWidget* parent)
       incorrectColumn(0),
       modified(false)
 {
+    //KDAB
+    /*
 
     for(int i = 0;i<groupTable->numCols();++i)
         groupTable->setColumnStretchable(i,true);
 
+
+    connect(groupTable, SIGNAL(valueChanged(int,int)),this, SLOT(groupChanged(int,int)));
+    connect(groupTable, SIGNAL(currentChanged(int,int)),this, SLOT(slotValidate()));
+    */
+
     //install a filter on the groupTable in order to validate the entries
     groupTable->installEventFilter(this);
 
+
+    connect(groupTable, SIGNAL(currentCellChanged(int,int,int,int)),this, SLOT(slotValidate()));
     connect(addGroupButton,SIGNAL(clicked()),this,SLOT(addGroup()));
     connect(removeGroupButton,SIGNAL(clicked()),this,SLOT(removeGroup()));
-    connect(groupTable, SIGNAL(valueChanged(int,int)),this, SLOT(groupChanged(int,int)));
-    connect(groupTable, SIGNAL(currentChanged(int,int)),this, SLOT(slotValidate()));
-    connect(groupTable, SIGNAL(pressed(int,int,int,QPoint)),this, SLOT(slotValidate()));
-    connect(groupTable, SIGNAL(clicked(int,int,int,QPoint)),this, SLOT(slotValidate()));
-    connect(groupTable, SIGNAL(doubleClicked(int,int,int,QPoint)),this, SLOT(slotValidate()));
+    connect(groupTable, SIGNAL(cellPressed(int,int)),this, SLOT(slotValidate()));
+    connect(groupTable, SIGNAL(cellClicked(int,int)),this, SLOT(slotValidate()));
+    connect(groupTable, SIGNAL(cellDoubleClicked(int,int)),this, SLOT(slotValidate()));
+
 }
 
 
@@ -61,6 +69,7 @@ SpikePage::~SpikePage(){}
 
 
 bool SpikePage::eventFilter(QObject* object,QEvent* event){
+#ifdef KDAB_PENDING
     QString name = object->name();
     if(name.indexOf("groupTable") != -1 && isIncorrectRow){
         groupTable->selectRow(incorrectRow);
@@ -88,11 +97,14 @@ bool SpikePage::eventFilter(QObject* object,QEvent* event){
         else return QWidget::eventFilter(object,event);
     }
     else return QWidget::eventFilter(object,event);
+#endif
 }
 
 void SpikePage::setGroups(const QMap<int, QList<int> >& groups,const QMap<int, QMap<QString,QString> >& information){
+#ifdef KDAB_PENDING
     //Clean the groupTable, just in case, before creating empty rows.
-    for(int i =0; i<groupTable->numRows();++i) groupTable->removeRow(i);
+    for(int i =0; i<groupTable->numRows();++i)
+        groupTable->removeRow(i);
     groupTable->setNumRows(groups.count());
 
     QMap<int,QList<int> >::const_iterator iterator;
@@ -134,16 +146,16 @@ void SpikePage::setGroups(const QMap<int, QList<int> >& groups,const QMap<int, Q
         }
         groupTable->adjustRow(iterator.key() - 1);
     }//end of groups loop
+#endif
 }
 
 
 
 void SpikePage::getGroups(QMap<int, QList<int> >& groups)const{
-
     int groupId = 1;
-    for(int i =0; i<groupTable->numRows();++i){
+    for(int i =0; i<groupTable->rowCount();++i){
         QList<int> channels;
-        QString item = groupTable->text(i,0);
+        QString item = groupTable->item(i,0)->text();
         QString channelList = item.simplified();
         if(channelList == " ")
             continue;
@@ -156,7 +168,7 @@ void SpikePage::getGroups(QMap<int, QList<int> >& groups)const{
 }
 
 void SpikePage::getGroupInformation(QMap<int,  QMap<QString,QString> >& groupInformation)const{
-
+#ifdef KDAB_PENDING
     int groupId = 1;
     for(int i =0; i<groupTable->numRows();++i){
         QMap<QString,QString> information;
@@ -178,9 +190,11 @@ void SpikePage::getGroupInformation(QMap<int,  QMap<QString,QString> >& groupInf
         groupInformation.insert(groupId,information);
         groupId++;
     }
+#endif
 }
 
 void SpikePage::removeGroup(){
+    #ifdef KDAB_PENDING
     if(isIncorrectRow) return;
     modified = true;
     int nbSelections = groupTable->numSelections();
@@ -205,17 +219,21 @@ void SpikePage::removeGroup(){
             groupTable->removeRows(*iterator);
     }
     emit nbGroupsModified(groupTable->numRows());
+#endif
 }
 
 void SpikePage::groupChanged(int row,int column){
+    #ifdef KDAB_PENDING
     modified = true;
     QString group = groupTable->text(row,column);
 
     if(isIncorrectRow){
         QWidget* widget = groupTable->cellWidget(incorrectRow,incorrectColumn);
         QString incorrectGroup;
-        if(widget != 0 && widget->metaObject()->className() == ("QLineEdit")) incorrectGroup = static_cast<QLineEdit*>(widget)->text();
-        else if(widget == 0) incorrectGroup = groupTable->item(incorrectRow,incorrectColumn)->text();
+        if(widget != 0 && widget->metaObject()->className() == ("QLineEdit"))
+            incorrectGroup = static_cast<QLineEdit*>(widget)->text();
+        else if(widget == 0)
+            incorrectGroup = groupTable->item(incorrectRow,incorrectColumn)->text();
         if(incorrectGroup.contains(QRegExp("[^\\d\\s]")) != 0){
             groupTable->selectRow(incorrectRow);
             groupTable->setCurrentCell(incorrectRow,incorrectColumn);
@@ -236,6 +254,7 @@ void SpikePage::groupChanged(int row,int column){
         groupTable->selectRow(incorrectRow);
         groupTable->setCurrentCell(incorrectRow,incorrectColumn);
     }
+#endif
 }
 
 void SpikePage::slotValidate(){
@@ -248,6 +267,7 @@ void SpikePage::slotValidate(){
 }
 
 void SpikePage::addGroup(){
+    #ifdef KDAB_PENDING
     if(isIncorrectRow)
         return;
     modified = true;
@@ -259,6 +279,7 @@ void SpikePage::addGroup(){
         groupTable->setItem(groupTable->numRows() - 1,i,item);
     }
     emit nbGroupsModified(groupTable->numRows());
+#endif
 }
 
 

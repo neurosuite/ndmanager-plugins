@@ -67,7 +67,7 @@ public:
 
     /**Returns the current number of group of spikes.
 */
-    inline int getNbGroups() const {return groupTable->numRows();}
+    inline int getNbGroups() const {return groupTable->rowCount();}
 
 signals:
     void nbGroupsModified(int nbGroups);
