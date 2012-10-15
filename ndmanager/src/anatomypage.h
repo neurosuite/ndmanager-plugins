@@ -105,7 +105,6 @@ public slots:
     void resetModificationStatus(){modified = false;}
 
 private:
-    int nbChannels;
     bool isIncorrectRow;
     int incorrectRow;
     bool modified;
