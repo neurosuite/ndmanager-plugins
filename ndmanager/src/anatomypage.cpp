@@ -84,30 +84,24 @@ bool AnatomyPage::eventFilter(QObject* object,QEvent* event){
 }
 
 void AnatomyPage::setAttributes(const QMap<QString, QMap<int,QString> >& attributes){
-    #ifdef KDAB_PENDING
-    Q3Header* header = attributesTable->horizontalHeader();
-    for(int i =0; i<attributesTable->numCols();++i){
-        QMap<int,QString> values = attributes[header->label(i)];//the headers have been set in the ui file and the corresponding entries in the map in the xmlreader
+    for(int i =0; i<attributesTable->columnCount();++i){
+        QMap<int,QString> values = attributes[attributesTable->horizontalHeaderItem(i)->text()];//the headers have been set in the ui file and the corresponding entries in the map in the xmlreader
         //insert the values in the table and set the line headers
         for(int j = 0;j<nbChannels;++j){
-
-            Q3TableItem* item = new Q3TableItem(attributesTable,Q3TableItem::WhenCurrent,values[j]);
-            item->setWordWrap(true);
-            attributesTable->setItem(j,i,item);
-            attributesTable->verticalHeader()->setLabel(j,QString::number(j));
+            attributesTable->setItem(j,i,new QTableWidgetItem(values[j]));
+            attributesTable->setHorizontalHeaderItem(j,new QTableWidgetItem(QString::number(j)));
         }
-        attributesTable->adjustColumn(i);
+        //attributesTable->adjustColumn(i);
     }
-#endif
 }
 
 void AnatomyPage::getAttributes(QMap<QString, QMap<int,QString> >& attributesMap)const{
 #ifdef KDAB_PENDING
     Q3Header* header = attributesTable->horizontalHeader();
-    for(int i =0; i<attributesTable->numCols();++i){
+    for(int i =0; i<attributesTable->columnCount();++i){
         QMap<int,QString> values;
         for(int j = 0;j<nbChannels;++j){
-            QString attribut = attributesTable->text(j,i).simplified();
+            QString attribut = attributesTable->item(j,i)->text().simplified();
             if(attribut != " ") values.insert(j,attribut);
         }
         attributesMap.insert(header->label(i),values);
