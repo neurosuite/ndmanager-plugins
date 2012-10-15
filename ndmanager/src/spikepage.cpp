@@ -101,11 +101,9 @@ bool SpikePage::eventFilter(QObject* object,QEvent* event){
 }
 
 void SpikePage::setGroups(const QMap<int, QList<int> >& groups,const QMap<int, QMap<QString,QString> >& information){
-#ifdef KDAB_PENDING
     //Clean the groupTable, just in case, before creating empty rows.
-    for(int i =0; i<groupTable->numRows();++i)
-        groupTable->removeRow(i);
-    groupTable->setNumRows(groups.count());
+    groupTable->clearContents();
+    groupTable->setRowCount(groups.count());
 
     QMap<int,QList<int> >::const_iterator iterator;
     //The iterator gives the keys sorted.
@@ -120,33 +118,25 @@ void SpikePage::setGroups(const QMap<int, QList<int> >& groups,const QMap<int, Q
             group.append(" ");
         }
 
-        Q3TableItem* item = new Q3TableItem(groupTable,Q3TableItem::WhenCurrent,group);
-        item->setWordWrap(true);
-        groupTable->setItem(iterator.key() - 1,0,item);
+        groupTable->setItem(iterator.key() - 1,0,new QTableWidgetItem(group));
+
 
         QMap<QString,QString> groupInformation = information[iterator.key()];
         QMap<QString,QString>::Iterator iterator2;
         //The positions of the information in the table are hard coded (for the moment :0) )
         for(iterator2 = groupInformation.begin(); iterator2 != groupInformation.end(); ++iterator2){
             if(iterator2.key() == NB_SAMPLES){
-                Q3TableItem* item = new Q3TableItem(groupTable,Q3TableItem::WhenCurrent,iterator2.data());
-                item->setWordWrap(true);
-                groupTable->setItem(iterator.key() - 1,1,item);
+                groupTable->setItem(iterator.key() - 1,1,new QTableWidgetItem(iterator2.data()));
             }
             if(iterator2.key() == PEAK_SAMPLE_INDEX){
-                Q3TableItem* item = new Q3TableItem(groupTable,Q3TableItem::WhenCurrent,iterator2.data());
-                item->setWordWrap(true);
-                groupTable->setItem(iterator.key() - 1,2,item);
+                groupTable->setItem(iterator.key() - 1,2,new QTableWidgetItem(iterator2.data()));
             }
             if(iterator2.key() == NB_FEATURES){
-                Q3TableItem* item = new Q3TableItem(groupTable,Q3TableItem::WhenCurrent,iterator2.data());
-                item->setWordWrap(true);
-                groupTable->setItem(iterator.key() - 1,3,item);
+                groupTable->setItem(iterator.key() - 1,3,new QTableWidgetItem(iterator2.data()));
             }
         }
-        groupTable->adjustRow(iterator.key() - 1);
+        //groupTable->adjustRow(iterator.key() - 1);
     }//end of groups loop
-#endif
 }
 
 
@@ -168,16 +158,16 @@ void SpikePage::getGroups(QMap<int, QList<int> >& groups)const{
 }
 
 void SpikePage::getGroupInformation(QMap<int,  QMap<QString,QString> >& groupInformation)const{
-#ifdef KDAB_PENDING
     int groupId = 1;
-    for(int i =0; i<groupTable->numRows();++i){
+    for(int i =0; i<groupTable->rowCount();++i){
         QMap<QString,QString> information;
-        QString item = groupTable->text(i,0);
+        const QString item = groupTable->item(i,0)->text();
         QString channelList = item.simplified();
-        if(channelList == " ") continue;
+        if(channelList == " ")
+            continue;
         //The positions of the information in the table are hard coded
-        for(int j = 1;j <= groupTable->numCols(); ++j){
-            QString infoItem = groupTable->text(i,j).simplified();
+        for(int j = 1;j <= groupTable->columnCount(); ++j){
+            QString infoItem = groupTable->item(i,j)->text().simplified();
             if(infoItem == " ")
                 continue;
             if(j == 1)
@@ -190,7 +180,6 @@ void SpikePage::getGroupInformation(QMap<int,  QMap<QString,QString> >& groupInf
         groupInformation.insert(groupId,information);
         groupId++;
     }
-#endif
 }
 
 void SpikePage::removeGroup(){
@@ -267,19 +256,15 @@ void SpikePage::slotValidate(){
 }
 
 void SpikePage::addGroup(){
-    #ifdef KDAB_PENDING
     if(isIncorrectRow)
         return;
     modified = true;
-    groupTable->insertRows(groupTable->numRows());
-    for(int i = 0;i<groupTable->numCols();++i){
-        //Use of the the 3 parameter constructor to be qt 3.1 compatible
-        Q3TableItem* item = new Q3TableItem(groupTable,Q3TableItem::WhenCurrent,"");
-        item->setWordWrap(true);
-        groupTable->setItem(groupTable->numRows() - 1,i,item);
+    groupTable->insertRow(groupTable->rowCount());
+    for(int i = 0;i<groupTable->columnCount();++i){
+        groupTable->setItem(groupTable->rowCount()-1,i,new QTableWidgetItem());
+        groupTable->update();
     }
-    emit nbGroupsModified(groupTable->numRows());
-#endif
+    emit nbGroupsModified(groupTable->rowCount());
 }
 
 
