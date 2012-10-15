@@ -97,7 +97,6 @@ void ParameterPage::propertyModified(int, int column){
 
 QMap<int, QStringList > ParameterPage::getParameterInformation(){
     QMap<int, QStringList > parameterInformation;
-#ifdef KDAB_PENDING
     int paramNb = 1;
     for(int i =0; i<parameterTable->rowCount();++i){
         QStringList information;
@@ -107,18 +106,18 @@ QMap<int, QStringList > ParameterPage::getParameterInformation(){
             continue;
         information.append(name);
         for(int j = 1;j < parameterTable->columnCount(); ++j){
-            QTableWidget* item = parameterTable->item(i,j);
             QString text;
-            if(ddList.contains(j))
-                text = static_cast<Q3ComboTableItem*>(item)->currentText();
-            else text = parameterTable->text(i,j);
+            if(ddList.contains(j)) {
+                text = (static_cast<QComboBox*>(parameterTable->cellWidget(i,j)))->currentText();
+            }
+            else
+                text = parameterTable->item(i,j)->text();
             information.append(text.simplified());
         }
 
         parameterInformation.insert(paramNb,information);
         paramNb++;
     }
-#endif
     return parameterInformation;
 }
 
@@ -148,7 +147,7 @@ void ParameterPage::setParameterInformation(const QMap<int, QStringList >& param
 
 
 void ParameterPage::addParameter(){
-    #ifdef KDAB_PENDING
+#ifdef KDAB_PENDING
     descriptionModified = true;
     parameterTable->insertRows(parameterTable->numRows());
 
