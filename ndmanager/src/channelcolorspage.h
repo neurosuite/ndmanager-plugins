@@ -43,11 +43,7 @@ public:
     /**Sets the number of channels, creating the correspondent number of lines in the table.
  * @param nbChannels number of channels.
  */
-    void setNbChannels(int nbChannels){
-        this->nbChannels = nbChannels;
-        for(int i =0; i<colorTable->numRows();++i) colorTable->removeRow(i);
-        colorTable->setNumRows(nbChannels);
-    }
+    void setNbChannels(int nbChannels);
     
     /** Returns the colors associated with the channels.
  * @param colors list of ChannelColors given the 3 color used by each channel.

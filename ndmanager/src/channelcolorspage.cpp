@@ -28,7 +28,10 @@
 #include <qcolordialog.h>
 
 ChannelColorsPage::ChannelColorsPage(QWidget* parent)
-    : ChannelColorsLayout(parent),nbChannels(0),modified(false){
+    : ChannelColorsLayout(parent)
+    ,nbChannels(0)
+    ,modified(false)
+{
     for(int i = 0;i<colorTable->numCols();++i)
         colorTable->setColumnStretchable(i,true);
 
@@ -81,5 +84,13 @@ void ChannelColorsPage::chooseColor(int row,int column,int button){
         }
     }
 } 
+
+void ChannelColorsPage::setNbChannels(int nbChannels){
+    this->nbChannels = nbChannels;
+    for(int i =0; i<colorTable->numRows();++i)
+        colorTable->removeRow(i);
+    colorTable->setNumRows(nbChannels);
+}
+
 
 #include "channelcolorspage.moc"
