@@ -32,7 +32,7 @@
 
 ParameterPage::ParameterPage(bool expertMode,QWidget *parent)
     : ParameterLayout(parent),valueModified(false),descriptionModified(false){
-
+#ifdef KDAB_PENDING
     status<<tr("Mandatory")<<tr("Optional")<<tr("Dynamic");
 
     for(int i = 0;i<parameterTable->numCols();++i)
@@ -61,6 +61,7 @@ ParameterPage::ParameterPage(bool expertMode,QWidget *parent)
 
 
     connect(parameterTable, SIGNAL(valueChanged(int,int)),this, SLOT(propertyModified(int,int)));//does not seem to work (see the hack with the eventfiler)
+#endif
 }
 
 
@@ -68,7 +69,7 @@ ParameterPage::~ParameterPage(){}
 
 bool ParameterPage::eventFilter(QObject* object,QEvent* event){
     QString name = object->name();
-
+#ifdef KDAB_PENDING
     //hack, if the event is KeyRelease this means that there was a modification
     if(name.indexOf("parameterTable") != -1 && event->type() == QEvent::KeyRelease){
         if(parameterTable->currentColumn() == 1) valueModified = true;
@@ -77,16 +78,19 @@ bool ParameterPage::eventFilter(QObject* object,QEvent* event){
         return true;
     }
     else return QWidget::eventFilter(object,event);
+#endif
 }
 
 void ParameterPage::propertyModified(int, int column){
-    if(column == 1) valueModified = true;
-    else descriptionModified = true;
+    if(column == 1)
+        valueModified = true;
+    else
+        descriptionModified = true;
 }
 
 QMap<int, QStringList > ParameterPage::getParameterInformation(){
     QMap<int, QStringList > parameterInformation;
-
+#ifdef KDAB_PENDING
     int paramNb = 1;
     for(int i =0; i<parameterTable->numRows();++i){
         QStringList information;
@@ -106,11 +110,12 @@ QMap<int, QStringList > ParameterPage::getParameterInformation(){
         parameterInformation.insert(paramNb,information);
         paramNb++;
     }
-
+#endif
     return parameterInformation;
 }
 
 void ParameterPage::setParameterInformation(const QMap<int, QStringList >& parameters){
+    #ifdef KDAB_PENDING
     //Clean the parameterTable, just in case, before creating empty rows.
     for(int i =0; i<parameterTable->numRows();++i) parameterTable->removeRow(i);
     parameterTable->setNumRows(parameters.count());
@@ -134,10 +139,12 @@ void ParameterPage::setParameterInformation(const QMap<int, QStringList >& param
             parameterTable->adjustColumn(i);
         }
     }//end of parameters loop
+#endif
 }
 
 
 void ParameterPage::addParameter(){
+    #ifdef KDAB_PENDING
     descriptionModified = true;
     parameterTable->insertRows(parameterTable->numRows());
 
@@ -154,9 +161,11 @@ void ParameterPage::addParameter(){
     //Add the comboxItem in the status column
     Q3ComboTableItem* comboStatus = new Q3ComboTableItem(parameterTable,status);
     parameterTable->setItem(parameterTable->numRows() - 1,2,comboStatus);
+#endif
 }
 
 void ParameterPage::removeParameter(){
+    #ifdef KDAB_PENDING
     descriptionModified = true;
     int nbSelections = parameterTable->numSelections();
     if(nbSelections > 0){
@@ -178,6 +187,7 @@ void ParameterPage::removeParameter(){
         QList< QVector<int> >::iterator iterator;
         for(iterator = rowsToRemove.begin(); iterator != rowsToRemove.end(); ++iterator) parameterTable->removeRows(*iterator);
     }
+#endif
 }
 
 void ParameterPage::changeCaption()

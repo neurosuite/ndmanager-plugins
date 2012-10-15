@@ -158,7 +158,7 @@
                 </spacer>
               </item>
               <item row="1" column="0">
-                <widget class="Q3Table" name="parameterTable">
+                <widget class="QTableWidget" name="parameterTable">
                   <property name="sizePolicy">
                     <sizepolicy>
                       <hsizetype>7</hsizetype>
@@ -173,14 +173,14 @@
                       <height>100</height>
                     </size>
                   </property>
-                  <property name="numRows">
+                  <property name="rowCount">
                     <number>0</number>
                   </property>
-                  <property name="numCols">
+                  <property name="columnCount">
                     <number>3</number>
                   </property>
                   <property name="selectionMode">
-                    <enum>Multi</enum>
+                    <enum>QAbstractItemView::MultiSelection</enum>
                   </property>
                   <column>
                     <property name="text">
