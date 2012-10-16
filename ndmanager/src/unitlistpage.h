@@ -91,8 +91,6 @@ public slots:
     void resetModificationStatus(){modified = false;}
 
 private:
-
-    int	nbUnits;
     bool	isIncorrect;
     int	incorrectRow,incorrectColumn;
     bool	modified;

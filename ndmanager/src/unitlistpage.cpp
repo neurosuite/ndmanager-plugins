@@ -31,7 +31,7 @@
 #include <QVector>
 
 UnitListPage::UnitListPage(QWidget* parent) :
-    UnitListLayout(parent),nbUnits(0),isIncorrect(false),incorrectRow(0),modified(false)
+    UnitListLayout(parent),isIncorrect(false),incorrectRow(0),modified(false)
 {
 #ifdef KDAB_PENDING
     for(int i = 0;i<unitTable->numCols();++i)
@@ -99,7 +99,7 @@ void UnitListPage::setUnits(const QMap<int, QStringList >& units)
         const QStringList info = iterator.value();
         for (uint i=0;i<info.count();++i)
         {
-            //UnitTableItem* item = new UnitTableItem(unitTable,Q3TableItem::OnTyping,info[i]);
+            //UnitTableItem* item = new UnitTableItem(unitTable,QTableItem::OnTyping,info[i]);
             unitTable->setItem(iterator.key(),i,new QTableWidgetItem(info.at(i)));
         }
     }//end of units loop
@@ -153,12 +153,9 @@ void UnitListPage::removeUnit()
 
 void UnitListPage::setNbUnits(int nbUnits)
 {
-    #ifdef KDAB_PENDING
-    this->nbUnits = nbUnits;
-    for(int i =0; i<unitTable->numRows();++i)
+    for(int i =0; i<unitTable->rowCount();++i)
         unitTable->removeRow(i);
-    unitTable->setNumRows(nbUnits);
-#endif
+    unitTable->setRowCount(nbUnits);
 }
 
 void UnitListPage::addUnit()
@@ -166,17 +163,13 @@ void UnitListPage::addUnit()
     if(isIncorrect)
         return;
     modified = true;
-    #ifdef KDAB_PENDING
-    unitTable->insertRows(unitTable->numRows());
+    unitTable->insertRow(unitTable->rowCount());
 
-    //Use of the the 3 parameter constructor to be qt 3.1 compatible
-    for(int i=0;i<unitTable->numCols();++i)
+    for(int i=0;i<unitTable->columnCount();++i)
     {
-        UnitTableItem* item = new UnitTableItem(unitTable,Q3TableItem::WhenCurrent,"");
-        item->setWordWrap(true);
-        unitTable->setItem(unitTable->numRows() - 1,i,item);
+        //UnitTableItem* item = new UnitTableItem(unitTable,QTableItem::WhenCurrent,"");
+        unitTable->setItem(unitTable->rowCount() - 1,i,new QTableWidgetItem());
     }
-#endif
 }
 
 void UnitListPage::currentChanged()
