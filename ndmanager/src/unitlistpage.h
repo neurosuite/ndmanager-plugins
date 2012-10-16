@@ -25,7 +25,6 @@
 //include files for the application
 #include <unitlistlayout.h>
 #include "unittable.h"
-#include "unittableitem.h"
 
 // include files for QT
 #include <qwidget.h>

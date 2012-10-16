@@ -12,7 +12,6 @@
 
 #include <qvariant.h>
 #include <qpushbutton.h>
-#include <q3table.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qtooltip.h>
