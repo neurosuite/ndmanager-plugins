@@ -43,17 +43,17 @@ FilesPage::FilesPage(QWidget* parent)
 
     //Add the buttons
     QWidget* buttons = new QWidget(this);
-    QGridLayout* gridLayout = new QGridLayout(buttons,1,1,0,6);
+    QGridLayout* gridLayout = new QGridLayout(buttons);
     frameLayout->addWidget(buttons);
 
     addButton = new QPushButton(tr("Add File"),buttons);
-    addButton->setSizePolicy(QSizePolicy((QSizePolicy::Policy)0,(QSizePolicy::Policy)0,0,0,addButton->sizePolicy().hasHeightForWidth()));
+    //addButton->setSizePolicy(QSizePolicy((QSizePolicy::Policy)0,(QSizePolicy::Policy)0,0,0,addButton->sizePolicy().hasHeightForWidth()));
     addButton->setMinimumSize(QSize(124,0));
     addButton->setMaximumSize(QSize(124,32767));
     gridLayout->addWidget(addButton,0,1);
 
     removeButton = new QPushButton(tr("Remove File"),buttons);
-    removeButton->setSizePolicy(QSizePolicy((QSizePolicy::Policy)0,(QSizePolicy::Policy)0,0,0,removeButton->sizePolicy().hasHeightForWidth()));
+    //removeButton->setSizePolicy(QSizePolicy((QSizePolicy::Policy)0,(QSizePolicy::Policy)0,0,0,removeButton->sizePolicy().hasHeightForWidth()));
     removeButton->setMinimumSize(QSize(124,0));
     removeButton->setMaximumSize(QSize(124,32767));
     gridLayout->addWidget(removeButton,0,3);
@@ -80,7 +80,7 @@ void FilesPage::addNewFile(){
     filePage->initialisationOver();
 
     //make sure to show the content of the new page
-    tabWidget->showPage(filePage);
+    tabWidget->setCurrentIndex(tabWidget->indexOf(filePage));
 }
 
 FilePage* FilesPage::addFile(const QString &title){
@@ -95,27 +95,27 @@ FilePage* FilesPage::addFile(const QString &title){
 
 
 void FilesPage::removeFile(){
-    FilePage* filePage = static_cast<FilePage*>(tabWidget->currentPage());
-    tabWidget->removePage(filePage);
+    FilePage* filePage = static_cast<FilePage*>(tabWidget->currentWidget());
+    tabWidget->removeTab(tabWidget->indexOf(filePage));
     delete filePage;
     emit fileModification(getFileExtensions());
 }
 
 void FilesPage::changeCaption(const QString& caption,FilePage* filePage){
-    tabWidget->setTabLabel(filePage,caption);
+    tabWidget->setTabText(tabWidget->indexOf(filePage), caption);
     emit fileModification(getFileExtensions());
 }
 
 void FilesPage::getFilePages(QList<FilePage*>& fileList){
     for(int i = 0; i<tabWidget->count();++i){
-        fileList.append(static_cast<FilePage*>(tabWidget->page(i)));
+        fileList.append(static_cast<FilePage*>(tabWidget->widget(i)));
     }
 }
 
 bool FilesPage::isModified()const{
     bool modified = false;
     for(int i = 0; i<tabWidget->count();++i){
-        modified = static_cast<FilePage*>(tabWidget->page(i))->isModified();
+        modified = static_cast<FilePage*>(tabWidget->widget(i))->isModified();
         if(modified)
             break;
     }
@@ -125,7 +125,7 @@ bool FilesPage::isModified()const{
 
 void FilesPage::resetModificationStatus(){
     for(int i = 0; i<tabWidget->count();++i){
-        static_cast<FilePage*>(tabWidget->page(i))->resetModificationStatus();
+        static_cast<FilePage*>(tabWidget->widget(i))->resetModificationStatus();
     }
 }
 
@@ -133,7 +133,7 @@ QStringList FilesPage::getFileExtensions(){
     QStringList extensionList;
 
     for(int i = 0; i<tabWidget->count();++i)
-        extensionList.append(static_cast<FilePage*>(tabWidget->page(i))->getExtension());
+        extensionList.append(static_cast<FilePage*>(tabWidget->widget(i))->getExtension());
 
 
     return extensionList;

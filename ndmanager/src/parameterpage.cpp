@@ -128,7 +128,7 @@ void ParameterPage::setParameterInformation(const QMap<int, QStringList >& param
     QMap<int,QStringList >::ConstIterator iterator;
     //The iterator gives the keys sorted.
     for(iterator = parameters.constBegin(); iterator != parameters.constEnd(); ++iterator){
-        const QStringList parameterInfo = iterator.data();
+        const QStringList parameterInfo = iterator.value();
 
         for(uint i=0;i<parameterInfo.count();++i){
             if(ddList.contains(i)){

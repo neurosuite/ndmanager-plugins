@@ -82,7 +82,7 @@ void DescriptionWriter::setProgramInformation(const ProgramInformation& programI
     //The iterator gives the keys sorted.
     for(parameterIterator = parametersInfo.begin(); parameterIterator != parametersInfo.end(); ++parameterIterator){
         QDomElement parameter = doc.createElement(PARAMETER);
-        QStringList parameterInfo = parameterIterator.data();
+        QStringList parameterInfo = parameterIterator.value();
 
         for(uint i = 0; i< parameterInfo.count();++i){
             //the info are NAME, VALUE and STATUS

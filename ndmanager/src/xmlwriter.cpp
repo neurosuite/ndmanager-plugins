@@ -215,7 +215,7 @@ void XmlWriter::setFilesInformation(const QList<FileInformation>& fileList){
         //The iterator gives the keys sorted.
         for(mappingIterator = mapping.begin(); mappingIterator != mapping.end(); ++mappingIterator){
             QDomElement originalChannels = doc.createElement(ORIGINAL_CHANNELS);
-            QList<int> channelIds = mappingIterator.data();
+            QList<int> channelIds = mappingIterator.value();
 
             QList<int>::iterator channelIterator;
             for(channelIterator = channelIds.begin(); channelIterator != channelIds.end(); ++channelIterator){
@@ -242,7 +242,7 @@ void XmlWriter::setAnatomicalDescription(QMap<int, QList<int> >& anatomicalGroup
     QMap<int,QList<int> >::Iterator iterator;
     //The iterator gives the keys sorted.
     for(iterator = anatomicalGroups.begin(); iterator != anatomicalGroups.end(); ++iterator){
-        QList<int> channelIds = iterator.data();
+        QList<int> channelIds = iterator.value();
         QList<int>::iterator channelIterator;
 
         QDomElement groupElement = doc.createElement(GROUP);
@@ -271,7 +271,7 @@ void  XmlWriter::setSpikeDetectionInformation(QMap<int, QList<int> >& spikeGroup
     QMap<int,QList<int> >::Iterator iterator;
     //The iterator gives the keys sorted.
     for(iterator = spikeGroups.begin(); iterator != spikeGroups.end(); ++iterator){
-        QList<int> channelIds = iterator.data();
+        QList<int> channelIds = iterator.value();
         QList<int>::iterator channelIterator;
 
         QDomElement groupElement = doc.createElement(GROUP);
@@ -447,7 +447,7 @@ void XmlWriter::setProgramsInformation(const QList<ProgramInformation> &programL
         //The iterator gives the keys sorted.
         for(parameterIterator = parametersInfo.begin(); parameterIterator != parametersInfo.end(); ++parameterIterator){
             QDomElement parameter = doc.createElement(PARAMETER);
-            QStringList parameterInfo = parameterIterator.data();
+            QStringList parameterInfo = parameterIterator.value();
 
             for(uint i = 0; i< parameterInfo.count();++i){
                 //the info are NAME, VALUE and STATUS
@@ -499,7 +499,7 @@ void  XmlWriter::setUnitsInformation(const QMap<int, QStringList> &units)
 
     //The iterator gives the keys sorted.
     for(iterator = units.constBegin(); iterator != units.constEnd(); ++iterator){
-        QStringList unit = iterator.data();
+        QStringList unit = iterator.value();
         QStringList::iterator unitIterator;
 
         QDomElement unitElement = doc.createElement(UNIT);

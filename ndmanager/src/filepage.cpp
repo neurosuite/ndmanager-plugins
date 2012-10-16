@@ -125,7 +125,7 @@ void FilePage::setChannelMapping(const QMap<int, QList<int> >& channels){
     QMap<int,QList<int> >::const_iterator iterator;
     //The iterator gives the keys sorted.
     for(iterator = channels.begin(); iterator != channels.end(); ++iterator){
-        QList<int> channelIds = iterator.data();
+        QList<int> channelIds = iterator.value();
         QList<int>::iterator channelIterator;
 
         //create the string containing the channel ids

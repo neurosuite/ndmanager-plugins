@@ -73,12 +73,12 @@ public:
     
     /**Gets the description.*/
     inline QString getDescription() const {
-        return descriptionTextEdit->text();
+        return descriptionTextEdit->toPlainText();
     }
     
     /**Gets the notes.*/
     inline QString getNotes() const {
-        return notesTextEdit->text();
+        return notesTextEdit->toPlainText();
     }
     
     /**True if at least one property has been modified, false otherwise.*/

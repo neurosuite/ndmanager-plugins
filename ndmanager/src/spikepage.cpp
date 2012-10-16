@@ -100,7 +100,7 @@ void SpikePage::setGroups(const QMap<int, QList<int> >& groups,const QMap<int, Q
     QMap<int,QList<int> >::const_iterator iterator;
     //The iterator gives the keys sorted.
     for(iterator = groups.begin(); iterator != groups.end(); ++iterator){
-        QList<int> channelIds = iterator.data();
+        QList<int> channelIds = iterator.value();
         QList<int>::iterator channelIterator;
 
         //create the string containing the channel ids

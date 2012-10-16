@@ -56,7 +56,7 @@ AnatomyPage::AnatomyPage(QWidget* parent)
 AnatomyPage::~AnatomyPage(){}
 
 bool AnatomyPage::eventFilter(QObject* object,QEvent* event){
-    QString name = object->name();
+    QString name = object->objectName();
     if(name.indexOf("groupTable") != -1 && isIncorrectRow){
         groupTable->selectRow(incorrectRow);
         groupTable->setCurrentCell(incorrectRow,0);
@@ -109,7 +109,7 @@ void AnatomyPage::setGroups(const QMap<int, QList<int> >& groups){
     QMap<int,QList<int> >::const_iterator iterator;
     //The iterator gives the keys sorted.
     for(iterator = groups.begin(); iterator != groups.end(); ++iterator){
-        QList<int> channelIds = iterator.data();
+        QList<int> channelIds = iterator.value();
         QList<int>::iterator channelIterator;
 
         //create the string containing the channel ids

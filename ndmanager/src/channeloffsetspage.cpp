@@ -50,7 +50,7 @@ void ChannelOffsetsPage::setOffsets(const QMap<int,int>& offsets){
     for(iterator = offsets.constBegin(); iterator != offsets.constEnd(); ++iterator){
         int channelId = iterator.key();
         lst<<(channelId,QString::number(channelId));
-        QTableWidgetItem *item = new QTableWidgetItem(QString::number(iterator.data()));
+        QTableWidgetItem *item = new QTableWidgetItem(QString::number(iterator.value()));
         offsetTable->setItem(channelId,0,item);
     }
     offsetTable->setVerticalHeaderLabels(lst);
