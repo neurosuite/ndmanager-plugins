@@ -59,7 +59,6 @@ UnitListPage::~UnitListPage(){}
 
 bool UnitListPage::eventFilter(QObject* object,QEvent* event)
 {
-    #ifdef KDAB_PENDING
     QString name = object->name();
 
     if (name.indexOf("unitTable") != -1 && isIncorrect)
@@ -77,9 +76,8 @@ bool UnitListPage::eventFilter(QObject* object,QEvent* event)
             QWidget* widget = unitTable->cellWidget(row,column);
             if(widget != 0 && widget->metaObject()->className() == ("QLineEdit"))
             {
-                Q3TableItem* item = unitTable->item(row,column);
                 if(!static_cast<QLineEdit*>(widget)->text().isEmpty())
-                    item->setContentFromEditor(widget);
+                    unitTable->setCellWidget(row,column,widget);
                 return true;
             }
             else return QWidget::eventFilter(object,event);
@@ -87,7 +85,6 @@ bool UnitListPage::eventFilter(QObject* object,QEvent* event)
         else return QWidget::eventFilter(object,event);
     }
     else return QWidget::eventFilter(object,event);
-    #endif
 }
 
 void UnitListPage::setUnits(const QMap<int, QStringList >& units)
