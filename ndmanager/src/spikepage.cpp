@@ -69,8 +69,7 @@ SpikePage::~SpikePage(){}
 
 
 bool SpikePage::eventFilter(QObject* object,QEvent* event){
-#ifdef KDAB_PENDING
-    QString name = object->name();
+    QString name = object->objectName();
     if(name.indexOf("groupTable") != -1 && isIncorrectRow){
         groupTable->selectRow(incorrectRow);
         //groupTable->selectColumn(incorrectColumn);
@@ -83,13 +82,7 @@ bool SpikePage::eventFilter(QObject* object,QEvent* event){
             int column = groupTable->currentColumn();
             QWidget* widget = groupTable->cellWidget(row,column);
             if(widget != 0 && widget->metaObject()->className() == ("QLineEdit")){
-                Q3TableItem* item = groupTable->item(row,column);
-                if(item == NULL){
-                    item = new Q3TableItem(groupTable,Q3TableItem::WhenCurrent,static_cast<QLineEdit*>(widget)->text());
-                    item->setWordWrap(true);
-                    groupTable->setItem(row,column,item);
-                }
-                else item->setContentFromEditor(widget);
+                groupTable->setCellWidget(row,column,widget);
                 return true;
             }
             else return QWidget::eventFilter(object,event);
@@ -97,7 +90,6 @@ bool SpikePage::eventFilter(QObject* object,QEvent* event){
         else return QWidget::eventFilter(object,event);
     }
     else return QWidget::eventFilter(object,event);
-#endif
 }
 
 void SpikePage::setGroups(const QMap<int, QList<int> >& groups,const QMap<int, QMap<QString,QString> >& information){
