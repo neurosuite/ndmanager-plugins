@@ -65,10 +65,9 @@ FilePage::~FilePage(){
 }
 
 bool FilePage::eventFilter(QObject* object,QEvent* event){
-#if KDAB_PENDING
     QString name = object->objectName();
     if(name.indexOf("mappingTable") != -1 && isIncorrectRow){
-        mappingTable->editCell(incorrectRow,0);
+        mappingTable->editItem(mappingTable->item(incorrectRow,0));
         return true;
     }
     else if(name.indexOf("mappingTable") != -1 && event->type() == QEvent::Leave){
@@ -77,8 +76,7 @@ bool FilePage::eventFilter(QObject* object,QEvent* event){
             int column = mappingTable->currentColumn();
             QWidget* widget = mappingTable->cellWidget(row,column);
             if(widget != 0 && widget->metaObject()->className() == ("QLineEdit")){
-                Q3TableItem* item = mappingTable->item(row,column);
-                item->setContentFromEditor(widget);
+                mappingTable->editItem(mappingTable->item(row,column));
                 return true;
             }
             else return QWidget::eventFilter(object,event);
@@ -86,7 +84,6 @@ bool FilePage::eventFilter(QObject* object,QEvent* event){
         else return QWidget::eventFilter(object,event);
     }
     else
-#endif
         return QWidget::eventFilter(object,event);
 }
 
