@@ -43,12 +43,13 @@ UnitListPage::UnitListPage(QWidget* parent) :
 
     connect(unitTable, SIGNAL(currentChanged(int,int)),this, SLOT(currentChanged()));
     connect(unitTable, SIGNAL(valueChanged(int,int)),this, SLOT(unitChanged(int,int)));
-    connect(unitTable, SIGNAL(pressed(int,int,int,QPoint)),this, SLOT(currentChanged()));
-    connect(unitTable, SIGNAL(clicked(int,int,int,QPoint)),this,SLOT(currentChanged()));
-    connect(unitTable, SIGNAL(doubleClicked(int,int,int,QPoint)),this,SLOT(currentChanged()));
 #endif
     //install a filter on the unitTable in order to validate the entries
     unitTable->installEventFilter(this);
+
+    connect(unitTable, SIGNAL(cellPressed(int,int)),this, SLOT(currentChanged()));
+    connect(unitTable, SIGNAL(cellClicked(int,int)),this,SLOT(currentChanged()));
+    connect(unitTable, SIGNAL(cellDoubleClicked(int,int)),this,SLOT(currentChanged()));
 
     connect(addUnitButton,SIGNAL(clicked()),this,SLOT(addUnit()));
     connect(removeUnitButton,SIGNAL(clicked()),this,SLOT(removeUnit()));

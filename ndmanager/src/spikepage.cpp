@@ -204,9 +204,8 @@ void SpikePage::removeGroup(){
 }
 
 void SpikePage::groupChanged(int row,int column){
-    #ifdef KDAB_PENDING
     modified = true;
-    QString group = groupTable->text(row,column);
+    QString group = groupTable->item(row,column)->text();
 
     if(isIncorrectRow){
         QWidget* widget = groupTable->cellWidget(incorrectRow,incorrectColumn);
@@ -225,7 +224,7 @@ void SpikePage::groupChanged(int row,int column){
     isIncorrectRow = false;
     incorrectRow = 0;
     incorrectColumn = column;
-    groupTable->adjustRow(row);
+    //groupTable->adjustRow(row);
 
     //the group entry should only contain digits and whitespaces
     if(group.contains(QRegExp("[^\\d\\s]")) != 0){
@@ -235,7 +234,6 @@ void SpikePage::groupChanged(int row,int column){
         groupTable->selectRow(incorrectRow);
         groupTable->setCurrentCell(incorrectRow,incorrectColumn);
     }
-#endif
 }
 
 void SpikePage::slotValidate(){
