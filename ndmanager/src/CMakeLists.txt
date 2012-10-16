@@ -36,7 +36,6 @@ set(ndmanager_SRCS
 	unitlistlayout.cpp 
 	unitlistpage.cpp 
 	unittable.cpp 
-	unittableitem.cpp
         videopage.cpp 
 	xmlreader.cpp 
 	xmlwriter.cpp 
