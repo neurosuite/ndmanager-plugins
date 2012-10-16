@@ -57,7 +57,6 @@ AnatomyPage::~AnatomyPage(){}
 
 bool AnatomyPage::eventFilter(QObject* object,QEvent* event){
     QString name = object->name();
-#ifdef KDAB_PENDING
     if(name.indexOf("groupTable") != -1 && isIncorrectRow){
         groupTable->selectRow(incorrectRow);
         groupTable->setCurrentCell(incorrectRow,0);
@@ -69,8 +68,7 @@ bool AnatomyPage::eventFilter(QObject* object,QEvent* event){
             int column = groupTable->currentColumn();
             QWidget* widget = groupTable->cellWidget(row,column);
             if(widget != 0 && widget->metaObject()->className() == ("QLineEdit")){
-                Q3TableItem* item = groupTable->item(row,column);
-                item->setContentFromEditor(widget);
+                groupTable->editItem(groupTable->item(row,column));
                 return true;
             }
             else return QWidget::eventFilter(object,event);
@@ -78,7 +76,6 @@ bool AnatomyPage::eventFilter(QObject* object,QEvent* event){
         else return QWidget::eventFilter(object,event);
     }
     else return QWidget::eventFilter(object,event);
-#endif
 }
 
 void AnatomyPage::setAttributes(const QMap<QString, QMap<int,QString> >& attributes){
@@ -188,7 +185,8 @@ void AnatomyPage::groupChanged(int row,int column){
     if(isIncorrectRow){
         QWidget* widget = groupTable->cellWidget(incorrectRow,0);
         QString incorrectGroup;
-        if(widget != 0 && widget->metaObject()->className() == ("QLineEdit")) incorrectGroup = static_cast<QLineEdit*>(widget)->text();
+        if(widget != 0 && widget->metaObject()->className() == ("QLineEdit"))
+            incorrectGroup = static_cast<QLineEdit*>(widget)->text();
         else if(widget == 0) incorrectGroup = groupTable->item(incorrectRow,0)->text();
         if(incorrectGroup.contains(QRegExp("[^\\d\\s]")) != 0){
             groupTable->selectRow(incorrectRow);

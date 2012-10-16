@@ -66,19 +66,19 @@ UnitListLayout::UnitListLayout(QWidget* parent, const char* name)
 
     unitTable = new UnitTable( this );
     unitTable->setColumnCount( unitTable->columnCount() + 1 );
-    unitTable->horizontalHeaderItem(unitTable->columnCount() - 1)->setText( tr( "Group" ) );
+    unitTable->setHorizontalHeaderItem(unitTable->columnCount() - 1,new QTableWidgetItem( tr("Group" ) ));
     unitTable->setColumnCount( unitTable->columnCount() + 1 );
-    unitTable->horizontalHeaderItem(unitTable->columnCount() - 1)->setText(tr( "Cluster" ) );
+    unitTable->setHorizontalHeaderItem(unitTable->columnCount() - 1,new QTableWidgetItem( tr("Cluster" ) ));
     unitTable->setColumnCount( unitTable->columnCount() + 1 );
-    unitTable->horizontalHeaderItem(unitTable->columnCount() - 1)->setText(tr( "Structure" ) );
+    unitTable->setHorizontalHeaderItem(unitTable->columnCount() - 1,new QTableWidgetItem( tr( "Structure" ) ) );
     unitTable->setColumnCount( unitTable->columnCount() + 1 );
-    unitTable->horizontalHeaderItem(unitTable->columnCount() - 1)->setText(tr( "Type" ) );
+    unitTable->setHorizontalHeaderItem(unitTable->columnCount() - 1,new QTableWidgetItem(tr( "Type" ) ));
     unitTable->setColumnCount( unitTable->columnCount() + 1 );
-    unitTable->horizontalHeaderItem(unitTable->columnCount() - 1)->setText(tr( "I.D." ) );
+    unitTable->setHorizontalHeaderItem(unitTable->columnCount() - 1,new QTableWidgetItem(tr( "I.D." ) ));
     unitTable->setColumnCount( unitTable->columnCount() + 1 );
-    unitTable->horizontalHeaderItem(unitTable->columnCount() - 1)->setText(tr( "Quality" ) );
+    unitTable->setHorizontalHeaderItem(unitTable->columnCount() - 1,new QTableWidgetItem(tr( "Quality" ) ));
     unitTable->setColumnCount( unitTable->columnCount() + 1 );
-    unitTable->horizontalHeaderItem(unitTable->columnCount() - 1)->setText(tr( "Notes" ) );
+    unitTable->setHorizontalHeaderItem(unitTable->columnCount() - 1,new QTableWidgetItem(tr( "Notes" ) ));
     unitTable->setSizePolicy( QSizePolicy( (QSizePolicy::Policy)7, (QSizePolicy::Policy)7, 0, 0, unitTable->sizePolicy().hasHeightForWidth() ) );
     unitTable->setMinimumSize( QSize( 200, 100 ) );
     unitTable->setVerticalScrollBarPolicy( Qt::ScrollBarAsNeeded );

@@ -37,20 +37,21 @@ UnitListPage::UnitListPage(QWidget* parent) :
     for(int i = 0;i<unitTable->numCols();++i)
         unitTable->setColumnStretchable(i,true);
 
-    //install a filter on the unitTable in order to validate the entries
-    unitTable->installEventFilter(this);
 
     //Set that the click on the header of a column sorts that column
     unitTable->setSorting(true);
 
-    connect(addUnitButton,SIGNAL(clicked()),this,SLOT(addUnit()));
-    connect(removeUnitButton,SIGNAL(clicked()),this,SLOT(removeUnit()));
     connect(unitTable, SIGNAL(currentChanged(int,int)),this, SLOT(currentChanged()));
     connect(unitTable, SIGNAL(valueChanged(int,int)),this, SLOT(unitChanged(int,int)));
     connect(unitTable, SIGNAL(pressed(int,int,int,QPoint)),this, SLOT(currentChanged()));
     connect(unitTable, SIGNAL(clicked(int,int,int,QPoint)),this,SLOT(currentChanged()));
     connect(unitTable, SIGNAL(doubleClicked(int,int,int,QPoint)),this,SLOT(currentChanged()));
 #endif
+    //install a filter on the unitTable in order to validate the entries
+    unitTable->installEventFilter(this);
+
+    connect(addUnitButton,SIGNAL(clicked()),this,SLOT(addUnit()));
+    connect(removeUnitButton,SIGNAL(clicked()),this,SLOT(removeUnit()));
 }
 
 UnitListPage::~UnitListPage(){}
@@ -112,20 +113,18 @@ void UnitListPage::setUnits(const QMap<int, QStringList >& units)
 
 void UnitListPage::getUnits(QMap<int, QStringList >& units)const
 { 
-    #ifdef KDAB_PENDING
     int unitId = 1;
-    for(int i =0; i<unitTable->numRows();++i)
+    for(int i =0; i<unitTable->rowCount();++i)
     {
         QStringList info;
-        for(int j = 0;j < unitTable->numCols(); ++j)
+        for(int j = 0;j < unitTable->columnCount(); ++j)
         {
-            QString text = unitTable->text(i,j);
+            QString text = unitTable->item(i,j)->text();
             info.append(text.simplified());
         }
         units.insert(unitId,info);
         unitId++;
     }
-#endif
 }
 
 void UnitListPage::removeUnit()
