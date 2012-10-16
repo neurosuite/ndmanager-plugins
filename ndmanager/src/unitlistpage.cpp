@@ -89,23 +89,20 @@ bool UnitListPage::eventFilter(QObject* object,QEvent* event)
 
 void UnitListPage::setUnits(const QMap<int, QStringList >& units)
 {
-    #ifdef KDAB_PENDING
-    for (int i =0; i<unitTable->numRows();++i) unitTable->removeRow(i);
-    unitTable->setNumRows(units.count());
+    unitTable->clearContents();
+    unitTable->setRowCount(units.count());
 
     QMap<int,QStringList >::const_iterator iterator;
     //The iterator gives the keys sorted.
-    for (iterator = units.begin(); iterator != units.end(); ++iterator)
+    for (iterator = units.constBegin(); iterator != units.constEnd(); ++iterator)
     {
-        QStringList info = iterator.data();
+        const QStringList info = iterator.value();
         for (uint i=0;i<info.count();++i)
         {
-            UnitTableItem* item = new UnitTableItem(unitTable,Q3TableItem::OnTyping,info[i]);
-            item->setWordWrap(true);
-            unitTable->setItem(iterator.key(),i,item);
+            //UnitTableItem* item = new UnitTableItem(unitTable,Q3TableItem::OnTyping,info[i]);
+            unitTable->setItem(iterator.key(),i,new QTableWidgetItem(info.at(i)));
         }
     }//end of units loop
-    #endif
 }
 
 void UnitListPage::getUnits(QMap<int, QStringList >& units)const
