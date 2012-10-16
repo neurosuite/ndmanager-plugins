@@ -65,7 +65,7 @@ public:
         }
         else{
             QPixmap pixmap;
-            pixmap.resize(width,height);
+            pixmap = pixmap.copy(0, 0, width,height);
             pixmap.fill(Qt::black);
             backgroundPixmap2->setPixmap(pixmap);
         }
@@ -177,7 +177,7 @@ private slots:
         if(image != "")  setBackgroundImage(image);
         else{
             QPixmap pixmap;
-            pixmap.resize(width,height);
+            pixmap = pixmap.copy(0, 0, width,height);
             pixmap.fill(Qt::black);
             backgroundPixmap2->setPixmap(pixmap);
         }

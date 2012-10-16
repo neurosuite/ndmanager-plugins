@@ -271,7 +271,7 @@ ProgramPage* ParameterView::addProgram(const QString& programName,bool show){
 
 void ParameterView::changeProgramName(ProgramPage* programPage, const QString& newName, const QString &message, const QString &title){
 
-    QString oldName = programPage->name();
+    QString oldName = programPage->objectName();
     if(newName == oldName)
         return;
 
@@ -289,7 +289,7 @@ void ParameterView::changeProgramName(ProgramPage* programPage, const QString& n
     }
     ProgramPageId id = programDict[oldName];
     id.item->setName(newName);
-    id.page->setName(newName);
+    id.page->setObjectName(newName);
 
     programDict.remove(oldName);
     programDict.insert(newName,id);
@@ -307,7 +307,7 @@ void ParameterView::changeProgramName(ProgramPage* programPage, const QString& n
 void ParameterView::removeProgram(ProgramPage* programPage){
     programsModified = true;
 
-    const QString name = programPage->name();
+    const QString name = programPage->objectName();
     ProgramPageId id = programDict[name];
     removePage(id.item);
     programDict.remove(name);

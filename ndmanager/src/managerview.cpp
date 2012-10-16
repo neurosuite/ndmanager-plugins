@@ -60,7 +60,7 @@ void ManagerView::updateSpikeGroupList(int nbGroups){
         klustersFiles<<QString::number(i+1);
     }
 
-    klustersComboBox->insertStringList(klustersFiles);
+    klustersComboBox->addItems(klustersFiles);
 }
 
 void ManagerView::updateFileList(const QStringList& extensions){
@@ -68,12 +68,12 @@ void ManagerView::updateFileList(const QStringList& extensions){
     QStringList neuroscopeFiles;
     neuroscopeFiles<<".dat"<<".eeg";
     neuroscopeFiles<<extensions;
-    neuroscopeComboBox->insertStringList(neuroscopeFiles);
+    neuroscopeComboBox->addItems(neuroscopeFiles);
 }
 
 void ManagerView::updateScriptList(const QStringList& scriptNames){
     scriptsComboBox->clear();
-    scriptsComboBox->insertStringList(scriptNames);
+    scriptsComboBox->addItems(scriptNames);
 }
 
 void ManagerView::launchNeuroscope(){

@@ -61,13 +61,13 @@ ProgramsPage::ProgramsPage(bool expertMode,QWidget *parent)
 
     if(expertMode){
         addButton = new QPushButton(tr("Add"),buttons);
-        addButton->setSizePolicy(QSizePolicy((QSizePolicy::Policy)0,(QSizePolicy::Policy)0,0,0,addButton->sizePolicy().hasHeightForWidth()));
+        //addButton->setSizePolicy(QSizePolicy((QSizePolicy::Policy)0,(QSizePolicy::Policy)0,0,0,addButton->sizePolicy().hasHeightForWidth()));
         addButton->setMinimumSize(QSize(104,0));
         addButton->setMaximumSize(QSize(104,32767));
         gridLayout->addWidget(addButton,0,1);
 
         loadButton = new QPushButton(tr("Load..."),buttons);
-        loadButton->setSizePolicy(QSizePolicy((QSizePolicy::Policy)0,(QSizePolicy::Policy)0,0,0,loadButton->sizePolicy().hasHeightForWidth()));
+        //loadButton->setSizePolicy(QSizePolicy((QSizePolicy::Policy)0,(QSizePolicy::Policy)0,0,0,loadButton->sizePolicy().hasHeightForWidth()));
         loadButton->setMinimumSize(QSize(104,0));
         loadButton->setMaximumSize(QSize(104,32767));
         gridLayout->addWidget(loadButton,0,3);
@@ -83,7 +83,7 @@ ProgramsPage::ProgramsPage(bool expertMode,QWidget *parent)
     }
     else{
         loadButton = new QPushButton(tr("Load..."),buttons);
-        loadButton->setSizePolicy(QSizePolicy((QSizePolicy::Policy)0,(QSizePolicy::Policy)0,0,0,loadButton->sizePolicy().hasHeightForWidth()));
+        //loadButton->setSizePolicy(QSizePolicy((QSizePolicy::Policy)0,(QSizePolicy::Policy)0,0,0,loadButton->sizePolicy().hasHeightForWidth()));
         loadButton->setMinimumSize(QSize(104,0));
         loadButton->setMaximumSize(QSize(104,32767));
         gridLayout->addWidget(loadButton,0,1);

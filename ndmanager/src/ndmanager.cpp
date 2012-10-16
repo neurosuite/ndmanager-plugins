@@ -195,7 +195,7 @@ void ndManager::slotStatusMsg(const QString &text)
 {
     ///////////////////////////////////////////////////////////////////
     // change status message permanently
-    statusBar()->clear();
+    statusBar()->clearMessage();
     statusBar()->showMessage(text);
 }
 
@@ -346,7 +346,7 @@ void ndManager::createParameterView(QMap<int, QList<int> >& anatomicalGroups,QMa
     //Create the mainDock (parameter view)
     mainDock = new QDockWidget(tr("Parameters"));
 
-    parameterView = new ParameterView(this,*doc,mainDock,tr("ParameterView"),mExpertMode->isChecked());
+    parameterView = new ParameterView(this,*doc,mainDock,"ParameterView",mExpertMode->isChecked());
 
     connect(parameterView,SIGNAL(nbSpikeGroupsHasBeenModified(int)),this,SLOT(nbSpikeGroupsModified(int)));
     connect(parameterView,SIGNAL(fileHasBeenModified(QStringList)),this,SLOT(fileModification(QStringList)));
@@ -666,7 +666,7 @@ void ndManager::slotQuery(){
         if(htmlFile.open(QIODevice::ReadOnly))
         {
             QTextStream stream(&htmlFile);
-            html = stream.read();
+            html = stream.readAll();
             htmlFile.close();
         }
         // Display query result

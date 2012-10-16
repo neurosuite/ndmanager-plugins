@@ -34,13 +34,13 @@ LauncherPage::LauncherPage(const QString& url,QWidget* parent)
     : LauncherLayout(parent){
     QDir dir(url);
     qDebug()<<"currentPath "<<url;
-    QStringList neuroscopeFiles = dir.entryList(QLatin1String("*.dat;*.eeg;*.fil"));
+    QStringList neuroscopeFiles = dir.entryList(QStringList()<<QLatin1String("*.dat;*.eeg;*.fil"));
     qDebug()<<"neuroscopeFiles.size() "<<neuroscopeFiles.size();
     neuroscopeFiles.append("");
-    neuroscopeComboBox->insertStringList(neuroscopeFiles);
-    QStringList klustersFiles = dir.entryList(QLatin1String("*.fet;*.spk;*.clu"));
+    neuroscopeComboBox->addItems(neuroscopeFiles);
+    QStringList klustersFiles = dir.entryList(QStringList()<<QLatin1String("*.fet;*.spk;*.clu"));
     klustersFiles.append("");
-    klustersComboBox->insertStringList(klustersFiles);
+    klustersComboBox->addItems(klustersFiles);
 
 }
 
