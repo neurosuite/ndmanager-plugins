@@ -76,7 +76,7 @@ void QueryOutputDialog::slotUser1()
         QTextStream stream(&textFile);
         stream << queryResult;
         textFile.close();
-        if(stream.device()->status() == IO_WriteError )
+        if(textFile.error() == QFile::WriteError )
             QMessageBox::critical(this,QString(),tr("Could not save the report. This may be due to incorrect write permissions."));
     }
     else
@@ -96,7 +96,7 @@ void QueryOutputDialog::slotUser2()
         QTextStream stream(&htmlFile);
         stream << htmlText;
         htmlFile.close();
-        if(stream.device()->status() == IO_WriteError )
+        if(htmlFile.error() == QFile::WriteError )
             QMessageBox::critical(this,QString(),tr("Could not save the report. This may be due to incorrect write permissions."));
     }
     else
