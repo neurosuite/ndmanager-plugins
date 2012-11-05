@@ -210,23 +210,24 @@ void AnatomyPage::groupChanged(int row,int column){
 }
 
 void AnatomyPage::attributeChanged(int row,int column){
-    #ifdef KDAB_PENDING
     modified = true;
     //hard coded that the skip attribut is an int, later it can be made more dynamic
-    Q3Header* header = attributesTable->horizontalHeader();
-    QString attributName = header->label(column);
+    QTableWidgetItem * 	header = attributesTable->horizontalHeaderItem ( column );
+    QString attributName = header->text();
     if(attributName == "Skip"){
         bool ok;
-        QString attribut = attributesTable->text(row,column);
+	QTableWidgetItem * item = attributesTable->item ( row, column );
+        QString attribut = item->text();
         attribut.toInt(&ok);
-        if(ok) attributesTable->adjustRow(row);
-        else {
+        if(ok) { 
+	   //KDAB_PENDING attributesTable->adjustRow(row);
+	} else {
             attributesTable->selectRow(row);
             attributesTable->setCurrentCell(row,column);
         }
+    } else { 
+      //KDAB_PENDING attributesTable->adjustRow(row);
     }
-    else attributesTable->adjustRow(row);
-     #endif
 }
 
 void AnatomyPage::slotValidate(){
