@@ -85,7 +85,7 @@ bool XmlWriter::writeTofile(const QString& url){
     const QString xmlDocument = doc.toString();
 
     QTextStream stream(&parameterFile);
-    stream.setEncoding(QTextStream::UnicodeUTF8);
+    //stream.setEncoding(QTextStream::UnicodeUTF8);
     stream<< xmlDocument;
     parameterFile.close();
 
