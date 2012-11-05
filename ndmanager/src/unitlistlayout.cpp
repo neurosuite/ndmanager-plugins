@@ -48,14 +48,24 @@ UnitListLayout::UnitListLayout(QWidget* parent, const char* name)
     layout19->addItem( spacer10_2_3, 0, 4 );
 
     addUnitButton = new QPushButton( this);
-    addUnitButton->setSizePolicy( QSizePolicy( (QSizePolicy::Policy)0, (QSizePolicy::Policy)0, 0, 0, addUnitButton->sizePolicy().hasHeightForWidth() ) );
+    QSizePolicy policy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+    policy.setHorizontalStretch(0);
+    policy.setVerticalStretch(0);
+    policy.setHeightForWidth(addUnitButton->sizePolicy().hasHeightForWidth());
+
+    addUnitButton->setSizePolicy( policy );
     addUnitButton->setMinimumSize( QSize( 104, 0 ) );
     addUnitButton->setMaximumSize( QSize( 104, 32767 ) );
 
     layout19->addWidget( addUnitButton, 0, 1 );
 
     removeUnitButton = new QPushButton( this );
-    removeUnitButton->setSizePolicy( QSizePolicy( (QSizePolicy::Policy)0, (QSizePolicy::Policy)0, 0, 0, removeUnitButton->sizePolicy().hasHeightForWidth() ) );
+    policy = QSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+    policy.setHorizontalStretch(0);
+    policy.setVerticalStretch(0);
+    policy.setHeightForWidth(removeUnitButton->sizePolicy().hasHeightForWidth());
+    removeUnitButton->setSizePolicy(policy);
+
     removeUnitButton->setMinimumSize( QSize( 104, 0 ) );
     removeUnitButton->setMaximumSize( QSize( 104, 32767 ) );
 
@@ -78,7 +88,15 @@ UnitListLayout::UnitListLayout(QWidget* parent, const char* name)
     unitTable->setHorizontalHeaderItem(unitTable->columnCount() - 1,new QTableWidgetItem(tr( "Quality" ) ));
     unitTable->setColumnCount( unitTable->columnCount() + 1 );
     unitTable->setHorizontalHeaderItem(unitTable->columnCount() - 1,new QTableWidgetItem(tr( "Notes" ) ));
-    unitTable->setSizePolicy( QSizePolicy( (QSizePolicy::Policy)7, (QSizePolicy::Policy)7, 0, 0, unitTable->sizePolicy().hasHeightForWidth() ) );
+
+    policy = QSizePolicy((QSizePolicy::Policy)7, (QSizePolicy::Policy)7);
+    policy.setHorizontalStretch(0);
+    policy.setVerticalStretch(0);
+    policy.setHeightForWidth(unitTable->sizePolicy().hasHeightForWidth());
+
+
+
+    unitTable->setSizePolicy( policy );
     unitTable->setMinimumSize( QSize( 200, 100 ) );
     unitTable->setVerticalScrollBarPolicy( Qt::ScrollBarAsNeeded );
     unitTable->setRowCount( 0 );
