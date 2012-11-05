@@ -147,9 +147,6 @@ void ndManager::setupActions()
     connect(mQueryAction, SIGNAL(triggered()), this, SLOT(slotQuery()));
 
     mProcessingManager = actionMenu->addAction(tr("Show Processing Manager"));
-    //FIXME !
-
-
 
     QMenu *settingsMenu = menuBar()->addMenu(tr("&Settings"));
 
