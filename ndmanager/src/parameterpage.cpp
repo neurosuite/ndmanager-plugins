@@ -30,6 +30,22 @@
 #include <QVector>
 #include <QList>
 #include <QDebug>
+#include <QStyledItemDelegate>
+
+class ColumnDelegate : public QStyledItemDelegate
+{
+public:
+    ColumnDelegate(QObject *parent)
+        : QStyledItemDelegate(parent)
+    {
+
+    }
+    QWidget *createEditor ( QWidget * parent, const QStyleOptionViewItem & option, const QModelIndex & index ) const
+    {
+        return 0;
+    }
+
+};
 
 ParameterPage::ParameterPage(bool expertMode,QWidget *parent)
     : ParameterLayout(parent),
@@ -48,8 +64,8 @@ ParameterPage::ParameterPage(bool expertMode,QWidget *parent)
 
     //If the export mode is not set, only the value column is editable
     if(!expertMode){
-       //KDAB_PENDING parameterTable->setColumnReadOnly(0,true);
-        //KDAB_PENDING parameterTable->setColumnReadOnly(2,true);
+        parameterTable->setItemDelegateForColumn(0,new ColumnDelegate(this));
+        parameterTable->setItemDelegateForColumn(2,new ColumnDelegate(this));
 
         addButton->setEnabled(false);
         removeButton->setEnabled(false);

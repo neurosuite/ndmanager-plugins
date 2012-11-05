@@ -32,8 +32,7 @@ FilePage::FilePage(QWidget *parent)
     : FileLayout(parent),
       isIncorrectRow(false),
       modified(false),
-      isInit(true),
-      extension("")
+      isInit(true)
 {
 
     //KDAB_PENDING mappingTable->setColumnStretchable(0,true);
