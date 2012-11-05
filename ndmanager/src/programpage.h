@@ -119,7 +119,7 @@ public slots:
 private slots:
 
     /**Updates the menus and actions when the script becomes the active tab.*/
-    void tabChange(QWidget* widget);
+    void tabChange(int index);
 
 
 private: 

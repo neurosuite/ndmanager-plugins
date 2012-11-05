@@ -66,7 +66,7 @@ ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const QString& name)
     tabWidget->addTab(parameters,tr("Parameters"));
 
     tabWidget->addTab(help,tr("Help"));
-    connect(tabWidget, SIGNAL(currentChanged(QWidget*)), this, SLOT(tabChange(QWidget*)));
+    connect(tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChange(int)));
 
     if(expertMode){
         scriptView = new QTextEdit(this);
@@ -310,8 +310,9 @@ void ProgramPage::nameChanged(const QString& name){
     emit programNameChanged(this,name,message,title);
 }
 
-void ProgramPage::tabChange(QWidget * page){
-    if(page == scriptView){
+void ProgramPage::tabChange(int index){
+    QWidget *w = tabWidget->widget(index);
+    if(w == scriptView){
         emit scriptShown(scriptView);
     } else {
         emit scriptHidden();
