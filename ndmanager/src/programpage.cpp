@@ -77,7 +77,7 @@ ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const QString& name)
 
     //Add the buttons
     QWidget* buttons = new QWidget(this);
-    QGridLayout* gridLayout = new QGridLayout(buttons,1,1,0,6);
+    QGridLayout* gridLayout = new QGridLayout(buttons);
     frameLayout->addWidget(buttons);
 
     if(expertMode){
@@ -138,7 +138,7 @@ ProgramPage::~ProgramPage(){
 
 QString ProgramPage::getHelp() const
 {
-    return help->text();
+    return help->toPlainText();
 }
 
 void ProgramPage::setHelp(const QString& helpContent){
@@ -169,7 +169,7 @@ bool ProgramPage::saveProgramScript(){
         }
         else{
             QTextStream stream(&file);
-            stream<<scriptView->text();
+            stream<<scriptView->toPlainText();
             file.close();
         }
     }
@@ -209,7 +209,7 @@ void ProgramPage::saveProgramParameters(){
         //Get the information
         ProgramInformation programInformation;
         programInformation.setProgramName(parameters->getProgramName());
-        programInformation.setHelp(help->text());
+        programInformation.setHelp(help->toPlainText());
         QMap<int, QStringList > parameterInformation = parameters->getParameterInformation();
         programInformation.setParameterInformation(parameterInformation);
         //Create the writer and save the data to disk
