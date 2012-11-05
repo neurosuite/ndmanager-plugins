@@ -37,15 +37,12 @@ UnitListPage::UnitListPage(QWidget* parent) :
     for(int i = 0;i<unitTable->numCols();++i)
         unitTable->setColumnStretchable(i,true);
 
-
-    //Set that the click on the header of a column sorts that column
-    unitTable->setSorting(true);
-
     connect(unitTable, SIGNAL(currentChanged(int,int)),this, SLOT(currentChanged()));
     connect(unitTable, SIGNAL(valueChanged(int,int)),this, SLOT(unitChanged(int,int)));
 #endif
     //install a filter on the unitTable in order to validate the entries
     unitTable->installEventFilter(this);
+    unitTable->setSortingEnabled(true);
 
     connect(unitTable, SIGNAL(cellPressed(int,int)),this, SLOT(currentChanged()));
     connect(unitTable, SIGNAL(cellClicked(int,int)),this,SLOT(currentChanged()));
