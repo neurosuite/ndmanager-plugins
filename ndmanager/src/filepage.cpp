@@ -38,7 +38,7 @@ FilePage::FilePage(QWidget *parent)
     //KDAB_PENDING mappingTable->setColumnStretchable(0,true);
 
     connect(extensionLineEdit,SIGNAL(returnPressed()),this,SLOT(changeCaption()));
-    connect(extensionLineEdit,SIGNAL(lostFocus()),this,SLOT(changeCaption()));
+    connect(extensionLineEdit,SIGNAL(editingFinished()),this,SLOT(changeCaption()));
 
     connect(addChannelButton,SIGNAL(clicked()),this,SLOT(addChannel()));
     connect(removeChannelButton,SIGNAL(clicked()),this,SLOT(removeChannel()));

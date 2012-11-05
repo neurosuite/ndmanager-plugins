@@ -75,7 +75,7 @@ ParameterPage::ParameterPage(bool expertMode,QWidget *parent)
         connect(addButton,SIGNAL(clicked()),this,SLOT(addParameter()));
         connect(removeButton,SIGNAL(clicked()),this,SLOT(removeParameter()));
         connect(nameLineEdit,SIGNAL(returnPressed()),this,SLOT(changeCaption()));
-        connect(nameLineEdit,SIGNAL(lostFocus()),this,SLOT(changeCaption()));
+        connect(nameLineEdit,SIGNAL(editingFinished()),this,SLOT(changeCaption()));
     }
 
     //install a filter on the groupTable in order to validate the entries

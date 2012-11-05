@@ -41,7 +41,7 @@ AcquisitionSystemPage::AcquisitionSystemPage(QWidget *parent)
  amplificationLineEdit->setValidator(&intValidator);
  
  connect(nbChannelsLineEdit,SIGNAL(returnPressed()),this,SLOT(nbChannelsLineEditReturnPressed()));
- connect(nbChannelsLineEdit,SIGNAL(lostFocus()),this,SLOT(nbChannelsLineEditLostFocus()));
+ connect(nbChannelsLineEdit,SIGNAL(editingFinished()),this,SLOT(nbChannelsLineEditLostFocus()));
  
  
  connect(resolutionComboBox,SIGNAL(activated(int)),this,SLOT(propertyModified()));
