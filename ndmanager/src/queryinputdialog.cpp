@@ -42,18 +42,22 @@ QueryInputDialog::QueryInputDialog(QWidget *parent,const QString& caption,const 
     QVBoxLayout *layout = new QVBoxLayout(page);
     layout->setMargin(0);
 
-    QLabel *label1 = new QLabel(tr("Query"),page,"query_label");
+    QLabel *label1 = new QLabel(tr("Query"),page);
+    label1->setObjectName("query_label");
     layout->addWidget(label1);
 
-    query = new QLineEdit(page,"query");
+    query = new QLineEdit(page);
+    query->setObjectName("query");
     query->setMinimumWidth(fontMetrics().maxWidth()*20);
     query->setFocus();
     layout->addWidget(query);
 
-    QLabel *label2 = new QLabel(tr("Path"),page,"path_label");
+    QLabel *label2 = new QLabel(tr("Path"),page);
+    label2->setObjectName("path_label");
     layout->addWidget(label2);
 
-    path = new QLineEdit(page,"path");
+    path = new QLineEdit(page);
+    path->setObjectName("path");
     path->setMinimumWidth(fontMetrics().maxWidth()*20);
     path->setText(urltext);
     layout->addWidget(path);

@@ -27,10 +27,10 @@
  *  name 'name' and widget flags set to 'f'.
  */
 UnitListLayout::UnitListLayout(QWidget* parent, const char* name)
-    : QWidget( parent, name )
+    : QWidget( parent)
 {
     if ( !name )
-        setName( "UnitListLayout" );
+        setObjectName( "UnitListLayout" );
     UnitListLayoutLayout = new QGridLayout( this);
 
     layout21 = new QGridLayout;
@@ -47,14 +47,14 @@ UnitListLayout::UnitListLayout(QWidget* parent, const char* name)
     spacer10_2_3 = new QSpacerItem( 136, 16, QSizePolicy::Expanding, QSizePolicy::Minimum );
     layout19->addItem( spacer10_2_3, 0, 4 );
 
-    addUnitButton = new QPushButton( this, "addUnitButton" );
+    addUnitButton = new QPushButton( this);
     addUnitButton->setSizePolicy( QSizePolicy( (QSizePolicy::Policy)0, (QSizePolicy::Policy)0, 0, 0, addUnitButton->sizePolicy().hasHeightForWidth() ) );
     addUnitButton->setMinimumSize( QSize( 104, 0 ) );
     addUnitButton->setMaximumSize( QSize( 104, 32767 ) );
 
     layout19->addWidget( addUnitButton, 0, 1 );
 
-    removeUnitButton = new QPushButton( this, "removeUnitButton" );
+    removeUnitButton = new QPushButton( this );
     removeUnitButton->setSizePolicy( QSizePolicy( (QSizePolicy::Policy)0, (QSizePolicy::Policy)0, 0, 0, removeUnitButton->sizePolicy().hasHeightForWidth() ) );
     removeUnitButton->setMinimumSize( QSize( 104, 0 ) );
     removeUnitButton->setMaximumSize( QSize( 104, 32767 ) );
@@ -87,7 +87,7 @@ UnitListLayout::UnitListLayout(QWidget* parent, const char* name)
 
     layout20->addMultiCellWidget( unitTable, 1, 1, 0, 1 );
 
-    textLabel4_2_2_4_2_2_2 = new QLabel( this, "textLabel4_2_2_4_2_2_2" );
+    textLabel4_2_2_4_2_2_2 = new QLabel( this );
 
     layout20->addWidget( textLabel4_2_2_4_2_2_2, 0, 0 );
     spacer96 = new QSpacerItem( 16, 19, QSizePolicy::Minimum, QSizePolicy::Fixed );

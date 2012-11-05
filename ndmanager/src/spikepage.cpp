@@ -118,13 +118,13 @@ void SpikePage::setGroups(const QMap<int, QList<int> >& groups,const QMap<int, Q
         //The positions of the information in the table are hard coded (for the moment :0) )
         for(iterator2 = groupInformation.begin(); iterator2 != groupInformation.end(); ++iterator2){
             if(iterator2.key() == NB_SAMPLES){
-                groupTable->setItem(iterator.key() - 1,1,new QTableWidgetItem(iterator2.data()));
+                groupTable->setItem(iterator.key() - 1,1,new QTableWidgetItem(iterator2.value()));
             }
             if(iterator2.key() == PEAK_SAMPLE_INDEX){
-                groupTable->setItem(iterator.key() - 1,2,new QTableWidgetItem(iterator2.data()));
+                groupTable->setItem(iterator.key() - 1,2,new QTableWidgetItem(iterator2.value()));
             }
             if(iterator2.key() == NB_FEATURES){
-                groupTable->setItem(iterator.key() - 1,3,new QTableWidgetItem(iterator2.data()));
+                groupTable->setItem(iterator.key() - 1,3,new QTableWidgetItem(iterator2.value()));
             }
         }
         //groupTable->adjustRow(iterator.key() - 1);

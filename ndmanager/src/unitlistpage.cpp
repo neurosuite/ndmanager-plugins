@@ -60,7 +60,7 @@ UnitListPage::~UnitListPage(){}
 
 bool UnitListPage::eventFilter(QObject* object,QEvent* event)
 {
-    QString name = object->name();
+    QString name = object->objectName();
 
     if (name.indexOf("unitTable") != -1 && isIncorrect)
     {
