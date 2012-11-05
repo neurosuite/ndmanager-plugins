@@ -71,7 +71,7 @@ UnitListLayout::UnitListLayout(QWidget* parent, const char* name)
 
     layout19->addWidget( removeUnitButton, 0, 3 );
 
-    layout20->addMultiCellLayout( layout19, 3, 3, 0, 1 );
+    layout20->addLayout( layout19, 3, 3, 0, 1 );
 
     unitTable = new UnitTable( this );
     unitTable->setColumnCount( unitTable->columnCount() + 1 );
@@ -103,7 +103,7 @@ UnitListLayout::UnitListLayout(QWidget* parent, const char* name)
     unitTable->setColumnCount( 7 );
     unitTable->setSelectionMode( QAbstractItemView::MultiSelection );
 
-    layout20->addMultiCellWidget( unitTable, 1, 1, 0, 1 );
+    layout20->addWidget( unitTable, 1, 1, 0, 1 );
 
     textLabel4_2_2_4_2_2_2 = new QLabel( this );
 
@@ -111,7 +111,7 @@ UnitListLayout::UnitListLayout(QWidget* parent, const char* name)
     spacer96 = new QSpacerItem( 16, 19, QSizePolicy::Minimum, QSizePolicy::Fixed );
     layout20->addItem( spacer96, 2, 0 );
 
-    layout21->addMultiCellLayout( layout20, 0, 1, 2, 2 );
+    layout21->addLayout( layout20, 0, 1, 2, 2 );
     spacer10_2_3_3 = new QSpacerItem( 30, 16, QSizePolicy::Fixed, QSizePolicy::Minimum );
     layout21->addItem( spacer10_2_3_3, 1, 1 );
 
