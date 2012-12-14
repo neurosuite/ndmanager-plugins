@@ -27,9 +27,7 @@
 #include <QEvent>
 #include <QVector>
 #include <QList>
-
-
-
+#include <QDebug>
 
 using namespace ndmanager;
 
@@ -154,8 +152,8 @@ void SpikePage::getGroupInformation(QMap<int,  QMap<QString,QString> >& groupInf
         if(channelList == " ")
             continue;
         //The positions of the information in the table are hard coded
-        for(int j = 1;j <= groupTable->columnCount(); ++j){
-            QString infoItem = groupTable->item(i,j)->text().simplified();
+        for(int j = 1;j < groupTable->columnCount(); ++j){
+            const QString infoItem = groupTable->item(i,j)->text().simplified();
             if(infoItem == " ")
                 continue;
             if(j == 1)
