@@ -9,7 +9,6 @@ find_package(LibXml2 REQUIRED)
 find_package(LibKlustersShared REQUIRED)
 include(CheckCXXCompilerFlag)
 add_definitions(${QT_DEFINITIONS})
-SET( QT_USE_QT3SUPPORT TRUE )
 set( QT_USE_XML TRUE)
 set( QT_USE_QTWEBKIT TRUE) 
 
