@@ -64,9 +64,6 @@ ndManager::ndManager()
     setupActions();
 
     initStatusBar();
-
-
-
     //Disable some actions at startup (see the ndManager.rc file)
     slotStateChanged("initState");
 
@@ -84,8 +81,7 @@ void ndManager::initializePreferences(){
 
 void ndManager::setupActions()
 {
-
-    //File Menu
+   //File Menu
     QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
 
     mNewAction = fileMenu->addAction(tr("&New..."));
@@ -219,7 +215,7 @@ void ndManager::slotFileOpen()
 {
     slotStatusMsg(tr("Opening file..."));
 
-    QString url=QFileDialog::getOpenFileName(this, tr("Open File..."),QString(),
+    const QString url=QFileDialog::getOpenFileName(this, tr("Open File..."),QString(),
                                              tr("*.xml|Parameter File (*.xml)\n*|All files") );
     if(!url.isEmpty())
         openDocumentFile(url);
@@ -275,8 +271,7 @@ void ndManager::openDocumentFile(const QString& url)
         int answer = QMessageBox::question(this,tr("The selected file no longer exists. Do you want to remove it from the list of recent opened files ?"), title);
         if(answer == QMessageBox::Yes){
             mFileOpenRecent->removeRecentFile(url);
-        }
-        else  {
+        } else  {
             mFileOpenRecent->addRecentFile(url); //hack, unselect the item
         }
         filePath.clear();
@@ -369,7 +364,7 @@ void ndManager::slotImport(){
     slotStatusMsg(tr("importing file as model..."));
     importedFile = true;
 
-    QString url = QFileDialog::getOpenFileName(this, tr("Import file as model..."),QString(),
+    const QString url = QFileDialog::getOpenFileName(this, tr("Import file as model..."),QString(),
                                                tr("*.xml|Parameter File (*.xml)\n*|All files") );
     if(!url.isEmpty())
         openDocumentFile(url);
@@ -461,11 +456,9 @@ bool ndManager::queryClose()
         return true;
     else{
         //check first if some scripts have been modified
-        QStringList scriptModified = parameterView->modifiedScripts();
-        if(scriptModified.size() != 0){
-            QStringList::iterator iterator;
-            for(iterator = scriptModified.begin(); iterator != scriptModified.end(); ++iterator){
-                QString name = *iterator;
+        const QStringList scriptModified = parameterView->modifiedScripts();
+        if( !scriptModified.isEmpty() ){
+            Q_FOREACH(const QString& name, scriptModified) {
                 switch(QMessageBox::question(0,tr("Script modification"),tr("The script %1 has been modified, do you want to save the it?").arg(name),QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
                 case QMessageBox::Save://<=> Save
                     parameterView->saveScript(name);
@@ -480,11 +473,9 @@ bool ndManager::queryClose()
         }
 
         //check if some descriptions have been modified
-        QStringList programModified = parameterView->modifiedProgramDescription();
-        if(programModified.size() != 0){
-            QStringList::iterator iterator;
-            for(iterator = programModified.begin(); iterator != programModified.end(); ++iterator){
-                QString name = *iterator;
+        const QStringList programModified = parameterView->modifiedProgramDescription();
+        if(!programModified.isEmpty()){
+            Q_FOREACH(const QString& name, programModified) {
                 switch(QMessageBox::question(0,tr("Program description modification"),tr("The description of the program %1 has been modified, do you want to save the it?").arg(name),QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
                 case QMessageBox::Save://<=> Save
                     parameterView->saveProgramDescription(name);
@@ -530,7 +521,7 @@ void ndManager::slotSave(){
             initialPath = QFileInfo(currentUrl).absolutePath();
         }
 
-        QString url=QFileDialog::getSaveFileName( this, tr("Save as..."),initialPath,tr("*.xml|Xml Files\n*|All Files"));
+        const QString url=QFileDialog::getSaveFileName( this, tr("Save as..."),initialPath,tr("*.xml|Xml Files\n*|All Files"));
         if(!url.isEmpty()){
             QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
             int saveStatus = doc->saveAs(url);
@@ -609,7 +600,7 @@ void ndManager::slotReload(){
 
     //Reopen the document
 
-    QString url = QString(filePath);
+    QString url = filePath;
 
     QFileInfo file(filePath);
 
@@ -620,7 +611,7 @@ void ndManager::slotReload(){
     }
 
     //Open the file (that will also initialize the document)
-    int returnStatus = doc->openDocument(url);
+    const int returnStatus = doc->openDocument(url);
     if(returnStatus == ndManagerDoc::PARSE_ERROR){
         QApplication::restoreOverrideCursor();
         QMessageBox::critical (this, tr("IO Error!"),tr("The selected parameter file could not be initialize due to parsing error."));
@@ -675,9 +666,8 @@ void ndManager::slotQuery(){
         queryResult.replace("</a>","");
         queryResult.replace("</td><td>","\t");
         queryResult.replace("</td></tr>","");
-        QueryOutputDialog *queryOutputDialog = new QueryOutputDialog(html,queryResult);
-        queryOutputDialog->exec();
-        delete queryOutputDialog;
+        QueryOutputDialog queryOutputDialog(html,queryResult);
+        queryOutputDialog.exec();
     }
     delete queryInputDialog;
     slotStatusMsg(tr("Ready."));
@@ -728,11 +718,13 @@ void ndManager::scriptModification(const QStringList& scriptNames){
 
 void ndManager::checkBeforeLaunchingPrograms(){
     if(managerView){
-        if(importedFile || newFile) managerView->updateDocumentInformation(doc->url(),false);
-        else{
-            if(parameterView->isModified()) managerView->updateDocumentInformation(doc->url(),false);
-            else{
-                QStringList programModified = parameterView->modifiedProgramDescription();
+        if(importedFile || newFile) {
+            managerView->updateDocumentInformation(doc->url(),false);
+        } else {
+            if(parameterView->isModified()) {
+                managerView->updateDocumentInformation(doc->url(),false);
+            } else {
+                const QStringList programModified = parameterView->modifiedProgramDescription();
                 if(!programModified.isEmpty())
                     managerView->updateDocumentInformation(doc->url(),false);
                 else
@@ -744,16 +736,17 @@ void ndManager::checkBeforeLaunchingPrograms(){
 
 void ndManager::checkBeforeLaunchingScripts(){
     if(managerView){
-        if(importedFile || newFile)
+        if(importedFile || newFile) {
             managerView->updateDocumentInformation(doc->url(),false);
-        else{
-            if(parameterView->isModified()) managerView->updateDocumentInformation(doc->url(),false);
-            else{
-                QStringList programModified = parameterView->modifiedProgramDescription();
-                if(!programModified.isEmpty())
+        } else {
+            if(parameterView->isModified()) {
+                managerView->updateDocumentInformation(doc->url(),false);
+            } else {
+                const QStringList programModified = parameterView->modifiedProgramDescription();
+                if(!programModified.isEmpty()) {
                     managerView->updateDocumentInformation(doc->url(),false);
-                else{
-                    QStringList scriptModified = parameterView->modifiedScripts();
+                } else {
+                    const QStringList scriptModified = parameterView->modifiedScripts();
                     if(!scriptModified.isEmpty())
                         managerView->updateDocumentInformation(doc->url(),false);
                     else
