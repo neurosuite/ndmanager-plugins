@@ -138,32 +138,26 @@ void AnatomyPage::getGroups(QMap<int, QList<int> >& groups)const{
 }
 
 void AnatomyPage::removeGroup(){
-    if(isIncorrectRow) return;
-#ifdef KDAB_PENDING
+    if(isIncorrectRow)
+        return;
     modified = true;
-    int nbSelections = groupTable->numSelections();
-    
-    if(nbSelections > 0){
-        QList< QVector<int> > rowsToRemove;
-        //Look up the rows to be removed
-        for(int j = 0; j < nbSelections;++j){
-            Q3TableSelection selection = groupTable->selection(j);
-            bool active = selection.isActive();
-            if(active){
-                int nbRows = selection.bottomRow() - selection.topRow() + 1;
-                QVector<int> rows(nbRows);
-                for(int i = 0; i < nbRows;++i){
-                    rows[i] = selection.topRow() + i;
+    const QList<QTableWidgetSelectionRange> range = groupTable->selectedRanges();
+    if(!range.isEmpty()) {
+        QList<int> lst;
+        Q_FOREACH(const QTableWidgetSelectionRange&r, range) {
+            const int nbRows = r.bottomRow() - r.topRow() + 1;
+            for(int i = 0; i < nbRows;++i){
+                int val = (r.topRow() + i);
+                if(!lst.contains(val)) {
+                    lst<< val;
                 }
-                rowsToRemove.append(rows);
             }
         }
-        //Actually remove the rows
-        QList< QVector<int> >::iterator iterator;
-        for(iterator = rowsToRemove.begin(); iterator != rowsToRemove.end(); ++iterator)
-            groupTable->removeRows(*iterator);
+        qSort(lst);
+        for(int i = lst.count()-1; i>0; --i) {
+            groupTable->removeRow(lst.at(i));
+        }
     }
-#endif
 }
 
 void AnatomyPage::addGroup(){
