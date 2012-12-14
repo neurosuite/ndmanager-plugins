@@ -29,7 +29,7 @@
 
 AnatomyPage::AnatomyPage(QWidget* parent)
     : AnatomyLayout(parent),
-     isIncorrectRow(false),
+      isIncorrectRow(false),
       incorrectRow(0),
       modified(false)
 {
@@ -139,7 +139,7 @@ void AnatomyPage::getGroups(QMap<int, QList<int> >& groups)const{
 
 void AnatomyPage::removeGroup(){
     if(isIncorrectRow) return;
-    #ifdef KDAB_PENDING
+#ifdef KDAB_PENDING
     modified = true;
     int nbSelections = groupTable->numSelections();
     
@@ -174,7 +174,7 @@ void AnatomyPage::addGroup(){
 }
 
 void AnatomyPage::groupChanged(int row,int column){
-    #ifdef KDAB_PENDING
+#ifdef KDAB_PENDING
     modified = true;
     QString group = groupTable->text(row,column);
 
@@ -212,17 +212,17 @@ void AnatomyPage::attributeChanged(int row,int column){
     QString attributName = header->text();
     if(attributName == "Skip"){
         bool ok;
-	QTableWidgetItem * item = attributesTable->item ( row, column );
+        QTableWidgetItem * item = attributesTable->item ( row, column );
         QString attribut = item->text();
         attribut.toInt(&ok);
-        if(ok) { 
-	   //KDAB_PENDING attributesTable->adjustRow(row);
-	} else {
+        if(ok) {
+            //KDAB_PENDING attributesTable->adjustRow(row);
+        } else {
             attributesTable->selectRow(row);
             attributesTable->setCurrentCell(row,column);
         }
-    } else { 
-      //KDAB_PENDING attributesTable->adjustRow(row);
+    } else {
+        //KDAB_PENDING attributesTable->adjustRow(row);
     }
 }
 

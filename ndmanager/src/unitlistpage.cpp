@@ -35,7 +35,6 @@ UnitListPage::UnitListPage(QWidget* parent) :
     UnitListLayout(parent),isIncorrect(false),incorrectRow(0),modified(false)
 {
 #ifdef KDAB_PENDING
-    connect(unitTable, SIGNAL(currentChanged(int,int)),this, SLOT(currentChanged()));
     connect(unitTable, SIGNAL(valueChanged(int,int)),this, SLOT(unitChanged(int,int)));
 #endif
     unitTable->horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
@@ -44,6 +43,7 @@ UnitListPage::UnitListPage(QWidget* parent) :
     unitTable->installEventFilter(this);
     unitTable->setSortingEnabled(true);
 
+    connect(unitTable, SIGNAL(currentCellChanged(int,int,int,int)),this, SLOT(currentChanged()));
     connect(unitTable, SIGNAL(cellPressed(int,int)),this, SLOT(currentChanged()));
     connect(unitTable, SIGNAL(cellClicked(int,int)),this,SLOT(currentChanged()));
     connect(unitTable, SIGNAL(cellDoubleClicked(int,int)),this,SLOT(currentChanged()));
