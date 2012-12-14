@@ -41,23 +41,23 @@ public:
     /**Returns the video image rotation angle (0,90,180,270). The angle is counted counterclockwise.
   * @return rotation angle.
   */
-    inline int getRotation()const{return rotation;}
+    int getRotation()const{return rotation;}
 
     /**Returns the video image flip orientation. 0 stands for none, 1 for vertical and 2 for horizontal.
   * @return flip orientation.
   */
-    inline int getFlip()const{return flip;}
+    int getFlip()const{return flip;}
 
     /**All the positions contained in a position file can be used to create a background image for the PositionView.
   * The value return by this function tells if such background has to be created.
   * @return 1 if the all the positions contain in the position file have to be drawn on the background, 0 otherwise.
    */
-    inline int getTrajectory()const{return trajectory;}
+    int getTrajectory()const{return trajectory;}
 
     /**Gets the url of the background image.
   * @return the url of the background image, an empty string if no background has been choosen and a dash if the entry does not exist in the file.
   */
-    inline QString getBackgroundImage()const{return backgroundImage;}
+    QString getBackgroundImage()const{return backgroundImage;}
 
     /**Sets the video image rotation angle (0,90,180,270). The angle is counted counterclockwise.
   * @param angle the rotation angle.

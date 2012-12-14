@@ -61,7 +61,7 @@ public:
             pixmap.fill(Qt::black);
             backgroundPixmap2->setPixmap(pixmap);
         }
-    };
+    }
 
     /**All the positions contained in a position file can be used to create a background image for the PositionView.
   * This function sets if such background has to be created.
@@ -166,7 +166,8 @@ private slots:
     }
 
     void updateBackgroundImage(const QString& image){
-        if(image != "")  setBackgroundImage(image);
+        if(!image.isEmpty())
+            setBackgroundImage(image);
         else{
             QPixmap pixmap;
             pixmap = pixmap.copy(0, 0, width,height);
