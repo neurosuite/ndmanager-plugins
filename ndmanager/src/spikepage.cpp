@@ -114,10 +114,10 @@ void SpikePage::setGroups(const QMap<int, QList<int> >& groups,const QMap<int, Q
             if(iterator2.key() == NB_SAMPLES){
                 groupTable->setItem(iterator.key() - 1,1,new QTableWidgetItem(iterator2.value()));
             }
-            if(iterator2.key() == PEAK_SAMPLE_INDEX){
+            else if(iterator2.key() == PEAK_SAMPLE_INDEX){
                 groupTable->setItem(iterator.key() - 1,2,new QTableWidgetItem(iterator2.value()));
             }
-            if(iterator2.key() == NB_FEATURES){
+            else if(iterator2.key() == NB_FEATURES){
                 groupTable->setItem(iterator.key() - 1,3,new QTableWidgetItem(iterator2.value()));
             }
         }
