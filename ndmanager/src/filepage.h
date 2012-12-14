@@ -28,7 +28,7 @@
 #include <qwidget.h>
 #include <qlineedit.h>
 #include <qregexp.h>
-//Added by qt3to4:
+
 #include <QEvent>
 #include <QList>
 

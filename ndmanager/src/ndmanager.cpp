@@ -21,7 +21,7 @@
 // include files for QT
 #include <qcursor.h>
 #include <qevent.h>
-//Added by qt3to4:
+
 #include <QTextStream>
 #include <QList>
 #include <QPixmap>

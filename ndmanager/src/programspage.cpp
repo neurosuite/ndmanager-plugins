@@ -26,7 +26,7 @@
 #include <qpushbutton.h> 
 #include <qlabel.h>
 #include <qregexp.h> 
-//Added by qt3to4:
+
 #include <QGridLayout>
 #include <QTextStream>
 #include <QVBoxLayout>

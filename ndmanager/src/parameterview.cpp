@@ -29,7 +29,7 @@
 #include <qstringlist.h>
 #include <QTextEdit>
 #include <QDebug>
-//Added by qt3to4:
+
 #include <QTextStream>
 #include <QList>
 #include <QFrame>

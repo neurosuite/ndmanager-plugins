@@ -22,7 +22,7 @@
 
 //QT includes
 #include <qicon.h>
-//Added by qt3to4:
+
 #include <QPixmap>
 
 NeuroscopeVideoPage::NeuroscopeVideoPage(QWidget* parent)

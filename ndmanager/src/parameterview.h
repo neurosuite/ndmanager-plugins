@@ -27,7 +27,7 @@
 #include <QMap>
 #include <qwidget.h>
 #include <QList>
-//Added by qt3to4:
+
 #include <QFrame>
 
 #include <qpagedialog.h>

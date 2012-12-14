@@ -26,7 +26,7 @@
 
 
 #include <fstream>
-//Added by qt3to4:
+
 #include <QTextStream>
 #include <QList>
 

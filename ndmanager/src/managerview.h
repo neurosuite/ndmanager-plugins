@@ -25,7 +25,7 @@
 #include <qstring.h>
 #include <qcombobox.h>
 #include <qspinbox.h> 
-//Added by qt3to4:
+
 
 #include <QFrame>
 #include <QList>
