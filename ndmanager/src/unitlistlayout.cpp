@@ -71,7 +71,7 @@ UnitListLayout::UnitListLayout(QWidget* parent, const char* name)
 
     layout19->addWidget( removeUnitButton, 0, 3 );
 
-    layout20->addLayout( layout19, 3, 3, 0, 1 );
+    layout20->addLayout( layout19, 3, 3, 3, 4 );
 
     unitTable = new UnitTable( this );
     unitTable->setColumnCount( unitTable->columnCount() + 1 );
@@ -103,7 +103,7 @@ UnitListLayout::UnitListLayout(QWidget* parent, const char* name)
     unitTable->setColumnCount( 7 );
     unitTable->setSelectionMode( QAbstractItemView::MultiSelection );
 
-    layout20->addWidget( unitTable, 1, 1, 0, 1 );
+    layout20->addWidget( unitTable, 1, 1, 1, 2 );
 
     textLabel4_2_2_4_2_2_2 = new QLabel( this );
 
