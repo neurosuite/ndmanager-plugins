@@ -34,11 +34,8 @@ ChannelColorsPage::ChannelColorsPage(QWidget* parent)
     : ChannelColorsLayout(parent)
     ,modified(false)
 {
-    /*
-    for(int i = 0;i<colorTable->numCols();++i)
-        colorTable->setColumnStretchable(i,true);
+    colorTable->horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
 
-        */
     connect(colorTable, SIGNAL(cellChanged(int,int)),this, SLOT(propertyModified()));
     connect(colorTable, SIGNAL(cellDoubleClicked(int,int)),this, SLOT(propertyModified()));
 }

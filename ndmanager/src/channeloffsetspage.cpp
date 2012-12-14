@@ -25,11 +25,9 @@
 #include <QList>
 
 ChannelOffsetsPage::ChannelOffsetsPage(QWidget* parent)
-    : ChannelOffsetsLayout(parent),nbChannels(0),modified(false){
-    /*
-    for(int i = 0;i<offsetTable->rowCount();++i)
-        offsetTable->setColumnStretchable(i,true);
-*/
+    : ChannelOffsetsLayout(parent),nbChannels(0),modified(false)
+{
+    offsetTable->horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
     connect(offsetTable, SIGNAL(itemChanged(QTableWidgetItem*)),this, SLOT(propertyModified()));
     connect(offsetTable, SIGNAL(itemDoubleClicked(QTableWidgetItem*)),this, SLOT(propertyModified()));
 

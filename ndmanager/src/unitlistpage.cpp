@@ -29,17 +29,17 @@
 
 #include <QEvent>
 #include <QVector>
+#include <QHeaderView>
 
 UnitListPage::UnitListPage(QWidget* parent) :
     UnitListLayout(parent),isIncorrect(false),incorrectRow(0),modified(false)
 {
 #ifdef KDAB_PENDING
-    for(int i = 0;i<unitTable->numCols();++i)
-        unitTable->setColumnStretchable(i,true);
-
     connect(unitTable, SIGNAL(currentChanged(int,int)),this, SLOT(currentChanged()));
     connect(unitTable, SIGNAL(valueChanged(int,int)),this, SLOT(unitChanged(int,int)));
 #endif
+    unitTable->horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
+
     //install a filter on the unitTable in order to validate the entries
     unitTable->installEventFilter(this);
     unitTable->setSortingEnabled(true);

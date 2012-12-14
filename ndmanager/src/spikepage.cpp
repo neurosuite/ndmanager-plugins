@@ -42,15 +42,11 @@ SpikePage::SpikePage(QWidget* parent)
 {
     //KDAB
     /*
-
-    for(int i = 0;i<groupTable->numCols();++i)
-        groupTable->setColumnStretchable(i,true);
-
-
     connect(groupTable, SIGNAL(valueChanged(int,int)),this, SLOT(groupChanged(int,int)));
-    connect(groupTable, SIGNAL(currentChanged(int,int)),this, SLOT(slotValidate()));
     */
 
+
+    groupTable->horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
     //install a filter on the groupTable in order to validate the entries
     groupTable->installEventFilter(this);
 

@@ -34,9 +34,7 @@ FilePage::FilePage(QWidget *parent)
       modified(false),
       isInit(true)
 {
-
-    //KDAB_PENDING mappingTable->setColumnStretchable(0,true);
-
+    mappingTable->horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
     connect(extensionLineEdit,SIGNAL(returnPressed()),this,SLOT(changeCaption()));
     connect(extensionLineEdit,SIGNAL(editingFinished()),this,SLOT(changeCaption()));
 

@@ -54,13 +54,7 @@ ParameterPage::ParameterPage(bool expertMode,QWidget *parent)
 {
     status<<tr("Mandatory")<<tr("Optional")<<tr("Dynamic");
     ddList.append(2);
-#ifdef KDAB_PENDING
-
-
-    for(int i = 0;i<parameterTable->numCols();++i)
-        parameterTable->setColumnStretchable(i,true);
-#endif
-
+    parameterTable->horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
 
     //If the export mode is not set, only the value column is editable
     if(!expertMode){
