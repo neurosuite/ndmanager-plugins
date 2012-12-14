@@ -324,4 +324,3 @@ void ProgramPage::removeProgram(){
 }
 
 
-#include "programpage.moc"

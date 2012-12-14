@@ -32,4 +32,3 @@ LfpPage::LfpPage(QWidget* parent)
 LfpPage::~LfpPage(){}
 
 
-#include "lfppage.moc"

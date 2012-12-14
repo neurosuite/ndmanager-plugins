@@ -6,4 +6,3 @@ AcquisitionSystemLayout::AcquisitionSystemLayout( QWidget* parent )
     setupUi( this );
 
 }
-#include "acquisitionsystemlayout.moc"

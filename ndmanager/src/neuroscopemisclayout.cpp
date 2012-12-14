@@ -5,4 +5,3 @@ NeuroscopeMiscLayout::NeuroscopeMiscLayout( QWidget* parent )
     setupUi( this );
 
 }
-#include "neuroscopemisclayout.moc"

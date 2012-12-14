@@ -6,4 +6,3 @@ ParameterLayout::ParameterLayout( QWidget* parent )
 
 }
 
-#include "parameterlayout.moc"

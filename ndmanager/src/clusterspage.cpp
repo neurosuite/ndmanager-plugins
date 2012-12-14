@@ -37,4 +37,3 @@ ClustersPage::~ClustersPage()
 }
 
 
-#include "clusterspage.moc"

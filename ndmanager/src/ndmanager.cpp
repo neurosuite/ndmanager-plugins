@@ -804,4 +804,3 @@ void ndManager::slotAbout()
 }
 
 
-#include "ndmanager.moc"

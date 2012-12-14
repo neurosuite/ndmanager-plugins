@@ -6,4 +6,3 @@ ClustersLayout::ClustersLayout( QWidget* parent )
 
 }
 
-#include "clusterslayout.moc"

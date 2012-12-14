@@ -167,4 +167,3 @@ void ManagerView::updateDocumentInformation(const QString& url,bool isUptoDate){
     this->isUptoDate = isUptoDate;
 }
 
-#include "managerview.moc"

@@ -198,5 +198,3 @@ void FilePage::changeCaption(){
     }
 }
 
-#include "filepage.moc"
-

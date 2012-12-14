@@ -57,4 +57,3 @@ void ChannelOffsetsPage::setOffsets(const QMap<int,int>& offsets){
 }
 
 
-#include "channeloffsetspage.moc"

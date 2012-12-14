@@ -212,4 +212,3 @@ void ParameterPage::changeCaption()
 
 
 
-#include "parameterpage.moc"

@@ -83,4 +83,3 @@ void QueryInputDialog::pathChanged(const QString & newPath){
     buttonBox->button(QDialogButtonBox::Ok)->setEnabled(!newPath.isEmpty());
 }
 
-#include "queryinputdialog.moc"

@@ -103,4 +103,3 @@ void QueryOutputDialog::slotUser2()
         QMessageBox::critical(this,QString(),tr("Could not save the report. This may be due to incorrect write permissions."));
 }
 
-#include "queryoutputdialog.moc"

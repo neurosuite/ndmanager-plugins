@@ -6,4 +6,3 @@ Query::Query( QWidget* parent )
 
 }
 
-#include "queryinputdialogbase.moc"

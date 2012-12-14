@@ -732,4 +732,3 @@ QStringList ParameterView::getFileScriptNames()const
     return QStringList()<<programDict.keys();
 }
 
-#include "parameterview.moc"

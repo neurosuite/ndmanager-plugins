@@ -139,4 +139,3 @@ QStringList FilesPage::getFileExtensions(){
     return extensionList;
 }
 
-#include "filespage.moc"

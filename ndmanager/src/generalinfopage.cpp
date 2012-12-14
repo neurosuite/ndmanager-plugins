@@ -36,4 +36,3 @@ GeneralInfoPage::~GeneralInfoPage()
 }
 
 
-#include "generalinfopage.moc"

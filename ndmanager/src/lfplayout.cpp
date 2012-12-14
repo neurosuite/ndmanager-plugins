@@ -5,4 +5,3 @@ LfpLayout::LfpLayout( QWidget* parent )
     setupUi( this );
 
 }
-#include "lfplayout.moc"

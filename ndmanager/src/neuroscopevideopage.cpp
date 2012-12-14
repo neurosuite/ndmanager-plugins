@@ -86,4 +86,3 @@ void NeuroscopeVideoPage::updateDisplayedImage(){
     }
 }
 
-#include "neuroscopevideopage.moc"

@@ -6,4 +6,3 @@ GeneralInfoLayout::GeneralInfoLayout( QWidget* parent )
 
 }
 
-#include "generalinfolayout.moc"

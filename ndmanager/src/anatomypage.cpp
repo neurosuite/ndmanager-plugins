@@ -245,4 +245,3 @@ void AnatomyPage::setNbChannels(int nbChannels){
 }
 
 
-#include "anatomypage.moc"

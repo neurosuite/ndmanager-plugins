@@ -6,4 +6,3 @@ ChannelColorsLayout::ChannelColorsLayout( QWidget* parent )
 
 }
 
-#include "channelcolorslayout.moc"

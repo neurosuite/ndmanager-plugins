@@ -5,4 +5,3 @@ AnatomyLayout::AnatomyLayout( QWidget* parent )
     setupUi( this );
 
 }
-#include "anatomylayout.moc"

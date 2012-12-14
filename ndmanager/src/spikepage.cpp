@@ -258,4 +258,3 @@ void SpikePage::addGroup(){
 }
 
 
-#include "spikepage.moc"

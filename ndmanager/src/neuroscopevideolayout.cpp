@@ -6,4 +6,3 @@ NeuroscopeVideoLayout::NeuroscopeVideoLayout( QWidget* parent )
 
 }
 
-#include "neuroscopevideolayout.moc"

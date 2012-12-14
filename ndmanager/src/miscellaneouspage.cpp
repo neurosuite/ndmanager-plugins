@@ -44,4 +44,3 @@ MiscellaneousPage::MiscellaneousPage(QWidget* parent)
 MiscellaneousPage::~MiscellaneousPage(){}
 
 
-#include "miscellaneouspage.moc"

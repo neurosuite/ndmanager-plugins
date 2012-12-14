@@ -6,4 +6,3 @@ SpikeLayout::SpikeLayout( QWidget* parent )
 
 }
 
-#include "spikelayout.moc"

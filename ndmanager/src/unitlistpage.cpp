@@ -202,4 +202,3 @@ void UnitListPage::unitChanged(int row,int column)
 }
 
 
-#include "unitlistpage.moc"

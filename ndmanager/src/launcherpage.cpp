@@ -50,4 +50,3 @@ LauncherPage::~LauncherPage()
 }
 
 
-#include "launcherpage.moc"

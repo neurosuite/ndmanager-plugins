@@ -145,4 +145,3 @@ void ProgramsPage::loadProgram(){
 }
 
 
-#include "programspage.moc"

@@ -6,4 +6,3 @@ VideoLayout::VideoLayout( QWidget* parent )
 
 }
 
-#include "videolayout.moc"

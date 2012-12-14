@@ -40,4 +40,3 @@ VideoPage::~VideoPage()
 }
 
 
-#include "videopage.moc"

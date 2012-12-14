@@ -6,4 +6,3 @@ FileLayout::FileLayout( QWidget* parent )
 
 }
 
-#include "filelayout.moc"

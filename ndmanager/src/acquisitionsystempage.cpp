@@ -100,4 +100,3 @@ void AcquisitionSystemPage::nbChannelsChanged(){
 
 
 
-#include "acquisitionsystempage.moc"

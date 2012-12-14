@@ -90,4 +90,3 @@ void ChannelColorsPage::setNbChannels(int nbChannels){
 }
 
 
-#include "channelcolorspage.moc"

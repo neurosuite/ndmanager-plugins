@@ -6,4 +6,3 @@ ChannelOffsetsLayout::ChannelOffsetsLayout( QWidget* parent )
 
 }
 
-#include "channeloffsetslayout.moc"

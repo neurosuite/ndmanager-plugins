@@ -6,4 +6,3 @@ LauncherLayout::LauncherLayout( QWidget* parent )
 
 }
 
-#include "launcherlayout.moc"

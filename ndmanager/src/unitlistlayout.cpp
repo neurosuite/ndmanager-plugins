@@ -151,4 +151,3 @@ void UnitListLayout::languageChange()
     textLabel4_2_2_4_2_2_2->setText( tr( "Units" ) );
 }
 
-#include "unitlistlayout.moc"
