@@ -121,32 +121,26 @@ void UnitListPage::getUnits(QMap<int, QStringList >& units)const
 
 void UnitListPage::removeUnit()
 {
-    #ifdef KDAB_PENDING
-    if (isIncorrect) return;
+    if (isIncorrect)
+        return;
     modified = true;
-    int nbSelections = unitTable->numSelections();
-
-    if (nbSelections > 0)
-    {
-        QList< QVector<int> > rowsToRemove;
-        //Look up the rows to be removed
-        for (int j = 0; j < nbSelections;++j)
-        {
-            Q3TableSelection selection = unitTable->selection(j);
-            bool active = selection.isActive();
-            if (active)
-            {
-                int nbRows = selection.bottomRow() - selection.topRow() + 1;
-                QVector<int> rows(nbRows);
-                for(int i = 0; i < nbRows;++i) rows[i] = selection.topRow() + i;
-                rowsToRemove.append(rows);
+    const QList<QTableWidgetSelectionRange> range = unitTable->selectedRanges();
+    if(!range.isEmpty()) {
+        QList<int> lst;
+        Q_FOREACH(const QTableWidgetSelectionRange&r, range) {
+            const int nbRows = r.bottomRow() - r.topRow() + 1;
+            for(int i = 0; i < nbRows;++i){
+                int val = (r.topRow() + i);
+                if(!lst.contains(val)) {
+                    lst<< val;
+                }
             }
         }
-        //Actually remove the rows
-        QList< QVector<int> >::iterator iterator;
-        for (iterator = rowsToRemove.begin(); iterator != rowsToRemove.end(); ++iterator) unitTable->removeRows(*iterator);
+        qSort(lst);
+        for(int i = lst.count()-1; i>0; --i) {
+            unitTable->removeRow(lst.at(i));
+        }
     }
-    #endif
 }
 
 void UnitListPage::setNbUnits(int nbUnits)

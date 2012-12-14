@@ -35,11 +35,6 @@
 #include <QFileDialog>
 #include <QMessageBox>
 
-
-
-
-
-
 ProgramsPage::ProgramsPage(bool expertMode,QWidget *parent)
     : QFrame(parent),expertMode(expertMode){
 
