@@ -24,11 +24,6 @@
 #include <QDialogButtonBox>
 #include <QPushButton>
 
-
-
-
-
-
 QueryInputDialog::QueryInputDialog(QWidget *parent,const QString& caption,const QString& urltext) :
     QDialog(parent)
 {

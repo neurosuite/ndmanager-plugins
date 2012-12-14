@@ -51,7 +51,8 @@ DescriptionWriter::~DescriptionWriter(){}
 bool DescriptionWriter::writeTofile(const QString& url){ 
     QFile descriptionFile(url);
     bool status = descriptionFile.open(QIODevice::WriteOnly);
-    if(!status) return status;
+    if(!status)
+        return status;
 
     root.appendChild(program);
     QString xmlDocument = doc.toString();
@@ -92,7 +93,7 @@ void DescriptionWriter::setProgramInformation(const ProgramInformation& programI
                 nameElement.appendChild(nameValue);
                 parameter.appendChild(nameElement);
             }
-            if(i == 1){
+            else if(i == 1){
                 QDomElement valueElement = doc.createElement(VALUE);
                 if(!parameterInfo[i].isEmpty()){
                     QDomText valueValue = doc.createTextNode(parameterInfo[i]);
@@ -100,7 +101,7 @@ void DescriptionWriter::setProgramInformation(const ProgramInformation& programI
                 }
                 parameter.appendChild(valueElement);
             }
-            if(i == 2){
+            else if(i == 2){
                 QDomElement statusElement = doc.createElement(STATUS);
                 QDomText statusValue = doc.createTextNode(parameterInfo[i]);
                 statusElement.appendChild(statusValue);

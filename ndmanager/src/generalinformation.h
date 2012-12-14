@@ -31,41 +31,41 @@
 class GeneralInformation{
 public:
 
- GeneralInformation(){
-  date = QDate::currentDate();
- }
+    GeneralInformation(){
+        date = QDate::currentDate();
+    }
 
- ~GeneralInformation(){}
+    ~GeneralInformation(){}
 
-  /**Sets the date.*/
-  void setDate(const QDate& date){this->date = date;}
-  
-  /**Sets the experimenters.*/
-  void setExperimenters(const QString& experimenters){this->experimenters = experimenters;}
-  
- /**Sets the description.*/
-  void setDescription(const QString& description){this->description = description;}
-  
- /**Sets the notes.*/
- void setNotes(const QString& notes){this->notes = notes;}
-  
-  /**Gets the date.*/
-  inline QDate getDate() const{return date;}
-  
-  /**Gets the experimenters.*/
-  inline QString getExperimenters() const {return experimenters;}
-  
- /**Gets the description.*/
-  inline QString getDescription() const {return description;}
-  
- /**Gets the notes.*/
-  inline QString getNotes() const {return notes;}
-     
+    /**Sets the date.*/
+    void setDate(const QDate& date){this->date = date;}
+
+    /**Sets the experimenters.*/
+    void setExperimenters(const QString& experimenters){this->experimenters = experimenters;}
+
+    /**Sets the description.*/
+    void setDescription(const QString& description){this->description = description;}
+
+    /**Sets the notes.*/
+    void setNotes(const QString& notes){this->notes = notes;}
+
+    /**Gets the date.*/
+    inline QDate getDate() const{return date;}
+
+    /**Gets the experimenters.*/
+    inline QString getExperimenters() const {return experimenters;}
+
+    /**Gets the description.*/
+    inline QString getDescription() const {return description;}
+
+    /**Gets the notes.*/
+    inline QString getNotes() const {return notes;}
+
 private:
- QDate date;
- QString description;
- QString notes; 
- QString experimenters;
+    QDate date;
+    QString description;
+    QString notes;
+    QString experimenters;
 };
 
 #endif

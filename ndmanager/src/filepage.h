@@ -42,7 +42,7 @@ class FilePage : public FileLayout
     Q_OBJECT
 public:
     /**Constructor.*/
-    FilePage(QWidget *parent = 0);
+    explicit FilePage(QWidget *parent = 0);
 
     /**Destructor.*/
     ~FilePage();

@@ -41,19 +41,19 @@ public:
     ~ClustersPage();
 
     /**Sets the number of samples per spike waveform.*/
-    void setNbSamples(int nb){nbSamplesLineEdit->setText(QString::number(nb));}
+    void setNbSamples(int nb) {nbSamplesLineEdit->setText(QString::number(nb));}
 
     /**Sets the index of the peak sample in the spike waveform.*/
-    void setPeakIndex(int index){peakIndexLineEdit->setText(QString::number(index));}
+    void setPeakIndex(int index) {peakIndexLineEdit->setText(QString::number(index));}
 
     /**Returns the number of samples per spike waveform.*/
-    inline int getNbSamples()const{return nbSamplesLineEdit->text().toInt();}
+    inline int getNbSamples() const {return nbSamplesLineEdit->text().toInt();}
 
     /**Returns the index of the peak sample in the spike waveform.*/
-    inline int getPeakIndex()const{return peakIndexLineEdit->text().toInt();}
+    inline int getPeakIndex() const {return peakIndexLineEdit->text().toInt();}
 
     /**True if at least one property has been modified, false otherwise.*/
-    inline bool isModified()const{return modified;}
+    inline bool isModified() const {return modified;}
 
     /**Indicates that the initialisation is finished.*/
     void initialisationOver(){isInit = false;}
@@ -61,7 +61,7 @@ public:
 public slots:
 
     /** Will be called when any properties is modified.*/
-    void propertyModified(){if(!isInit) modified = true;}
+    void propertyModified(){ if(!isInit) modified = true;}
 
     /**Resets the internal modification status to false.*/
     void resetModificationStatus(){modified = false;}

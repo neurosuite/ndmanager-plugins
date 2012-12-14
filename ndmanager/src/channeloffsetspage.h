@@ -33,7 +33,7 @@ class ChannelOffsetsPage : public ChannelOffsetsLayout
 {
     Q_OBJECT
 public:
-    ChannelOffsetsPage(QWidget* parent = 0);
+    explicit ChannelOffsetsPage(QWidget* parent = 0);
     ~ChannelOffsetsPage();
 
     /**Sets the number of channels, creating the correspondent number of lines in the table.
@@ -57,7 +57,7 @@ public:
     void setOffsets(const QMap<int,int>& offsets);
 
     /**True if at least one property has been modified, false otherwise.*/
-    bool isModified()const{return modified;}
+    bool isModified() const {return modified;}
 
 public slots: 
     /** Will be called when any properties is modified.*/

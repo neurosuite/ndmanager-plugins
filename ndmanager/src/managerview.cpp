@@ -39,7 +39,8 @@
 
 
 ManagerView::ManagerView(QWidget *parent)
-    : QFrame(parent),isUptoDate(true){
+    : QFrame(parent),isUptoDate(true)
+{
     frameLayout = new QVBoxLayout(this);
     frameLayout->setSpacing(0);
     frameLayout->setMargin(0);
@@ -133,13 +134,13 @@ void ManagerView::launchScript(){
     //The parameter file is new or has been imported from an existing file.
     QFileInfo parameterUrlFileInfo(parameterUrl);
     if(parameterUrlFileInfo.fileName() == "Untitled"){
-        QString message = tr("In order to launch %1, the parameter file has to be saved first.").arg(script);
+        const  QString message = tr("In order to launch %1, the parameter file has to be saved first.").arg(script);
         QMessageBox::critical (this, tr("Unsaved file!"),message);
         return;
     }
     else{
         if(!isUptoDate){
-            QString message = tr("The parameter file contains unsaved data or script, please save before launching %1.").arg(script);
+            const QString message = tr("The parameter file contains unsaved data or script, please save before launching %1.").arg(script);
             QMessageBox::critical (this, tr("Unsaved data!"),message);
             return;
         }

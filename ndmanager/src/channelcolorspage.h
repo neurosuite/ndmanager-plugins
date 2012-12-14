@@ -26,7 +26,6 @@
 
 // include files for QT
 #include <qwidget.h>
-
 #include <QList>
 
 

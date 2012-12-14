@@ -26,10 +26,6 @@
 #include <qwidget.h>
 #include <QFrame>
 
-
-
-
-
 //forward declaration
 class QPushButton;
 

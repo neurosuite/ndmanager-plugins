@@ -35,14 +35,6 @@
 #include <qcheckbox.h> 
 #include <QFileDialog>
 
-
-
-
-
-
-
-
-
 /**
 @author Lynn Hazan
 */
@@ -54,7 +46,7 @@ public:
     ~NeuroscopeVideoPage();
 
     /**Sets the background image.*/
-    void setBackgroundImage(QString image){
+    void setBackgroundImage(const QString &image){
         backgroundLineEdit->setText(image);
         if(!image.isEmpty()){
             backgroungImage.load(image);
@@ -95,7 +87,7 @@ public:
             rotateComboBox->setCurrentIndex(0);
             break;
         }
-    };
+    }
 
     /**Sets the video image flip orientation.
   * 0 stands for none, 1 for vertical and 2 for horizontal.
@@ -115,7 +107,7 @@ public:
             filpComboBox->setCurrentIndex(0);
             break;
         }
-    };
+    }
 
     /**Returns the background image.*/
     inline QString getBackgroundImage()const{return backgroundLineEdit->text();}
@@ -141,7 +133,7 @@ public:
         default:
             return 0;
         }
-    };
+    }
 
     /**Returns the video image flip orientation.
   * 0 stands for none, 1 for vertical and 2 for horizontal.
@@ -157,7 +149,7 @@ public:
         default:
             return 0;
         }
-    };
+    }
 
     /**True if at least one property has been modified, false otherwise.*/
     inline bool isModified()const{return modified;}
@@ -169,7 +161,7 @@ private slots:
     void updateBackgroundImage(){
         QString image = QFileDialog::getOpenFileName(this, tr("Select the background image..."));
 
-        if(image != "")
+        if(!image.isEmpty())
             setBackgroundImage(image);
     }
 

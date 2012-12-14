@@ -20,9 +20,6 @@
 //include files for the application
 #include "miscellaneouspage.h"
 
-
-
-
 MiscellaneousPage::MiscellaneousPage(QWidget* parent)
     : NeuroscopeMiscLayout(parent),doubleValidator(this),modified(false),isInit(true){
 

@@ -62,7 +62,7 @@ FilePage::~FilePage(){
 }
 
 bool FilePage::eventFilter(QObject* object,QEvent* event){
-    QString name = object->objectName();
+    const QString name = object->objectName();
     if(name.indexOf("mappingTable") != -1 && isIncorrectRow){
         mappingTable->editItem(mappingTable->item(incorrectRow,0));
         return true;

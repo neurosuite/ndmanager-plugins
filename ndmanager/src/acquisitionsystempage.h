@@ -36,138 +36,138 @@
 */
 class AcquisitionSystemPage : public AcquisitionSystemLayout
 {
-Q_OBJECT
+    Q_OBJECT
 public:
     AcquisitionSystemPage(QWidget* parent = 0);
 
     ~AcquisitionSystemPage();
     
-  /**Sets the number of channels.*/
-  void setNbChannels(int nb){
-   nbChannels = nb;
-   nbChannelsLineEdit->setText(QString::number(nb));
-  }
-
-  /**Sets the sampling rate.*/
-  void setSamplingRate(double rate){ 
-  samplingRateLineEdit->setText(Helper::doubleToString(rate));
-  }
-
-  /**Sets the resolution of the acquisition system.*/
-   void setResolution(int res){
-    switch(res){
-       case 12:
-         resolutionComboBox->setCurrentIndex(0);
-         break;
-       case 14:
-         resolutionComboBox->setCurrentIndex(1);
-         break;
-       case 16:
-         resolutionComboBox->setCurrentIndex(2);
-         break;
-       case 32:
-         resolutionComboBox->setCurrentIndex(3);
-         break;
-       default:
-         resolutionComboBox->setCurrentIndex(2);
-         break;
+    /**Sets the number of channels.*/
+    void setNbChannels(int nb){
+        nbChannels = nb;
+        nbChannelsLineEdit->setText(QString::number(nb));
     }
-   }
-   
-  /**Sets the initial offset for all the field potentials.*/
-  void setOffset(int offset){offsetLineEdit->setText(QString::number(offset));}
 
-  /**Sets the voltage range of the acquisition system in milivolts.
+    /**Sets the sampling rate.*/
+    void setSamplingRate(double rate){
+        samplingRateLineEdit->setText(Helper::doubleToString(rate));
+    }
+
+    /**Sets the resolution of the acquisition system.*/
+    void setResolution(int res){
+        switch(res){
+        case 12:
+            resolutionComboBox->setCurrentIndex(0);
+            break;
+        case 14:
+            resolutionComboBox->setCurrentIndex(1);
+            break;
+        case 16:
+            resolutionComboBox->setCurrentIndex(2);
+            break;
+        case 32:
+            resolutionComboBox->setCurrentIndex(3);
+            break;
+        default:
+            resolutionComboBox->setCurrentIndex(2);
+            break;
+        }
+    }
+
+    /**Sets the initial offset for all the field potentials.*/
+    void setOffset(int offset){offsetLineEdit->setText(QString::number(offset));}
+
+    /**Sets the voltage range of the acquisition system in milivolts.
   */
-  void setVoltageRange(int value){
-   voltageRangeLineEdit->setText(QString::number(value));
-  }
+    void setVoltageRange(int value){
+        voltageRangeLineEdit->setText(QString::number(value));
+    }
 
-  /**Sets the amplification of the acquisition system.
+    /**Sets the amplification of the acquisition system.
   */
-  void setAmplification(int value){
-   amplificationLineEdit->setText(QString::number(value));
-  }
+    void setAmplification(int value){
+        amplificationLineEdit->setText(QString::number(value));
+    }
 
-  /**Returns the number of channels.*/
-  inline int getNbChannels() const{return nbChannelsLineEdit->text().toInt();}
+    /**Returns the number of channels.*/
+    inline int getNbChannels() const{return nbChannelsLineEdit->text().toInt();}
 
-  /**Returns the sampling rate.*/
-  inline double getSamplingRate() const{return samplingRateLineEdit->text().toDouble();}
- 
-  /**Returns the resolution of the acquisition system.*/
-  inline int getResolution()const{
-   switch(resolutionComboBox->currentIndex()){
-      case 0:
-        return 12;
-      case 1:
-        return 14;
-      case 2:
-        return 16;
-      case 3:
-        return 32;
-      default:
-        return 16;
-   }    
-  }
-  
-  /**Returns the initial offset for all the field potentials.*/
-  inline int getOffset() const{return offsetLineEdit->text().toInt();}
-  
-  /**Returns the voltage range of the acquisition system in volts.
+    /**Returns the sampling rate.*/
+    inline double getSamplingRate() const{return samplingRateLineEdit->text().toDouble();}
+
+    /**Returns the resolution of the acquisition system.*/
+    inline int getResolution()const{
+        switch(resolutionComboBox->currentIndex()){
+        case 0:
+            return 12;
+        case 1:
+            return 14;
+        case 2:
+            return 16;
+        case 3:
+            return 32;
+        default:
+            return 16;
+        }
+    }
+
+    /**Returns the initial offset for all the field potentials.*/
+    inline int getOffset() const{return offsetLineEdit->text().toInt();}
+
+    /**Returns the voltage range of the acquisition system in volts.
   */
-  inline int getVoltageRange() const{
-   return voltageRangeLineEdit->text().toInt();
-  }
+    inline int getVoltageRange() const{
+        return voltageRangeLineEdit->text().toInt();
+    }
 
-  /**Returns the amplification of the acquisition system.
+    /**Returns the amplification of the acquisition system.
   */
-  inline int getAmplification() const{
-   return amplificationLineEdit->text().toInt();
-  }
- 
-  /**True if at least one property has been modified, false otherwise.*/
-  inline bool isModified()const{return modified;}
- 
-  /**Checks if the number of channels has changed.*/
-  void checkNbChannels();
-   
-  public slots:
-   /**This function is called when the user presses the return key in the <i>Number of Channels</i> field.*/
-   void nbChannelsLineEditReturnPressed();
-   
-   /**This function is called when the <i>Number of Channels</i> field lose focus.*/
-   void nbChannelsLineEditLostFocus(); 
-  
-   /** Will be called when any properties except the number of channels has been modified.*/
-  void propertyModified(){if(!isInit) modified = true;}
+    inline int getAmplification() const{
+        return amplificationLineEdit->text().toInt();
+    }
 
-  /**Indicates that the initialisation is finished.*/
-  void initialisationOver(){isInit = false;}
+    /**True if at least one property has been modified, false otherwise.*/
+    inline bool isModified()const{return modified;}
+
+    /**Checks if the number of channels has changed.*/
+    void checkNbChannels();
+
+public slots:
+    /**This function is called when the user presses the return key in the <i>Number of Channels</i> field.*/
+    void nbChannelsLineEditReturnPressed();
+
+    /**This function is called when the <i>Number of Channels</i> field lose focus.*/
+    void nbChannelsLineEditLostFocus();
+
+    /** Will be called when any properties except the number of channels has been modified.*/
+    void propertyModified(){if(!isInit) modified = true;}
+
+    /**Indicates that the initialisation is finished.*/
+    void initialisationOver(){isInit = false;}
     
-  /**Resets the internal modification status to false.*/
-  void resetModificationStatus(){modified = false;}
-   
-  signals:
-   /*Signals that the number of channels has been modified.
+    /**Resets the internal modification status to false.*/
+    void resetModificationStatus(){modified = false;}
+
+signals:
+    /*Signals that the number of channels has been modified.
    * @param nbChannels the neew number of channels
    */
-   void nbChannelsModified(int nbChannels);
-   
-  private:
-  
-  /**This function is called when the user changes the number of channels. It warns him of the consequences and triggers the implied changes.*/
-  void nbChannelsChanged(); 
+    void nbChannelsModified(int nbChannels);
+
+private:
+
+    /**This function is called when the user changes the number of channels. It warns him of the consequences and triggers the implied changes.*/
+    void nbChannelsChanged();
     
-  QDoubleValidator doubleValidator;
-  QIntValidator intValidator;
-  bool isInit;
-  float nbChannels;
-  bool reset;
-  bool isLostFocus;
-  bool isReturnPressed;
-  bool modified;
-  bool isCheckAsked;
+    QDoubleValidator doubleValidator;
+    QIntValidator intValidator;
+    bool isInit;
+    float nbChannels;
+    bool reset;
+    bool isLostFocus;
+    bool isReturnPressed;
+    bool modified;
+    bool isCheckAsked;
 };
 
 #endif

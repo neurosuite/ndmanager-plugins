@@ -28,7 +28,6 @@
 #include <qpushbutton.h>
 #include <qmap.h>
 #include <qregexp.h>
-#include <q3header.h> 
 #include <qlineedit.h>
 
 #include <QEvent>
@@ -43,7 +42,7 @@ class AnatomyPage : public AnatomyLayout
     Q_OBJECT
 public:
     /**Constructor.*/
-    AnatomyPage(QWidget* parent = 0);
+    explicit AnatomyPage(QWidget* parent = 0);
     /**Destructor.*/
     ~AnatomyPage();
 

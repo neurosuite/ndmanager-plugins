@@ -7,16 +7,8 @@
 class AnatomyLayout : public QWidget, public Ui_AnatomyLayout
 {
     Q_OBJECT
-
 public:
-    AnatomyLayout( QWidget* parent = 0 );
-    
-
-public slots:
-   // TODO copy 0 functions, 0 signals, and 0 slots (not init and destroy!) from anatomylayout.h.old here
-
-private:
-   
+    explicit AnatomyLayout( QWidget* parent = 0 );
 };
 
 #endif

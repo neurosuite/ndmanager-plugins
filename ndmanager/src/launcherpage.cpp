@@ -23,19 +23,12 @@
 #include <qdir.h> 
 #include <qcombobox.h>
 #include <qstringlist.h> 
-
-
-
 #include <QDebug>
-
-
 
 LauncherPage::LauncherPage(const QString& url,QWidget* parent)
     : LauncherLayout(parent){
     QDir dir(url);
-    qDebug()<<"currentPath "<<url;
     QStringList neuroscopeFiles = dir.entryList(QStringList()<<QLatin1String("*.dat;*.eeg;*.fil"));
-    qDebug()<<"neuroscopeFiles.size() "<<neuroscopeFiles.size();
     neuroscopeFiles.append("");
     neuroscopeComboBox->addItems(neuroscopeFiles);
     QStringList klustersFiles = dir.entryList(QStringList()<<QLatin1String("*.fet;*.spk;*.clu"));

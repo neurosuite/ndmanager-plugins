@@ -9,14 +9,8 @@ class NeuroscopeVideoLayout : public QWidget, public Ui_NeuroscopeVideoLayout
     Q_OBJECT
 
 public:
-    NeuroscopeVideoLayout( QWidget* parent = 0 );
-    
+    explicit NeuroscopeVideoLayout( QWidget* parent = 0 );
 
-public slots:
-   // TODO copy 0 functions, 0 signals, and 0 slots (not init and destroy!) from neuroscopevideolayout.h.old here
-
-private:
-   
 };
 
 #endif

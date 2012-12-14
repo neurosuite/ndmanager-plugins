@@ -19,20 +19,11 @@
  ***************************************************************************/
 // application specific includes
 #include "xmlreader.h"
-
-
-
-
-
 //include files for QT
 #include <qfile.h> 
 #include <qstring.h> 
 
 #include <QList>
-
-
-
-
 
 using namespace ndmanager;
 
@@ -47,7 +38,7 @@ bool XmlReader::parseFile(const QString& url){
     // Load XML document
     doc = xmlParseFile(url.toLatin1());
     if(doc == NULL)
-      return false;
+        return false;
 
     // Create xpath evaluation context
     xpathContex = xmlXPathNewContext(doc);
@@ -930,7 +921,8 @@ void XmlReader::getProgramInformation(ProgramInformation& programInformation) co
                     }
                 }
             }
-            if(parameters.size() != 0) programInformation.setParameterInformation(parameters);
+            if(!parameters.isEmpty())
+                programInformation.setParameterInformation(parameters);
         }
     }
 

@@ -41,7 +41,7 @@ public:
     /**Constructor.
  * @param parent the parent QWidget.
  */
-    ndManagerDoc(QWidget* parent);
+    explicit ndManagerDoc(QWidget* parent);
     ~ndManagerDoc();
 
     /**Information retun after a call to openFile/saveDocument/createFeatureFile*/

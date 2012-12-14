@@ -9,14 +9,7 @@ class SpikeLayout : public QWidget, public Ui_SpikeLayout
     Q_OBJECT
 
 public:
-    SpikeLayout( QWidget* parent = 0 );
-    
-
-public slots:
-   // TODO copy 0 functions, 0 signals, and 0 slots (not init and destroy!) from spikelayout.h.old here
-
-private:
-   
+    explicit SpikeLayout( QWidget* parent = 0 );
 };
 
 #endif

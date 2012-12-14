@@ -22,80 +22,81 @@
 #include <QMessageBox>
 
 AcquisitionSystemPage::AcquisitionSystemPage(QWidget *parent)
- : AcquisitionSystemLayout(parent),
-   doubleValidator(this),
-   intValidator(this),
-   isInit(true),
-   reset(false),
-   isLostFocus(false),
-   isReturnPressed(false),
-   modified(false),
-   isCheckAsked(false)
+    : AcquisitionSystemLayout(parent),
+      doubleValidator(this),
+      intValidator(this),
+      isInit(true),
+      reset(false),
+      isLostFocus(false),
+      isReturnPressed(false),
+      modified(false),
+      isCheckAsked(false)
 {
 
- //Set a validator on the line edits, the values have to be integers.
- nbChannelsLineEdit->setValidator(&intValidator);
- samplingRateLineEdit->setValidator(&doubleValidator);
- offsetLineEdit->setValidator(&intValidator);
- voltageRangeLineEdit->setValidator(&intValidator);
- amplificationLineEdit->setValidator(&intValidator);
- 
- connect(nbChannelsLineEdit,SIGNAL(returnPressed()),this,SLOT(nbChannelsLineEditReturnPressed()));
- connect(nbChannelsLineEdit,SIGNAL(editingFinished()),this,SLOT(nbChannelsLineEditLostFocus()));
- 
- 
- connect(resolutionComboBox,SIGNAL(activated(int)),this,SLOT(propertyModified()));
- connect(voltageRangeLineEdit,SIGNAL(textChanged(QString)),this,SLOT(propertyModified()));
- connect(amplificationLineEdit,SIGNAL(textChanged(QString)),this,SLOT(propertyModified()));
- connect(samplingRateLineEdit,SIGNAL(textChanged(QString)),this,SLOT(propertyModified()));
- connect(offsetLineEdit,SIGNAL(textChanged(QString)),this,SLOT(propertyModified()));
+    //Set a validator on the line edits, the values have to be integers.
+    nbChannelsLineEdit->setValidator(&intValidator);
+    samplingRateLineEdit->setValidator(&doubleValidator);
+    offsetLineEdit->setValidator(&intValidator);
+    voltageRangeLineEdit->setValidator(&intValidator);
+    amplificationLineEdit->setValidator(&intValidator);
+
+    connect(nbChannelsLineEdit,SIGNAL(returnPressed()),this,SLOT(nbChannelsLineEditReturnPressed()));
+    connect(nbChannelsLineEdit,SIGNAL(editingFinished()),this,SLOT(nbChannelsLineEditLostFocus()));
+
+
+    connect(resolutionComboBox,SIGNAL(activated(int)),this,SLOT(propertyModified()));
+    connect(voltageRangeLineEdit,SIGNAL(textChanged(QString)),this,SLOT(propertyModified()));
+    connect(amplificationLineEdit,SIGNAL(textChanged(QString)),this,SLOT(propertyModified()));
+    connect(samplingRateLineEdit,SIGNAL(textChanged(QString)),this,SLOT(propertyModified()));
+    connect(offsetLineEdit,SIGNAL(textChanged(QString)),this,SLOT(propertyModified()));
 }
 
 
 AcquisitionSystemPage::~AcquisitionSystemPage(){}
 
 void AcquisitionSystemPage::checkNbChannels(){
- isCheckAsked = true;
- nbChannelsChanged();
- isCheckAsked = false;
+    isCheckAsked = true;
+    nbChannelsChanged();
+    isCheckAsked = false;
 }
 
 void AcquisitionSystemPage::nbChannelsLineEditReturnPressed(){
- isReturnPressed = true;
- nbChannelsChanged();
- isReturnPressed = false;
+    isReturnPressed = true;
+    nbChannelsChanged();
+    isReturnPressed = false;
 }
 
 void AcquisitionSystemPage::nbChannelsLineEditLostFocus(){
- isLostFocus = true;
- nbChannelsChanged();
- isLostFocus = false;
+    isLostFocus = true;
+    nbChannelsChanged();
+    isLostFocus = false;
 }
 
 
 void AcquisitionSystemPage::nbChannelsChanged(){
- int newNbChannels = nbChannelsLineEdit->text().toInt();
- 
- //the return key has been press or the save action has been asked, the message box has triggered an lostFocusEvent
- if(isLostFocus && isReturnPressed || isLostFocus && isCheckAsked) return;
- if(newNbChannels != nbChannels && !isInit && !reset){
-  if(QMessageBox::warning(this, tr("Change the number of channels?"), tr("Changing the number of channels "
-      "will rest all the groups. Do you wish to continue?"),QMessageBox::Cancel|QMessageBox::Ok
-      )==QMessageBox::Cancel){
-   reset = true;   
-   nbChannelsLineEdit->setText(QString::number(nbChannels));
-   reset = false;
-  }
-  else{
-   nbChannels = newNbChannels;
-   modified = true;
-   emit nbChannelsModified(getNbChannels());
-  } 
- }
-//  else{
-//   nbChannels = newNbChannels;
-//   emit nbChannelsModified(getNbChannels()); 
-//  }
+    int newNbChannels = nbChannelsLineEdit->text().toInt();
+
+    //the return key has been press or the save action has been asked, the message box has triggered an lostFocusEvent
+    if(isLostFocus && isReturnPressed || isLostFocus && isCheckAsked)
+        return;
+    if(newNbChannels != nbChannels && !isInit && !reset){
+        if(QMessageBox::warning(this, tr("Change the number of channels?"), tr("Changing the number of channels "
+                                                                               "will rest all the groups. Do you wish to continue?"),QMessageBox::Cancel|QMessageBox::Ok
+                                )==QMessageBox::Cancel){
+            reset = true;
+            nbChannelsLineEdit->setText(QString::number(nbChannels));
+            reset = false;
+        }
+        else{
+            nbChannels = newNbChannels;
+            modified = true;
+            emit nbChannelsModified(getNbChannels());
+        }
+    }
+    //  else{
+    //   nbChannels = newNbChannels;
+    //   emit nbChannelsModified(getNbChannels());
+    //  }
 }
 
 

@@ -23,9 +23,6 @@
 //Include for the application
 #include <launcherlayout.h>
 
-
-
-
 /**
 @author Lynn Hazan
 */

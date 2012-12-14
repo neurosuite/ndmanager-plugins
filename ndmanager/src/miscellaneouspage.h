@@ -30,10 +30,6 @@
 #include <qpushbutton.h>
 #include <QFileDialog>
 
-
-
-
-
 /**
 @author Lynn Hazan
 */
@@ -41,7 +37,7 @@ class MiscellaneousPage : public NeuroscopeMiscLayout
 {
     Q_OBJECT
 public:
-    MiscellaneousPage(QWidget* parent = 0);
+    explicit MiscellaneousPage(QWidget* parent = 0);
     ~MiscellaneousPage();
 
     
@@ -52,7 +48,7 @@ public:
     }
 
     /**Sets the background image used for the trace view.*/
-    void setTraceBackgroundImage(QString image){
+    void setTraceBackgroundImage(const QString& image){
         traceBackgroundLineEdit->setText(image);
     }
 
@@ -82,7 +78,7 @@ public slots:
 
 private slots:
     void updateTraceBackgroundImage(){
-        QString image = QFileDialog::getOpenFileName(this, tr("Select the background image..."));
+        const QString image = QFileDialog::getOpenFileName(this, tr("Select the background image..."));
 
         setTraceBackgroundImage(image);
     }

@@ -29,6 +29,9 @@ LfpPage::LfpPage(QWidget* parent)
     connect(samplingRateLineEdit,SIGNAL(textChanged(QString)),this,SLOT(propertyModified()));
 }
 
-LfpPage::~LfpPage(){}
+LfpPage::~LfpPage()
+{
+
+}
 
 

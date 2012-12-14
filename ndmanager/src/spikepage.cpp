@@ -169,7 +169,7 @@ void SpikePage::getGroupInformation(QMap<int,  QMap<QString,QString> >& groupInf
 }
 
 void SpikePage::removeGroup(){
-    #ifdef KDAB_PENDING
+#ifdef KDAB_PENDING
     if(isIncorrectRow) return;
     modified = true;
     int nbSelections = groupTable->numSelections();
