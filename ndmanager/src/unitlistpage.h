@@ -31,7 +31,6 @@
 #include <qpushbutton.h>
 #include <qmap.h>
 #include <qregexp.h>
-#include <q3header.h> 
 #include <qlineedit.h>
 
 #include <QEvent>
