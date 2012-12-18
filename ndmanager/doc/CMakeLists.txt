@@ -12,9 +12,9 @@ macro (CREATE_HTML_DOC _docbook _dir )
    get_filename_component(_targ ${CMAKE_CURRENT_SOURCE_DIR} NAME)
    add_custom_target(${_targ} ALL DEPENDS "${_htmlDoc}")
 
-   install( DIRECTORY Images DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/klusters/ )
+   install( DIRECTORY Images DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/ndmanager/ )
    file(GLOB _html ${CMAKE_CURRENT_BINARY_DIR}/*.html)
-   install(FILES ${_html} ${_htmlDoc} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/klusters/)
+   install(FILES ${_html} ${_htmlDoc} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/doc/ndmanager/)
 
 endmacro (CREATE_HTML_DOC)
 
