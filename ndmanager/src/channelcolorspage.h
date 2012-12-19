@@ -36,7 +36,7 @@ class ChannelColorsPage : public ChannelColorsLayout
 {
     Q_OBJECT
 public:
-    ChannelColorsPage(QWidget* parent = 0);
+    explicit ChannelColorsPage(QWidget* parent = 0);
     ~ChannelColorsPage();
 
     /**Sets the number of channels, creating the correspondent number of lines in the table.
