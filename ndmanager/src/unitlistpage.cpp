@@ -173,8 +173,7 @@ void UnitListPage::currentChanged()
 
 void UnitListPage::unitChanged(int row,int column)
 {
-    #ifdef KDAB_PENDING
-    QString unit = unitTable->text(row,column);
+    const QString unit = unitTable->item(row,column)->text();
     //the group and cluster entries should only contain digits
     //the I.D. entry should only contain digits and '.'
     if((column==0||column==1)&&(unit.contains(QRegExp("[^\\d]"))!=0)||(column==4&&(unit.contains(QRegExp("[^\\d.]"))!=0)))
@@ -188,9 +187,8 @@ void UnitListPage::unitChanged(int row,int column)
     else
     {
         isIncorrect = false;
-        unitTable->adjustRow(row);
+        //unitTable->adjustRow(row);
     }
-#endif
 }
 
 
