@@ -79,8 +79,8 @@ public slots:
 private slots:
     void updateTraceBackgroundImage(){
         const QString image = QFileDialog::getOpenFileName(this, tr("Select the background image..."));
-
-        setTraceBackgroundImage(image);
+        if( !image.isEmpty() )
+          setTraceBackgroundImage(image);
     }
 
     void updateTraceBackgroundImage(const QString& image){

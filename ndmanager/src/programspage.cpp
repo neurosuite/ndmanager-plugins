@@ -103,7 +103,7 @@ ProgramsPage::~ProgramsPage(){}
 void ProgramsPage::loadProgram(){
 
     QStringList programUrls=QFileDialog::getOpenFileNames(this, tr("Select the Script(s) to load..."));
-    if(programUrls.size() != 0){
+    if(!programUrls.isEmpty()){
         QStringList::iterator iterator;
         for(iterator = programUrls.begin();iterator != programUrls.end();++iterator){
             QString programUrl = static_cast<QString>(*iterator);
