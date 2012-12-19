@@ -53,7 +53,6 @@ ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const QString& name)
     QVBoxLayout* frameLayout = new QVBoxLayout(this);
     frameLayout->setMargin(0);
     frameLayout->setSpacing(0);
-    qDebug()<<" ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const QString& name)";
     //Creat the upper part containing a tabWidget with 3 tabs, one with the parameters (ParameterPage), one with the script and one with the help.
     //In expert mode, the script tab does not exist.
 
