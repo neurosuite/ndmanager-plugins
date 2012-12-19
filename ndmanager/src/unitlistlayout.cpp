@@ -103,7 +103,7 @@ UnitListLayout::UnitListLayout(QWidget* parent, const char* name)
     unitTable->setColumnCount( 7 );
     unitTable->setSelectionMode( QAbstractItemView::MultiSelection );
 
-    layout20->addWidget( unitTable, 1, 1, 1, 2 );
+    layout20->addWidget( unitTable, 1, 0, 1, 6 );
 
     textLabel4_2_2_4_2_2_2 = new QLabel( this );
 
