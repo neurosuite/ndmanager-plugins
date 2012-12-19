@@ -86,4 +86,6 @@ if(QT_QTWEBKIT_FOUND)
 	target_link_libraries(ndmanager ${QT_QTWEBKIT_LIBRARY})
 endif()
 
+install(FILES ndManagerDefault.xml DESTINATION share/applications/ndmanager/)
+
 install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/ndmanager DESTINATION bin)

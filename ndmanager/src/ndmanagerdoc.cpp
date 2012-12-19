@@ -20,7 +20,7 @@
 // include files for Qt
 #include <qmap.h>
 #include <QList>
-
+#include <QDebug>
 
 // application specific includes
 #include <ndmanagerdoc.h>
@@ -141,12 +141,9 @@ ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::openDocument(const QStri
 
 ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::newDocument(){
     //If the user has no local version of the file the system default is used
-    QString path = QStandardPaths::writableLocation(QStandardPaths::ApplicationsLocation);
-    QDir dir(path);
-    bool ok = dir.mkpath(path);
-    path = path + QDir::separator() + QLatin1String("ndManagerDefault.xml");
-
+    QString path = QStandardPaths::locate (QStandardPaths::ApplicationsLocation, QLatin1String("ndmanager/ndManagerDefault.xml"));
     return openDocument(path);
+    
 }
 
 
