@@ -195,11 +195,6 @@ private slots:
 
     /**Process query.*/
     void slotQuery();
-    /**Process query.*/
-    void slotQueryResult(const QString &message);
-    void slotQueryResult(QProcess*,char* buffer,int buflen){
-        slotQueryResult(QString::fromLocal8Bit(buffer,buflen));
-    }
 private:
     /**Sets up all the actions used.*/
     void setupActions();
@@ -266,8 +261,6 @@ private:
     /**If the current file has been imported, this variable stores the original URL.*/
     QString importedFileUrl;
 
-    /**Query result buffer*/
-    QString queryResult;
     QString html;
 };
 

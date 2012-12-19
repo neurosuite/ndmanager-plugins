@@ -638,7 +638,6 @@ void ndManager::slotReload(){
 
 void ndManager::slotQuery(){
     slotStatusMsg(tr("Processing query..."));
-    queryResult.clear();
     QPointer<QueryInputDialog> queryInputDialog = new QueryInputDialog();
     if(queryInputDialog->exec() == QDialog::Accepted)
     {
@@ -653,9 +652,14 @@ void ndManager::slotQuery(){
         arguments<<QString::fromLatin1(" -name '*xml' -exec xpathReader --html {} \"%1\" \\; | sed 'N;s/<tr>/<tr class=\"tr1\">/;s/<tr>/<tr class=\"tr2\">/'").arg(queryInputDialog->getQuery());
         //process << "find " + queryInputDialog->getPath() + " -name '*xml' -exec xpathReader --html {} \"" + queryInputDialog->getQuery() + "\" \\; | sed 'N;s/<tr>/<tr class=\"tr1\">/;s/<tr>/<tr class=\"tr2\">/'";
         process.start(program, arguments);
-        connect(&process,SIGNAL(readyReadStandardOutput()),this,SLOT(slotQueryResult()));
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-        process.waitForFinished();
+        if (!process.waitForFinished()) {
+            //TODO
+            delete queryInputDialog;
+            return;
+        }
+        QString queryResult = process.readAll();
+
 #endif
         QApplication::restoreOverrideCursor();
 
@@ -681,11 +685,6 @@ void ndManager::slotQuery(){
     }
     delete queryInputDialog;
     slotStatusMsg(tr("Ready."));
-}
-
-
-void ndManager::slotQueryResult(const QString& message){
-    queryResult += message;
 }
 
 void ndManager::slotExpertMode(){
