@@ -22,6 +22,7 @@
 #include <QTextStream>
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QHBoxLayout>
 
 #include <QWebSettings>
 
@@ -30,7 +31,6 @@ QueryOutputDialog::QueryOutputDialog(const QString& htmlText,const QString& quer
     htmlText(htmlText),
     queryResult(queryResult)
 {
-
     setButtons(Close|User1|User2);
     setDefaultButton(Close);
     setFaceType(Plain);
@@ -39,7 +39,10 @@ QueryOutputDialog::QueryOutputDialog(const QString& htmlText,const QString& quer
     setButtonText( User1, tr("Save As Text") );
     setButtonText( User2, tr("Save As HTML") );
     QWidget * w = new QWidget(this);
+    QHBoxLayout *lay = new QHBoxLayout;
     html = new QWebView(w);
+    lay->addWidget(html);
+    w->setLayout(lay);
 
     addPage(w,QString());
 
