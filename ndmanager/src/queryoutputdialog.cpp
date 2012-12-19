@@ -32,8 +32,8 @@ QueryOutputDialog::QueryOutputDialog(const QString& htmlText,const QString& quer
     queryResult(queryResult)
 {
 
-    setButtons(Ok|User1|User2);
-    setDefaultButton(Ok);
+    setButtons(Close|User1|User2);
+    setDefaultButton(Close);
     setFaceType(Plain);
     setWindowTitle(caption);
 
