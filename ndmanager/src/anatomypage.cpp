@@ -40,13 +40,13 @@ AnatomyPage::AnatomyPage(QWidget* parent)
 
     connect(addGroupButton,SIGNAL(clicked()),this,SLOT(addGroup()));
     connect(removeGroupButton,SIGNAL(clicked()),this,SLOT(removeGroup()));
-    connect(groupTable, SIGNAL(currentChanged(int,int)),this, SLOT(slotValidate()));
-    connect(groupTable, SIGNAL(valueChanged(int,int)),this, SLOT(groupChanged(int,int)));
+    connect(groupTable, SIGNAL(currentCellChanged(int,int,int,int)),this, SLOT(slotValidate()));
+    connect(groupTable, SIGNAL(cellChanged(int,int)),this, SLOT(groupChanged(int,int)));
     connect(groupTable, SIGNAL(cellPressed(int,int)),this, SLOT(slotValidate()));
     connect(groupTable, SIGNAL(cellClicked(int,int)),this,SLOT(slotValidate()));
     connect(groupTable, SIGNAL(cellDoubleClicked(int,int)),this,SLOT(slotValidate()));
 
-    connect(attributesTable, SIGNAL(valueChanged(int,int)),this, SLOT(attributeChanged(int,int)));
+    connect(attributesTable, SIGNAL(cellChanged(int,int)),this, SLOT(attributeChanged(int,int)));
 }
 
 AnatomyPage::~AnatomyPage(){}

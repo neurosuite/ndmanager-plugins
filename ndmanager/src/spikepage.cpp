@@ -38,12 +38,6 @@ SpikePage::SpikePage(QWidget* parent)
       incorrectColumn(0),
       modified(false)
 {
-    //KDAB
-    /*
-    connect(groupTable, SIGNAL(valueChanged(int,int)),this, SLOT(groupChanged(int,int)));
-    */
-
-
     groupTable->horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
     //install a filter on the groupTable in order to validate the entries
     groupTable->installEventFilter(this);
@@ -55,6 +49,7 @@ SpikePage::SpikePage(QWidget* parent)
     connect(groupTable, SIGNAL(cellPressed(int,int)),this, SLOT(slotValidate()));
     connect(groupTable, SIGNAL(cellClicked(int,int)),this, SLOT(slotValidate()));
     connect(groupTable, SIGNAL(cellDoubleClicked(int,int)),this, SLOT(slotValidate()));
+    connect(groupTable, SIGNAL(cellChanged(int,int)),this, SLOT(groupChanged(int,int)));
 
 }
 

@@ -34,9 +34,6 @@
 UnitListPage::UnitListPage(QWidget* parent) :
     UnitListLayout(parent),isIncorrect(false),incorrectRow(0),modified(false)
 {
-#ifdef KDAB_PENDING
-    connect(unitTable, SIGNAL(valueChanged(int,int)),this, SLOT(unitChanged(int,int)));
-#endif
     unitTable->horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
 
     //install a filter on the unitTable in order to validate the entries
@@ -47,6 +44,7 @@ UnitListPage::UnitListPage(QWidget* parent) :
     connect(unitTable, SIGNAL(cellPressed(int,int)),this, SLOT(currentChanged()));
     connect(unitTable, SIGNAL(cellClicked(int,int)),this,SLOT(currentChanged()));
     connect(unitTable, SIGNAL(cellDoubleClicked(int,int)),this,SLOT(currentChanged()));
+    connect(unitTable, SIGNAL(cellChanged(int,int)),this, SLOT(unitChanged(int,int)));
 
     connect(addUnitButton,SIGNAL(clicked()),this,SLOT(addUnit()));
     connect(removeUnitButton,SIGNAL(clicked()),this,SLOT(removeUnit()));
