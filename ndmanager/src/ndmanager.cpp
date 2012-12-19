@@ -653,7 +653,7 @@ void ndManager::slotQuery(){
         arguments<<QString::fromLatin1(" -name '*xml' -exec xpathReader --html {} \"%1\" \\; | sed 'N;s/<tr>/<tr class=\"tr1\">/;s/<tr>/<tr class=\"tr2\">/'").arg(queryInputDialog->getQuery());
         //process << "find " + queryInputDialog->getPath() + " -name '*xml' -exec xpathReader --html {} \"" + queryInputDialog->getQuery() + "\" \\; | sed 'N;s/<tr>/<tr class=\"tr1\">/;s/<tr>/<tr class=\"tr2\">/'";
         process.start(program, arguments);
-        connect(&process,SIGNAL(receivedStdout(QProcess*,char*,int)),this,SLOT(slotQueryResult(QProcess*,char*,int)));
+        connect(&process,SIGNAL(readyReadStandardOutput()),this,SLOT(slotQueryResult()));
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
         process.waitForFinished();
 #endif
@@ -682,6 +682,7 @@ void ndManager::slotQuery(){
     delete queryInputDialog;
     slotStatusMsg(tr("Ready."));
 }
+
 
 void ndManager::slotQueryResult(const QString& message){
     queryResult += message;
