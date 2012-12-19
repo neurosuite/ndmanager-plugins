@@ -168,9 +168,8 @@ void AnatomyPage::addGroup(){
 }
 
 void AnatomyPage::groupChanged(int row,int column){
-#ifdef KDAB_PENDING
     modified = true;
-    QString group = groupTable->text(row,column);
+    const QString group = groupTable->item(row,column)->text();
 
     if(isIncorrectRow){
         QWidget* widget = groupTable->cellWidget(incorrectRow,0);
@@ -186,7 +185,7 @@ void AnatomyPage::groupChanged(int row,int column){
     }
     isIncorrectRow = false;
     incorrectRow = 0;
-    groupTable->adjustRow(row);
+    //groupTable->adjustRow(row);
 
     //the group entry should only contain digits and whitespaces
     if(group.contains(QRegExp("[^\\d\\s]")) != 0){
@@ -195,7 +194,6 @@ void AnatomyPage::groupChanged(int row,int column){
         groupTable->selectRow(incorrectRow);
         groupTable->setCurrentCell(incorrectRow,0);
     }
-#endif
 
 }
 
