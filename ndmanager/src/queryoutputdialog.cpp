@@ -26,7 +26,6 @@
 #include <QWebSettings>
 
 QueryOutputDialog::QueryOutputDialog(const QString& htmlText,const QString& queryResult,QWidget *parent,const QString& caption,const QString& urltext) :
-    //QPageDialog(parent,"Query Results",true,caption,Ok|User1|User2,Ok,true,KGuiItem(tr("Save As Text")),KGuiItem(tr("Save As HTML"))),
     QPageDialog(parent),
     htmlText(htmlText),
     queryResult(queryResult)
@@ -85,21 +84,23 @@ void QueryOutputDialog::slotUser1()
 
 void QueryOutputDialog::slotUser2()
 {
-    QString filename = QFileDialog::getSaveFileName(this,"saveQuery",QString(),"*.html");
+    const QString filename = QFileDialog::getSaveFileName(this,"saveQuery",QString(),"*.html");
     if(filename.isEmpty())
       return;
-    if(QFile::exists(filename) && QMessageBox::question(this,QString(),tr("File already exists. Overwrite?"),QMessageBox::Yes|QMessageBox::No) == QMessageBox::No)
+    if(QFile::exists(filename) &&
+            QMessageBox::question(this,QString(),tr("File already exists. Overwrite?"),QMessageBox::Yes|QMessageBox::No) == QMessageBox::No)
         return;
+
     QFile htmlFile(filename);
-    if(htmlFile.open(QIODevice::WriteOnly))
-    {
+    if(htmlFile.open(QIODevice::WriteOnly)) {
         QTextStream stream(&htmlFile);
         stream << htmlText;
         htmlFile.close();
-        if(htmlFile.error() == QFile::WriteError )
+        if(htmlFile.error() == QFile::WriteError ) {
             QMessageBox::critical(this,QString(),tr("Could not save the report. This may be due to incorrect write permissions."));
-    }
-    else
+        }
+    } else {
         QMessageBox::critical(this,QString(),tr("Could not save the report. This may be due to incorrect write permissions."));
+    }
 }
 

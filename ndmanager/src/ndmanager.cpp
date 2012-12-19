@@ -33,6 +33,7 @@
 #include <QMenuBar>
 #include <QDebug>
 #include <QSettings>
+#include <QPointer>
 
 // application specific includes
 #include "ndmanager.h"
@@ -141,6 +142,9 @@ void ndManager::setupActions()
 
     QMenu *actionMenu = menuBar()->addMenu(tr("&Actions"));
     mQueryAction = actionMenu->addAction(tr("&Query"));
+#ifndef Q_OS_UNIX
+    mQueryAction->setEnabled(false);
+#endif
     connect(mQueryAction, SIGNAL(triggered()), this, SLOT(slotQuery()));
 
     mProcessingManager = actionMenu->addAction(tr("Show Processing Manager"));
@@ -408,7 +412,7 @@ void ndManager::slotFileClose(){
             QStringList::iterator iterator;
             for(iterator = programModified.begin(); iterator != programModified.end(); ++iterator){
                 QString name = *iterator;
-                switch(QMessageBox::question(0,tr("Program description modification"),tr("The description of the program %1 has been modified, do you want to save the it?").arg(name),QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
+                switch(QMessageBox::question(this,tr("Program description modification"),tr("The description of the program %1 has been modified, do you want to save the it?").arg(name),QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
                 case QMessageBox::Save://<=> Save
                     parameterView->saveProgramDescription(name);
                     break;
@@ -424,7 +428,7 @@ void ndManager::slotFileClose(){
         if(!hasBeenCancel){
             //if at least one parameter has been modified, prompt the user to save the information
             if(parameterView->isModified()){
-                switch(QMessageBox::question(0,tr("Parameters modification"),tr("Some parameters have changed, do you want to save the parameter file?"),QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
+                switch(QMessageBox::question(this,tr("Parameters modification"),tr("Some parameters have changed, do you want to save the parameter file?"),QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
                 case QMessageBox::Save://<=> Save
                     slotSave();
                     break;
@@ -448,7 +452,6 @@ void ndManager::slotFileClose(){
 
 bool ndManager::queryClose()
 {
-
     QSettings settings;
     settings.beginGroup("General");
     settings.setValue("expertMode",mExpertMode->isChecked());
@@ -461,7 +464,7 @@ bool ndManager::queryClose()
         const QStringList scriptModified = parameterView->modifiedScripts();
         if( !scriptModified.isEmpty() ){
             Q_FOREACH(const QString& name, scriptModified) {
-                switch(QMessageBox::question(0,tr("Script modification"),tr("The script %1 has been modified, do you want to save the it?").arg(name),QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
+                switch(QMessageBox::question(this,tr("Script modification"),tr("The script %1 has been modified, do you want to save the it?").arg(name),QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
                 case QMessageBox::Save://<=> Save
                     parameterView->saveScript(name);
                     break;
@@ -478,7 +481,7 @@ bool ndManager::queryClose()
         const QStringList programModified = parameterView->modifiedProgramDescription();
         if(!programModified.isEmpty()){
             Q_FOREACH(const QString& name, programModified) {
-                switch(QMessageBox::question(0,tr("Program description modification"),tr("The description of the program %1 has been modified, do you want to save the it?").arg(name),QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
+                switch(QMessageBox::question(this,tr("Program description modification"),tr("The description of the program %1 has been modified, do you want to save the it?").arg(name),QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
                 case QMessageBox::Save://<=> Save
                     parameterView->saveProgramDescription(name);
                     break;
@@ -493,7 +496,7 @@ bool ndManager::queryClose()
 
         //if at least one parameter has been modified, prompt the user to save the information
         if(parameterView->isModified()){
-            switch(QMessageBox::question(0,tr("Parameters modification"),tr("Some parameters have changed, do you want to save the parameter file?"),QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
+            switch(QMessageBox::question(this,tr("Parameters modification"),tr("Some parameters have changed, do you want to save the parameter file?"),QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
             case QMessageBox::Save://<=> Save
                 slotSave();
                 break;
@@ -528,7 +531,7 @@ void ndManager::slotSave(){
             QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
             int saveStatus = doc->saveAs(url);
             if(saveStatus == ndManagerDoc::SAVE_ERROR){
-                QMessageBox::critical(0, tr("IO Error!"),tr("The current file could not be saved possibly because of insufficient file access permissions."
+                QMessageBox::critical(this, tr("IO Error!"),tr("The current file could not be saved possibly because of insufficient file access permissions."
                                                             " You may consider saving your session file to another location."));
             }
             if(importedFile || newFile){
@@ -544,7 +547,7 @@ void ndManager::slotSave(){
         //Save the parameter file
         int saveStatus = doc->save();
         if(saveStatus == ndManagerDoc::SAVE_ERROR){
-            QMessageBox::critical(0, tr("IO Error!"),tr("The current file could not be saved possibly because of insufficient file access permissions."
+            QMessageBox::critical(this, tr("IO Error!"),tr("The current file could not be saved possibly because of insufficient file access permissions."
                                                         " You may consider saving your session file to another location using the Save As entry in the File menu."));
         }
     }
@@ -582,7 +585,7 @@ void ndManager::slotSaveDefault(){
     slotStatusMsg(tr("Saving as default..."));
     int saveStatus = doc->saveDefault();
     if(saveStatus == ndManagerDoc::SAVE_ERROR){
-        QMessageBox::critical(0, tr("IO Error!"),tr("The current file could not be saved as the default parameter file."));
+        QMessageBox::critical(this, tr("IO Error!"),tr("The current file could not be saved as the default parameter file."));
     }
     slotStatusMsg(tr("Ready."));
 }
@@ -636,18 +639,23 @@ void ndManager::slotReload(){
 void ndManager::slotQuery(){
     slotStatusMsg(tr("Processing query..."));
     queryResult.clear();
-    QueryInputDialog *queryInputDialog = new QueryInputDialog();
+    QPointer<QueryInputDialog> queryInputDialog = new QueryInputDialog();
     if(queryInputDialog->exec() == QDialog::Accepted)
     {
         // Run query
         QProcess process;
-#if KDAB_PENDING
+#ifdef Q_OS_UNIX
         //Not portable
-        process.setUseShell(true);
-        process << "find " + queryInputDialog->getPath() + " -name '*xml' -exec xpathReader --html {} \"" + queryInputDialog->getQuery() + "\" \\; | sed 'N;s/<tr>/<tr class=\"tr1\">/;s/<tr>/<tr class=\"tr2\">/'";
+        //process.setUseShell(true);
+        const QString program("find");
+        QStringList arguments;
+        arguments<<queryInputDialog->getPath();
+        arguments<<QString::fromLatin1(" -name '*xml' -exec xpathReader --html {} \"%1\" \\; | sed 'N;s/<tr>/<tr class=\"tr1\">/;s/<tr>/<tr class=\"tr2\">/'").arg(queryInputDialog->getQuery());
+        //process << "find " + queryInputDialog->getPath() + " -name '*xml' -exec xpathReader --html {} \"" + queryInputDialog->getQuery() + "\" \\; | sed 'N;s/<tr>/<tr class=\"tr1\">/;s/<tr>/<tr class=\"tr2\">/'";
+        process.start(program, arguments);
         connect(&process,SIGNAL(receivedStdout(QProcess*,char*,int)),this,SLOT(slotQueryResult(QProcess*,char*,int)));
         QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
-        process.start(QProcess::Block,QProcess::Stdout);
+        process.waitForFinished();
 #endif
         QApplication::restoreOverrideCursor();
 
