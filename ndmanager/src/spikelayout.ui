@@ -242,7 +242,4 @@
   </widget>
   <layoutdefault spacing="6" margin="11"/>
   <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
-  <resources>
-    <include location="spikelayout.qrc"/>
-  </resources>
 </ui>

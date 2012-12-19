@@ -110,7 +110,4 @@
   </widget>
   <layoutdefault spacing="6" margin="11"/>
   <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
-  <resources>
-    <include location="lfplayout.qrc"/>
-  </resources>
 </ui>
