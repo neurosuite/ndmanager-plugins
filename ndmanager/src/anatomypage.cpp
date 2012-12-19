@@ -208,13 +208,13 @@ void AnatomyPage::attributeChanged(int row,int column){
         QString attribut = item->text();
         attribut.toInt(&ok);
         if(ok) {
-            //KDAB_PENDING attributesTable->adjustRow(row);
+            //attributesTable->adjustRow(row);
         } else {
             attributesTable->selectRow(row);
             attributesTable->setCurrentCell(row,column);
         }
     } else {
-        //KDAB_PENDING attributesTable->adjustRow(row);
+        //attributesTable->adjustRow(row);
     }
 }
 

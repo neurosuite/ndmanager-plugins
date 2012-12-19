@@ -54,16 +54,16 @@ public:
 
     /**Returns the screen gain in milivolts by centimeters used to display the field potentiels.
   */
-    inline float getScreenGain() const{
+    float getScreenGain() const{
         return screenGainLineEdit->text().toFloat();
     }
 
     /**Returns the background image used for the trace view.*/
-    inline QString getTraceBackgroundImage()const{return traceBackgroundLineEdit->text();}
+    QString getTraceBackgroundImage()const{return traceBackgroundLineEdit->text();}
 
 
     /**True if at least one property has been modified, false otherwise.*/
-    inline bool isModified()const{return modified;}
+    bool isModified()const{return modified;}
 
     /**Indicates that the initialisation is finished.*/
     void initialisationOver(){isInit = false;}

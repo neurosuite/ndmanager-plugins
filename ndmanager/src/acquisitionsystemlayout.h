@@ -9,14 +9,8 @@ class AcquisitionSystemLayout : public QWidget, public Ui_AcquisitionSystemLayou
     Q_OBJECT
 
 public:
-    AcquisitionSystemLayout( QWidget* parent = 0 );
-    
+    explicit AcquisitionSystemLayout( QWidget* parent = 0 );
 
-public slots:
-   // TODO copy 0 functions, 0 signals, and 0 slots (not init and destroy!) from acquisitionsystemlayout.h.old here
-
-private:
-   
 };
 
 #endif

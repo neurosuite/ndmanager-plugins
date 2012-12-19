@@ -50,16 +50,16 @@ public:
     void setNotes(const QString& notes){this->notes = notes;}
 
     /**Gets the date.*/
-    inline QDate getDate() const{return date;}
+    QDate getDate() const{return date;}
 
     /**Gets the experimenters.*/
-    inline QString getExperimenters() const {return experimenters;}
+    QString getExperimenters() const {return experimenters;}
 
     /**Gets the description.*/
-    inline QString getDescription() const {return description;}
+    QString getDescription() const {return description;}
 
     /**Gets the notes.*/
-    inline QString getNotes() const {return notes;}
+    QString getNotes() const {return notes;}
 
 private:
     QDate date;

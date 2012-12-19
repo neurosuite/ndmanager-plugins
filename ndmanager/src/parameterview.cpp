@@ -341,9 +341,12 @@ void ParameterView::initialize(QMap<int, QList<int> >& anatomicalGroups,QMap<QSt
     acquisitionSystem->initialisationOver();
 
     //Initialize the video page
-    if(videoInformation[SAMPLING_RATE] != 0) video->setSamplingRate(videoInformation[SAMPLING_RATE]);
-    if(videoInformation[WIDTH] != 0) video->setWidth(static_cast<int>(videoInformation[WIDTH]));
-    if(videoInformation[HEIGHT] != 0) video->setHeight(static_cast<int>(videoInformation[HEIGHT]));
+    if(videoInformation[SAMPLING_RATE] != 0)
+        video->setSamplingRate(videoInformation[SAMPLING_RATE]);
+    if(videoInformation[WIDTH] != 0)
+        video->setWidth(static_cast<int>(videoInformation[WIDTH]));
+    if(videoInformation[HEIGHT] != 0)
+        video->setHeight(static_cast<int>(videoInformation[HEIGHT]));
     video->initialisationOver();
 
     //Initialize the lfp page

@@ -48,11 +48,11 @@ public:
     ~ProgramPage();
 
     /**Returns the parameterPage contained in the page.*/
-    inline ParameterPage* getParameterPage() const {return parameters;}
+    ParameterPage* getParameterPage() const {return parameters;}
 
 
     /**Returns the script view contained in the page.*/
-    inline QTextEdit* getScriptView(){return scriptView;}
+    QTextEdit* getScriptView(){return scriptView;}
 
     /**Returns the content of the help.*/
     QString getHelp() const;
@@ -76,7 +76,7 @@ public:
     bool isDescriptionModifiedAndNotSaved()const;
 
     /**True if the script has been modified, false otherwise.*/
-    inline bool isScriptModified()const{return sciptIsModified;}
+    bool isScriptModified()const{return sciptIsModified;}
 
     /**Indicates that the initialisation is finished.*/
     void initialisationOver(){isInit = false;}

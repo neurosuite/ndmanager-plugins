@@ -36,7 +36,7 @@ public:
     void write() const;
 
     Configuration();
-    inline ~Configuration(){}
+    ~Configuration(){}
     Configuration(const Configuration&);
 
     friend Configuration& configuration();

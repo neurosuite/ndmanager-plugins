@@ -31,12 +31,6 @@
 #include <QList>
 
 
-
-
-
-
-
-
 /**
 @author Lynn Hazan
 */
@@ -55,10 +49,10 @@ public:
     /**Sets the name of the program.
   * @param name name of the program.
   */
-    void setProgramName(QString name){nameLineEdit->setText(name);}
+    void setProgramName(const QString& name){nameLineEdit->setText(name);}
 
     /**Gets the name of the program.*/
-    inline QString getProgramName() const{return nameLineEdit->text();}
+    QString getProgramName() const{return nameLineEdit->text();}
 
     /**Updates an internal status to reflect the change in program name.
   */
@@ -77,10 +71,10 @@ public:
     QMap<int, QStringList > getParameterInformation();
 
     /**True if at least one of the description property has been modified, false otherwise.*/
-    inline bool isDescriptionModified()const{return descriptionModified;}
+    bool isDescriptionModified()const{return descriptionModified;}
 
     /**True if the value of at least one of parameters has been modified, false otherwise.*/
-    inline bool isValueModified()const{return valueModified;}
+    bool isValueModified()const{return valueModified;}
 
 signals:
     void nameChanged(const QString& extension);

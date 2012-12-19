@@ -37,7 +37,7 @@ class GeneralInfoPage : public GeneralInfoLayout
 {
     Q_OBJECT
 public:
-    GeneralInfoPage(QWidget *parent = 0);
+    explicit GeneralInfoPage(QWidget *parent = 0);
     ~GeneralInfoPage();
     
     /**Sets the date.*/

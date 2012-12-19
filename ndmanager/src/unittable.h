@@ -28,7 +28,7 @@
 class UnitTable : public QTableWidget
 {
 public:
-    UnitTable(QWidget * parent = 0 );
+    explicit UnitTable(QWidget * parent = 0 );
     UnitTable( int numRows, int numCols, QWidget * parent = 0 );
 
     ~UnitTable();

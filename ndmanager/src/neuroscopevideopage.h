@@ -42,7 +42,7 @@ class NeuroscopeVideoPage : public NeuroscopeVideoLayout
 {
     Q_OBJECT
 public:
-    NeuroscopeVideoPage(QWidget* parent = 0);
+    explicit NeuroscopeVideoPage(QWidget* parent = 0);
     ~NeuroscopeVideoPage();
 
     /**Sets the background image.*/
@@ -54,8 +54,7 @@ public:
                 //flip and rotation values should have been set before any call to this function.
                 updateDisplayedImage();
             }
-        }
-        else{
+        } else {
             QPixmap pixmap;
             pixmap = pixmap.copy(0, 0, width,height);
             pixmap.fill(Qt::black);
