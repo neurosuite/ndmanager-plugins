@@ -91,7 +91,7 @@ ProgramsPage::ProgramsPage(bool expertMode,QWidget *parent)
 
     //Set an icon on the load button
 
-    loadButton->setIcon(QIcon(":/icons/fileopen"));
+    loadButton->setIcon(QIcon(":/shared-icons/folder-open"));
 
     connect(loadButton,SIGNAL(clicked()),this,SLOT(loadProgram()));
 }
