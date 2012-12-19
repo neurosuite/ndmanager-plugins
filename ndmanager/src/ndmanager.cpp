@@ -85,6 +85,7 @@ void ndManager::setupActions()
     QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
 
     mNewAction = fileMenu->addAction(tr("&New..."));
+    mNewAction->setIcon(QPixmap(":/shared-icons/document-new"));
     mNewAction->setShortcut(QKeySequence::New);
     connect(mNewAction, SIGNAL(triggered()), this, SLOT(slotNewFile()));
 
@@ -172,6 +173,7 @@ void ndManager::setupActions()
     QAction *about = helpMenu->addAction(tr("About"));
     connect(about,SIGNAL(triggered()), this,SLOT(slotAbout()));
 
+    mMainToolBar->addAction(mNewAction);
     mMainToolBar->addAction(mOpenAction);
     mMainToolBar->addAction(mSaveAction);
 
