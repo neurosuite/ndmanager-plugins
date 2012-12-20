@@ -317,7 +317,7 @@ void  XmlWriter::setSpikeDetectionInformation(QMap<int, QList<int> >& spikeGroup
     if(channelGroupsElement.hasChildNodes()) spikeDetection.appendChild(channelGroupsElement);
 }
 
-void XmlWriter::setMiscellaneousInformation(float screenGain,QString traceBackgroundImage){
+void XmlWriter::setMiscellaneousInformation(float screenGain, const QString &traceBackgroundImage){
     miscellaneous = doc.createElement(MISCELLANEOUS);
 
     QDomElement gainElement = doc.createElement(SCREENGAIN);

@@ -21,10 +21,38 @@
 #define UNITTABLE_H
 
 #include <QTableWidget>
+#include <QDebug>
 
 /**
     @author Lynn Hazan <lynn.hazan@myrealbox.com>
 */
+
+class UnitTableItem : public QTableWidgetItem
+{
+public:
+    explicit UnitTableItem(const QString& text)
+        : QTableWidgetItem(text)
+    {
+    }
+    static QString key(const QString& txt) {
+        QString text = txt;
+        float fVal = text.toFloat();
+        if (fVal > 0) // true only if txt is a float number
+        {
+            text.prepend("00000");
+            text = text.right(5);
+            text.append(".0");
+        }
+        return text;
+    }
+
+
+    bool operator <(const QTableWidgetItem &other) const
+    {
+        return UnitTableItem::key(text()) < UnitTableItem::key(other.text());
+    }
+};
+
 class UnitTable : public QTableWidget
 {
 public:

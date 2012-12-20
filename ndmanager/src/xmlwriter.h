@@ -103,7 +103,7 @@ public:
   * @param screenGain screen gain in millivolts by centimeters used to display the field potentiels.
   * @param traceBackgroundImage background image for the trace view in NeuroScope.
   */
-    void setMiscellaneousInformation(float screenGain,QString traceBackgroundImage);
+    void setMiscellaneousInformation(float screenGain,const QString& traceBackgroundImage);
 
     /**
   * Creates the elements containing the video information used in NeuroScope.

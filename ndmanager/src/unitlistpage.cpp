@@ -95,8 +95,8 @@ void UnitListPage::setUnits(const QMap<int, QStringList >& units)
         const QStringList info = iterator.value();
         for (uint i=0;i<info.count();++i)
         {
-            //UnitTableItem* item = new UnitTableItem(unitTable,QTableItem::OnTyping,info[i]);
-            unitTable->setItem(iterator.key(),i,new QTableWidgetItem(info.at(i)));
+            UnitTableItem* item = new UnitTableItem(info.at(i));
+            unitTable->setItem(iterator.key(),i,item);
         }
     }//end of units loop
 }
@@ -157,8 +157,8 @@ void UnitListPage::addUnit()
 
     for(int i=0;i<unitTable->columnCount();++i)
     {
-        //UnitTableItem* item = new UnitTableItem(unitTable,QTableItem::WhenCurrent,"");
-        unitTable->setItem(unitTable->rowCount() - 1,i,new QTableWidgetItem());
+        UnitTableItem* item = new UnitTableItem("");
+        unitTable->setItem(unitTable->rowCount() - 1,i,item);
     }
 }
 
