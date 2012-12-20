@@ -13,5 +13,6 @@
         <file>icons/stop.png</file>
         <file>icons/units.png</file>
         <file>icons/video.png</file>
+        <file>icons/folder-blue.png</file>
     </qresource>
 </RCC>

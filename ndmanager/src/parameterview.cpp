@@ -64,7 +64,7 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
     generalInfo = new GeneralInfoPage(w);
     QPageWidgetItem *item = new QPageWidgetItem(generalInfo,tr("General"));
     item->setHeader(tr("General information"));
-    item->setIcon(QIcon(":/icons/kfm"));
+    item->setIcon(QIcon(":/icons/folder-blue"));
     addPage(item);
 
     //adding page "Acquisition System"
