@@ -172,6 +172,7 @@ void ndManager::setupActions()
     viewStatusBar = settingsMenu->addAction(tr("Show StatusBar"));
     viewStatusBar->setCheckable(true);
     connect(viewStatusBar,SIGNAL(triggered()), this,SLOT(slotViewStatusBar()));
+    viewStatusBar->setChecked(true);
 
     QMenu *helpMenu = menuBar()->addMenu(tr("Help"));
     QAction *about = helpMenu->addAction(tr("About"));
