@@ -29,11 +29,9 @@
 */
 class NeuroscopeVideoInfo{
 public:
-    NeuroscopeVideoInfo(){
-        flip = 0;
-        rotation = 0;
-        trajectory = 0;
-        backgroundImage = "";
+    NeuroscopeVideoInfo()
+        :flip(0), rotation(0),trajectory(0)
+    {
     }
 
     ~NeuroscopeVideoInfo(){}

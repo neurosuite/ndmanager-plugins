@@ -45,9 +45,6 @@
 #include "ndmanagerutils.h"
 
 
-
-
-
 using namespace ndmanager;
 
 const QString ParameterView::DEFAULT_COLOR = "#0080ff";
@@ -434,7 +431,7 @@ void ParameterView::initialize(QMap<int, QList<int> >& anatomicalGroups,QMap<QSt
                     int i = firstLine.indexOf(QRegExp("^#!"));
 
                     if(i != -1){
-                        //KDAB_PORTING scriptDoc->openURL(path);
+                        scriptView->setText(stream.readAll());
                         file.close();
                         programPage->initialisationOver();
                     }
@@ -506,7 +503,7 @@ void ParameterView::loadProgram(const QString &programUrl) {
                 int i = firstLine.indexOf(QRegExp("^#!"));
 
                 if(i != -1){
-                    //KDAB_PENDING scriptDoc->openURL(path);
+                    scriptView->setText(stream.readAll());
                     file.close();
                 } else {
                     QString message =  tr("The file %1  does not appear to be a script file (a script file should begin with #!).").arg(name);

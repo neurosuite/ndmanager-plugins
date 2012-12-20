@@ -192,7 +192,7 @@ void ParameterPage::removeParameter(){
 
 void ParameterPage::changeCaption()
 {
-    QString name = nameLineEdit->text();
+    const QString name = nameLineEdit->text();
     if(name.isEmpty() && !name.contains("New Script-"))
         emit nameChanged(tr("Unknown"));
     else
