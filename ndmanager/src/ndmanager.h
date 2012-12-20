@@ -195,6 +195,8 @@ private slots:
 
     /**Process query.*/
     void slotQuery();
+
+    void slotHanbook();
 private:
     /**Sets up all the actions used.*/
     void setupActions();

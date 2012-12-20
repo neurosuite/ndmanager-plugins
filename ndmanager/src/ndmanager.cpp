@@ -40,6 +40,8 @@
 #include "configuration.h"  // class Configuration
 #include "queryinputdialog.h"
 #include "queryoutputdialog.h"
+#include "qhelpviewer.h"
+#include "config-ndmanager.h"
 
 
 ndManager::ndManager()
@@ -175,6 +177,10 @@ void ndManager::setupActions()
     viewStatusBar->setChecked(true);
 
     QMenu *helpMenu = menuBar()->addMenu(tr("Help"));
+    QAction *handbook = helpMenu->addAction(tr("Handbook"));
+    handbook->setShortcut(Qt::Key_F1);
+    connect(handbook,SIGNAL(triggered()), this,SLOT(slotHanbook()));
+
     QAction *about = helpMenu->addAction(tr("About"));
     connect(about,SIGNAL(triggered()), this,SLOT(slotAbout()));
 
@@ -808,3 +814,11 @@ void ndManager::slotAbout()
 }
 
 
+void ndManager::slotHanbook()
+{
+    QHelpViewer *helpDialog = new QHelpViewer(this);
+    helpDialog->setHtml(NDMANAGER_DOC_PATH + QLatin1String("index.html"));
+    helpDialog->setAttribute( Qt::WA_DeleteOnClose );
+    helpDialog->show();
+    qDebug()<<" void ndManager::slotHanbook()";
+}
