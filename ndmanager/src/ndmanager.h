@@ -235,7 +235,7 @@ private:
     QAction* mSaveAsDefaultAction;
     QAction* mNewAction;
     QAction* mQueryAction;
-    QAction* mProcessingManager;
+    //QAction* mProcessingManager;
 
     QAction* mExpertMode;
     //QAction* mPreferenceAction;

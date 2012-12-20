@@ -147,7 +147,7 @@ void ndManager::setupActions()
 #endif
     connect(mQueryAction, SIGNAL(triggered()), this, SLOT(slotQuery()));
 
-    mProcessingManager = actionMenu->addAction(tr("Show Processing Manager"));
+    //mProcessingManager = actionMenu->addAction(tr("Show Processing Manager"));
 
     QMenu *settingsMenu = menuBar()->addMenu(tr("&Settings"));
 
@@ -776,7 +776,7 @@ void ndManager::slotStateChanged(const QString& state)
         mSaveAction->setEnabled(false);
         mCloseAction->setEnabled(false);
         mSaveAsDefaultAction->setEnabled(false);
-        mProcessingManager->setEnabled(false);
+        //mProcessingManager->setEnabled(false);
         mExpertMode->setEnabled(false);
         mOpenAction->setEnabled(true);
         mNewAction->setEnabled(true);
@@ -789,12 +789,12 @@ void ndManager::slotStateChanged(const QString& state)
         mSaveAction->setEnabled(true);
         mCloseAction->setEnabled(true);
         mSaveAsDefaultAction->setEnabled(true);
-        mProcessingManager->setEnabled(true);
+        //mProcessingManager->setEnabled(true);
         mExpertMode->setEnabled(true);
     } else if(state == QLatin1String("showManager")) {
-        mProcessingManager->setEnabled(false);
+        //mProcessingManager->setEnabled(false);
     } else if(state == QLatin1String("hideManger")) {
-        mProcessingManager->setEnabled(false);
+        //mProcessingManager->setEnabled(false);
     } else {
         qDebug()<<" state unknown"<<state;
     }
