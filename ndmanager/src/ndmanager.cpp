@@ -452,11 +452,6 @@ void ndManager::slotFileClose(){
 
 bool ndManager::queryClose()
 {
-    QSettings settings;
-    settings.beginGroup("General");
-    settings.setValue("expertMode",mExpertMode->isChecked());
-    settings.endGroup();
-
     if(doc == 0 || mainDock == 0L)
         return true;
     else{
@@ -688,6 +683,11 @@ void ndManager::slotQuery(){
 }
 
 void ndManager::slotExpertMode(){
+    QSettings settings;
+    settings.beginGroup("General");
+    settings.setValue("expertMode",mExpertMode->isChecked());
+    settings.endGroup();
+
     bool isImportedFile = importedFile;
     bool isNewFile = newFile;
 

@@ -164,7 +164,7 @@ void ManagerView::updateDocUrl(const QString &url){
 }
 
 void ManagerView::updateDocumentInformation(const QString& url,bool isUptoDate){
-    parameterUrl = QString(url);
+    parameterUrl = url;
     this->isUptoDate = isUptoDate;
 }
 
