@@ -261,7 +261,7 @@ void ndManager::slotNewFile(){
             return;
         }
 
-        QString url = QDir::currentPath()+QDir::separator() + "Untitled";
+        const QString url = QDir::currentPath()+QDir::separator() + "Untitled";
         doc->rename(url);
         filePath = url;
         setWindowTitle(url);
@@ -399,10 +399,8 @@ void ndManager::slotFileClose(){
 
         //check first if some scripts have been modified
         QStringList scriptModified = parameterView->modifiedScripts();
-        if(!scriptModified.isEmpty()){
-            QStringList::iterator iterator;
-            for(iterator = scriptModified.begin(); iterator != scriptModified.end(); ++iterator){
-                QString name = *iterator;
+        if(!scriptModified.isEmpty()) {
+            Q_FOREACH(const QString& name, scriptModified ) {
                 switch(QMessageBox::question(0,tr("Script modification"),tr("The script %1 has been modified, do you want to save the it?").arg(name),QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
                 case QMessageBox::Save://<=> Save
                     parameterView->saveScript(name);
@@ -418,9 +416,7 @@ void ndManager::slotFileClose(){
         //check if some descriptions have been modified
         QStringList programModified = parameterView->modifiedProgramDescription();
         if(!programModified.isEmpty()){
-            QStringList::iterator iterator;
-            for(iterator = programModified.begin(); iterator != programModified.end(); ++iterator){
-                QString name = *iterator;
+            Q_FOREACH(const QString& name, programModified ) {
                 switch(QMessageBox::question(this,tr("Program description modification"),tr("The description of the program %1 has been modified, do you want to save the it?").arg(name),QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
                 case QMessageBox::Save://<=> Save
                     parameterView->saveProgramDescription(name);
@@ -451,12 +447,12 @@ void ndManager::slotFileClose(){
             //close the document
             doc->closeDocument();
             //Delete the main view
+            mainDock->hide();
             delete mainDock;
             mainDock = 0L;
             resetState();
         }
     }
-
 }
 
 bool ndManager::queryClose()
@@ -510,7 +506,6 @@ bool ndManager::queryClose()
                 return false;
             }
         }
-
         //close the document
         doc->closeDocument();
         return true;
