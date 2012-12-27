@@ -99,8 +99,11 @@ void ndManager::setupActions()
     connect(mOpenAction, SIGNAL(triggered()), this, SLOT(slotFileOpen()));
 
     mFileOpenRecent = new QRecentFileAction(this);
+    QSettings settings;
+    mFileOpenRecent->setListOfRecentFile(settings.value(QLatin1String("Recent Files"),QStringList()).toStringList());
     fileMenu->addAction(mFileOpenRecent);
     connect(mFileOpenRecent, SIGNAL(recentFileSelected(QString)), this, SLOT(slotFileOpenRecent(QString)));
+    connect(mFileOpenRecent, SIGNAL(recentFileListChanged()), this, SLOT(slotSaveRecentFiles()));
 
     mUseTemplateAction = fileMenu->addAction(tr("Use &Template..."));
     connect(mUseTemplateAction, SIGNAL(triggered()), this, SLOT(slotImport()));
@@ -159,7 +162,6 @@ void ndManager::setupActions()
     connect(mExpertMode, SIGNAL(triggered(bool)), this, SLOT(slotExpertMode()));
     settingsMenu->addSeparator();
 
-    QSettings settings;
     settings.beginGroup("General");
     mExpertMode->setChecked(settings.value("expertMode").toBool());
     settings.endGroup();
@@ -820,4 +822,10 @@ void ndManager::slotHanbook()
     helpDialog->setHtml(NDMANAGER_DOC_PATH + QLatin1String("index.html"));
     helpDialog->setAttribute( Qt::WA_DeleteOnClose );
     helpDialog->show();
+}
+
+void ndManager::slotSaveRecentFiles()
+{
+    QSettings settings;
+    settings.setValue(QLatin1String("Recent Files"),mFileOpenRecent->listOfRecentFile());
 }
