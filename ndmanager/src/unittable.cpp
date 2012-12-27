@@ -35,15 +35,4 @@ UnitTable::~UnitTable()
 {
 }
 
-void UnitTable::columnClicked ( int col ){
-    #ifdef KDAB_PENDING
-    static bool ascending = TRUE;
-    if (!sorting()) return;
-    ascending=!ascending;
-    sortColumn( col, ascending, TRUE);
-#endif
-}
-
-
-
 

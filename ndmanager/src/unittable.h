@@ -61,8 +61,6 @@ public:
 
     ~UnitTable();
 
-    virtual void columnClicked(int col);
-
 };
 
 #endif
