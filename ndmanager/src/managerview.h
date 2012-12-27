@@ -94,7 +94,7 @@ private slots:
 
     /**Launches the script selected in the dropdown list containing the existing scripts.
  */
-    void launchScript();
+    //void launchScript();
 
     /**Stops the currently running script.
  */

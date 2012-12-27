@@ -127,7 +127,7 @@ void ManagerView::launchKlusters(){
         }
     }
 }
-
+#if 0
 void ManagerView::launchScript(){
     emit checkBeforeLaunchingScripts();
     QString script = scriptsComboBox->currentText();
@@ -149,11 +149,11 @@ void ManagerView::launchScript(){
             QString fileName = parameterUrlFileInfo.fileName();
             QString baseName = fileName.left(fileName.length()-4);
 
-            //KDAB_PORTING konsole->runCommand(script+" "+baseName);
+            konsole->runCommand(script+" "+baseName);
         }
     }
 }
-
+#endif
 
 void ManagerView::stopScript(){
 }
