@@ -45,10 +45,10 @@ public:
     void setSamplingRate(double rate){samplingRateLineEdit->setText(Helper::doubleToString(rate));}
 
     /**Returns the sampling rate.*/
-    inline double getSamplingRate() const{return samplingRateLineEdit->text().toDouble();}
+    double getSamplingRate() const{return samplingRateLineEdit->text().toDouble();}
 
     /**True if at least one property has been modified, false otherwise.*/
-    inline bool isModified()const{return modified;}
+    bool isModified() const {return modified;}
 
     /**Indicates that the initialisation is finished.*/
     void initialisationOver(){isInit = false;}

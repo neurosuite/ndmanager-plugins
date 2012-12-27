@@ -33,8 +33,8 @@ class QueryOutputDialog : public QPageDialog
 {
     Q_OBJECT
 public:
-    QueryOutputDialog(const QString& htmlText,const QString& queryResult,QWidget *parent = 0,const QString& caption = tr("Query"),const QString& urltext = QString());
-    virtual ~QueryOutputDialog();
+    explicit QueryOutputDialog(const QString& htmlText,const QString& queryResult,QWidget *parent = 0,const QString& caption = tr("Query"),const QString& urltext = QString());
+    ~QueryOutputDialog();
 public slots:
     void slotUser1();
     void slotUser2();
