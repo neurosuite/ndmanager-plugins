@@ -256,9 +256,6 @@ private:
     /**Pointer on the ParameterView containing all the parameter information.*/
     ParameterView*  parameterView;
 
-    /**Represents the modified Kate part xml descriptor file.*/
-    QDomDocument kateXmlDocument;
-
     /**Pointer on the ManagerView aloowing to manage the data processing.*/
     ManagerView* managerView;
 
