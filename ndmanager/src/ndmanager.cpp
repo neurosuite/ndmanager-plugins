@@ -443,7 +443,9 @@ void ndManager::slotFileClose(){
                     return;
                 }
             }
-
+            parameterView->hide();
+            delete parameterView;
+            parameterView = 0;
             //close the document
             doc->closeDocument();
             //Delete the main view
