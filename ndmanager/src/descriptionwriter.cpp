@@ -70,7 +70,7 @@ void DescriptionWriter::setProgramInformation(const ProgramInformation& programI
     QMap<int, QStringList > parametersInfo = programInformation.getParameterInformation();
     QString help = programInformation.getHelp();
 
-    program = doc.createElement(PROGRAM);;
+    program = doc.createElement(PROGRAM);
 
     QDomElement nameElement = doc.createElement(NAME);
     QDomText nameValue = doc.createTextNode(name);

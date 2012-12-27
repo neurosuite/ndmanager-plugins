@@ -100,19 +100,19 @@ void XmlWriter::setGeneralInformation(GeneralInformation& generalInformation){
     dateElement.appendChild(dateValue);
 
     QDomElement experimentersElement = doc.createElement(EXPERIMENTERS);
-    if(generalInformation.getExperimenters() != ""){
+    if(!generalInformation.getExperimenters().isEmpty()){
         QDomText experimentersValue =doc.createTextNode(generalInformation.getExperimenters());
         experimentersElement.appendChild(experimentersValue);
     }
 
     QDomElement descriptionElement = doc.createElement(DESCRIPTION);
-    if(generalInformation.getDescription() != ""){
+    if(!generalInformation.getDescription().isEmpty()){
         QDomText descriptionValue = doc.createTextNode(generalInformation.getDescription());
         descriptionElement.appendChild(descriptionValue);
     }
 
     QDomElement notesElement = doc.createElement(NOTES);
-    if(generalInformation.getNotes() != ""){
+    if(!generalInformation.getNotes().isEmpty()){
         QDomText notesValue = doc.createTextNode(generalInformation.getNotes());
         notesElement.appendChild(notesValue);
     }
