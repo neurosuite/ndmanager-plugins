@@ -177,11 +177,6 @@ private slots:
    * @param text the text that is displayed in the statusbar.
    */
     void slotStatusMsg(const QString &text);
-
-
-
-    /**Initializes some of the variables defined in the settings (preferences).*/
-    void initializePreferences();
     
     /***Saves the current parameter file.*/
     void slotSave();

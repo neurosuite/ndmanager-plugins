@@ -57,8 +57,6 @@ ndManager::ndManager()
     mMainToolBar = new QToolBar();
 
     addToolBar(mMainToolBar);
-    //Apply the user settings.
-    initializePreferences();
 
     //Create a ndManagereDoc which will hold the document manipulated by the application.
     doc = new ndManagerDoc(this);
@@ -76,10 +74,6 @@ ndManager::ndManager()
 ndManager::~ndManager(){
     //Clear the memory by deleting all the pointers
     delete doc;
-}
-
-void ndManager::initializePreferences(){
-
 }
 
 void ndManager::setupActions()
@@ -281,9 +275,8 @@ void ndManager::openDocumentFile(const QString& url)
     filePath = url;
     QFileInfo file(filePath);
     if(!file.exists()){
-        QString title = tr("File not found: ");
-        title.append(filePath);
-        int answer = QMessageBox::question(this,tr("The selected file no longer exists. Do you want to remove it from the list of recent opened files ?"), title);
+        QString title = tr("File not found: %1").arg(filePath);
+        const int answer = QMessageBox::question(this,tr("The selected file no longer exists. Do you want to remove it from the list of recent opened files ?"), title);
         if(answer == QMessageBox::Yes){
             mFileOpenRecent->removeRecentFile(url);
         } else  {
