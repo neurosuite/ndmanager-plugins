@@ -1356,7 +1356,7 @@ The parameter file contains a section dedicated to the scripts used to process t
 <varlistentry>
 <term><menuchoice>
 <guimenu>Help</guimenu>
-<guimenuitem>&ndmanager; Handbook</guimenuitem>
+<guimenuitem>ndmanager Handbook</guimenuitem>
 </menuchoice></term>
 <listitem><para>Opens this user manual in the <guilabel>Help Center</guilabel>.</para></listitem>
 </varlistentry>
@@ -1377,7 +1377,7 @@ The parameter file contains a section dedicated to the scripts used to process t
 <varlistentry>
 <term><menuchoice>
 <guimenu>Help</guimenu>
-<guimenuitem>About &ndmanager;</guimenuitem>
+<guimenuitem>About ndmanager</guimenuitem>
 </menuchoice></term>
 <listitem><para>Shows information about the authors of and contributors to &ndmanager;.</para></listitem>
 </varlistentry>
