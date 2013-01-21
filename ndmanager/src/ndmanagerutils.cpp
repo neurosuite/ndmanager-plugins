@@ -36,6 +36,21 @@ static QString checkExecutable(const QString &path)
     return QString();
 }
 
+#ifdef Q_OS_WIN
+static QStringList executableExtensions()
+{
+    QStringList ret = QString::fromLocal8Bit(qgetenv("PATHEXT")).split(QLatin1Char(';'));
+    if (!ret.contains(QLatin1String(".exe"), Qt::CaseInsensitive)) {
+        // If %PATHEXT% does not contain .exe, it is either empty, malformed, or distorted in ways that we cannot support, anyway.
+        ret.clear();
+        ret << QLatin1String(".exe")
+            << QLatin1String(".com")
+            << QLatin1String(".bat")
+            << QLatin1String(".cmd");
+    }
+    return ret;
+}
+#endif
 
 QString NdManagerUtils::findExecutable(const QString &executableName, const QStringList &paths)
 {

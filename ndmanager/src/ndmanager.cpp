@@ -631,13 +631,14 @@ void ndManager::slotReload(){
 }
 
 void ndManager::slotQuery(){
+#ifdef Q_OS_UNIX
     slotStatusMsg(tr("Processing query..."));
     QPointer<QueryInputDialog> queryInputDialog = new QueryInputDialog();
     if(queryInputDialog->exec() == QDialog::Accepted)
     {
         // Run query
         QProcess process;
-#ifdef Q_OS_UNIX
+
         //Not portable
         //process.setUseShell(true);
         const QString program("find");
@@ -653,8 +654,6 @@ void ndManager::slotQuery(){
             return;
         }
         QString queryResult = process.readAll();
-
-#endif
         QApplication::restoreOverrideCursor();
 
         // Read HTML footer from file
@@ -679,6 +678,7 @@ void ndManager::slotQuery(){
     }
     delete queryInputDialog;
     slotStatusMsg(tr("Ready."));
+#endif
 }
 
 void ndManager::slotExpertMode(){
