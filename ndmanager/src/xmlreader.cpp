@@ -776,7 +776,7 @@ void XmlReader::getFilesInformation(QList<FileInformation>& files)const{
                                         channelList.append(channelId);
                                     }
                                 }
-                                if(channelList.size() != 0) mapping.insert(channelId,channelList);
+                                if(!channelList.isEmpty()) mapping.insert(channelId,channelList);
                                 channelId++;
                             }
                         }
