@@ -703,49 +703,43 @@ int XmlReader::getPeakSampleIndex()const{
 }
 
 void XmlReader::getNeuroscopeVideoInfo(NeuroscopeVideoInfo& videoInfo) const{
-    xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup(QString("//" + NEUROSCOPE + "/" + VIDEO).toLatin1());
 
-    //Evaluate xpath expression
-    result = xmlXPathEvalExpression(searchPath,xpathContex);
-    if(result != NULL){
-        xmlNodeSetPtr nodeset = result->nodesetval;
-        if(!xmlXPathNodeSetIsEmpty(nodeset)){
-            xmlNodePtr child;
-            for(child = nodeset->nodeTab[0]->children;child != NULL;child = child->next){
-                //skip the carriage return (text node named text and containing /n)
-                if(child->type == XML_TEXT_NODE) continue;
-
-                if(QString((char*)child->name) == ROTATE){
-                    xmlChar* sAngle = xmlNodeListGetString(doc,child->children, 1);
-                    int angle = QString((char*)sAngle).toInt();
-                    xmlFree(sAngle);
-                    videoInfo.setRotation(angle);
-                }
-                if(QString((char*)child->name) == FLIP){
-                    xmlChar* sOrientation = xmlNodeListGetString(doc,child->children, 1);
-                    int orientation = QString((char*)sOrientation).toInt();
-                    xmlFree(sOrientation);
-                    videoInfo.setFlip(orientation);
-                }
-                if(QString((char*)child->name) == VIDEO_IMAGE){
-                    xmlChar* sBackgroundPath = xmlNodeListGetString(doc,child->children, 1);
-                    QString backgroundPath = QString((char*)sBackgroundPath);
-                    xmlFree(sBackgroundPath);
-                    videoInfo.setBackgroundImage(backgroundPath);
-                }
-                if(QString((char*)child->name) == POSITIONS_BACKGROUND){
-                    xmlChar* sTrajectory = xmlNodeListGetString(doc,child->children, 1);
-                    int drawTrajectory = QString((char*)sTrajectory).toInt();
-                    xmlFree(sTrajectory);
-                    videoInfo.setTrajectory(drawTrajectory);
+    QDomNode n = documentNode.firstChild();
+    if (!n.isNull()) {
+        while(!n.isNull()) {
+            QDomElement e = n.toElement(); // try to convert the node to an element.
+            if(!e.isNull()) {
+                QString tag = e.tagName();
+                if (tag == NEUROSCOPE) {
+                    QDomNode video = e.firstChildElement(VIDEO); // try to convert the node to an element.
+                    if (!video.isNull()) {
+                        QDomNode b = video.firstChild();
+                        while(!b.isNull()) {
+                            QDomElement w = b.toElement();
+                            if(!w.isNull()) {
+                                tag = w.tagName();
+                                if (tag == ROTATE) {
+                                    int angle = w.text().toInt();
+                                    videoInfo.setRotation(angle);
+                                } else if (tag == FLIP) {
+                                    int orientation = w.text().toInt();
+                                    videoInfo.setFlip(orientation);
+                                } else if (tag == VIDEO_IMAGE) {
+                                    QString backgroundPath = w.text();
+                                    videoInfo.setBackgroundImage(backgroundPath);
+                                } else if (tag == POSITIONS_BACKGROUND) {
+                                    int drawTrajectory = w.text().toInt();
+                                    videoInfo.setTrajectory(drawTrajectory);
+                                }
+                            }
+                            b = b.nextSibling();
+                        }
+                    }
                 }
             }
+            n = n.nextSibling();
         }
     }
-
-    xmlFree(searchPath);
-    xmlXPathFreeObject(result);
 }
 
 void XmlReader::getFilesInformation(QList<FileInformation>& files)const{
