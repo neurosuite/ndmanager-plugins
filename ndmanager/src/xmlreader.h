@@ -34,6 +34,7 @@
 
 //include files for QT
 #include <QList> 
+#include <QDomNode>
 
 //Libxml2 include files.
 #include <stdlib.h>
@@ -168,6 +169,8 @@ private:
     QString readVersion;
     xmlDocPtr doc;
     xmlXPathContextPtr xpathContex;
+
+    QDomNode documentNode;
 };
 
 #endif

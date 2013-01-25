@@ -22,8 +22,9 @@
 //include files for QT
 #include <qfile.h> 
 #include <qstring.h> 
-
+#include <QDomDocument>
 #include <QList>
+#include <QDebug>
 
 using namespace ndmanager;
 
@@ -38,7 +39,29 @@ XmlReader::~XmlReader()
 
 }
 
-bool XmlReader::parseFile(const QString& url){  
+bool XmlReader::parseFile(const QString& url)
+{
+    QFile input(url);
+
+    QDomDocument docElement;
+    QString errorMsg;
+    int errorRow;
+    int errorCol;
+    if ( !docElement.setContent( &input, &errorMsg, &errorRow, &errorCol ) ) {
+        qWarning() << "Unable to load document.Parse error in " << url << ", line " << errorRow << ", col " << errorCol << ": " << errorMsg << endl;
+        return false;
+    }
+
+    QDomElement element = docElement.documentElement();
+
+    if (element.tagName() == QLatin1String("parameters")) {
+        if( element.hasAttribute(DOC__VERSION)) {
+            readVersion = element.attribute(DOC__VERSION);
+            qDebug()<<" readVersion "<<readVersion;
+        }
+    }
+    documentNode = element;
+
 
     // Init libxml
     xmlInitParser();
@@ -60,7 +83,8 @@ bool XmlReader::parseFile(const QString& url){
     xmlChar* versionTag = xmlCharStrdup(QString(DOC__VERSION).toLatin1());
     if(rootElement != NULL){
         xmlChar* sVersion = xmlGetProp(rootElement,versionTag);//get the attribute with the name versionTag
-        if(sVersion != NULL) readVersion = QString((char*)sVersion);
+        if(sVersion != NULL)
+            readVersion = QString((char*)sVersion);
         xmlFree(sVersion);
     }
     xmlFree(versionTag);
@@ -81,61 +105,46 @@ void XmlReader::closeFile(){
 void XmlReader::getAcquisitionSystemInfo(QMap<QString,double>& acquisitionSystemInfo)const{
     //acquisitionSystemInfo will contain the number of bits, number of channels, the sampling rate, the voltage range, the amplification and the offset.
 
-    xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup(QString("//" + ACQUISITION).toLatin1());
-
-    //Evaluate xpath expression
-    result = xmlXPathEvalExpression(searchPath,xpathContex);
-    if(result != NULL){
-        xmlNodeSetPtr nodeset = result->nodesetval;
-        if(!xmlXPathNodeSetIsEmpty(nodeset)){
-            xmlNodePtr child;
-            for(child = nodeset->nodeTab[0]->children;child != NULL;child = child->next){
-                //skip the carriage return (text node named text and containing /n)
-                if(child->type == XML_TEXT_NODE) continue;
-
-                if(QString((char*)child->name) == BITS){
-                    xmlChar* sResolution = xmlNodeListGetString(doc,child->children, 1);
-                    int resolution = QString((char*)sResolution).toInt();
-                    xmlFree(sResolution);
-                    acquisitionSystemInfo.insert(BITS,resolution);
-                }
-                if(QString((char*)child->name) == NB_CHANNELS){
-                    xmlChar* sNbChannels = xmlNodeListGetString(doc,child->children, 1);
-                    int nbChannels = QString((char*)sNbChannels).toInt();
-                    xmlFree(sNbChannels);
-                    acquisitionSystemInfo.insert(NB_CHANNELS,nbChannels);
-                }
-                if(QString((char*)child->name) == SAMPLING_RATE){
-                    xmlChar* sSamplingRate = xmlNodeListGetString(doc,child->children, 1);
-                    double samplingRate = QString((char*)sSamplingRate).toDouble();
-                    xmlFree(sSamplingRate);
-                    acquisitionSystemInfo.insert(SAMPLING_RATE,samplingRate);
-                }
-                if(QString((char*)child->name) == VOLTAGE_RANGE){
-                    xmlChar* sRange = xmlNodeListGetString(doc,child->children, 1);
-                    int range = QString((char*)sRange).toInt();
-                    xmlFree(sRange);
-                    acquisitionSystemInfo.insert(VOLTAGE_RANGE,range);
-                }
-                if(QString((char*)child->name) == AMPLIFICATION){
-                    xmlChar* sAmplification = xmlNodeListGetString(doc,child->children, 1);
-                    int amplification = QString((char*)sAmplification).toInt();
-                    xmlFree(sAmplification);
-                    acquisitionSystemInfo.insert(AMPLIFICATION,amplification);
-                }
-                if(QString((char*)child->name) == OFFSET){
-                    xmlChar* sOffset = xmlNodeListGetString(doc,child->children, 1);
-                    int offset = QString((char*)sOffset).toInt();
-                    xmlFree(sOffset);
-                    acquisitionSystemInfo.insert(OFFSET,offset);
+    QDomNode n = documentNode.firstChild();
+    if (!n.isNull()) {
+        while(!n.isNull()) {
+            QDomElement e = n.toElement(); // try to convert the node to an element.
+            if(!e.isNull()) {
+                QString tag = e.tagName();
+                if (tag == ACQUISITION) {
+                    QDomNode acquisition = e.firstChild(); // try to convert the node to an element.
+                    while(!acquisition.isNull()) {
+                        QDomElement u = acquisition.toElement();
+                        if (!u.isNull()) {
+                            tag = u.tagName();
+                            if (tag == BITS) {
+                                int resolution = u.text().toInt();
+                                acquisitionSystemInfo.insert(BITS,resolution);
+                            } else if (tag == NB_CHANNELS) {
+                                int nbChannels = u.text().toInt();
+                                acquisitionSystemInfo.insert(NB_CHANNELS,nbChannels);
+                            } else if (tag == SAMPLING_RATE) {
+                                double samplingRate = u.text().toDouble();
+                                acquisitionSystemInfo.insert(SAMPLING_RATE,samplingRate);
+                            } else if (tag == VOLTAGE_RANGE) {
+                                double samplingRate = u.text().toDouble();
+                                acquisitionSystemInfo.insert(SAMPLING_RATE,samplingRate);
+                            } else if(tag == AMPLIFICATION){
+                                int amplification = u.text().toInt();
+                                acquisitionSystemInfo.insert(AMPLIFICATION,amplification);
+                            } else if(tag == OFFSET){
+                                int offset = u.text().toInt();
+                                acquisitionSystemInfo.insert(OFFSET,offset);
+                            }
+                        }
+                        acquisition = acquisition.nextSibling();
+                    }
+                    break;
                 }
             }
+            n = n.nextSibling();
         }
     }
-
-    xmlFree(searchPath);
-    xmlXPathFreeObject(result);
 }
 
 void XmlReader::getAnatomicalDescription(int nbChannels,QMap<int, QList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes){
@@ -494,66 +503,70 @@ void XmlReader::getGeneralInformation(GeneralInformation& generalInformation)con
 
 
 
-void XmlReader::getVideoInfo(QMap<QString,double>& videoInformation)const{
-    //videoInformation will contain the sampling rate of the video recording system, the width and the heigth of the image.
-    xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup(QString("/" + PARAMETERS + "/" + VIDEO ).toLatin1());
+void XmlReader::getVideoInfo(QMap<QString,double>& videoInformation)const
+{
+    QDomNode n = documentNode.firstChild();
+    if (!n.isNull()) {
+        while(!n.isNull()) {
+            QDomElement e = n.toElement(); // try to convert the node to an element.
+            if(!e.isNull()) {
+                QString tag = e.tagName();
+                if (tag == VIDEO) {
+                    QDomNode video = e.firstChild(); // try to convert the node to an element.
+                    while(!video.isNull()) {
+                        QDomElement u = video.toElement();
+                        if (!u.isNull()) {
+                            tag = u.tagName();
+                            if (tag == SAMPLING_RATE) {
+                                double samplingRate = u.text().toDouble();
+                                videoInformation.insert(SAMPLING_RATE,samplingRate);
+                            } else if(tag == WIDTH) {
+                                int width = u.text().toInt();
+                                videoInformation.insert(WIDTH,width);
 
-    //Evaluate xpath expression
-    result = xmlXPathEvalExpression(searchPath,xpathContex);
-    if(result != NULL){
-        xmlNodeSetPtr nodeset = result->nodesetval;
-        if(!xmlXPathNodeSetIsEmpty(nodeset)){
-            xmlNodePtr child;
-            for(child = nodeset->nodeTab[0]->children;child != NULL;child = child->next){
-                //skip the carriage return (text node named text and containing /n)
-                if(child->type == XML_TEXT_NODE) continue;
-
-                if(QString((char*)child->name) == SAMPLING_RATE){
-                    xmlChar* sSamplingRate = xmlNodeListGetString(doc,child->children, 1);
-                    double samplingRate = QString((char*)sSamplingRate).toDouble();
-                    xmlFree(sSamplingRate);
-                    videoInformation.insert(SAMPLING_RATE,samplingRate);
-                }
-                if(QString((char*)child->name) == WIDTH){
-                    xmlChar* sWidth = xmlNodeListGetString(doc,child->children, 1);
-                    int width = QString((char*)sWidth).toInt();
-                    xmlFree(sWidth);
-                    videoInformation.insert(WIDTH,width);
-                }
-                if(QString((char*)child->name) == HEIGHT){
-                    xmlChar* sHeight = xmlNodeListGetString(doc,child->children, 1);
-                    int height = QString((char*)sHeight).toInt();
-                    xmlFree(sHeight);
-                    videoInformation.insert(HEIGHT,height);
+                            } else if(tag == HEIGHT) {
+                                int height = u.text().toInt();
+                                videoInformation.insert(HEIGHT,height);
+                            }
+                        }
+                        video = video.nextSibling();
+                    }
+                    break;
                 }
             }
+            n = n.nextSibling();
         }
     }
-
-    xmlFree(searchPath);
-    xmlXPathFreeObject(result);
 }
 
-double XmlReader::getLfpInformation()const{
+double XmlReader::getLfpInformation()const
+{
     double lfpSamplingRate = 0;
-    xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup(QString("//" + FIELD_POTENTIALS + "/" + LFP_SAMPLING_RATE).toLatin1());
-
-    //Evaluate xpath expression
-    result = xmlXPathEvalExpression(searchPath,xpathContex);
-    if(result != NULL){
-        xmlNodeSetPtr nodeset = result->nodesetval;
-        if(!xmlXPathNodeSetIsEmpty(nodeset)){
-            //Should be only one lfpSamplingRate element, so take the first one.
-            xmlChar* sLfpSamplingRate = xmlNodeListGetString(doc,nodeset->nodeTab[0]->children, 1);
-            lfpSamplingRate = QString((char*)sLfpSamplingRate).toDouble();
-            xmlFree(sLfpSamplingRate);
+    QDomNode n = documentNode.firstChild();
+    if (!n.isNull()) {
+        while(!n.isNull()) {
+            QDomElement e = n.toElement(); // try to convert the node to an element.
+            if(!e.isNull()) {
+                QString tag = e.tagName();
+                if (tag == FIELD_POTENTIALS) {
+                    QDomNode video = e.firstChild(); // try to convert the node to an element.
+                    while(!video.isNull()) {
+                        QDomElement u = video.toElement();
+                        if (!u.isNull()) {
+                            tag = u.tagName();
+                            if (tag == LFP_SAMPLING_RATE) {
+                                lfpSamplingRate = u.text().toDouble();
+                                return lfpSamplingRate;
+                            }
+                        }
+                        video = video.nextSibling();
+                    }
+                    break;
+                }
+            }
+            n = n.nextSibling();
         }
     }
-
-    xmlFree(searchPath);
-    xmlXPathFreeObject(result);
     return lfpSamplingRate;
 }
 
