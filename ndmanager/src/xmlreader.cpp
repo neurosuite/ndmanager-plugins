@@ -27,8 +27,16 @@
 
 using namespace ndmanager;
 
-XmlReader::XmlReader():readVersion(""){}
-XmlReader::~XmlReader(){}
+XmlReader::XmlReader()
+    :readVersion("")
+{
+
+}
+
+XmlReader::~XmlReader()
+{
+
+}
 
 bool XmlReader::parseFile(const QString& url){  
 

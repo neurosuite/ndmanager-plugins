@@ -227,7 +227,7 @@ void XmlWriter::setFilesInformation(const QList<FileInformation>& fileList){
             channelMapping.appendChild(originalChannels);
         }
 
-        if(mapping.size() != 0)
+        if(!mapping.isEmpty())
             fileElement.appendChild(channelMapping);
         files.appendChild(fileElement);
     }
@@ -459,7 +459,7 @@ void XmlWriter::setProgramsInformation(const QList<ProgramInformation> &programL
                 }
                 if(i == 1){
                     QDomElement valueElement = doc.createElement(VALUE);
-                    if(parameterInfo[i] != ""){
+                    if(!parameterInfo.at(i).isEmpty()){
                         QDomText valueValue = doc.createTextNode(parameterInfo[i]);
                         valueElement.appendChild(valueValue);
                     }
@@ -478,7 +478,7 @@ void XmlWriter::setProgramsInformation(const QList<ProgramInformation> &programL
         programElement.appendChild(parameters);
 
         QDomElement helpElement = doc.createElement(HELP);
-        if(help != ""){
+        if(!help.isEmpty()){
             QDomText helpValue = doc.createTextNode(help);
             helpElement.appendChild(helpValue);
         }
