@@ -572,45 +572,68 @@ double XmlReader::getLfpInformation()const
 
 float XmlReader::getScreenGain() const{
     float gain = 0;
-    xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup(QString("//" + MISCELLANEOUS + "/" + SCREENGAIN).toLatin1());
 
-    //Evaluate xpath expression
-    result = xmlXPathEvalExpression(searchPath,xpathContex);
-    if(result != NULL){
-        xmlNodeSetPtr nodeset = result->nodesetval;
-        if(!xmlXPathNodeSetIsEmpty(nodeset)){
-            //Should be only one gain element, so take the first one.
-            xmlChar* sGain = xmlNodeListGetString(doc,nodeset->nodeTab[0]->children, 1);
-            gain = QString((char*)sGain).toFloat();
-            xmlFree(sGain);
+    QDomNode n = documentNode.firstChild();
+    if (!n.isNull()) {
+        while(!n.isNull()) {
+            QDomElement e = n.toElement(); // try to convert the node to an element.
+            if(!e.isNull()) {
+                QString tag = e.tagName();
+                if (tag == NEUROSCOPE) {
+                    QDomNode video = e.firstChildElement(MISCELLANEOUS); // try to convert the node to an element.
+                    if (!video.isNull()) {
+                        QDomNode b = video.firstChild();
+                        while(!b.isNull()) {
+                            QDomElement w = b.toElement();
+                            if(!w.isNull()) {
+                                tag = w.tagName();
+                                if (tag == SCREENGAIN) {
+                                    gain = w.text().toFloat();
+                                    return gain;
+                                }
+                            }
+                            b = b.nextSibling();
+                        }
+                    }
+                }
+            }
+            n = n.nextSibling();
         }
     }
 
-    xmlFree(searchPath);
-    xmlXPathFreeObject(result);
     return gain;
 }
 
 QString XmlReader::getTraceBackgroundImage() const{
     QString traceBackgroundImage = 0;
-    xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup(QString("//" + MISCELLANEOUS + "/" + TRACE_BACKGROUND_IMAGE).toLatin1());
-
-    //Evaluate xpath expression
-    result = xmlXPathEvalExpression(searchPath,xpathContex);
-    if(result != NULL){
-        xmlNodeSetPtr nodeset = result->nodesetval;
-        if(!xmlXPathNodeSetIsEmpty(nodeset)){
-            //Should be only one traceBackgroundImage element, so take the first one.
-            xmlChar* straceBackgroundImage = xmlNodeListGetString(doc,nodeset->nodeTab[0]->children, 1);
-            traceBackgroundImage = QString((char*)straceBackgroundImage);
-            xmlFree(straceBackgroundImage);
+    QDomNode n = documentNode.firstChild();
+    if (!n.isNull()) {
+        while(!n.isNull()) {
+            QDomElement e = n.toElement(); // try to convert the node to an element.
+            if(!e.isNull()) {
+                QString tag = e.tagName();
+                if (tag == NEUROSCOPE) {
+                    QDomNode video = e.firstChildElement(MISCELLANEOUS); // try to convert the node to an element.
+                    if (!video.isNull()) {
+                        QDomNode b = video.firstChild();
+                        while(!b.isNull()) {
+                            QDomElement w = b.toElement();
+                            if(!w.isNull()) {
+                                tag = w.tagName();
+                                if (tag == TRACE_BACKGROUND_IMAGE) {
+                                    traceBackgroundImage = w.text();
+                                    return traceBackgroundImage;
+                                }
+                            }
+                            b = b.nextSibling();
+                        }
+                    }
+                }
+            }
+            n = n.nextSibling();
         }
     }
 
-    xmlFree(searchPath);
-    xmlXPathFreeObject(result);
     return traceBackgroundImage;
 }
 
