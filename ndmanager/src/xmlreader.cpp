@@ -435,50 +435,42 @@ void XmlReader::getChannelDefaultOffset(QMap<int,int>& channelDefaultOffsets)con
 }
 
 void XmlReader::getGeneralInformation(GeneralInformation& generalInformation)const{
-    xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup(QString("//" + GENERAL).toLatin1());
+    QDomNode n = documentNode.firstChild();
+    if (!n.isNull()) {
+        while(!n.isNull()) {
+            QDomElement e = n.toElement(); // try to convert the node to an element.
+            if(!e.isNull()) {
+                QString tag = e.tagName();
+                if (tag == GENERAL) {
+                    QDomNode video = e.firstChild(); // try to convert the node to an element.
+                    while(!video.isNull()) {
+                        QDomElement u = video.toElement();
+                        if (!u.isNull()) {
+                            tag = u.tagName();
+                            if (tag == DATE) {
+                                QString date = u.text();
+                                if(!date.isEmpty())
+                                    generalInformation.setDate(QDate::fromString(date,Qt::ISODate));
+                            } else if(tag == EXPERIMENTERS) {
+                                QString experimenters = u.text();
+                                generalInformation.setExperimenters(experimenters);
+                            } else if(tag == DESCRIPTION) {
+                                QString description = u.text();
+                                generalInformation.setDescription(description);
+                            } else if(tag == NOTES) {
+                                QString notes = u.text();
+                                generalInformation.setNotes(notes);
+                            }
+                        }
+                        video = video.nextSibling();
+                    }
+                    break;
 
-    //Evaluate xpath expression
-    result = xmlXPathEvalExpression(searchPath,xpathContex);
-    if(result != NULL){
-        xmlNodeSetPtr nodeset = result->nodesetval;
-        if(!xmlXPathNodeSetIsEmpty(nodeset)){
-            xmlNodePtr child;
-            for(child = nodeset->nodeTab[0]->children;child != NULL;child = child->next){
-                //skip the carriage return (text node named text and containing /n)
-                if(child->type == XML_TEXT_NODE) continue;
-
-                if(QString((char*)child->name) == DATE){
-                    xmlChar* sDate = xmlNodeListGetString(doc,child->children, 1);
-                    QString date = QString((char*)sDate);
-                    xmlFree(sDate);
-                    if(date != "") generalInformation.setDate(QDate::fromString(date,Qt::ISODate));
-                }
-                if(QString((char*)child->name) == EXPERIMENTERS){
-                    xmlChar* sExperimenters = xmlNodeListGetString(doc,child->children, 1);
-                    QString experimenters = QString((char*)sExperimenters);
-                    xmlFree(sExperimenters);
-                    generalInformation.setExperimenters(experimenters);
-                }
-                if(QString((char*)child->name) == DESCRIPTION){
-                    xmlChar* sDescription = xmlNodeListGetString(doc,child->children, 1);
-                    //QString description = QString((char*)sDescription);
-                    QString description = QString::fromUtf8((char*)sDescription);
-                    xmlFree(sDescription);
-                    generalInformation.setDescription(description);
-                }
-                if(QString((char*)child->name) == NOTES){
-                    xmlChar* sNotes = xmlNodeListGetString(doc,child->children, 1);
-                    QString notes = QString((char*)sNotes);
-                    xmlFree(sNotes);
-                    generalInformation.setNotes(notes);
                 }
             }
+            n = n.nextSibling();
         }
     }
-
-    xmlFree(searchPath);
-    xmlXPathFreeObject(result);
 }
 
 
