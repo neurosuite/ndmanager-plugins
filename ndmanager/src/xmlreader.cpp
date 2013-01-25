@@ -158,49 +158,64 @@ void XmlReader::getAnatomicalDescription(int nbChannels,QMap<int, QList<int> >& 
         skipStatus.insert(i,"0");
     }
 
-    xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup(QString("//" + ANATOMY + "/" + CHANNEL_GROUPS + "/" + GROUP).toLatin1());
-
-    //Evaluate xpath expression
-    result = xmlXPathEvalExpression(searchPath,xpathContex);
-    if(result != NULL){
-        xmlNodeSetPtr nodeset = result->nodesetval;
-        if(!xmlXPathNodeSetIsEmpty(nodeset)){
-            //loop on all the GROUP.
-            int nbGroups = nodeset->nodeNr;
-            for(int i = 0; i < nbGroups; ++i){
-                QList<int> channelList;
-                xmlNodePtr child;
-                for(child = nodeset->nodeTab[i]->children;child != NULL;child = child->next){
-                    //skip the carriage return (text node named text and containing /n)
-                    if(child->type == XML_TEXT_NODE) continue;
-
-                    if(QString((char*)child->name) == CHANNEL){
-                        xmlChar* sId = xmlNodeListGetString(doc,child->children, 1);
-                        int channelId = QString((char*)sId).toInt();
-                        xmlFree(sId);
-                        channelList.append(channelId);
-                        //remove the channel from the trash list as it is part of a group
-                        trashList.removeAll(channelId);
-
-                        //Look up for the SKIP attribute
-                        xmlChar* skipTag = xmlCharStrdup(QString(SKIP).toLatin1());
-                        xmlChar* sSkip = xmlGetProp(child,skipTag);
-                        if(sSkip != NULL) skipStatus.insert(channelId,QString((char*)sSkip));//replace the default value
-                        xmlFree(skipTag);
-                        xmlFree(sSkip);
+    int i = 0;
+    QDomNode n = documentNode.firstChild();
+    if (!n.isNull()) {
+        while(!n.isNull()) {
+            QDomElement e = n.toElement(); // try to convert the node to an element.
+            if(!e.isNull()) {
+                QString tag = e.tagName();
+                if (tag == ANATOMY) {
+                    QDomNode anatomy = e.firstChild(); // try to convert the node to an element.
+                    while(!anatomy.isNull()) {
+                        QDomElement u = anatomy.toElement();
+                        if (!u.isNull()) {
+                            tag = u.tagName();
+                            if (tag == CHANNEL_GROUPS) {
+                               QDomNode channelGroup = u.firstChild(); // try to convert the node to an element.
+                               while(!channelGroup.isNull()) {
+                                   QDomElement val = channelGroup.toElement();
+                                   if (!val.isNull()) {
+                                       tag = val.tagName();
+                                       if (tag == GROUP) {
+                                           QList<int> channelList;
+                                           QDomNode group = val.firstChild(); // try to convert the node to an element.
+                                           while(!group.isNull()) {
+                                               QDomElement valGroup = group.toElement();
+                                               if (!valGroup.isNull()) {
+                                                   tag = valGroup.tagName();
+                                                   if (tag == CHANNEL) {
+                                                       int channelId = valGroup.text().toInt();
+                                                       channelList.append(channelId);
+                                                       //remove the channel from the trash list as it is part of a group
+                                                       trashList.removeAll(channelId);
+                                                       if (valGroup.hasAttribute(SKIP)) {
+                                                           skipStatus.insert(channelId,valGroup.attribute(SKIP));
+                                                       }
+                                                   }
+                                               }
+                                               group = group.nextSibling();
+                                           }
+                                           anatomicalGroups.insert(i + 1,channelList);
+                                           i++;
+                                       }
+                                   }
+                                   channelGroup = channelGroup.nextSibling();
+                               }
+                            }
+                        }
+                        anatomy = anatomy.nextSibling();
                     }
+                    break;
                 }
-                anatomicalGroups.insert(i + 1,channelList);
             }
+            n = n.nextSibling();
         }
     }
 
     if(!trashList.isEmpty()) anatomicalGroups.insert(0,trashList);
     attributes.insert("Skip",skipStatus);
 
-    xmlFree(searchPath);
-    xmlXPathFreeObject(result);
 }
 
 
@@ -872,8 +887,10 @@ void XmlReader::getProgramsInformation(QList<ProgramInformation>& programs) cons
                         }
                     }
                 }
-                if(parameters.size() != 0) programInformation.setParameterInformation(parameters);
-                if(programInformation.getProgramName() != "") programs.append(programInformation);
+                if(!parameters.isEmpty())
+                    programInformation.setParameterInformation(parameters);
+                if(!programInformation.getProgramName().isEmpty())
+                    programs.append(programInformation);
             }
         }
     }
