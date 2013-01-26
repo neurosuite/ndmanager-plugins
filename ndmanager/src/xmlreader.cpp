@@ -225,78 +225,90 @@ void XmlReader::getSpikeDescription(int nbChannels,QMap<int, QList<int> >& spike
     //At first, if a channel is not in the trash group it is put in the undefined group, the -1 (this correspond to no spike group).
     //Then reading for the file, the right information is set.
     QList<int> trashList;
-    if(spikeGroups.contains(0)) trashList = spikeGroups[0];
+    if(spikeGroups.contains(0))
+        trashList = spikeGroups[0];
     QList<int> spikeTrashList;
     for(int i = 0; i < nbChannels; ++i){
-        if(!trashList.contains(i)) spikeTrashList.append(i);
-    }
-
-    xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup(QString("//" + SPIKE + "/" + CHANNEL_GROUPS + "/" + GROUP).toLatin1());
-
-    //Evaluate xpath expression
-    result = xmlXPathEvalExpression(searchPath,xpathContex);
-    if(result != NULL){
-        xmlNodeSetPtr nodeset = result->nodesetval;
-        if(!xmlXPathNodeSetIsEmpty(nodeset)){
-            //loop on all the GROUP.
-            int nbGroups = nodeset->nodeNr;
-            for(int i = 0; i < nbGroups; ++i){
-                xmlNodePtr child;
-                QMap<QString,QString> groupInfo;
-                for(child = nodeset->nodeTab[i]->children;child != NULL;child = child->next){
-                    //skip the carriage return (text node named text and containing /n)
-                    if(child->type == XML_TEXT_NODE) continue;
-
-                    if(QString((char*)child->name) == CHANNELS){
-                        //loop on the channels
-                        xmlNodePtr channels;
-                        QList<int> channelList;
-                        for(channels = child->children;channels != NULL;channels = channels->next){
-                            //skip the carriage return (text node named text and containing /n)
-                            if(channels->type == XML_TEXT_NODE) continue;
-
-                            if(QString((char*)channels->name) == CHANNEL){
-                                xmlChar* sId = xmlNodeListGetString(doc,channels->children, 1);
-                                int channelId = QString((char*)sId).toInt();
-                                xmlFree(sId);
-                                channelList.append(channelId);
-                                //remove the channel from the spike trash list as it is part of a group
-                                spikeTrashList.removeAll(channelId);
-                            }
-                        }
-                        spikeGroups.insert(i + 1,channelList);
-                    }
-
-
-                    if(QString((char*)child->name) == NB_SAMPLES){
-                        xmlChar* sNbSamples = xmlNodeListGetString(doc,child->children, 1);
-                        groupInfo.insert(NB_SAMPLES,QString((char*)sNbSamples));
-                        xmlFree(sNbSamples);
-                    }
-
-                    if(QString((char*)child->name) == PEAK_SAMPLE_INDEX){
-                        xmlChar* sindex = xmlNodeListGetString(doc,child->children, 1);
-                        groupInfo.insert(PEAK_SAMPLE_INDEX,QString((char*)sindex));
-                        xmlFree(sindex);
-                    }
-
-                    if(QString((char*)child->name) == NB_FEATURES){
-                        xmlChar* sNbFeatures = xmlNodeListGetString(doc,child->children, 1);
-                        groupInfo.insert(NB_FEATURES,QString((char*)sNbFeatures));
-                        xmlFree(sNbFeatures);
-                    }
-                }
-                information.insert(i + 1,groupInfo);
-            }
+        if(!trashList.contains(i))  {
+            spikeTrashList.append(i);
         }
     }
 
-    //The trash and undefined groups are not store as they are not shown (channels are not in any group are either in the trash group or the undefined group).
-    if(spikeGroups.contains(0)) spikeGroups.remove(0);
+    QDomNode n = documentNode.firstChild();
+    if (!n.isNull()) {
+        while(!n.isNull()) {
+            QDomElement e = n.toElement(); // try to convert the node to an element.
+            if(!e.isNull()) {
+                QString tag = e.tagName();
+                if (tag == SPIKE) {
+                    QDomNode anatomy = e.firstChild(); // try to convert the node to an element.
+                    while(!anatomy.isNull()) {
+                        QDomElement u = anatomy.toElement();
+                        if (!u.isNull()) {
+                            tag = u.tagName();
+                            if (tag == CHANNEL_GROUPS) {
+                               QDomNode channelGroup = u.firstChild(); // try to convert the node to an element.
+                               int i = 0;
+                               while(!channelGroup.isNull()) {
+                                   QDomElement val = channelGroup.toElement();
+                                   if (!val.isNull()) {
+                                       tag = val.tagName();
+                                       if (tag == GROUP) {
+                                           QMap<QString,QString> groupInfo;
+                                           QDomNode group = val.firstChild(); // try to convert the node to an element.
 
-    xmlFree(searchPath);
-    xmlXPathFreeObject(result);
+                                           while(!group.isNull()) {
+                                               QDomElement valGroup = group.toElement();
+
+                                               if (!valGroup.isNull()) {
+                                                   tag = valGroup.tagName();
+                                                   if (tag == CHANNELS) {
+                                                       QDomNode channels = valGroup.firstChild(); // try to convert the node to an element.
+                                                       QList<int> channelList;
+                                                       while(!channels.isNull()) {
+                                                           QDomElement channelsElement = channels.toElement();
+                                                           if( channelsElement.tagName() == CHANNEL) {
+                                                               int channelId = channelsElement.text().toInt();
+                                                               channelList.append(channelId);
+                                                               //remove the channel from the spike trash list as it is part of a group
+                                                               spikeTrashList.removeAll(channelId);
+
+                                                           }
+                                                           channels = channels.nextSibling();
+                                                       }
+                                                       spikeGroups.insert(i + 1,channelList);
+                                                   }else if( tag == NB_SAMPLES) {
+                                                       groupInfo.insert(NB_SAMPLES,valGroup.text());
+                                                       qDebug()<<" valGroup.text()"<<valGroup.text();
+                                                   } else if( tag == PEAK_SAMPLE_INDEX) {
+                                                       groupInfo.insert(PEAK_SAMPLE_INDEX,valGroup.text());
+                                                   } else if( tag == NB_FEATURES) {
+                                                       groupInfo.insert(NB_FEATURES,valGroup.text());
+                                                   }
+                                               }
+                                               group = group.nextSibling();
+                                           }
+                                           information.insert(i + 1,groupInfo);
+                                           ++i;
+
+                                       }
+                                   }
+                                   channelGroup = channelGroup.nextSibling();
+                               }
+                            }
+                        }
+                        anatomy = anatomy.nextSibling();
+                    }
+                    break;
+                }
+            }
+            n = n.nextSibling();
+        }
+    }
+    //The trash and undefined groups are not store as they are not shown (channels are not in any group are either in the trash group or the undefined group).
+    if(spikeGroups.contains(0))
+        spikeGroups.remove(0);
+
 }
 
 void XmlReader::getUnits(QMap<int, QStringList >& units) const{
