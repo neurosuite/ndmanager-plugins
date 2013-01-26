@@ -213,7 +213,8 @@ void XmlReader::getAnatomicalDescription(int nbChannels,QMap<int, QList<int> >& 
         }
     }
 
-    if(!trashList.isEmpty()) anatomicalGroups.insert(0,trashList);
+    if(!trashList.isEmpty())
+        anatomicalGroups.insert(0,trashList);
     attributes.insert("Skip",skipStatus);
 
 }
@@ -739,72 +740,68 @@ void XmlReader::getNeuroscopeVideoInfo(NeuroscopeVideoInfo& videoInfo) const{
 }
 
 void XmlReader::getFilesInformation(QList<FileInformation>& files)const{
-    xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup(QString("//" + FILES + "/" + ndmanager::FILE).toLatin1());
+    QDomNode n = documentNode.firstChild();
+    if (!n.isNull()) {
+        while(!n.isNull()) {
+            QDomElement e = n.toElement(); // try to convert the node to an element.
+            if(!e.isNull()) {
+                QString tag = e.tagName();
+                if (tag == FILES) {
+                    QDomNode unit = e.firstChild(); // try to convert the node to an element.
+                    while(!unit.isNull()) {
+                        QDomElement u = unit.toElement();
+                        if (!u.isNull()) {
+                            QDomNode val = u.firstChild(); // ndmanager::FILE
+                            FileInformation fileInformation;
+                            while(!val.isNull()) {
+                                QDomElement valElement = val.toElement();
+                                tag = valElement.tagName();
+                                if (tag == EXTENSION) {
+                                    QString extension = valElement.text();
+                                    fileInformation.setExtension(extension);
+                                } else if (tag == SAMPLING_RATE) {
+                                    double samplingRate = valElement.text().toDouble();
+                                    fileInformation.setSamplingRate(samplingRate);
+                                } else if (tag == CHANNEL_MAPPING) {
+                                    QMap<int, QList<int> > mapping;
+                                    //loop on the ORIGINAL_CHANNELS which contain a list of channels
+                                    QDomNode channelMapping = valElement.firstChild();
+                                    if (!channelMapping.isNull()) {
+                                        int channelId = 0;
+                                        while(!channelMapping.isNull()) {
+                                            QDomElement channelMappingElement = channelMapping.toElement();
+                                            QList<int> channelList;
+                                            if(channelMappingElement.tagName() == ORIGINAL_CHANNELS) {
 
-    //Evaluate xpath expression
-    result = xmlXPathEvalExpression(searchPath,xpathContex);
-    if(result != NULL){
-        xmlNodeSetPtr nodeset = result->nodesetval;
-        if(!xmlXPathNodeSetIsEmpty(nodeset)){
-            //loop on all the child.
-            int nbFiles = nodeset->nodeNr;
-            for(int i = 0; i < nbFiles; ++i){
-                xmlNodePtr child;
-                FileInformation fileInformation;
-                for(child = nodeset->nodeTab[i]->children;child != NULL;child = child->next){
-                    //skip the carriage return (text node named text and containing /n)
-                    if(child->type == XML_TEXT_NODE) continue;
-
-                    if(QString((char*)child->name) == EXTENSION){
-                        xmlChar* sExtendion = xmlNodeListGetString(doc,child->children, 1);
-                        QString extension = QString((char*)sExtendion);
-                        xmlFree(sExtendion);
-                        fileInformation.setExtension(extension);
-                    }
-                    if(QString((char*)child->name) == SAMPLING_RATE){
-                        xmlChar* sSamplingRate = xmlNodeListGetString(doc,child->children, 1);
-                        double samplingRate = QString((char*)sSamplingRate).toDouble();
-                        xmlFree(sSamplingRate);
-                        fileInformation.setSamplingRate(samplingRate);
-                    }
-                    if(QString((char*)child->name) == CHANNEL_MAPPING){
-                        QMap<int, QList<int> > mapping;
-                        //loop on the ORIGINAL_CHANNELS which contain a list of channels
-                        xmlNodePtr originalChannels;
-                        int channelId = 0;
-                        for(originalChannels = child->children;originalChannels != NULL;originalChannels = originalChannels->next){
-                            //skip the carriage return (text node named text and containing /n)
-                            if(originalChannels->type == XML_TEXT_NODE) continue;
-
-                            if(QString((char*)originalChannels->name) == ORIGINAL_CHANNELS){
-                                QList<int> channelList;
-                                xmlNodePtr channels;
-                                for(channels = originalChannels->children;channels != NULL;channels = channels->next){
-                                    //skip the carriage return (text node named text and containing /n)
-                                    if(channels->type == XML_TEXT_NODE) continue;
-
-                                    if(QString((char*)channels->name) == CHANNEL){
-                                        xmlChar* sId = xmlNodeListGetString(doc,channels->children, 1);
-                                        int channelId = QString((char*)sId).toInt();
-                                        xmlFree(sId);
-                                        channelList.append(channelId);
+                                                QDomNode channel = channelMappingElement.firstChild();
+                                                while(!channel.isNull()) {
+                                                    QDomElement channelElement = channel.toElement();
+                                                    if( channelElement.tagName() == CHANNEL) {
+                                                        int channelId = channelElement.text().toInt();
+                                                        channelList.append(channelId);
+                                                    }
+                                                    channel = channel.nextSibling();
+                                                }
+                                            }
+                                            if(!channelList.isEmpty())
+                                                mapping.insert(channelId,channelList);
+                                            channelId++;
+                                            channelMapping = channelMapping.nextSibling();
+                                        }
                                     }
+                                    fileInformation.setChannelMapping(mapping);
                                 }
-                                if(!channelList.isEmpty()) mapping.insert(channelId,channelList);
-                                channelId++;
+                                val = val.nextSibling();
                             }
+                            files.append(fileInformation);
                         }
-                        fileInformation.setChannelMapping(mapping);
+                        unit = unit.nextSibling();
                     }
                 }
-                files.append(fileInformation);
             }
+            n = n.nextSibling();
         }
     }
-
-    xmlFree(searchPath);
-    xmlXPathFreeObject(result);
 }
 
 void XmlReader::getProgramsInformation(QList<ProgramInformation>& programs) const{
@@ -881,7 +878,8 @@ void XmlReader::getProgramsInformation(QList<ProgramInformation>& programs) cons
                                         }
                                     }
                                 }
-                                if(parameterInfo.size() != 0) parameters.insert(parameterId,parameterInfo);
+                                if(parameterInfo.size() != 0)
+                                    parameters.insert(parameterId,parameterInfo);
                                 parameterId++;
                             }
                         }
