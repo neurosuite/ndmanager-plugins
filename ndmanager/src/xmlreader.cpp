@@ -62,44 +62,12 @@ bool XmlReader::parseFile(const QString& url)
     }
     documentNode = element;
 
-
-    // Init libxml
-    xmlInitParser();
-
-    // Load XML document
-    doc = xmlParseFile(url.toLatin1());
-    if(doc == NULL)
-        return false;
-
-    // Create xpath evaluation context
-    xpathContex = xmlXPathNewContext(doc);
-    if(xpathContex == NULL){
-        xmlFreeDoc(doc);
-        return false;
-    }
-
-    //Read the document version
-    xmlNodePtr rootElement = xmlDocGetRootElement(doc);
-    xmlChar* versionTag = xmlCharStrdup(QString(DOC__VERSION).toLatin1());
-    if(rootElement != NULL){
-        xmlChar* sVersion = xmlGetProp(rootElement,versionTag);//get the attribute with the name versionTag
-        if(sVersion != NULL)
-            readVersion = QString((char*)sVersion);
-        xmlFree(sVersion);
-    }
-    xmlFree(versionTag);
-
     return true;
 }
 
 void XmlReader::closeFile(){
-    //Cleanup
-    xmlXPathFreeContext(xpathContex);
-    xmlFreeDoc(doc);
     readVersion = "";
 
-    //Shutdown libxml
-    xmlCleanupParser();
 }
 
 void XmlReader::getAcquisitionSystemInfo(QMap<QString,double>& acquisitionSystemInfo)const{
@@ -901,88 +869,85 @@ void XmlReader::getProgramsInformation(QList<ProgramInformation>& programs) cons
 
 
 void XmlReader::getProgramInformation(ProgramInformation& programInformation) const{
-    xmlXPathObjectPtr result;
-    xmlChar* searchPath = xmlCharStrdup(QString("//" + PROGRAM).toLatin1());
 
-    //Evaluate xpath expression
-    result = xmlXPathEvalExpression(searchPath,xpathContex);
-    if(result != NULL){
-        xmlNodeSetPtr nodeset = result->nodesetval;
-        if(!xmlXPathNodeSetIsEmpty(nodeset)){
-            QMap<int, QStringList > parameters;
-            int parameterId = 0;
-            xmlNodePtr child;
-            //There should be only one child, so take the first one.
-            for(child = nodeset->nodeTab[0]->children;child != NULL;child = child->next){
-                //skip the carriage return (text node named text and containing /n)
-                if(child->type == XML_TEXT_NODE) continue;
+    QDomNode n = documentNode.firstChild();
+    if (!n.isNull()) {
+        while(!n.isNull()) {
+            QDomElement e = n.toElement(); // try to convert the node to an element.
+            if(!e.isNull()) {
+                QString tag = e.tagName();
+                //ProgramInformation programInformation;
+                QMap<int, QStringList > parameters;
+                int parameterId = 0;
+                if (tag == PROGRAMS) {
+                    QDomNode unit = e.firstChild(); // try to convert the node to an element.
+                    while(!unit.isNull()) {
+                        QDomElement u = unit.toElement();
+                        if (!u.isNull()) {
+                            if( u.tagName() == PROGRAM) {
+                                QDomNode program = u.firstChild();
+                                while(!program.isNull()) {
+                                    QDomElement p = program.toElement();
+                                    QString tag =p.tagName();
+                                    if( tag == NAME) {
+                                        QString name = p.text();
+                                        programInformation.setProgramName(name);
+                                    } else if( tag == HELP) {
+                                        QString help = p.text();
+                                        programInformation.setHelp(help);
 
-                if(QString((char*)child->name) == NAME){
-                    xmlChar* sName = xmlNodeListGetString(doc,child->children, 1);
-                    QString name = QString((char*)sName);
-                    xmlFree(sName);
-                    programInformation.setProgramName(name);
-                }
+                                    } else if(tag ==PARAMETERS ){
+                                        QDomNode parametersNode = p.firstChild().firstChild();
+                                        QStringList parameterInfo;
+                                        while(!parametersNode.isNull()) {
 
-                if(QString((char*)child->name) == HELP){
-                    xmlChar* sHelp = xmlNodeListGetString(doc,child->children, 1);
-                    QString help = QString((char*)sHelp);
-                    xmlFree(sHelp);
-                    programInformation.setHelp(help);
-                }
+                                            QDomElement parametersElement = parametersNode.toElement();
+                                            if(!parametersElement.isNull() ) {
+                                                QString tag = parametersElement.tagName();
+                                                if(tag == NAME) {
+                                                    QString name = parametersElement.text();
+                                                    parameterInfo.prepend(name);
 
-                if(QString((char*)child->name) == PARAMETERS){
-                    //loop on the children of the parameters tag: parameter
-                    xmlNodePtr parametersNode;
-                    for(parametersNode = child->children;parametersNode != NULL;parametersNode = parametersNode->next){
-                        //skip the carriage return (text node named text and containing /n)
-                        if(child->type == XML_TEXT_NODE) continue;
+                                                } else if(tag == STATUS ) {
+                                                    QString status = parametersElement.text();
+                                                    parameterInfo.append(status);
 
-                        if(QString((char*)parametersNode->name) == PARAMETER){
-                            QStringList parameterInfo;
-                            //loop on the children of the parameter tag: name, status and value
-                            xmlNodePtr parameter;
-                            for(parameter = parametersNode->children;parameter != NULL;parameter = parameter->next){
-                                //skip the carriage return (text node named text and containing /n)
-                                if(parameter->type == XML_TEXT_NODE) continue;
+                                                } else if(tag == VALUE) {
+                                                    QString value = parametersElement.text();
+                                                    if(parameterInfo.size() == 1)
+                                                        parameterInfo.append(value);
+                                                    else{
+                                                        QStringList::iterator it = parameterInfo.begin();
+                                                        parameterInfo.insert(++it,value);
+                                                    }
 
-                                if(QString((char*)parameter->name) == NAME){
-                                    xmlChar* sName = xmlNodeListGetString(doc,parameter->children, 1);
-                                    QString name = QString((char*)sName);
-                                    xmlFree(sName);
-                                    parameterInfo.prepend(name);
-                                }
+                                                }
+                                            }
+                                            parametersNode = parametersNode.nextSibling();
 
-                                if(QString((char*)parameter->name) == STATUS){
-                                    xmlChar* sStatus = xmlNodeListGetString(doc,parameter->children, 1);
-                                    QString status = QString((char*)sStatus);
-                                    xmlFree(sStatus);
-                                    parameterInfo.append(status);
-                                }
+                                        }
+                                        if(parameterInfo.size() != 0) {
+                                            parameters.insert(parameterId,parameterInfo);
+                                            parameterId++;
+                                        }
 
-                                if(QString((char*)parameter->name) == VALUE){
-                                    xmlChar* sValue = xmlNodeListGetString(doc,parameter->children, 1);
-                                    QString value = QString((char*)sValue);
-                                    xmlFree(sValue);
-                                    if(parameterInfo.size() == 1) parameterInfo.append(value);
-                                    else{
-                                        QStringList::iterator it = parameterInfo.begin();
-                                        parameterInfo.insert(++it,value);
                                     }
+                                    program= program.nextSibling();
+
                                 }
+                                if(!parameters.isEmpty())
+                                    programInformation.setParameterInformation(parameters);
+
                             }
-                            if(!parameterInfo.isEmpty())
-                                parameters.insert(parameterId,parameterInfo);
-                            parameterId++;
                         }
+                        break;
+                        //unit = unit.nextSibling();
                     }
+
                 }
             }
-            if(!parameters.isEmpty())
-                programInformation.setParameterInformation(parameters);
+            n = n.nextSibling();
         }
     }
 
-    xmlFree(searchPath);
-    xmlXPathFreeObject(result);
 }

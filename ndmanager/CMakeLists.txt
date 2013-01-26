@@ -5,7 +5,6 @@ set (QT_MIN_VERSION "4.8.0")
 find_package(Qt4 REQUIRED)
 include(${QT_USE_FILE})
 include(MacroEnsureVersion)
-find_package(LibXml2 REQUIRED)
 find_package(LibKlustersShared 1.0.0 REQUIRED)
 include(CheckCXXCompilerFlag)
 add_definitions(${QT_DEFINITIONS})
@@ -13,7 +12,7 @@ set( QT_USE_XML TRUE)
 set( QT_USE_QTWEBKIT TRUE) 
 
 # tell cmake where to search for Qt/KDE headers:
-include_directories(${LIBXML2_INCLUDE_DIR} ${QT_INCLUDE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${QT_QTXML_INCLUDE_DIR} ${LIBKLUSTERSSHARED_INCLUDE_DIR} )
+include_directories(${QT_INCLUDE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${QT_QTXML_INCLUDE_DIR} ${LIBKLUSTERSSHARED_INCLUDE_DIR} )
 
 if(QT_QTWEBKIT_FOUND)
 	include_directories(${QT_QTWEBKIT_INCLUDE_DIR})
