@@ -1,289 +1,274 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ui version="4.0" stdsetdef="1">
-  <author></author>
-  <comment></comment>
-  <exportmacro></exportmacro>
-  <class>ParameterLayout</class>
-  <widget class="QWidget" name="ParameterLayout">
-    <property name="geometry">
-      <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>507</width>
-        <height>342</height>
-      </rect>
-    </property>
-    <property name="windowTitle">
-      <string>Parameters</string>
-    </property>
+<ui version="4.0">
+ <class>ParameterLayout</class>
+ <widget class="QWidget" name="ParameterLayout">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>507</width>
+    <height>342</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Parameters</string>
+  </property>
+  <layout class="QGridLayout">
+   <item row="0" column="0">
     <layout class="QGridLayout">
-      <item row="0" column="0">
-        <layout class="QGridLayout">
-          <item row="1" column="0">
-            <spacer name="spacer97">
-              <property name="sizeHint">
-                <size>
-                  <width>16</width>
-                  <height>25</height>
-                </size>
-              </property>
-              <property name="sizeType">
-                <enum>QSizePolicy::Fixed</enum>
-              </property>
-              <property name="orientation">
-                <enum>Qt::Vertical</enum>
-              </property>
-            </spacer>
-          </item>
-          <item row="2" column="0">
-            <layout class="QGridLayout">
-              <item row="1" column="2">
-                <layout class="QVBoxLayout">
-                  <item>
-                    <widget class="QPushButton" name="addButton">
-                      <property name="sizePolicy">
-                        <sizepolicy>
-                          <hsizetype>0</hsizetype>
-                          <vsizetype>0</vsizetype>
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                        </sizepolicy>
-                      </property>
-                      <property name="minimumSize">
-                        <size>
-                          <width>104</width>
-                          <height>0</height>
-                        </size>
-                      </property>
-                      <property name="maximumSize">
-                        <size>
-                          <width>104</width>
-                          <height>32767</height>
-                        </size>
-                      </property>
-                      <property name="text">
-                        <string>Add</string>
-                      </property>
-                    </widget>
-                  </item>
-                  <item>
-                    <widget class="QPushButton" name="removeButton">
-                      <property name="sizePolicy">
-                        <sizepolicy>
-                          <hsizetype>0</hsizetype>
-                          <vsizetype>0</vsizetype>
-                          <horstretch>0</horstretch>
-                          <verstretch>0</verstretch>
-                        </sizepolicy>
-                      </property>
-                      <property name="minimumSize">
-                        <size>
-                          <width>104</width>
-                          <height>0</height>
-                        </size>
-                      </property>
-                      <property name="maximumSize">
-                        <size>
-                          <width>104</width>
-                          <height>32767</height>
-                        </size>
-                      </property>
-                      <property name="text">
-                        <string>Remove</string>
-                      </property>
-                    </widget>
-                  </item>
-                  <item>
-                    <spacer name="spacer28">
-                      <property name="sizeHint">
-                        <size>
-                          <width>16</width>
-                          <height>152</height>
-                        </size>
-                      </property>
-                      <property name="sizeType">
-                        <enum>QSizePolicy::Expanding</enum>
-                      </property>
-                      <property name="orientation">
-                        <enum>Qt::Vertical</enum>
-                      </property>
-                    </spacer>
-                  </item>
-                </layout>
-              </item>
-              <item row="0" column="0" rowspan="1" colspan="3">
-                <layout class="QHBoxLayout">
-                  <item>
-                    <widget class="QLabel" name="textLabel4_2_2_4_2_2">
-                      <property name="text">
-                        <string>Parameters</string>
-                      </property>
-                      <property name="wordWrap">
-                        <bool>false</bool>
-                      </property>
-                    </widget>
-                  </item>
-                  <item>
-                    <spacer name="spacer10_2_3">
-                      <property name="sizeHint">
-                        <size>
-                          <width>5</width>
-                          <height>16</height>
-                        </size>
-                      </property>
-                      <property name="sizeType">
-                        <enum>QSizePolicy::Expanding</enum>
-                      </property>
-                      <property name="orientation">
-                        <enum>Qt::Horizontal</enum>
-                      </property>
-                    </spacer>
-                  </item>
-                </layout>
-              </item>
-              <item row="1" column="1">
-                <spacer name="spacer10_2_2">
-                  <property name="sizeHint">
-                    <size>
-                      <width>20</width>
-                      <height>16</height>
-                    </size>
-                  </property>
-                  <property name="sizeType">
-                    <enum>QSizePolicy::Fixed</enum>
-                  </property>
-                  <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                  </property>
-                </spacer>
-              </item>
-              <item row="1" column="0">
-                <widget class="QTableWidget" name="parameterTable">
-                  <property name="sizePolicy">
-                    <sizepolicy>
-                      <hsizetype>7</hsizetype>
-                      <vsizetype>7</vsizetype>
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                    </sizepolicy>
-                  </property>
-                  <property name="minimumSize">
-                    <size>
-                      <width>200</width>
-                      <height>100</height>
-                    </size>
-                  </property>
-                  <property name="rowCount">
-                    <number>0</number>
-                  </property>
-                  <property name="columnCount">
-                    <number>3</number>
-                  </property>
-                  <property name="selectionMode">
-                    <enum>QAbstractItemView::MultiSelection</enum>
-                  </property>
-                  <column>
-                    <property name="text">
-                      <string>Name</string>
-                    </property>
-                    <property name="pixmap">
-                      <pixmap/>
-                    </property>
-                  </column>
-                  <column>
-                    <property name="text">
-                      <string>Value</string>
-                    </property>
-                    <property name="pixmap">
-                      <pixmap/>
-                    </property>
-                  </column>
-                  <column>
-                    <property name="text">
-                      <string>Status</string>
-                    </property>
-                    <property name="pixmap">
-                      <pixmap/>
-                    </property>
-                  </column>
-                </widget>
-              </item>
-            </layout>
-          </item>
-          <item row="0" column="0">
-            <layout class="QHBoxLayout">
-              <item>
-                <widget class="QLabel" name="textLabel4_2_2_4">
-                  <property name="text">
-                    <string>Name</string>
-                  </property>
-                  <property name="wordWrap">
-                    <bool>false</bool>
-                  </property>
-                </widget>
-              </item>
-              <item>
-                <spacer name="spacer10_2">
-                  <property name="sizeHint">
-                    <size>
-                      <width>20</width>
-                      <height>16</height>
-                    </size>
-                  </property>
-                  <property name="sizeType">
-                    <enum>QSizePolicy::Fixed</enum>
-                  </property>
-                  <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                  </property>
-                </spacer>
-              </item>
-              <item>
-                <widget class="QLineEdit" name="nameLineEdit">
-                  <property name="sizePolicy">
-                    <sizepolicy>
-                      <hsizetype>0</hsizetype>
-                      <vsizetype>0</vsizetype>
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                    </sizepolicy>
-                  </property>
-                  <property name="minimumSize">
-                    <size>
-                      <width>400</width>
-                      <height>20</height>
-                    </size>
-                  </property>
-                  <property name="maximumSize">
-                    <size>
-                      <width>400</width>
-                      <height>32767</height>
-                    </size>
-                  </property>
-                </widget>
-              </item>
-              <item>
-                <spacer name="spacer11">
-                  <property name="sizeHint">
-                    <size>
-                      <width>5</width>
-                      <height>21</height>
-                    </size>
-                  </property>
-                  <property name="sizeType">
-                    <enum>QSizePolicy::Expanding</enum>
-                  </property>
-                  <property name="orientation">
-                    <enum>Qt::Horizontal</enum>
-                  </property>
-                </spacer>
-              </item>
-            </layout>
-          </item>
+     <item row="1" column="0">
+      <spacer name="spacer97">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>16</width>
+         <height>25</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="2" column="0">
+      <layout class="QGridLayout">
+       <item row="1" column="2">
+        <layout class="QVBoxLayout">
+         <item>
+          <widget class="QPushButton" name="addButton">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>104</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>104</width>
+             <height>32767</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Add</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="removeButton">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>104</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>104</width>
+             <height>32767</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Remove</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="spacer28">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Expanding</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>16</width>
+             <height>152</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
         </layout>
-      </item>
+       </item>
+       <item row="0" column="0" colspan="3">
+        <layout class="QHBoxLayout">
+         <item>
+          <widget class="QLabel" name="textLabel4_2_2_4_2_2">
+           <property name="text">
+            <string>Parameters</string>
+           </property>
+           <property name="wordWrap">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="spacer10_2_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Expanding</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>5</width>
+             <height>16</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </item>
+       <item row="1" column="1">
+        <spacer name="spacer10_2_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>16</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="1" column="0">
+        <widget class="QTableWidget" name="parameterTable">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>200</width>
+           <height>100</height>
+          </size>
+         </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::MultiSelection</enum>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
+         </property>
+         <property name="rowCount">
+          <number>0</number>
+         </property>
+         <property name="columnCount">
+          <number>3</number>
+         </property>
+         <column>
+          <property name="text">
+           <string>Name</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Value</string>
+          </property>
+         </column>
+         <column>
+          <property name="text">
+           <string>Status</string>
+          </property>
+         </column>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="0" column="0">
+      <layout class="QHBoxLayout">
+       <item>
+        <widget class="QLabel" name="textLabel4_2_2_4">
+         <property name="text">
+          <string>Name</string>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="spacer10_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>16</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="nameLineEdit">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>400</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>400</width>
+           <height>32767</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="spacer11">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Expanding</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>5</width>
+           <height>21</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </item>
     </layout>
-  </widget>
-  <layoutdefault spacing="6" margin="11"/>
-  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+ <resources/>
+ <connections/>
 </ui>
