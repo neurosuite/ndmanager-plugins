@@ -23,10 +23,6 @@
 #include "channelcolors.h"
 #include <helper.h>
 
-
-
-#include <fstream>
-
 #include <QTextStream>
 #include <QList>
 
