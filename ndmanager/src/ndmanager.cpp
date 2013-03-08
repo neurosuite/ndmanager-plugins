@@ -373,7 +373,7 @@ void ndManager::slotImport(){
     importedFile = true;
 
     const QString url = QFileDialog::getOpenFileName(this, tr("Import file as model..."),QString(),
-                                               tr("*.xml|Parameter File (*.xml)\n*|All files") );
+                                               tr("Parameter File (*.xml);;All files (*.*)") );
     if(!url.isEmpty())
         openDocumentFile(url);
 
@@ -520,7 +520,7 @@ void ndManager::slotSave(){
             initialPath = QFileInfo(currentUrl).absolutePath();
         }
 
-        const QString url=QFileDialog::getSaveFileName( this, tr("Save as..."),initialPath,tr("*.xml|Xml Files\n*|All Files"));
+        const QString url=QFileDialog::getSaveFileName( this, tr("Save as..."),initialPath,tr("Xml Files (*.xml)|All Files (*.*)"));
         if(!url.isEmpty()){
             QApplication::setOverrideCursor(QCursor(Qt::WaitCursor));
             int saveStatus = doc->saveAs(url);
@@ -552,7 +552,7 @@ void ndManager::slotSaveAs(){
     slotStatusMsg(tr("Saving as..."));
 
     //Save the parameter file
-    QString url=QFileDialog::getSaveFileName(this, tr("Save as..."),doc->url(),tr("*|All files"));
+    QString url=QFileDialog::getSaveFileName(this, tr("Save as..."),doc->url(),tr("All files (*.*)"));
     if(!url.isEmpty()){
         int saveStatus = doc->saveAs(url);
         if(saveStatus == ndManagerDoc::SAVE_ERROR){
