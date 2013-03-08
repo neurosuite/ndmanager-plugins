@@ -225,7 +225,7 @@ void ndManager::slotFileOpen()
     slotStatusMsg(tr("Opening file..."));
 
     const QString url=QFileDialog::getOpenFileName(this, tr("Open File..."),QString(),
-                                             tr("*.xml|Parameter File (*.xml)\n*|All files") );
+                                             tr("Parameter File (*.xml);;All files (*.*)") );
     if(!url.isEmpty())
         openDocumentFile(url);
 
