@@ -29,7 +29,6 @@
 using namespace ndmanager;
 
 XmlReader::XmlReader()
-    :readVersion("")
 {
 
 }
@@ -66,7 +65,7 @@ bool XmlReader::parseFile(const QString& url)
 }
 
 void XmlReader::closeFile(){
-    readVersion = "";
+    readVersion.clear();
 
 }
 
