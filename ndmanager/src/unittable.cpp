@@ -29,6 +29,7 @@ UnitTable::UnitTable( int numRows, int numCols, QWidget * parent)
 {
    setColumnCount(numCols);
    setRowCount(numRows);
+   setSelectionBehavior(QAbstractItemView::SelectRows);
 }
 
 UnitTable::~UnitTable()

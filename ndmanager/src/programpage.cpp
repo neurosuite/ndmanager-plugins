@@ -281,14 +281,13 @@ void ProgramPage::nameChanged(const QString& name){
                 else{
                     QTextStream stream(&file);
                     QString firstLine = stream.readLine();
-                    int i = firstLine.indexOf(QRegExp("^#!"));
+                    const int i = firstLine.indexOf(QRegExp("^#!"));
                     if(i != -1){
                         file.close();
                         //Setting the content of the KTextEdit (named script) will trigger a scriptModified and therefore set sciptIsModified to true. The initial load of the script
                         //should no be considered as a modification.
                         sciptIsModified = false;
-                    }
-                    else{
+                    } else {
                         message =  tr("The file %1 does not appear to be a script file (a script file should begin with #!).").arg(name);
                         title = tr("IO Error!");
                         scriptView->clear();
