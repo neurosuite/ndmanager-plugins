@@ -59,6 +59,7 @@ ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const QString& name)
     tabWidget = new QTabWidget(this);
     // script = new KTextEdit(tabWidget);
     help = new QTextEdit(tabWidget);
+    help->setAcceptRichText(false);
     if(!expertMode)
         help->setReadOnly(true);
     parameters = new ParameterPage(expertMode,tabWidget);
@@ -69,6 +70,7 @@ ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const QString& name)
 
     if(expertMode){
         scriptView = new QTextEdit(this);
+        scriptView->setAcceptRichText(false);
         tabWidget->addTab(scriptView,tr("Script"));
     }
 
