@@ -173,9 +173,9 @@ bool ProgramPage::saveProgramScript(){
     QString scriptUrl;
 
     if(!path.isNull())
-        scriptUrl = QFileDialog::getSaveFileName( this, tr("Save as..."),path,tr("*"));
+        scriptUrl = QFileDialog::getSaveFileName( this, tr("Save as..."),path,QLatin1String("*.*"));
     else
-        scriptUrl = QFileDialog::getSaveFileName(this, tr("Save as..."),QString(),tr("*"));
+        scriptUrl = QFileDialog::getSaveFileName(this, tr("Save as..."),QString(),QLatin1String("*.*"));
 
     if(!scriptUrl.isEmpty()){
         path = scriptUrl;
@@ -197,7 +197,8 @@ bool ProgramPage::saveProgramScript(){
     if(programName != parameters->getProgramName()) programName = parameters->getProgramName();
     if(!title.isEmpty())
         QMessageBox::critical (this, title,message);
-    if(recall) return saveProgramScript();
+    if(recall)
+        return saveProgramScript();
     else{
         if(!title.isEmpty())
             return false;
@@ -217,10 +218,10 @@ void ProgramPage::saveProgramParameters(){
         QString name = parameters->getProgramName();
         name.append(".xml");
         descriptionUrlTmp += QDir::separator() + name;
-        descriptionUrl = QFileDialog::getSaveFileName(this, tr("Save as..."),descriptionUrlTmp,tr("*.xml|Xml Files"));
+        descriptionUrl = QFileDialog::getSaveFileName(this, tr("Save as..."),descriptionUrlTmp,tr("Xml Files (*.xml)"));
     }
     else{
-        descriptionUrl = QFileDialog::getSaveFileName(this, tr("Save as..."),descriptionUrl,tr("*.xml|Xml Files"));
+        descriptionUrl = QFileDialog::getSaveFileName(this, tr("Save as..."),descriptionUrl,tr("Xml Files (*.xml)"));
     }
     //a location has been chosen
     if(!descriptionUrl.isEmpty()){
