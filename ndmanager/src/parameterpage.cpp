@@ -184,7 +184,7 @@ void ParameterPage::removeParameter(){
             }
         }
         qSort(lst);
-        for(int i = lst.count()-1; i>0; --i) {
+        for(int i = lst.count()-1; i>=0; --i) {
             parameterTable->removeRow(lst.at(i));
         }
     }
