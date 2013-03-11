@@ -268,7 +268,7 @@ ProgramPage* ParameterView::addProgram(const QString& programName,bool show){
 
 void ParameterView::changeProgramName(ProgramPage* programPage, const QString& newName, const QString &message, const QString &title){
 
-    QString oldName = programPage->objectName();
+    const QString oldName = programPage->objectName();
     if(newName == oldName)
         return;
 
@@ -279,7 +279,7 @@ void ParameterView::changeProgramName(ProgramPage* programPage, const QString& n
         //this method will be call anyway but by calling it now a first time, we ensure that the text display in the script tab in consistent with the program (the old program which is kept)
         programPage->nameChanged(oldName);
 
-        QString currentMessage =  tr("There is already a script with the name %1.").arg(newName);
+        const QString currentMessage =  tr("There is already a script with the name %1.").arg(newName);
         QMessageBox::critical (this, tr("script name conflict"),currentMessage);
 
         return;
@@ -422,13 +422,12 @@ void ParameterView::initialize(QMap<int, QList<int> >& anatomicalGroups,QMap<QSt
             if(!path.isNull()){
                 QFile file(path);
                 if(!file.open(QIODevice::ReadOnly)){
-                    QString message = tr("The file %1 is not readable.").arg(name);
+                    const QString message = tr("The file %1 is not readable.").arg(name);
                     QMessageBox::critical (this,tr("IO Error!"),message);
-                }
-                else{
+                } else {
                     QTextStream stream(&file);
                     QString firstLine = stream.readLine();
-                    int i = firstLine.indexOf(QRegExp("^#!"));
+                    const int i = firstLine.indexOf(QRegExp("^#!"));
 
                     if(i != -1){
                         scriptView->setText(stream.readAll());
@@ -436,7 +435,7 @@ void ParameterView::initialize(QMap<int, QList<int> >& anatomicalGroups,QMap<QSt
                         programPage->initialisationOver();
                     }
                     else{
-                        QString message =  tr("The file %1  does not appear to be a script file (a script file should begin with #!).").arg(name);
+                        const QString message =  tr("The file %1  does not appear to be a script file (a script file should begin with #!).").arg(name);
                         QMessageBox::critical (this,tr("IO Error!"),message);
                         scriptView->clear();
                     }
@@ -464,7 +463,7 @@ void ParameterView::loadProgram(const QString &programUrl) {
 
     if(programDict.contains(name)){
         const QString message =  tr("The selected script %1 is already loaded. Do you want to reload it?").arg(name);
-        int answer = QMessageBox::question(this,tr("Script already loaded"),message );
+        const int answer = QMessageBox::question(this,tr("Script already loaded"),message );
         if(answer == QMessageBox::No){
             counter--;
             return;
@@ -494,19 +493,19 @@ void ParameterView::loadProgram(const QString &programUrl) {
         if(!path.isNull()){
             QFile file(path);
             if(!file.open(QIODevice::ReadOnly)){
-                QString message = tr("The file %1 is not readable.").arg(name);
+                const QString message = tr("The file %1 is not readable.").arg(name);
                 QMessageBox::critical (this,message, tr("IO Error!"));
             }
             else{
                 QTextStream stream(&file);
                 QString firstLine = stream.readLine();
-                int i = firstLine.indexOf(QRegExp("^#!"));
+                const int i = firstLine.indexOf(QRegExp("^#!"));
 
                 if(i != -1){
                     scriptView->setText(stream.readAll());
                     file.close();
                 } else {
-                    QString message =  tr("The file %1  does not appear to be a script file (a script file should begin with #!).").arg(name);
+                    const QString message =  tr("The file %1  does not appear to be a script file (a script file should begin with #!).").arg(name);
                     QMessageBox::critical (this,tr("IO Error!"),message);
                     scriptView->clear();
                 }
