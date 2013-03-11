@@ -246,7 +246,6 @@ void XmlReader::getSpikeDescription(int nbChannels,QMap<int, QList<int> >& spike
                                                        spikeGroups.insert(i + 1,channelList);
                                                    }else if( tag == NB_SAMPLES) {
                                                        groupInfo.insert(NB_SAMPLES,valGroup.text());
-                                                       qDebug()<<" valGroup.text()"<<valGroup.text();
                                                    } else if( tag == PEAK_SAMPLE_INDEX) {
                                                        groupInfo.insert(PEAK_SAMPLE_INDEX,valGroup.text());
                                                    } else if( tag == NB_FEATURES) {
