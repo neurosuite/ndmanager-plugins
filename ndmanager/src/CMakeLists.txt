@@ -88,6 +88,6 @@ endif()
 
 install(FILES ndManagerDefault.xml DESTINATION share/applications/ndmanager/)
 
-install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/ndmanager DESTINATION bin)
+install(TARGETS ndmanager DESTINATION bin)
 
 install(FILES ndmanager.desktop DESTINATION share/applications/ )
