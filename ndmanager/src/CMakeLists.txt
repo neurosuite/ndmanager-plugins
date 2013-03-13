@@ -90,4 +90,9 @@ install(FILES ndManagerDefault.xml DESTINATION share/applications/ndmanager/)
 
 install(TARGETS ndmanager DESTINATION bin)
 
+install(FILES hi16-app-ndmanager.png DESTINATION share/icons/hicolor/16x16/apps/ RENAME ndmanager.png)
+install(FILES hi22-app-ndmanager.png DESTINATION share/icons/hicolor/22x22/apps/ RENAME ndmanager.png)
+install(FILES hi32-app-ndmanager.png DESTINATION share/icons/hicolor/32x32/apps/ RENAME ndmanager.png)
+install(FILES hi48-app-ndmanager.png DESTINATION share/icons/hicolor/48x48/apps/ RENAME ndmanager.png)
+install(FILES hi64-app-ndmanager.png DESTINATION share/icons/hicolor/64x64/apps/ RENAME ndmanager.png)
 install(FILES ndmanager.desktop DESTINATION share/applications/ )
