@@ -28,12 +28,7 @@
 /**
     @author Lynn Hazan <lynn.hazan@myrealbox.com>
 */
-class  Helper{
-public:
-    Helper();
-
-    virtual ~Helper();
-
+namespace  Helper{
     static QString doubleToString(double value){
 
         QString stringValue = QString::fromLatin1("%1").arg(value,0,'g',14);
@@ -41,6 +36,6 @@ public:
     return stringValue.replace(regexp,"\\1\\2");*/
         return stringValue;
     }
-};
+}
 
 #endif
