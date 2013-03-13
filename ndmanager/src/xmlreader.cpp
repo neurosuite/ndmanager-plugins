@@ -56,7 +56,6 @@ bool XmlReader::parseFile(const QString& url)
     if (element.tagName() == QLatin1String("parameters")) {
         if( element.hasAttribute(DOC__VERSION)) {
             readVersion = element.attribute(DOC__VERSION);
-            qDebug()<<" readVersion "<<readVersion;
         }
     }
     documentNode = element;
