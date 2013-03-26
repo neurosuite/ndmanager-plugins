@@ -31,8 +31,8 @@ QueryOutputDialog::QueryOutputDialog(const QString& htmlText,const QString& quer
     htmlText(htmlText),
     queryResult(queryResult)
 {
-    setButtons(Close|User1|User2);
-    setDefaultButton(Close);
+    setButtons(Ok|User1|User2);
+    setDefaultButton(Ok);
     setFaceType(Plain);
     setWindowTitle(caption);
 
@@ -56,8 +56,6 @@ QueryOutputDialog::QueryOutputDialog(const QString& htmlText,const QString& quer
     resize(800,600);
     connect(this, SIGNAL(user1Clicked()), SLOT(slotUser1()));
     connect(this, SIGNAL(user2Clicked()), SLOT(slotUser2()));
-
-
 }
 
 QueryOutputDialog::~QueryOutputDialog()
