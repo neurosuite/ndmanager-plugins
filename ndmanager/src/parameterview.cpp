@@ -611,10 +611,33 @@ bool ParameterView::isModified(){
             break;
     }
 
-    //if one of the page has been modified, return true, false otherwise
-    return (programsModified || (counter != 0)||generalInfo->isModified() || acquisitionSystem->isModified() || video->isModified() || lfp->isModified()  ||  anatomy->isModified() || spike->isModified() || unitList->isModified() || miscellaneous->isModified() || neuroscopeVideo->isModified() || clusters->isModified() ||  this->channelColors->isModified() || this->channelDefaultOffsets->isModified() || files->isModified() || parameterModified || descriptionModified);
+    const bool p = (programsModified ||
+                    (counter != 0)||
+                    generalInfo->isModified() ||
+                    acquisitionSystem->isModified() ||
+                    video->isModified() ||
+                    lfp->isModified()  ||
+                    anatomy->isModified() ||
+                    spike->isModified() ||
+                    unitList->isModified() ||
+                    miscellaneous->isModified() ||
+                    neuroscopeVideo->isModified() ||
+                    clusters->isModified() ||
+                    this->channelColors->isModified() ||
+                    this->channelDefaultOffsets->isModified() ||
+                    files->isModified() ||
+                    parameterModified ||
+                    descriptionModified);
 
-    //programs
+    qDebug()<<" p :"<<p;
+    qDebug()<<"programsModified "<<programsModified<<" counter"<<counter<<" generalInfo->isModified()"<<generalInfo->isModified();
+    qDebug()<<"acquisitionSystem->isModified() "<<acquisitionSystem->isModified()<<" video->isModified()"<<video->isModified()<<" lfp->isModified()"<<lfp->isModified();
+    qDebug()<<" anatomy->isModified()"<<anatomy->isModified()<<" spike->isModified()"<<spike->isModified()<<" unitList->isModified()"<<unitList->isModified();
+    qDebug()<<" miscellaneous->isModified()"<<miscellaneous->isModified()<<" neuroscopeVideo->isModified()"<<neuroscopeVideo->isModified();
+    qDebug()<<" clusters->isModified()"<<clusters->isModified()<<" this->channelColors->isModified()"<<this->channelColors->isModified();
+    qDebug()<<" this->channelDefaultOffsets->isModified()"<<this->channelDefaultOffsets->isModified()<<" files->isModified()"<<files->isModified();
+    qDebug()<<" parameterModified"<<parameterModified<<" descriptionModified"<<descriptionModified;
+    return p;
 }
 
 void ParameterView::getInformation(QMap<int, QList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes,
