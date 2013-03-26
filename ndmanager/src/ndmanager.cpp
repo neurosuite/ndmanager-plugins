@@ -276,7 +276,7 @@ void ndManager::openDocumentFile(const QString& url)
     QFileInfo file(filePath);
     if(!file.exists()){
         QString title = tr("File not found: %1").arg(filePath);
-        const int answer = QMessageBox::question(this,tr("The selected file no longer exists. Do you want to remove it from the list of recent opened files ?"), title);
+        const int answer = QMessageBox::question(this,title, tr("The selected file no longer exists. Do you want to remove it from the list of recent opened files ?"), QMessageBox::Yes|QMessageBox::No);
         if(answer == QMessageBox::Yes){
             mFileOpenRecent->removeRecentFile(url);
         } else  {
