@@ -145,6 +145,7 @@ void ParameterPage::setParameterInformation(const QMap<int, QStringList >& param
                 QComboBox *combo = new QComboBox;
                 combo->addItems(status);
                 parameterTable->setCellWidget(iterator.key(),i,combo);
+                connect(combo, SIGNAL(activated(int)), SLOT(slotValueModified()));
             } else {
                 parameterTable->setItem(iterator.key(),i,new QTableWidgetItem(parameterInfo[i]));
             }

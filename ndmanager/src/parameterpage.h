@@ -96,6 +96,9 @@ public slots:
         descriptionModified = false;
     }
 
+    void slotValueModified() {
+        valueModified = true;
+    }
 
 protected:
     /** Event filter to validate the entries in the group table.
