@@ -18,13 +18,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "managerview.h"
-
-
-
-
-
 // include files for Qt
-#include <qwidget.h> 
 #include <qdir.h> 
 #include <qstringlist.h> 
 #include <qlayout.h>

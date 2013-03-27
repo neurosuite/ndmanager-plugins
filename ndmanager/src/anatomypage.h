@@ -72,8 +72,8 @@ public:
     void setNbChannels(int nbChannels);
 
     /**True if at least one property has been modified, false otherwise.*/
-    inline bool isModified()const{return modified;}
-
+    bool isModified()const{return modified;}
+    void setModified(bool b) { modified = b; }
 protected:
     /** Event filter to validate the entries in the group table.
  * @param object target object for the event.

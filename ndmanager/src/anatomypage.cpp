@@ -26,6 +26,7 @@
 
 #include <QEvent>
 #include <QVector>
+#include <QDebug>
 
 AnatomyPage::AnatomyPage(QWidget* parent)
     : AnatomyLayout(parent),
@@ -216,6 +217,7 @@ void AnatomyPage::attributeChanged(int row,int column){
     } else {
         //attributesTable->adjustRow(row);
     }
+    qDebug()<<" attributeChanged"<<modified;
 }
 
 void AnatomyPage::slotValidate(){

@@ -58,6 +58,7 @@ public:
 
     /**True if at least one property has been modified, false otherwise.*/
     bool isModified() const {return modified;}
+    void setModified(bool b) {modified = b; }
 
 public slots: 
     /** Will be called when any properties is modified.*/

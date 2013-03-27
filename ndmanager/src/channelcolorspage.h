@@ -55,7 +55,8 @@ public:
     void setColors(const QList<ChannelColors> &colors);
 
     /**True if at least one property has been modified, false otherwise.*/
-    inline bool isModified()const{return modified;}
+    bool isModified()const{return modified;}
+    void setModified( bool b ) { modified = b; }
 
 public slots:
     /** Will be called when any properties is modified.*/

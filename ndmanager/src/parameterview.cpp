@@ -367,9 +367,11 @@ void ParameterView::initialize(QMap<int, QList<int> >& anatomicalGroups,QMap<QSt
     anatomy->setNbChannels(static_cast<int>(acquisitionSystemInfo[NB_CHANNELS]));
     anatomy->setGroups(anatomicalGroups);
     anatomy->setAttributes(attributes);
+    anatomy->setModified(false);
 
     //Initialize the spike groups page
     spike->setGroups(spikeGroups,spikeGroupsInformation);
+    spike->setModified(false);
 
     //Initialize the unit list page
     unitList->setNbUnits(units.count());
@@ -395,10 +397,12 @@ void ParameterView::initialize(QMap<int, QList<int> >& anatomicalGroups,QMap<QSt
     //Initialize the channel color page
     this->channelColors->setNbChannels(static_cast<int>(acquisitionSystemInfo[NB_CHANNELS]));
     this->channelColors->setColors(channelColors);
+    this->channelColors->setModified(false);
 
     //Initialize the channel offset page
     this->channelDefaultOffsets->setNbChannels(static_cast<int>(acquisitionSystemInfo[NB_CHANNELS]));
     this->channelDefaultOffsets->setOffsets(channelDefaultOffsets);
+    this->channelDefaultOffsets->setModified(false);
 
 
     //Initialize the programs page

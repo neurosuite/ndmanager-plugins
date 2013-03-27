@@ -63,7 +63,8 @@ public:
     void getGroupInformation(QMap<int,  QMap<QString,QString> >& groupInformation)const;
 
     /**True if at least one property has been modified, false otherwise.*/
-    inline bool isModified() const {return modified;}
+    bool isModified() const {return modified;}
+    void setModified(bool b) { modified = b;}
 
     /**Returns the current number of group of spikes.
 */
