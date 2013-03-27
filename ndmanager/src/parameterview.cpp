@@ -433,18 +433,17 @@ void ParameterView::initialize(QMap<int, QList<int> >& anatomicalGroups,QMap<QSt
                     QString firstLine = stream.readLine();
                     const int i = firstLine.indexOf(QRegExp("^#!"));
 
-                    if(i != -1){
+                    if(i != -1) {
                         scriptView->setText(stream.readAll());
                         file.close();
-                        programPage->initialisationOver();
-                    }
-                    else{
+                    } else {
                         const QString message =  tr("The file %1  does not appear to be a script file (a script file should begin with #!).").arg(name);
                         QMessageBox::critical (this,tr("IO Error!"),message);
                         scriptView->clear();
                     }
                 }
             }
+            programPage->initialisationOver();
         }
     }
 }
