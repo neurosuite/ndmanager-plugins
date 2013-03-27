@@ -365,9 +365,6 @@ void ndManager::createParameterView(QMap<int, QList<int> >& anatomicalGroups,QMa
 
 }
 
-
-
-
 void ndManager::slotImport(){
     slotStatusMsg(tr("importing file as model..."));
     importedFile = true;
@@ -441,7 +438,6 @@ void ndManager::slotFileClose(){
             //close the document
             doc->closeDocument();
             //Delete the main view
-            mainDock->hide();
             delete mainDock;
             mainDock = 0L;
             resetState();
