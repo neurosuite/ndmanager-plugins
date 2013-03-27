@@ -279,8 +279,7 @@ void ProgramPage::nameChanged(const QString& name){
                     message = tr("The file %1 is not readable.").arg(name);
                     title = tr("IO Error!");
                     scriptView->clear();
-                }
-                else{
+                } else {
                     QTextStream stream(&file);
                     QString firstLine = stream.readLine();
                     const int i = firstLine.indexOf(QRegExp("^#!"));

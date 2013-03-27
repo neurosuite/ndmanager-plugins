@@ -64,7 +64,7 @@ QueryOutputDialog::~QueryOutputDialog()
 
 void QueryOutputDialog::slotUser1()
 {
-    QString filename = QFileDialog::getSaveFileName(this,"saveQuery",QString(),"*");
+    const QString filename = QFileDialog::getSaveFileName(this,tr("Save query"),QString(),"*");
     if(filename.isEmpty())
       return;
 
@@ -85,7 +85,7 @@ void QueryOutputDialog::slotUser1()
 
 void QueryOutputDialog::slotUser2()
 {
-    const QString filename = QFileDialog::getSaveFileName(this,"saveQuery",QString(),"*.html");
+    const QString filename = QFileDialog::getSaveFileName(this,tr("Save query as HTML"),QString(),"*.html");
     if(filename.isEmpty())
       return;
     if(QFile::exists(filename) &&
