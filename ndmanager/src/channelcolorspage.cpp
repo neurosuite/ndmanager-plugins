@@ -66,10 +66,7 @@ void ChannelColorsPage::setColors(const QList<ChannelColors>& colors){
 
 void ChannelColorsPage::mousePressEvent ( QMouseEvent * event )
 {
-    //KDAB: fix me
-    qDebug()<<" ChannelColorsPage::mousePressEven";
     if(event->button() == Qt::MidButton) {
-        qDebug()<<" ChannelColorsPage::mousePressEven";
         QTableWidgetItem *item = colorTable->itemAt(event->pos());
         if(item) {
             const QColor color(item->text());

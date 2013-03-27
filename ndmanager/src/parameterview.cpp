@@ -633,14 +633,6 @@ bool ParameterView::isModified(){
                     parameterModified ||
                     descriptionModified);
 
-    qDebug()<<" p :"<<p;
-    qDebug()<<"programsModified "<<programsModified<<" counter"<<counter<<" generalInfo->isModified()"<<generalInfo->isModified();
-    qDebug()<<"acquisitionSystem->isModified() "<<acquisitionSystem->isModified()<<" video->isModified()"<<video->isModified()<<" lfp->isModified()"<<lfp->isModified();
-    qDebug()<<" anatomy->isModified()"<<anatomy->isModified()<<" spike->isModified()"<<spike->isModified()<<" unitList->isModified()"<<unitList->isModified();
-    qDebug()<<" miscellaneous->isModified()"<<miscellaneous->isModified()<<" neuroscopeVideo->isModified()"<<neuroscopeVideo->isModified();
-    qDebug()<<" clusters->isModified()"<<clusters->isModified()<<" this->channelColors->isModified()"<<this->channelColors->isModified();
-    qDebug()<<" this->channelDefaultOffsets->isModified()"<<this->channelDefaultOffsets->isModified()<<" files->isModified()"<<files->isModified();
-    qDebug()<<" parameterModified"<<parameterModified<<" descriptionModified"<<descriptionModified;
     return p;
 }
 
