@@ -76,7 +76,7 @@ public:
     bool isDescriptionModifiedAndNotSaved()const;
 
     /**True if the script has been modified, false otherwise.*/
-    bool isScriptModified()const{return sciptIsModified;}
+    bool isScriptModified()const{return scriptIsModified;}
 
     /**Indicates that the initialisation is finished.*/
     void initialisationOver(){isInit = false;}
@@ -104,14 +104,14 @@ public slots:
     void nameChanged(const QString& name);
     
     /** Will be called when the script is modified.*/
-    void scriptModified(){if(!isInit) sciptIsModified = true;}
+    void scriptModified(){if(!isInit) scriptIsModified = true;}
 
     /** Will be called when the help is modified.*/
     void helpModified(){if(!isInit) helpIsModified = true;}
 
     /**Resets the internal modification status to false.*/
     void resetModificationStatus(){
-        sciptIsModified = false;
+        scriptIsModified = false;
         helpIsModified = false;
         parameters->resetModificationStatus();
     }
@@ -129,7 +129,7 @@ private:
     QPushButton* saveParametersButton;
     ParameterPage* parameters;
     QTextEdit* script;
-    bool sciptIsModified;
+    bool scriptIsModified;
     bool isInit;
     QString programName;
     QString descriptionUrl;
