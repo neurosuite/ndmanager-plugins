@@ -133,19 +133,21 @@ add_subdirectory(po)
 add_subdirectory(doc)
 
 INCLUDE(InstallRequiredSystemLibraries)
+
 if(WIN32)
   set(CPACK_GENERATOR "NSIS")
   set(CPACK_PACKAGE_EXECUTABLES "ndmanager" "ndmanager")
+  SET(CPACK_PACKAGE_INSTALL_REGISTRY_KEY "ndmanager")
+  SET(CPACK_NSIS_INSTALL_ROOT "C:\\ndmanager") # use "$PROGRAMFILES" to get "C:\Program Files" or similar
 endif()
 if(UNIX)
   if(APPLE)
     set( CMAKE_INSTALL_PREFIX "/Applications" )
-    set( CPACK_GENERATOR "DragNDrop" )
-    set( CPACK_DMG_FORMAT "UDBZ" )
+    set( CPACK_GENERATOR "ZIP" )
     set( CPACK_DMG_VOLUME_NAME "ndmanager" )
     set( CPACK_SYSTEM_NAME "OSX" )
   else()
-    set(CPACK_GENERATOR "TGZ") # for testing mostly, we probably want STGZ or RPM/DEB
+    set(CPACK_GENERATOR "TBZ2") # for testing mostly, we probably want STGZ or RPM/DEB
     set(CPACK_SYSTEM_NAME "${CMAKE_SYSTEM_NAME}-${CMAKE_SYSTEM_PROCESSOR}")
   endif()
 endif()
