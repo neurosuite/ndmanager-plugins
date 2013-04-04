@@ -108,6 +108,9 @@
            <property name="columnCount">
             <number>1</number>
            </property>
+           <attribute name="horizontalHeaderStretchLastSection">
+            <bool>true</bool>
+           </attribute>
            <column>
             <property name="text">
              <string>Original Channels</string>
