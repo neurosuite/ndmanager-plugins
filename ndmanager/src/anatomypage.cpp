@@ -81,7 +81,7 @@ void AnatomyPage::setAttributes(const QMap<QString, QMap<int,QString> >& attribu
         //insert the values in the table and set the line headers
         for(int j = 0;j<attributesTable->rowCount();++j){
             attributesTable->setItem(j,i,new QTableWidgetItem(values[j]));
-            attributesTable->setHorizontalHeaderItem(j,new QTableWidgetItem(QString::number(j)));
+            attributesTable->setVerticalHeaderItem(j,new QTableWidgetItem(QString::number(j)));
         }
         //attributesTable->adjustColumn(i);
     }
