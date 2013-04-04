@@ -17,7 +17,7 @@
    <item row="0" column="0">
     <layout class="QGridLayout">
      <item row="1" column="0" colspan="2">
-      <widget class="QTableWidget" name="colorTable">
+      <widget class="ColorTable" name="colorTable">
        <property name="minimumSize">
         <size>
          <width>350</width>
@@ -90,4 +90,11 @@
  <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
  <resources/>
  <connections/>
+ <customwidgets>
+  <customwidget>
+   <class>ColorTable</class>
+   <extends>QTableWidget</extends>
+   <header>colortable.h</header>
+  </customwidget>
+ </customwidgets>
 </ui>

@@ -39,6 +39,7 @@ ChannelColorsPage::ChannelColorsPage(QWidget* parent)
 
     connect(colorTable, SIGNAL(cellChanged(int,int)),this, SLOT(propertyModified()));
     connect(colorTable, SIGNAL(cellDoubleClicked(int,int)),this, SLOT(propertyModified()));
+    connect(colorTable, SIGNAL(modified()),SLOT(propertyModified()));
 }
 
 ChannelColorsPage::~ChannelColorsPage(){}
@@ -61,22 +62,6 @@ void ChannelColorsPage::setColors(const QList<ChannelColors>& colors){
         colorTable->setItem(id,0,new QTableWidgetItem((*iterator).getColor().name()));
         colorTable->setItem(id,1,new QTableWidgetItem((*iterator).getGroupColor().name()));
         colorTable->setItem(id,2,new QTableWidgetItem((*iterator).getSpikeGroupColor().name()));
-    }
-}
-
-void ChannelColorsPage::mousePressEvent ( QMouseEvent * event )
-{
-    if(event->button() == Qt::MidButton) {
-        QTableWidgetItem *item = colorTable->itemAt(event->pos());
-        if(item) {
-            const QColor color(item->text());
-
-            const QColor result = QColorDialog::getColor(color,0);
-            if (result.isValid()) {
-                item->setText(result.name());
-                modified = true;
-            }
-        }
     }
 }
 

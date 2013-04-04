@@ -64,9 +64,6 @@ public slots:
 
     /**Resets the internal modification status to false.*/
     void resetModificationStatus(){modified = false;}
-protected:
-    void mousePressEvent ( QMouseEvent * event );
-
 private:
     bool modified;
 };
