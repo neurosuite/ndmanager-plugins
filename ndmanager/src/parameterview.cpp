@@ -60,6 +60,7 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
     setLayout(hbox);
 
     QSplitter *splitter = new QSplitter;
+    splitter->setChildrenCollapsible(false);
     hbox->addWidget(splitter);
     mParameterTree = new ParameterTree;
     splitter->addWidget(mParameterTree);

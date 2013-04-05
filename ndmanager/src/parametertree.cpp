@@ -30,7 +30,9 @@ QWidget *ParameterTreeItem::widget() const
 ParameterTree::ParameterTree(QWidget *parent)
     : QTreeWidget(parent)
 {
+    setHeaderHidden(true);
     connect(this, SIGNAL(itemClicked(QTreeWidgetItem*,int)), SLOT(slotItemClicked(QTreeWidgetItem*,int)));
+    connect(this, SIGNAL(itemPressed(QTreeWidgetItem*,int)), SLOT(slotItemClicked(QTreeWidgetItem*,int)));
 }
 
 ParameterTree::~ParameterTree()
