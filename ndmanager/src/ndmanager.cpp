@@ -78,7 +78,7 @@ ndManager::~ndManager(){
 
 void ndManager::setupActions()
 {
-   //File Menu
+    //File Menu
     QMenu *fileMenu = menuBar()->addMenu(tr("&File"));
 
     mNewAction = fileMenu->addAction(tr("&New..."));
@@ -225,7 +225,7 @@ void ndManager::slotFileOpen()
     slotStatusMsg(tr("Opening file..."));
 
     const QString url=QFileDialog::getOpenFileName(this, tr("Open File..."),QString(),
-                                             tr("Parameter File (*.xml);;All files (*.*)") );
+                                                   tr("Parameter File (*.xml);;All files (*.*)") );
     if(!url.isEmpty())
         openDocumentFile(url);
 
@@ -370,7 +370,7 @@ void ndManager::slotImport(){
     importedFile = true;
 
     const QString url = QFileDialog::getOpenFileName(this, tr("Import file as model..."),QString(),
-                                               tr("Parameter File (*.xml);;All files (*.*)") );
+                                                     tr("Parameter File (*.xml);;All files (*.*)") );
     if(!url.isEmpty())
         openDocumentFile(url);
 
@@ -521,7 +521,7 @@ void ndManager::slotSave(){
             int saveStatus = doc->saveAs(url);
             if(saveStatus == ndManagerDoc::SAVE_ERROR){
                 QMessageBox::critical(this, tr("IO Error!"),tr("The current file could not be saved possibly because of insufficient file access permissions."
-                                                            " You may consider saving your session file to another location."));
+                                                               " You may consider saving your session file to another location."));
             }
             if(importedFile || newFile){
                 filePath = url;
@@ -537,7 +537,7 @@ void ndManager::slotSave(){
         int saveStatus = doc->save();
         if(saveStatus == ndManagerDoc::SAVE_ERROR){
             QMessageBox::critical(this, tr("IO Error!"),tr("The current file could not be saved possibly because of insufficient file access permissions."
-                                                        " You may consider saving your session file to another location using the Save As entry in the File menu."));
+                                                           " You may consider saving your session file to another location using the Save As entry in the File menu."));
         }
     }
     slotStatusMsg(tr("Ready."));
@@ -620,7 +620,7 @@ void ndManager::slotReload(){
     QApplication::restoreOverrideCursor();
 
     //Raise the previously active page
-   parameterView->setCurrentPage(activePage);
+    parameterView->setCurrentPage(activePage);
 
     slotStatusMsg(tr("Ready."));
 }
