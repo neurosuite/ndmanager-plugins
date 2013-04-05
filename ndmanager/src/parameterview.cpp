@@ -289,7 +289,7 @@ void ParameterView::removeProgram(ProgramPage* programPage){
 
     /*if(name.contains("New Program-") || name.contains("Untitled-"))*/ counter--;
     emit scriptListHasBeenModified(QStringList()<<programDict.keys());
-    mParameterTree->setCurrentItem(mScriptsItem);
+    //mParameterTree->setCurrentItem(mScriptsItem);
 }
 
 void ParameterView::initialize(QMap<int, QList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes,
