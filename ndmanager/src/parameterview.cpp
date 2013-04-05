@@ -60,32 +60,28 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
     //setShowIconsInTreeList(true);
 
     //adding page "General information"
-    QWidget * w = new QWidget(this);
-    generalInfo = new GeneralInfoPage(w);
+    generalInfo = new GeneralInfoPage;
     QPageWidgetItem *item = new QPageWidgetItem(generalInfo,tr("General"));
     item->setHeader(tr("General information"));
     item->setIcon(QIcon(":/icons/folder-blue"));
     addPage(item);
 
     //adding page "Acquisition System"
-    w = new QWidget(this);
-    acquisitionSystem = new AcquisitionSystemPage(w);
+    acquisitionSystem = new AcquisitionSystemPage;
     item = new QPageWidgetItem(acquisitionSystem,tr("Acquisition System"));
     item->setHeader(tr("Acquisition System"));
     item->setIcon(QIcon(":/icons/acquisition"));
     addPage(item);
 
     //adding page "Video"
-    w = new QWidget(this);
-    video = new VideoPage(w);
+    video = new VideoPage;
     item = new QPageWidgetItem(video,tr("Video"));
     item->setHeader(tr("Video"));
     item->setIcon(QIcon(":/icons/video"));
     addPage(item);
 
     //adding page "Local Field Potentials "
-    w = new QWidget(this);
-    lfp = new LfpPage(w);
+    lfp = new LfpPage;
     item = new QPageWidgetItem(lfp,tr("Local Field Potentials"));
     item->setHeader(tr("Local Field Potentials"));
     item->setIcon(QIcon(":/icons/lfp"));
@@ -96,8 +92,7 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
     //adding page "Files"
     //This page is added only if the expert mode is set. The page is always created to keep track of the file information
     if(expertMode){
-        w = new QWidget(this);
-        files = new FilesPage(w);
+        files = new FilesPage;
         item = new QPageWidgetItem(files,tr("Files"));
         item->setHeader(tr("Other Files"));
         item->setIcon(QIcon(":/icons/files"));
@@ -110,8 +105,7 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
     //adding page "Anatomical Groups"
     //This page is added only if the expert mode is set. The page is always created to keep track of the file information
     if(expertMode){
-        w = new QWidget(this);
-        anatomy = new AnatomyPage(w);
+        anatomy = new AnatomyPage;
         item = new QPageWidgetItem(anatomy,tr("Anatomical Groups"));
         item->setHeader(tr("Anatomical Groups"));
         item->setIcon(QIcon(":/icons/anatomy"));
@@ -125,8 +119,7 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
     //adding page "Spike Groups"
     //This page is added only if the expert mode is set. The page is always created to keep track of the file information
     if(expertMode){
-        w = new QWidget(this);
-        spike = new SpikePage(w);
+        spike = new SpikePage;
         item = new QPageWidgetItem(spike,tr("Spike Groups"));
         item->setHeader(tr("Spike Groups"));
         item->setIcon(QIcon(":/icons/spikes"));
@@ -138,8 +131,7 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
     }
 
     //adding page "Unit List"
-    w = new QWidget(this);
-    unitList = new UnitListPage(w);
+    unitList = new UnitListPage;
     item = new QPageWidgetItem(unitList,tr("Units"));
     item->setHeader(tr("Units"));
     item->setIcon(QIcon(":/icons/units"));
@@ -148,9 +140,8 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
 
 
     //adding page "Neuroscope"
-    w = new QWidget(this);
 
-    QTabWidget* tabWidget = new QTabWidget(w);
+    QTabWidget* tabWidget = new QTabWidget;
     //adding "Miscellaneous" tab
     miscellaneous = new MiscellaneousPage();
     tabWidget->addTab(miscellaneous,tr("Miscellaneous"));
@@ -180,8 +171,7 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
 
     //adding page "Programs"
 
-    w = new QWidget(this);
-    programs = new ProgramsPage(expertMode,w);
+    programs = new ProgramsPage(expertMode);
     mScriptsItem = new QPageWidgetItem(programs,tr("Scripts"));
     mScriptsItem->setHeader(tr("Scripts"));
     mScriptsItem->setIcon(QIcon(":/icons/units"));
