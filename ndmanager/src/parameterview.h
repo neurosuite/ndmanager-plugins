@@ -30,7 +30,6 @@
 
 #include <QFrame>
 
-#include <qpagedialog.h>
 
 //include files for the application
 #include "acquisitionsystempage.h"
@@ -55,8 +54,9 @@
 
 class ndManager;
 class ndManagerDoc;
-class QString;
-
+class ParameterTree;
+class QStackedWidget;
+class QTreeWidgetItem;
 /**
  * This is the main view class for ndManager.  Most of the non-menu,
  * non-toolbar, and non-statusbar (e.g., non frame) GUI code should go
@@ -66,7 +66,7 @@ class QString;
  * @author Lynn Hazan <lynn.hazan@myrealbox.com>
  * @version 0.1
  */
-class ParameterView : public QPageDialog
+class ParameterView : public QWidget
 {
     Q_OBJECT
 public:
@@ -247,6 +247,9 @@ public slots:
   */
     void fileModification(const QStringList& extensions){emit fileHasBeenModified(extensions);}
 
+    void setCurrentPage(int index);
+    int currentPage() const;
+
 private slots:
 
     void scriptHidden();
@@ -317,7 +320,7 @@ private:
             item = 0;
         }
         ProgramPage *page;
-        QPageWidgetItem *item;
+        QTreeWidgetItem *item;
     };
 
     /**Dictionary containing all the programs.*/
@@ -335,7 +338,11 @@ private:
 
     /**True if the file is opened in expert mode, false otherwise*/
     bool expertMode;
-    QPageWidgetItem *mScriptsItem;
+    QTreeWidgetItem *mScriptsItem;
+
+    ParameterTree *mParameterTree;
+    QStackedWidget *mStackWidget;
+
 };
 
 #endif // _NDPARAMETERVIEW_H_

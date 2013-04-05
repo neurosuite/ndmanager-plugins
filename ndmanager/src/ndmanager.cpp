@@ -583,7 +583,7 @@ void ndManager::slotReload(){
     slotStatusMsg(tr("reloading..."));
 
     //Get the current active page index
-    QPageWidgetItem* activePage = parameterView->currentPage();
+    int currentPage = parameterView->currentPage();
 
     //close the current document
     doc->closeDocument();
@@ -620,7 +620,7 @@ void ndManager::slotReload(){
     QApplication::restoreOverrideCursor();
 
     //Raise the previously active page
-    parameterView->setCurrentPage(activePage);
+    parameterView->setCurrentPage(currentPage);
 
     slotStatusMsg(tr("Ready."));
 }

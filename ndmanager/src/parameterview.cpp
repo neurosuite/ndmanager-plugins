@@ -29,6 +29,7 @@
 #include <qstringlist.h>
 #include <QTextEdit>
 #include <QDebug>
+#include <QStackedWidget>
 
 #include <QTextStream>
 #include <QList>
@@ -44,61 +45,56 @@
 #include "xmlreader.h"
 #include "ndmanagerutils.h"
 
+#include "parametertree.h"
 
 using namespace ndmanager;
 
 const QString ParameterView::DEFAULT_COLOR = "#0080ff";
 
 ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const char*, bool expertMode)
-    : QPageDialog(parent)
+    : QWidget(parent)
     ,doc(doc),counter(0),programsModified(false),programId(0),expertMode(expertMode){
 
+    QHBoxLayout *hbox = new QHBoxLayout;
+    setLayout(hbox);
+
+    mParameterTree = new ParameterTree;
+    hbox->addWidget(mParameterTree);
+
+    mStackWidget = new QStackedWidget;
+    hbox->addWidget(mStackWidget);
+
     setWindowTitle(tr("Parameter View"));
-    setButtons(QExtendDialog::None);
-    setFaceType(Tree);
-    //Show the icones next to the name in the list
-    //setShowIconsInTreeList(true);
 
     //adding page "General information"
+
     generalInfo = new GeneralInfoPage;
-    QPageWidgetItem *item = new QPageWidgetItem(generalInfo,tr("General"));
-    item->setHeader(tr("General information"));
-    item->setIcon(QIcon(":/icons/folder-blue"));
-    addPage(item);
+    mStackWidget->addWidget(generalInfo);
+    mParameterTree->addPage(":/icons/folder-blue",tr("General information"),generalInfo);
 
     //adding page "Acquisition System"
     acquisitionSystem = new AcquisitionSystemPage;
-    item = new QPageWidgetItem(acquisitionSystem,tr("Acquisition System"));
-    item->setHeader(tr("Acquisition System"));
-    item->setIcon(QIcon(":/icons/acquisition"));
-    addPage(item);
+    mStackWidget->addWidget(acquisitionSystem);
+    mParameterTree->addPage(":/icons/acquisition",tr("Acquisition System"),acquisitionSystem);
 
     //adding page "Video"
     video = new VideoPage;
-    item = new QPageWidgetItem(video,tr("Video"));
-    item->setHeader(tr("Video"));
-    item->setIcon(QIcon(":/icons/video"));
-    addPage(item);
+    mStackWidget->addWidget(video);
+    mParameterTree->addPage(":/icons/video",tr("Video"),video);
 
     //adding page "Local Field Potentials "
     lfp = new LfpPage;
-    item = new QPageWidgetItem(lfp,tr("Local Field Potentials"));
-    item->setHeader(tr("Local Field Potentials"));
-    item->setIcon(QIcon(":/icons/lfp"));
-    addPage(item);
-
+    mStackWidget->addWidget(lfp);
+    mParameterTree->addPage(":/icons/lfp",tr("Local Field Potentials"),lfp);
 
 
     //adding page "Files"
     //This page is added only if the expert mode is set. The page is always created to keep track of the file information
     if(expertMode){
         files = new FilesPage;
-        item = new QPageWidgetItem(files,tr("Files"));
-        item->setHeader(tr("Other Files"));
-        item->setIcon(QIcon(":/icons/files"));
-        addPage(item);
-    }
-    else{
+        mStackWidget->addWidget(files);
+        mParameterTree->addPage(":/icons/files",tr("Files"),files);
+    } else {
         files = new FilesPage();
     }
 
@@ -106,11 +102,8 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
     //This page is added only if the expert mode is set. The page is always created to keep track of the file information
     if(expertMode){
         anatomy = new AnatomyPage;
-        item = new QPageWidgetItem(anatomy,tr("Anatomical Groups"));
-        item->setHeader(tr("Anatomical Groups"));
-        item->setIcon(QIcon(":/icons/anatomy"));
-        addPage(item);
-
+        mStackWidget->addWidget(anatomy);
+        mParameterTree->addPage(":/icons/anatomy",tr("Anatomical Groups"),anatomy);
     }
     else{
         anatomy = new AnatomyPage();
@@ -120,24 +113,16 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
     //This page is added only if the expert mode is set. The page is always created to keep track of the file information
     if(expertMode){
         spike = new SpikePage;
-        item = new QPageWidgetItem(spike,tr("Spike Groups"));
-        item->setHeader(tr("Spike Groups"));
-        item->setIcon(QIcon(":/icons/spikes"));
-        addPage(item);
-
-    }
-    else{
+        mStackWidget->addWidget(spike);
+        mParameterTree->addPage(":/icons/spikes", tr("Spike Groups"), spike);
+    } else {
         spike = new SpikePage();
     }
 
     //adding page "Unit List"
     unitList = new UnitListPage;
-    item = new QPageWidgetItem(unitList,tr("Units"));
-    item->setHeader(tr("Units"));
-    item->setIcon(QIcon(":/icons/units"));
-    addPage(item);
-
-
+    mStackWidget->addWidget(unitList);
+    mParameterTree->addPage(":/icons/units", tr("Units"), unitList);
 
     //adding page "Neuroscope"
 
@@ -159,25 +144,20 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
     //adding "Channel offeset" tab
     channelDefaultOffsets = new ChannelOffsetsPage();
     //This tab is added only if the expert mode is set. The page is always created to keep track of the file information
-    if(expertMode)tabWidget->addTab(channelDefaultOffsets,tr("Channel Offsets"));
+    if(expertMode)
+        tabWidget->addTab(channelDefaultOffsets,tr("Channel Offsets"));
 
 
-    item = new QPageWidgetItem(tabWidget,tr("Neuroscope"));
-    item->setHeader(tr("Neuroscope"));
-    item->setIcon(QIcon(":/icons/neuroscope"));
-    addPage(item);
-
+    mStackWidget->addWidget(tabWidget);
+    mParameterTree->addPage(":/icons/neuroscope", tr("Neuroscope"), tabWidget);
 
 
     //adding page "Programs"
 
     programs = new ProgramsPage(expertMode);
-    mScriptsItem = new QPageWidgetItem(programs,tr("Scripts"));
-    mScriptsItem->setHeader(tr("Scripts"));
-    mScriptsItem->setIcon(QIcon(":/icons/units"));
-    addPage(mScriptsItem);
 
-
+    mStackWidget->addWidget(programs);
+    mScriptsItem = mParameterTree->addPage(":/icons/units", tr("Scripts"), programs);
 
     //set connections
     connect(acquisitionSystem,SIGNAL(nbChannelsModified(int)),this,SLOT(nbChannelsModified(int)));
@@ -229,10 +209,9 @@ ProgramPage* ParameterView::addProgram(const QString& programName,bool show){
     //adding page "Video"
     QWidget *w = new QWidget(this);
     ProgramPage* program = new ProgramPage(expertMode,w,programName);
+    mStackWidget->addWidget(program);
 
-
-    QPageWidgetItem *item = new QPageWidgetItem(program,programName);
-    addSubPage(mScriptsItem,item);
+    QTreeWidgetItem * item = mParameterTree->addSubPage(mScriptsItem,programName, program);
 
     ProgramPageId pageId;
     pageId.item = item;
@@ -251,7 +230,7 @@ ProgramPage* ParameterView::addProgram(const QString& programName,bool show){
 
     //Show the new page
     if(show)
-        setCurrentPage(item);
+        mStackWidget->setCurrentWidget(program);
 
     return program;
 }
@@ -275,14 +254,14 @@ void ParameterView::changeProgramName(ProgramPage* programPage, const QString& n
         return;
     }
     ProgramPageId id = programDict[oldName];
-    id.item->setName(newName);
+    id.item->setText(0,newName);
     id.page->setObjectName(newName);
 
     programDict.remove(oldName);
     programDict.insert(newName,id);
 
 
-    setCurrentPage(id.item);
+    mStackWidget->setCurrentWidget(id.page);
     //If the message if not empty show a message box with it
     if(!message.isEmpty())
         QMessageBox::critical (this,title,message );
@@ -296,12 +275,13 @@ void ParameterView::removeProgram(ProgramPage* programPage){
 
     const QString name = programPage->objectName();
     ProgramPageId id = programDict[name];
-    removePage(id.item);
+    mStackWidget->removeWidget(id.page);
+    mParameterTree->removeItemWidget(id.item, 0);
     programDict.remove(name);
 
     /*if(name.contains("New Program-") || name.contains("Untitled-"))*/ counter--;
     emit scriptListHasBeenModified(QStringList()<<programDict.keys());
-    setCurrentPage(mScriptsItem);
+    mParameterTree->setCurrentItem(mScriptsItem);
 }
 
 void ParameterView::initialize(QMap<int, QList<int> >& anatomicalGroups,QMap<QString, QMap<int,QString> >& attributes,
@@ -517,8 +497,7 @@ void ParameterView::nbChannelsModified(int nbChannels){
     QMap<int, QList<int> > mapping;
     QList<FilePage*> fileList;
     files->getFilePages(fileList);
-    for(int i= 0 ; i < fileList.count();++i)
-    {
+    for(int i= 0 ; i < fileList.count();++i) {
         fileList.at(i)->setChannelMapping(mapping);
     }
 
@@ -739,3 +718,12 @@ QStringList ParameterView::getFileScriptNames()const
     return QStringList()<<programDict.keys();
 }
 
+void ParameterView::setCurrentPage(int index)
+{
+    mStackWidget->setCurrentIndex(index);
+}
+
+int ParameterView::currentPage() const
+{
+    return mStackWidget->currentIndex();
+}

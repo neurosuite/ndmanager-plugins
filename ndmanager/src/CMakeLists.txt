@@ -56,7 +56,9 @@ set(ndmanager_SRCS
 	videolayout.cpp
 	ndmanagerutils.cpp
         colortable.cpp
+        parametertree.cpp
 	)
+
 
 qt4_add_resources(ndmanager_SRCS ndmanager-icons.qrc ndmanager-html.qrc)
 
