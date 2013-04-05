@@ -281,7 +281,10 @@ void ParameterView::removeProgram(ProgramPage* programPage){
     const QString name = programPage->objectName();
     ProgramPageId id = programDict[name];
     mStackWidget->removeWidget(id.page);
-    mParameterTree->removeItemWidget(id.item, 0);
+    delete id.page;
+
+    delete id.item;
+    //mParameterTree->(id.item, 0);
     programDict.remove(name);
 
     /*if(name.contains("New Program-") || name.contains("Untitled-"))*/ counter--;
