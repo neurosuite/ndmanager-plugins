@@ -36,6 +36,7 @@
 #include <QFrame>
 #include <QVBoxLayout>
 #include <QMessageBox>
+#include <QSplitter>
 
 //include files for the application
 #include "parameterview.h"
@@ -58,11 +59,13 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
     QHBoxLayout *hbox = new QHBoxLayout;
     setLayout(hbox);
 
+    QSplitter *splitter = new QSplitter;
+    hbox->addWidget(splitter);
     mParameterTree = new ParameterTree;
-    hbox->addWidget(mParameterTree);
+    splitter->addWidget(mParameterTree);
 
     mStackWidget = new QStackedWidget;
-    hbox->addWidget(mStackWidget);
+    splitter->addWidget(mStackWidget);
     connect(mParameterTree,SIGNAL(showWidgetPage(QWidget*)),mStackWidget,SLOT(setCurrentWidget(QWidget*)));
 
     setWindowTitle(tr("Parameter View"));
