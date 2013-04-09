@@ -155,8 +155,7 @@ void UnitListPage::addUnit()
     modified = true;
     unitTable->insertRow(unitTable->rowCount());
 
-    for(int i=0;i<unitTable->columnCount();++i)
-    {
+    for(int i=0;i<unitTable->columnCount();++i) {
         UnitTableItem* item = new UnitTableItem("");
         unitTable->setItem(unitTable->rowCount() - 1,i,item);
     }
@@ -164,8 +163,7 @@ void UnitListPage::addUnit()
 
 void UnitListPage::currentChanged()
 {
-    if(isIncorrect)
-    {
+    if(isIncorrect) {
         unitTable->selectRow(incorrectRow);
         unitTable->setCurrentCell(incorrectRow,incorrectColumn);
     }
