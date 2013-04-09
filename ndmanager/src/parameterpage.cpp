@@ -144,9 +144,7 @@ void ParameterPage::setParameterInformation(const QMap<int, QStringList >& param
 
         for(uint i=0;i<parameterInfo.count();++i){
             if(ddList.contains(i)){
-                QComboBox *combo = new QComboBox;
-                combo->setEnabled(mExpertMode);
-                combo->addItems(status);
+                QComboBox *combo = createCombobox();
                 parameterTable->setCellWidget(iterator.key(),i,combo);
                 connect(combo, SIGNAL(activated(int)), SLOT(slotValueModified()));
             } else {
@@ -168,10 +166,15 @@ void ParameterPage::addParameter(){
     parameterTable->setItem(parameterTable->rowCount() - 1,1,new QTableWidgetItem());
 
     //Add the comboxItem in the status column
+    parameterTable->setCellWidget(parameterTable->rowCount() - 1,2,createCombobox());
+}
+
+QComboBox *ParameterPage::createCombobox()
+{
     QComboBox *combo = new QComboBox;
     combo->addItems(status);
     combo->setEnabled(mExpertMode);
-    parameterTable->setCellWidget(parameterTable->rowCount() - 1,2,combo);
+    return combo;
 }
 
 void ParameterPage::removeParameter(){

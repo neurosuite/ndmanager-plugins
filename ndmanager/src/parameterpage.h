@@ -29,7 +29,7 @@
 
 #include <QEvent>
 #include <QList>
-
+class QComboBox;
 
 /**
 @author Lynn Hazan
@@ -109,6 +109,7 @@ protected:
 
 
 private:
+    QComboBox *createCombobox();
     QStringList status;
     /**Stores the list of column containing drop down list.*/
     QList<int> ddList;
