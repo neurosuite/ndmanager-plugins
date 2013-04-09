@@ -60,6 +60,7 @@ ParameterPage::ParameterPage(bool expertMode,QWidget *parent)
     if(!expertMode){
         parameterTable->setItemDelegateForColumn(0,new ColumnDelegate(this));
         parameterTable->setItemDelegateForColumn(2,new ColumnDelegate(this));
+        parameterTable->setItemDelegateForColumn(1,new ColumnDelegate(this));
 
         addButton->setEnabled(false);
         removeButton->setEnabled(false);
