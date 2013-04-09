@@ -194,6 +194,13 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
 
 ParameterView::~ParameterView()
 {
+    if (!expertMode) {
+       delete files;
+       delete anatomy;
+       delete spike;
+       delete channelColors;
+       delete channelDefaultOffsets;
+    }
 }
 
 void ParameterView::addNewProgram(){
