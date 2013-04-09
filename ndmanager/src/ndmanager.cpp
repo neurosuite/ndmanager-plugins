@@ -74,6 +74,7 @@ ndManager::ndManager()
 ndManager::~ndManager(){
     //Clear the memory by deleting all the pointers
     delete doc;
+    delete mainDock;
 }
 
 void ndManager::setupActions()
