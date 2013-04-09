@@ -1,12 +1,12 @@
 #include "parametertree.h"
 
 ParameterTreeItem::ParameterTreeItem(QTreeWidget *parent)
-    : QTreeWidgetItem(parent)
+    : QTreeWidgetItem(parent), mWidget(0)
 {
 }
 
 ParameterTreeItem::ParameterTreeItem(QTreeWidgetItem *parent)
-    : QTreeWidgetItem(parent)
+    : QTreeWidgetItem(parent), mWidget(0)
 {
 
 }

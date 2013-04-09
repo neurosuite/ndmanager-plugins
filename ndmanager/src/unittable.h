@@ -49,7 +49,7 @@ public:
 
     bool operator <(const QTableWidgetItem &other) const
     {
-        return UnitTableItem::key(text()) < UnitTableItem::key(other.text());
+        return key(text()) < key(other.text());
     }
 };
 
