@@ -58,11 +58,12 @@ public:
   */
     void updateFileList(const QStringList &extensions);
 
+#if 0
     /**Triggers the update of the dropdown list containing the script names.
   * @param scriptNames list containing the script names.
   */
     void updateScriptList(const QStringList& scriptNames);
-
+#endif
     /** Updates the parameter file url.
   * @param url url of the currently open parameter file.
   */
@@ -101,11 +102,10 @@ private slots:
     void stopScript();
 
 private:
-    LauncherPage* launcherpage;
     QVBoxLayout* frameLayout;
     QComboBox* neuroscopeComboBox;
     QComboBox* klustersComboBox;
-    QComboBox* scriptsComboBox;
+    //QComboBox* scriptsComboBox;
     QString parameterUrl;
     bool isUptoDate;
 };

@@ -65,12 +65,12 @@ void ManagerView::updateFileList(const QStringList& extensions){
     neuroscopeFiles<<extensions;
     neuroscopeComboBox->addItems(neuroscopeFiles);
 }
-
+#if 0
 void ManagerView::updateScriptList(const QStringList& scriptNames){
     scriptsComboBox->clear();
     scriptsComboBox->addItems(scriptNames);
 }
-
+#endif
 void ManagerView::launchNeuroscope(){
     emit checkBeforeLaunchingPrograms();
     QFileInfo parameterUrlFileInfo(parameterUrl);

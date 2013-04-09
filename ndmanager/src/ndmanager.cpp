@@ -352,7 +352,7 @@ void ndManager::createParameterView(QMap<int, QList<int> >& anatomicalGroups,QMa
 
     connect(parameterView,SIGNAL(nbSpikeGroupsHasBeenModified(int)),this,SLOT(nbSpikeGroupsModified(int)));
     connect(parameterView,SIGNAL(fileHasBeenModified(QStringList)),this,SLOT(fileModification(QStringList)));
-    connect(parameterView,SIGNAL(scriptListHasBeenModified(QStringList)),this,SLOT(scriptModification(QStringList)));
+    //connect(parameterView,SIGNAL(scriptListHasBeenModified(QStringList)),this,SLOT(scriptModification(QStringList)));
 
 
 
@@ -715,13 +715,13 @@ void ndManager::fileModification(const QStringList& extensions){
         managerView->updateFileList(extensions);
     }
 }
-
+#if 0
 void ndManager::scriptModification(const QStringList& scriptNames){
     if(managerView){
         managerView->updateScriptList(scriptNames);
     }
 }
-
+#endif
 void ndManager::checkBeforeLaunchingPrograms(){
     if(managerView){
         if(importedFile || newFile) {

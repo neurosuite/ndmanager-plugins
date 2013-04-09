@@ -131,11 +131,12 @@ public slots:
   * This function informs the managerView of the status and gives it the current parameter file url.*/
     void checkBeforeLaunchingScripts();
 
+#if 0
     /**Triggers the update of the dropdown list containing the script names in the managerView.
   * @param scriptNames list containing the names.
   */
     void scriptModification(const QStringList& scriptNames);
-
+#endif
 private slots:
 
     void slotAbout();
