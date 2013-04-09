@@ -68,6 +68,8 @@ ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const QString& name)
         scriptView = new QTextEdit(this);
         scriptView->setAcceptRichText(false);
         tabWidget->addTab(scriptView,tr("Script"));
+    } else {
+        scriptView = 0;
     }
 
     frameLayout->addWidget(tabWidget);
