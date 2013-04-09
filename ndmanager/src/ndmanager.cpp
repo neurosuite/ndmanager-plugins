@@ -344,6 +344,7 @@ void ndManager::createParameterView(QMap<int, QList<int> >& anatomicalGroups,QMa
                                     double lfpRate,float screenGain,int nbSamples,int peakSampleIndex,const QString& traceBackgroundImage){
 
     //Create the mainDock (parameter view)
+    delete mainDock;
     mainDock = new QDockWidget(tr("Parameters"));
 
     parameterView = new ParameterView(this,*doc,mainDock,"ParameterView",mExpertMode->isChecked());
