@@ -114,6 +114,7 @@ private:
     QList<int> ddList;
     bool valueModified;
     bool descriptionModified;
+    bool mExpertMode;
 };
 
 #endif

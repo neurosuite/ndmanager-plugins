@@ -50,7 +50,8 @@ public:
 ParameterPage::ParameterPage(bool expertMode,QWidget *parent)
     : ParameterLayout(parent),
       valueModified(false),
-      descriptionModified(false)
+      descriptionModified(false),
+      mExpertMode(expertMode)
 {
     status<<tr("Mandatory")<<tr("Optional")<<tr("Dynamic");
     ddList.append(2);
@@ -144,6 +145,7 @@ void ParameterPage::setParameterInformation(const QMap<int, QStringList >& param
         for(uint i=0;i<parameterInfo.count();++i){
             if(ddList.contains(i)){
                 QComboBox *combo = new QComboBox;
+                combo->setEnabled(mExpertMode);
                 combo->addItems(status);
                 parameterTable->setCellWidget(iterator.key(),i,combo);
                 connect(combo, SIGNAL(activated(int)), SLOT(slotValueModified()));
@@ -168,6 +170,7 @@ void ParameterPage::addParameter(){
     //Add the comboxItem in the status column
     QComboBox *combo = new QComboBox;
     combo->addItems(status);
+    combo->setEnabled(mExpertMode);
     parameterTable->setCellWidget(parameterTable->rowCount() - 1,2,combo);
 }
 
