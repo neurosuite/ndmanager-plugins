@@ -32,7 +32,7 @@
 class FileInformation{
 public:
     /**Constructor.*/
-    FileInformation(){}
+    FileInformation() : samplingRate(0) {}
     /**Destructor.*/
     ~FileInformation(){}
 

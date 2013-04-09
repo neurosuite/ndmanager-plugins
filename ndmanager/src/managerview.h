@@ -51,12 +51,12 @@ public:
     /** Updates the dropdown list containing the spike groups used to launch Klusters.
   * @param nbGroups the new number of spike groups.
   */
-    void updateSpikeGroupList(int nbGroups);
+    //void updateSpikeGroupList(int nbGroups);
 
     /**Triggers the update of the dropdown list containing the file extensions.
   * @param extensions list containing the extensions of all the specific files.
   */
-    void updateFileList(const QStringList &extensions);
+    //void updateFileList(const QStringList &extensions);
 
 #if 0
     /**Triggers the update of the dropdown list containing the script names.
@@ -87,11 +87,11 @@ public slots:
 private slots: 
     /**Launches NeuroScope using, as a parameter, the file selected in the dropdown list containing the file extensions
  */
-    void launchNeuroscope();
+    //void launchNeuroscope();
 
     /**Launches Klusters using, as a parameter, the electrode group selected in the dropdown list containing the electrode ids
  */
-    void launchKlusters();
+    //void launchKlusters();
 
     /**Launches the script selected in the dropdown list containing the existing scripts.
  */
@@ -103,8 +103,8 @@ private slots:
 
 private:
     QVBoxLayout* frameLayout;
-    QComboBox* neuroscopeComboBox;
-    QComboBox* klustersComboBox;
+    //QComboBox* neuroscopeComboBox;
+    //QComboBox* klustersComboBox;
     //QComboBox* scriptsComboBox;
     QString parameterUrl;
     bool isUptoDate;

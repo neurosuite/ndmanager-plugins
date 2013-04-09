@@ -706,13 +706,13 @@ void ndManager::slotExpertMode(){
 
 void ndManager::nbSpikeGroupsModified(int nbGroups){
     if(managerView){
-        managerView->updateSpikeGroupList(nbGroups);
+        //managerView->updateSpikeGroupList(nbGroups);
     }
 }
 
 void ndManager::fileModification(const QStringList& extensions){
     if(managerView){
-        managerView->updateFileList(extensions);
+        //managerView->updateFileList(extensions);
     }
 }
 #if 0

@@ -47,7 +47,7 @@ ManagerView::~ManagerView(){
 void ManagerView::neuroscopeFileChange(int){
 
 }
-
+#if 0
 void ManagerView::updateSpikeGroupList(int nbGroups){
     klustersComboBox->clear();
     QStringList klustersFiles;
@@ -57,7 +57,8 @@ void ManagerView::updateSpikeGroupList(int nbGroups){
 
     klustersComboBox->addItems(klustersFiles);
 }
-
+#endif
+#if 0
 void ManagerView::updateFileList(const QStringList& extensions){
     neuroscopeComboBox->clear();
     QStringList neuroscopeFiles;
@@ -65,12 +66,15 @@ void ManagerView::updateFileList(const QStringList& extensions){
     neuroscopeFiles<<extensions;
     neuroscopeComboBox->addItems(neuroscopeFiles);
 }
+#endif
+
 #if 0
 void ManagerView::updateScriptList(const QStringList& scriptNames){
     scriptsComboBox->clear();
     scriptsComboBox->addItems(scriptNames);
 }
 #endif
+#if 0
 void ManagerView::launchNeuroscope(){
     emit checkBeforeLaunchingPrograms();
     QFileInfo parameterUrlFileInfo(parameterUrl);
@@ -121,6 +125,7 @@ void ManagerView::launchKlusters(){
         }
     }
 }
+#endif
 #if 0
 void ManagerView::launchScript(){
     emit checkBeforeLaunchingScripts();
