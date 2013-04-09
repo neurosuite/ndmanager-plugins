@@ -102,7 +102,6 @@ private slots:
 
 private:
     LauncherPage* launcherpage;
-    QToolBar* toolbar;
     QVBoxLayout* frameLayout;
     QComboBox* neuroscopeComboBox;
     QComboBox* klustersComboBox;

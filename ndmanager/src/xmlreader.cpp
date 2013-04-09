@@ -838,7 +838,7 @@ void XmlReader::getProgramsInformation(QList<ProgramInformation>& programs) cons
                                             parametersNode = parametersNode.nextSibling();
 
                                         }
-                                        if(parameterInfo.size() != 0) {
+                                        if(!parameterInfo.isEmpty()) {
                                             parameters.insert(parameterId,parameterInfo);
                                             parameterId++;
                                         }
