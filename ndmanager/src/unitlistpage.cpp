@@ -126,16 +126,16 @@ void UnitListPage::removeUnit()
     if(!range.isEmpty()) {
         QList<int> lst;
         Q_FOREACH(const QTableWidgetSelectionRange&r, range) {
-            const int nbRows = r.bottomRow() - r.topRow() + 1;
+            const int nbRows = r.bottomRow() - r.topRow()+1;
             for(int i = 0; i < nbRows;++i){
-                int val = (r.topRow() + i);
+                const int val = (r.topRow() + i);
                 if(!lst.contains(val)) {
                     lst<< val;
                 }
             }
         }
         qSort(lst);
-        for(int i = lst.count()-1; i>0; --i) {
+        for(int i = lst.count()-1; i>=0; --i) {
             unitTable->removeRow(lst.at(i));
         }
     }
