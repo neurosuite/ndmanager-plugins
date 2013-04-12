@@ -38,96 +38,50 @@ class AcquisitionSystemPage : public AcquisitionSystemLayout
 {
     Q_OBJECT
 public:
-    AcquisitionSystemPage(QWidget* parent = 0);
+    explicit AcquisitionSystemPage(QWidget* parent = 0);
 
     ~AcquisitionSystemPage();
     
     /**Sets the number of channels.*/
-    void setNbChannels(int nb){
-        nbChannels = nb;
-        nbChannelsLineEdit->setText(QString::number(nb));
-    }
-
+    void setNbChannels(int nb);
     /**Sets the sampling rate.*/
-    void setSamplingRate(double rate){
-        samplingRateLineEdit->setText(Helper::doubleToString(rate));
-    }
+    void setSamplingRate(double rate);
 
     /**Sets the resolution of the acquisition system.*/
-    void setResolution(int res){
-        switch(res){
-        case 12:
-            resolutionComboBox->setCurrentIndex(0);
-            break;
-        case 14:
-            resolutionComboBox->setCurrentIndex(1);
-            break;
-        case 16:
-            resolutionComboBox->setCurrentIndex(2);
-            break;
-        case 32:
-            resolutionComboBox->setCurrentIndex(3);
-            break;
-        default:
-            resolutionComboBox->setCurrentIndex(2);
-            break;
-        }
-    }
+    void setResolution(int res);
 
     /**Sets the initial offset for all the field potentials.*/
     void setOffset(int offset){offsetLineEdit->setText(QString::number(offset));}
 
     /**Sets the voltage range of the acquisition system in milivolts.
   */
-    void setVoltageRange(int value){
-        voltageRangeLineEdit->setText(QString::number(value));
-    }
+    void setVoltageRange(int value);
 
     /**Sets the amplification of the acquisition system.
   */
-    void setAmplification(int value){
-        amplificationLineEdit->setText(QString::number(value));
-    }
+    void setAmplification(int value);
 
     /**Returns the number of channels.*/
-    inline int getNbChannels() const{return nbChannelsLineEdit->text().toInt();}
+    int getNbChannels() const;
 
     /**Returns the sampling rate.*/
-    inline double getSamplingRate() const{return samplingRateLineEdit->text().toDouble();}
+    double getSamplingRate() const;
 
     /**Returns the resolution of the acquisition system.*/
-    inline int getResolution()const{
-        switch(resolutionComboBox->currentIndex()){
-        case 0:
-            return 12;
-        case 1:
-            return 14;
-        case 2:
-            return 16;
-        case 3:
-            return 32;
-        default:
-            return 16;
-        }
-    }
-
+    int getResolution()const;
     /**Returns the initial offset for all the field potentials.*/
-    inline int getOffset() const{return offsetLineEdit->text().toInt();}
+    int getOffset() const;
 
     /**Returns the voltage range of the acquisition system in volts.
   */
-    inline int getVoltageRange() const{
-        return voltageRangeLineEdit->text().toInt();
-    }
+    int getVoltageRange() const;
 
     /**Returns the amplification of the acquisition system.
   */
-    inline int getAmplification() const{
-        return amplificationLineEdit->text().toInt();
-    }
+    int getAmplification() const;
 
     /**True if at least one property has been modified, false otherwise.*/
-    inline bool isModified()const{return modified;}
+    bool isModified()const;
 
     /**Checks if the number of channels has changed.*/
     void checkNbChannels();
@@ -140,13 +94,13 @@ public slots:
     void nbChannelsLineEditLostFocus();
 
     /** Will be called when any properties except the number of channels has been modified.*/
-    void propertyModified(){if(!isInit) modified = true;}
+    void propertyModified() {if(!isInit) modified = true;}
 
     /**Indicates that the initialisation is finished.*/
-    void initialisationOver(){isInit = false;}
+    void initialisationOver() {isInit = false;}
     
     /**Resets the internal modification status to false.*/
-    void resetModificationStatus(){modified = false;}
+    void resetModificationStatus() { modified = false;}
 
 signals:
     /*Signals that the number of channels has been modified.

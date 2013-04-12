@@ -100,4 +100,97 @@ void AcquisitionSystemPage::nbChannelsChanged(){
 }
 
 
+void AcquisitionSystemPage::setNbChannels(int nb){
+    nbChannels = nb;
+    nbChannelsLineEdit->setText(QString::number(nb));
+}
+
+/**Sets the sampling rate.*/
+void AcquisitionSystemPage::setSamplingRate(double rate){
+    samplingRateLineEdit->setText(Helper::doubleToString(rate));
+}
+
+/**Sets the resolution of the acquisition system.*/
+void AcquisitionSystemPage::setResolution(int res){
+    switch(res){
+    case 12:
+        resolutionComboBox->setCurrentIndex(0);
+        break;
+    case 14:
+        resolutionComboBox->setCurrentIndex(1);
+        break;
+    case 16:
+        resolutionComboBox->setCurrentIndex(2);
+        break;
+    case 32:
+        resolutionComboBox->setCurrentIndex(3);
+        break;
+    default:
+        resolutionComboBox->setCurrentIndex(2);
+        break;
+    }
+}
+
+/**Returns the resolution of the acquisition system.*/
+int AcquisitionSystemPage::getResolution()const{
+    switch(resolutionComboBox->currentIndex()){
+    case 0:
+        return 12;
+    case 1:
+        return 14;
+    case 2:
+        return 16;
+    case 3:
+        return 32;
+    default:
+        return 16;
+    }
+}
+
+void AcquisitionSystemPage::setVoltageRange(int value){
+    voltageRangeLineEdit->setText(QString::number(value));
+}
+
+/**Sets the amplification of the acquisition system.
+*/
+void AcquisitionSystemPage::setAmplification(int value){
+    amplificationLineEdit->setText(QString::number(value));
+}
+
+/**Returns the number of channels.*/
+int AcquisitionSystemPage::getNbChannels() const
+{
+    return nbChannelsLineEdit->text().toInt();
+}
+
+/**Returns the sampling rate.*/
+double AcquisitionSystemPage::getSamplingRate() const
+{
+    return samplingRateLineEdit->text().toDouble();
+}
+
+int AcquisitionSystemPage::getOffset() const
+{
+    return offsetLineEdit->text().toInt();
+}
+
+/**Returns the voltage range of the acquisition system in volts.
+*/
+int AcquisitionSystemPage::getVoltageRange() const
+{
+    return voltageRangeLineEdit->text().toInt();
+}
+
+/**Returns the amplification of the acquisition system.
+*/
+int AcquisitionSystemPage::getAmplification() const
+{
+    return amplificationLineEdit->text().toInt();
+}
+
+/**True if at least one property has been modified, false otherwise.*/
+bool AcquisitionSystemPage::isModified()const
+{
+    return modified;
+}
 
