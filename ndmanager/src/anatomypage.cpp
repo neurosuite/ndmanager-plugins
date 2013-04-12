@@ -30,8 +30,8 @@
 
 AnatomyPage::AnatomyPage(QWidget* parent)
     : AnatomyLayout(parent),
-      isIncorrectRow(false),
       incorrectRow(0),
+      isIncorrectRow(false),
       modified(false)
 {
     attributesTable->horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
@@ -52,19 +52,18 @@ AnatomyPage::AnatomyPage(QWidget* parent)
 
 AnatomyPage::~AnatomyPage(){}
 
-bool AnatomyPage::eventFilter(QObject* object,QEvent* event){
-    QString name = object->objectName();
-    if(name.indexOf("groupTable") != -1 && isIncorrectRow){
+bool AnatomyPage::eventFilter(QObject* object,QEvent* event) {
+    const QString name = object->objectName();
+    if (name.indexOf("groupTable") != -1 && isIncorrectRow) {
         groupTable->selectRow(incorrectRow);
         groupTable->setCurrentCell(incorrectRow,0);
         return true;
-    }
-    else if(name.indexOf("groupTable") != -1 && event->type() == QEvent::Leave){
+    } else if(name.indexOf("groupTable") != -1 && event->type() == QEvent::Leave) {
         if(groupTable->currentRow() != -1){
             int row = groupTable->currentRow();
             int column = groupTable->currentColumn();
             QWidget* widget = groupTable->cellWidget(row,column);
-            if(widget != 0 && widget->metaObject()->className() == ("QLineEdit")){
+            if(widget != 0 && widget->metaObject()->className() == ("QLineEdit")) {
                 groupTable->editItem(groupTable->item(row,column));
                 return true;
             }
@@ -87,7 +86,8 @@ void AnatomyPage::setAttributes(const QMap<QString, QMap<int,QString> >& attribu
     }
 }
 
-void AnatomyPage::getAttributes(QMap<QString, QMap<int,QString> >& attributesMap)const{
+void AnatomyPage::getAttributes(QMap<QString, QMap<int,QString> >& attributesMap)const
+{
     for(int i =0; i<attributesTable->columnCount();++i){
         QMap<int,QString> values;
         for(int j = 0;j<attributesTable->rowCount();++j){
@@ -99,13 +99,14 @@ void AnatomyPage::getAttributes(QMap<QString, QMap<int,QString> >& attributesMap
     }
 }
 
-void AnatomyPage::setGroups(const QMap<int, QList<int> >& groups){
+void AnatomyPage::setGroups(const QMap<int, QList<int> >& groups)
+{
     groupTable->clearContents();
     groupTable->setRowCount(groups.count());
 
     QMap<int,QList<int> >::const_iterator iterator;
     //The iterator gives the keys sorted.
-    for(iterator = groups.begin(); iterator != groups.end(); ++iterator){
+    for (iterator = groups.begin(); iterator != groups.end(); ++iterator) {
         QList<int> channelIds = iterator.value();
         QList<int>::iterator channelIterator;
 
@@ -129,21 +130,27 @@ void AnatomyPage::getGroups(QMap<int, QList<int> >& groups)const{
         QList<int> channels;
         QString item = groupTable->item(i,0)->text();
         QString channelList = item.simplified();
-        if(channelList == " ") continue;
-        QStringList channelParts = channelList.split(" ", QString::SkipEmptyParts);
-        for(uint j = 0;j < channelParts.count(); ++j)
-            channels.append(channelParts[j].toInt());
+        if(channelList == " ")
+            continue;
+        const QStringList channelParts = channelList.split(" ", QString::SkipEmptyParts);
+
+        for(uint j = 0;j < channelParts.count(); ++j) {
+            channels.append(channelParts.at(j).toInt());
+        }
+
         groups.insert(groupId,channels);
         groupId++;
     }
 }
 
-void AnatomyPage::removeGroup(){
+void AnatomyPage::removeGroup()
+{
     if(isIncorrectRow)
         return;
+
     modified = true;
     const QList<QTableWidgetSelectionRange> range = groupTable->selectedRanges();
-    if(!range.isEmpty()) {
+    if (!range.isEmpty()) {
         QList<int> lst;
         Q_FOREACH(const QTableWidgetSelectionRange&r, range) {
             const int nbRows = r.bottomRow() - r.topRow() + 1;
@@ -175,9 +182,12 @@ void AnatomyPage::groupChanged(int row,int column){
     if(isIncorrectRow){
         QWidget* widget = groupTable->cellWidget(incorrectRow,0);
         QString incorrectGroup;
+
         if(widget != 0 && widget->metaObject()->className() == ("QLineEdit"))
             incorrectGroup = static_cast<QLineEdit*>(widget)->text();
-        else if(widget == 0) incorrectGroup = groupTable->item(incorrectRow,0)->text();
+        else if(widget == 0)
+            incorrectGroup = groupTable->item(incorrectRow,0)->text();
+
         if(incorrectGroup.contains(QRegExp("[^\\d\\s]")) != 0){
             groupTable->selectRow(incorrectRow);
             groupTable->setCurrentCell(incorrectRow,0);
@@ -230,7 +240,6 @@ void AnatomyPage::slotValidate(){
 void AnatomyPage::setNbChannels(int nbChannels){
     for(int i =0; i<attributesTable->rowCount();++i)
         attributesTable->removeRow(i);
+
     attributesTable->setRowCount(nbChannels);
 }
-
-

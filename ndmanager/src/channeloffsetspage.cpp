@@ -55,3 +55,12 @@ void ChannelOffsetsPage::setOffsets(const QMap<int,int>& offsets){
 }
 
 
+
+void ChannelOffsetsPage::setNbChannels(int nbChannels){
+    this->nbChannels = nbChannels;
+
+    for(int i =0; i<offsetTable->rowCount();++i)
+        offsetTable->removeRow(i);
+
+    offsetTable->setRowCount(nbChannels);
+}

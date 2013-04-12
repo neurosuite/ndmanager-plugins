@@ -104,8 +104,8 @@ public slots:
     void resetModificationStatus(){modified = false;}
 
 private:
-    bool isIncorrectRow;
     int incorrectRow;
+    bool isIncorrectRow;
     bool modified;
 };
 

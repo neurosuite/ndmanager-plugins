@@ -23,9 +23,6 @@
 //include files for the application
 #include <channeloffsetslayout.h>
 
-// include files for QT
-#include <qwidget.h>
-
 /**
 @author Lynn Hazan
 */
@@ -39,12 +36,7 @@ public:
     /**Sets the number of channels, creating the correspondent number of lines in the table.
  * @param nbChannels number of channels.
  */
-    void setNbChannels(int nbChannels){
-        this->nbChannels = nbChannels;
-        for(int i =0; i<offsetTable->rowCount();++i)
-            offsetTable->removeRow(i);
-        offsetTable->setRowCount(nbChannels);
-    }
+    void setNbChannels(int nbChannels);
     
     /** Returns the offsets associated with the channels.
  * @param offsets map given the channel default offsetsr.

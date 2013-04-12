@@ -21,11 +21,10 @@
 #define CHANNELCOLORSPAGE_H
 
 //include files for the application
-#include <channelcolorslayout.h>
+#include "channelcolorslayout.h"
 #include "channelcolors.h"
 
 // include files for QT
-#include <qwidget.h>
 #include <QList>
 
 

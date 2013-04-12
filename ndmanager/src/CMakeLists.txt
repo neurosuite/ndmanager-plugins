@@ -7,7 +7,6 @@ set(ndmanager_SRCS
         channelcolorspage.cpp 
 	channeloffsetspage.cpp 
         clusterspage.cpp 
-	configuration.cpp 
 	descriptionwriter.cpp 
         fileinformation.cpp 
 	filepage.cpp 

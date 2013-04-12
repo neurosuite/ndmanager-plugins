@@ -37,7 +37,6 @@
 
 // application specific includes
 #include "ndmanager.h"
-#include "configuration.h"  // class Configuration
 #include "queryinputdialog.h"
 #include "queryoutputdialog.h"
 #include "qhelpviewer.h"
