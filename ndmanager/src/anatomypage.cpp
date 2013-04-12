@@ -34,8 +34,13 @@ AnatomyPage::AnatomyPage(QWidget* parent)
       isIncorrectRow(false),
       modified(false)
 {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 0, 0)
     attributesTable->horizontalHeader()->setSectionResizeMode( QHeaderView::ResizeToContents );
     groupTable->horizontalHeader()->setSectionResizeMode( QHeaderView::ResizeToContents );
+#else
+    attributesTable->horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
+    groupTable->horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
+#endif
     //install a filter on the groupTable in order to validate the entries
     groupTable->installEventFilter(this);
 

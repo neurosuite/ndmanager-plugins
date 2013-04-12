@@ -55,8 +55,11 @@ ParameterPage::ParameterPage(bool expertMode,QWidget *parent)
 {
     status<<tr("Mandatory")<<tr("Optional")<<tr("Dynamic");
     ddList.append(2);
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+    parameterTable->horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
+#else
     parameterTable->horizontalHeader()->setSectionResizeMode( QHeaderView::ResizeToContents );
-
+#endif
     //If the export mode is not set, only the value column is editable
     if (!expertMode) {
         parameterTable->setItemDelegateForColumn(0,new ColumnDelegate(this));

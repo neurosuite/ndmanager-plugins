@@ -34,7 +34,11 @@ FilePage::FilePage(QWidget *parent)
       modified(false),
       isInit(true)
 {
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+    mappingTable->horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
+#else
     mappingTable->horizontalHeader()->setSectionResizeMode( QHeaderView::ResizeToContents );
+#endif
     connect(extensionLineEdit,SIGNAL(returnPressed()),this,SLOT(changeCaption()));
     connect(extensionLineEdit,SIGNAL(editingFinished()),this,SLOT(changeCaption()));
 

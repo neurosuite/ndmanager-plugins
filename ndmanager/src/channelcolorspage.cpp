@@ -35,8 +35,11 @@ ChannelColorsPage::ChannelColorsPage(QWidget* parent)
     : ChannelColorsLayout(parent)
     ,modified(false)
 {
+#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
+    colorTable->horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
+#else
     colorTable->horizontalHeader()->setSectionResizeMode( QHeaderView::ResizeToContents );
-
+#endif
     connect(colorTable, SIGNAL(cellChanged(int,int)),this, SLOT(propertyModified()));
     connect(colorTable, SIGNAL(cellDoubleClicked(int,int)),this, SLOT(propertyModified()));
     connect(colorTable, SIGNAL(modified()),SLOT(propertyModified()));
