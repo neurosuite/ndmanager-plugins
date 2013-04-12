@@ -27,7 +27,7 @@
 ChannelOffsetsPage::ChannelOffsetsPage(QWidget* parent)
     : ChannelOffsetsLayout(parent),nbChannels(0),modified(false)
 {
-    offsetTable->horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
+    offsetTable->horizontalHeader()->setSectionResizeMode( QHeaderView::ResizeToContents );
     connect(offsetTable, SIGNAL(itemChanged(QTableWidgetItem*)),this, SLOT(propertyModified()));
     connect(offsetTable, SIGNAL(itemDoubleClicked(QTableWidgetItem*)),this, SLOT(propertyModified()));
 

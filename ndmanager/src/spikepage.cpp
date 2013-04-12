@@ -38,7 +38,7 @@ SpikePage::SpikePage(QWidget* parent)
       incorrectColumn(0),
       modified(false)
 {
-    groupTable->horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
+    groupTable->horizontalHeader()->setSectionResizeMode( QHeaderView::ResizeToContents );
     //install a filter on the groupTable in order to validate the entries
     groupTable->installEventFilter(this);
 

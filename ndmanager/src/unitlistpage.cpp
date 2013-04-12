@@ -34,7 +34,7 @@
 UnitListPage::UnitListPage(QWidget* parent) :
     UnitListLayout(parent),isIncorrect(false),incorrectRow(0),modified(false)
 {
-    unitTable->horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
+    unitTable->horizontalHeader()->setSectionResizeMode( QHeaderView::ResizeToContents );
 
     //install a filter on the unitTable in order to validate the entries
     unitTable->installEventFilter(this);

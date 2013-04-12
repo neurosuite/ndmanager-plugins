@@ -55,7 +55,7 @@ ParameterPage::ParameterPage(bool expertMode,QWidget *parent)
 {
     status<<tr("Mandatory")<<tr("Optional")<<tr("Dynamic");
     ddList.append(2);
-    parameterTable->horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
+    parameterTable->horizontalHeader()->setSectionResizeMode( QHeaderView::ResizeToContents );
 
     //If the export mode is not set, only the value column is editable
     if (!expertMode) {

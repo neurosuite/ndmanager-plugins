@@ -82,11 +82,18 @@ qt4_wrap_ui(ndmanager_SRCS ${ndmanager_UI})
 
 add_executable(ndmanager ${ndmanager_SRCS} )
 
-target_link_libraries(ndmanager ${QT_LIBRARIES} ${QT_QTXML_LIBRARY} ${LIBKLUSTERSSHARED_LIBRARY})
 
+if(Qt5Core_FOUND)
+  target_link_libraries( ndmanager ${LIBKLUSTERSSHARED_LIBRARY} Qt5::Widgets Qt5::Xml ${Qt5WebKitWidgets_LIBRARIES})
+else(Qt5Core_FOUND)
+  target_link_libraries( ndmanager ${LIBKLUSTERSSHARED_LIBRARY} ${QT_LIBRARIES} ${QT_QTXML_LIBRARY})
 if(QT_QTWEBKIT_FOUND)
-	target_link_libraries(ndmanager ${QT_QTWEBKIT_LIBRARY})
+    target_link_libraries(ndmanager ${QT_QTWEBKIT_LIBRARY})
 endif()
+
+endif()
+
+
 
 install(FILES ndManagerDefault.xml DESTINATION share/applications/ndmanager/)
 

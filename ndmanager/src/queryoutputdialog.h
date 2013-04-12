@@ -21,7 +21,7 @@
 #define QUERYOUTPUTDIALOG_H
 
 #include <qpagedialog.h>
-#include <QtWebKit/QWebView>
+#include <QWebView>
 
 
 /**
