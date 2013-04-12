@@ -595,8 +595,6 @@ void ndManager::slotReload(){
 
     //Reopen the document
 
-    QString url = filePath;
-
     QFileInfo file(filePath);
 
     if(!file.exists()){
@@ -606,7 +604,7 @@ void ndManager::slotReload(){
     }
 
     //Open the file (that will also initialize the document)
-    const int returnStatus = doc->openDocument(url);
+    const int returnStatus = doc->openDocument(filePath);
     if(returnStatus == ndManagerDoc::PARSE_ERROR){
         QApplication::restoreOverrideCursor();
         QMessageBox::critical (this, tr("IO Error!"),tr("The selected parameter file could not be initialize due to parsing error."));

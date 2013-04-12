@@ -151,7 +151,7 @@ QMap<int, QList<int> > FilePage::getChannelMapping()const{
 
         QStringList channelParts = channelList.split(" ", QString::SkipEmptyParts);
         for(uint j = 0;j < channelParts.count(); ++j)
-            channels.append(channelParts[j].toInt());
+            channels.append(channelParts.at(j).toInt());
         channelMapping.insert(channelId,channels);
         channelId++;
     }

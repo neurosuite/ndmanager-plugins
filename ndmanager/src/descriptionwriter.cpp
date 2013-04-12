@@ -36,7 +36,9 @@
 
 using namespace ndmanager;
 
-DescriptionWriter::DescriptionWriter():doc(){
+DescriptionWriter::DescriptionWriter()
+    :doc()
+{
     //create the processing instruction
     QDomProcessingInstruction processingInstruction = doc.createProcessingInstruction("xml","version='1.0'");
     doc.appendChild(processingInstruction);
@@ -46,7 +48,10 @@ DescriptionWriter::DescriptionWriter():doc(){
     doc.appendChild(root);
 }
 
-DescriptionWriter::~DescriptionWriter(){}
+DescriptionWriter::~DescriptionWriter()
+{
+
+}
 
 bool DescriptionWriter::writeTofile(const QString& url){ 
     QFile descriptionFile(url);
@@ -92,16 +97,14 @@ void DescriptionWriter::setProgramInformation(const ProgramInformation& programI
                 QDomText nameValue = doc.createTextNode(parameterInfo[i]);
                 nameElement.appendChild(nameValue);
                 parameter.appendChild(nameElement);
-            }
-            else if(i == 1){
+            } else if(i == 1){
                 QDomElement valueElement = doc.createElement(VALUE);
                 if(!parameterInfo[i].isEmpty()){
                     QDomText valueValue = doc.createTextNode(parameterInfo[i]);
                     valueElement.appendChild(valueValue);
                 }
                 parameter.appendChild(valueElement);
-            }
-            else if(i == 2){
+            } else if(i == 2){
                 QDomElement statusElement = doc.createElement(STATUS);
                 QDomText statusValue = doc.createTextNode(parameterInfo[i]);
                 statusElement.appendChild(statusValue);

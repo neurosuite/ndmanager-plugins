@@ -58,7 +58,7 @@ ParameterPage::ParameterPage(bool expertMode,QWidget *parent)
     parameterTable->horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
 
     //If the export mode is not set, only the value column is editable
-    if(!expertMode){
+    if (!expertMode) {
         parameterTable->setItemDelegateForColumn(0,new ColumnDelegate(this));
         parameterTable->setItemDelegateForColumn(2,new ColumnDelegate(this));
         parameterTable->setItemDelegateForColumn(1,new ColumnDelegate(this));
@@ -66,8 +66,7 @@ ParameterPage::ParameterPage(bool expertMode,QWidget *parent)
         addButton->setEnabled(false);
         removeButton->setEnabled(false);
         nameLineEdit->setReadOnly(true);
-    }
-    else{
+    } else {
         connect(addButton,SIGNAL(clicked()),this,SLOT(addParameter()));
         connect(removeButton,SIGNAL(clicked()),this,SLOT(removeParameter()));
         connect(nameLineEdit,SIGNAL(returnPressed()),this,SLOT(changeCaption()));

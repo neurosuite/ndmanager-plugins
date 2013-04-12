@@ -22,14 +22,14 @@
 
 // include files for QT
 #include <qmap.h>
-
-#include <QList>
 #include <QString>
+#include <QList>
 /**
 * Class storing the information describing an additional file (filter and/or subset of the raw data file).
 @author Lynn Hazan
 */
-class FileInformation{
+class FileInformation
+{
 public:
     /**Constructor.*/
     FileInformation() : samplingRate(0) {}

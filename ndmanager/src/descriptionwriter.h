@@ -19,22 +19,17 @@
  ***************************************************************************/
 #ifndef DESCRIPTIONWRITER_H
 #define DESCRIPTIONWRITER_H
-
-
-
-
 //include files for the application
 #include "programinformation.h"
 
 //include files for QT
 #include <qdom.h> 
-
-
 /**
 This class writes a program description to disk.
 @author Lynn Hazan
 */
-class DescriptionWriter{
+class DescriptionWriter
+{
 public:
     DescriptionWriter();
     ~DescriptionWriter();

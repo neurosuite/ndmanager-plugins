@@ -422,7 +422,7 @@ void ParameterView::initialize(QMap<int, QList<int> >& anatomicalGroups,QMap<QSt
                         scriptView->setText(stream.readAll());
                         file.close();
                     } else {
-                        const QString message =  tr("The file %1  does not appear to be a script file (a script file should begin with #!).").arg(name);
+                        const QString message = tr("The file %1  does not appear to be a script file (a script file should begin with #!).").arg(name);
                         QMessageBox::critical (this,tr("IO Error!"),message);
                         scriptView->clear();
                     }

@@ -60,7 +60,7 @@ public:
     /**Returns a list containing the extensions of the all specific files.
  * @return extension list.
  */
-    QStringList getFileExtensions();
+    QStringList getFileExtensions() const;
 
     /**True if at least one the FilePage has been modified, false otherwise.*/
     bool isModified()const;

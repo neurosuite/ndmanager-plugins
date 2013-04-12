@@ -36,13 +36,14 @@
 #include <QMessageBox>
 
 ProgramsPage::ProgramsPage(bool expertMode,QWidget *parent)
-    : QFrame(parent),expertMode(expertMode){
+    : QFrame(parent),expertMode(expertMode)
+{
 
     QVBoxLayout* frameLayout = new QVBoxLayout(this);
     frameLayout->setMargin(0);
     frameLayout->setSpacing(0);
 
-    QString message = tr("Here you can add a new script description or load an existing one from disk.");
+    const QString message = tr("Here you can add a new script description or load an existing one from disk.");
     QLabel* description = new QLabel(message,this);
     description->adjustSize();
     description->setAlignment(Qt::AlignCenter);

@@ -69,7 +69,10 @@ FilesPage::FilesPage(QWidget* parent)
     connect(removeButton,SIGNAL(clicked()),this,SLOT(removeFile()));
 }
 
-FilesPage::~FilesPage(){}
+FilesPage::~FilesPage()
+{
+
+}
 
 void FilesPage::addNewFile(){
     FilePage* filePage = new FilePage();
@@ -129,7 +132,8 @@ void FilesPage::resetModificationStatus(){
     }
 }
 
-QStringList FilesPage::getFileExtensions(){
+QStringList FilesPage::getFileExtensions() const
+{
     QStringList extensionList;
 
     for(int i = 0; i<tabWidget->count();++i)

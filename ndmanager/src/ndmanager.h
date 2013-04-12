@@ -71,7 +71,7 @@ public:
     /**Opens a file, only one document at the time is allowed.
   * Asking for a new one will open a new instance of the application with it.
   */
-    void openDocumentFile(const QString& url=0);
+    void openDocumentFile(const QString& url=QString());
 
     /**Creates a ParameterView.
   * @param anatomicalGroups map given the composition of the anatomical groups. The trash group is not included, channels which are not part of

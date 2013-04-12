@@ -44,8 +44,15 @@
 
 
 ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const QString& name)
-    : QFrame(parent),scriptIsModified(false),isInit(true),programName(name),helpIsModified(false),descriptionNotSaved(true),expertMode(expertMode){
-	    setObjectName(name);
+    : QFrame(parent),
+      scriptIsModified(false),
+      isInit(true),
+      programName(name),
+      helpIsModified(false),
+      descriptionNotSaved(true),
+      expertMode(expertMode)
+{
+    setObjectName(name);
     QVBoxLayout* frameLayout = new QVBoxLayout(this);
     frameLayout->setMargin(0);
     frameLayout->setSpacing(0);
