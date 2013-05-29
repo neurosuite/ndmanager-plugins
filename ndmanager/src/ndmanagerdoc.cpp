@@ -21,6 +21,7 @@
 #include <qmap.h>
 #include <QList>
 #include <QDebug>
+#include <QMessageBox>
 
 // application specific includes
 #include <ndmanagerdoc.h>
@@ -57,6 +58,7 @@ ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::openDocument(const QStri
     docUrl = url;
     // Get the information from the file
     XmlReader reader = XmlReader();
+
 
     if(reader.parseFile(url)){
         QMap<int, QList<int> > anatomicalGroups;
@@ -142,6 +144,10 @@ ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::openDocument(const QStri
 ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::newDocument(){
     //If the user has no local version of the file the system default is used
     QString path = QStandardPaths::locate (QStandardPaths::ApplicationsLocation, QLatin1String("ndmanager/ndManagerDefault.xml"));
+    if (path.isEmpty()) {
+       qDebug()<<" ndManagerDefault.xml is not found. Verify install";
+       QMessageBox::critical (0, QObject::tr("Error!"),QObject::tr("The file ndManagerDefault.xml does not exist. Please verify installation"));
+    }
     return openDocument(path);
     
 }
