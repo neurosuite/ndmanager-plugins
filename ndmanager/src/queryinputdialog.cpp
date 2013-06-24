@@ -23,6 +23,49 @@
 #include <QLabel>
 #include <QDialogButtonBox>
 #include <QPushButton>
+#include <QFileDialog>
+#include <QLineEdit>
+
+
+QueryInputPathWidget::QueryInputPathWidget(QWidget *parent)
+    : QWidget(parent)
+{
+    QHBoxLayout *lay = new QHBoxLayout;
+    mLineEdit = new QLineEdit;
+    mPushButton = new QPushButton;
+    lay->addWidget(mLineEdit);
+    connect(mLineEdit, SIGNAL(textChanged(QString)), this, SIGNAL(textChanged(QString)));
+    mPushButton->setIcon(QPixmap(":/shared-icons/document-open"));
+    lay->addWidget(mPushButton);
+    connect(mPushButton, SIGNAL(clicked()), SLOT(slotSelectPath()));
+    setLayout(lay);
+}
+
+QueryInputPathWidget::~QueryInputPathWidget()
+{
+
+}
+
+void QueryInputPathWidget::slotSelectPath()
+{
+    const QString path = QFileDialog::getExistingDirectory(this, tr("Select path"), mLineEdit->text());
+    if (!path.isEmpty()) {
+        mLineEdit->setText(path);
+    }
+}
+
+QString QueryInputPathWidget::path() const
+{
+    return mLineEdit->text();
+}
+
+
+void QueryInputPathWidget::setPath(const QString &path)
+{
+    mLineEdit->setText(path);
+}
+
+
 
 QueryInputDialog::QueryInputDialog(QWidget *parent,const QString& caption,const QString& urltext) :
     QDialog(parent)
@@ -51,16 +94,15 @@ QueryInputDialog::QueryInputDialog(QWidget *parent,const QString& caption,const 
     label2->setObjectName("path_label");
     layout->addWidget(label2);
 
-    path = new QLineEdit(page);
-    path->setObjectName("path");
+    path = new QueryInputPathWidget(page);
     path->setMinimumWidth(fontMetrics().maxWidth()*20);
-    path->setText(urltext);
+    path->setPath(urltext);
     layout->addWidget(path);
 
     layout->addStretch(10);
 
     //connections
-    connect(path,SIGNAL(textChanged(QString)),this,SLOT(pathChanged(QString)));
+    connect(path, SIGNAL(textChanged(QString)), this, SLOT(pathChanged(QString)));
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok
                                      | QDialogButtonBox::Cancel);
     layout->addWidget(buttonBox);
@@ -77,4 +119,15 @@ void QueryInputDialog::pathChanged(const QString & newPath){
 
     buttonBox->button(QDialogButtonBox::Ok)->setEnabled(!newPath.isEmpty());
 }
+
+QString QueryInputDialog::getQuery() const
+{
+    return query->text();
+}
+
+QString QueryInputDialog::getPath() const
+{
+    return path->path();
+}
+
 

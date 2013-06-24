@@ -20,26 +20,46 @@
 #ifndef QUERYINPUTDIALOG_H
 #define QUERYINPUTDIALOG_H
 
-// #include <queryinputdialogbase.h>
-#include "qlayout.h"
-#include "qlabel.h"
-#include "qlineedit.h"
-
 #include <QDialog>
 class QDialogButtonBox;
+class QPushButton;
+class QLineEdit;
+
 /**
 Dialog used to get information for query.
 
 	@author Michaël Zugaro <michael.zugaro@college-de-france.fr>
 */
+
+class QueryInputPathWidget : public QWidget
+{
+    Q_OBJECT
+public:
+    explicit QueryInputPathWidget(QWidget *parent = 0);
+    ~QueryInputPathWidget();
+
+    QString path() const;
+    void setPath(const QString &path);
+
+Q_SIGNALS:
+    void textChanged(const QString &);
+
+private Q_SLOTS:
+    void slotSelectPath();
+
+private:
+    QLineEdit *mLineEdit;
+    QPushButton *mPushButton;
+};
+
 class QueryInputDialog : public QDialog
 {
     Q_OBJECT
 public:
-    QueryInputDialog(QWidget *parent = 0,const QString& caption = tr("Query"),const QString& urltext = QString());
+    explicit QueryInputDialog(QWidget *parent = 0,const QString& caption = tr("Query"),const QString& urltext = QString());
     ~QueryInputDialog();
-    QString getQuery() const { return query->text(); }
-    QString getPath() const { return path->text(); }
+    QString getQuery() const;
+    QString getPath() const;
 
 
 private slots:
@@ -47,7 +67,7 @@ private slots:
 
 private:
     QWidget			*page;
-    QLineEdit	*path;
+    QueryInputPathWidget	*path;
     QLineEdit		*query;
     QDialogButtonBox *buttonBox;
 };
