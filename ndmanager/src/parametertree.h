@@ -6,8 +6,8 @@
 class ParameterTreeItem : public QTreeWidgetItem
 {
 public:
-    ParameterTreeItem(QTreeWidget * parent);
-    ParameterTreeItem(QTreeWidgetItem *parent);
+    explicit ParameterTreeItem(QTreeWidget * parent = 0);
+    explicit ParameterTreeItem(QTreeWidgetItem *parent);
     ~ParameterTreeItem();
 
     void setWidget(QWidget *w);

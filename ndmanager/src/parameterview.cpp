@@ -63,6 +63,7 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
     splitter->setChildrenCollapsible(false);
     hbox->addWidget(splitter);
     mParameterTree = new ParameterTree;
+    mParameterTree->setHeaderLabels(QStringList()<<QString());
     splitter->addWidget(mParameterTree);
 
     mStackWidget = new QStackedWidget;
@@ -72,7 +73,6 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
     setWindowTitle(tr("Parameter View"));
 
     //adding page "General information"
-
     generalInfo = new GeneralInfoPage;
     mStackWidget->addWidget(generalInfo);
     mParameterTree->addPage(":/icons/folder-blue",tr("General"),generalInfo);
@@ -81,6 +81,7 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
     acquisitionSystem = new AcquisitionSystemPage;
     mStackWidget->addWidget(acquisitionSystem);
     mParameterTree->addPage(":/icons/acquisition",tr("Acquisition System"),acquisitionSystem);
+
 
     //adding page "Video"
     video = new VideoPage;
