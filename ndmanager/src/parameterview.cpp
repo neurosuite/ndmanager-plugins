@@ -163,7 +163,7 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
     programs = new ProgramsPage(expertMode);
 
     mStackWidget->addWidget(programs);
-    mScriptsItem = mParameterTree->addPage(":/icons/units", tr("Scripts"), programs);
+    mScriptsItem = mParameterTree->addPage(":/icons/programs", tr("Scripts"), programs);
 
     //set connections
     connect(acquisitionSystem,SIGNAL(nbChannelsModified(int)),this,SLOT(nbChannelsModified(int)));
