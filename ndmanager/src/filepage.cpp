@@ -102,6 +102,7 @@ void FilePage::removeChannel(){
     if(isIncorrectRow)
         return;
     modified = true;
+
     QList<QTableWidgetSelectionRange> range = mappingTable->selectedRanges ();
     if(!range.isEmpty()) {
         QList<int> rowsToRemove;
@@ -111,8 +112,9 @@ void FilePage::removeChannel(){
                 rowsToRemove.append(selection.topRow() + i);
             }
         }
+        qSort(rowsToRemove);
         //Actually remove the rows
-        for(int i = 0; i <rowsToRemove.count();++i) {
+        for(int i = rowsToRemove.count()-1; i>=0;--i) {
             mappingTable->removeRow(rowsToRemove.at(i));
         }
 
