@@ -75,7 +75,7 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
 
     generalInfo = new GeneralInfoPage;
     mStackWidget->addWidget(generalInfo);
-    mParameterTree->addPage(":/icons/folder-blue",tr("General information"),generalInfo);
+    mParameterTree->addPage(":/icons/folder-blue",tr("General"),generalInfo);
 
     //adding page "Acquisition System"
     acquisitionSystem = new AcquisitionSystemPage;
