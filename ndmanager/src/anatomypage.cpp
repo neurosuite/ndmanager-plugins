@@ -167,7 +167,7 @@ void AnatomyPage::removeGroup()
             }
         }
         qSort(lst);
-        for(int i = lst.count()-1; i>0; --i) {
+        for(int i = lst.count()-1; i>=0; --i) {
             groupTable->removeRow(lst.at(i));
         }
     }
