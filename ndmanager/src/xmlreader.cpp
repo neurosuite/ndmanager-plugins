@@ -866,10 +866,8 @@ void XmlReader::getProgramsInformation(QList<ProgramInformation>& programs) cons
     }
 }
 
-
 void XmlReader::getProgramInformation(ProgramInformation& programInformation) const
 {
-
     QDomNode n = documentNode.firstChild();
     if (!n.isNull()) {
         while(!n.isNull()) {
@@ -892,37 +890,41 @@ void XmlReader::getProgramInformation(ProgramInformation& programInformation) co
                             programInformation.setHelp(help);
 
                         } else if(tag ==PARAMETERS ){
-                            QDomNode parametersNode = p.firstChild().firstChild();
-                            QStringList parameterInfo;
-                            while(!parametersNode.isNull()) {
+                            QDomNode parameterElement = p.firstChild();
+                            while (!parameterElement.isNull()) {
+                                QDomNode parametersNode = parameterElement.firstChild();
+                                QStringList parameterInfo;
+                                while(!parametersNode.isNull()) {
+                                    QDomElement parametersElement = parametersNode.toElement();
+                                    if(!parametersElement.isNull() ) {
+                                        QString tag = parametersElement.tagName();
+                                        if(tag == NAME) {
+                                            QString name = parametersElement.text();
+                                            parameterInfo.prepend(name);
 
-                                QDomElement parametersElement = parametersNode.toElement();
-                                if(!parametersElement.isNull() ) {
-                                    QString tag = parametersElement.tagName();
-                                    if(tag == NAME) {
-                                        QString name = parametersElement.text();
-                                        parameterInfo.prepend(name);
+                                        } else if(tag == STATUS ) {
+                                            QString status = parametersElement.text();
+                                            parameterInfo.append(status);
 
-                                    } else if(tag == STATUS ) {
-                                        QString status = parametersElement.text();
-                                        parameterInfo.append(status);
+                                        } else if(tag == VALUE) {
+                                            QString value = parametersElement.text();
+                                            if(parameterInfo.size() == 1)
+                                                parameterInfo.append(value);
+                                            else{
+                                                QStringList::iterator it = parameterInfo.begin();
+                                                parameterInfo.insert(++it,value);
+                                            }
 
-                                    } else if(tag == VALUE) {
-                                        QString value = parametersElement.text();
-                                        if(parameterInfo.size() == 1)
-                                            parameterInfo.append(value);
-                                        else{
-                                            QStringList::iterator it = parameterInfo.begin();
-                                            parameterInfo.insert(++it,value);
                                         }
-
                                     }
+                                    parametersNode = parametersNode.nextSibling();
                                 }
-                                parametersNode = parametersNode.nextSibling();
-                            }
-                            if(!parameterInfo.isEmpty()) {
-                                parameters.insert(parameterId,parameterInfo);
-                                parameterId++;
+                                parameterElement = parameterElement.nextSibling();
+
+                                if(!parameterInfo.isEmpty()) {
+                                    parameters.insert(parameterId,parameterInfo);
+                                    parameterId++;
+                                }
                             }
                         }
                         program= program.nextSibling();
@@ -934,5 +936,4 @@ void XmlReader::getProgramInformation(ProgramInformation& programInformation) co
             n = n.nextSibling();
         }
     }
-
 }
