@@ -76,8 +76,7 @@ ProgramsPage::ProgramsPage(bool expertMode,QWidget *parent)
         gridLayout->addItem(space3,0,2);
 
         connect(addButton,SIGNAL(clicked()),this,SLOT(addProgram()));
-    }
-    else{
+    } else {
         loadButton = new QPushButton(tr("Load..."),buttons);
         //loadButton->setSizePolicy(QSizePolicy((QSizePolicy::Policy)0,(QSizePolicy::Policy)0,0,0,loadButton->sizePolicy().hasHeightForWidth()));
         loadButton->setMinimumSize(QSize(104,0));
@@ -103,11 +102,9 @@ ProgramsPage::~ProgramsPage(){}
 
 void ProgramsPage::loadProgram(){
 
-    QStringList programUrls=QFileDialog::getOpenFileNames(this, tr("Select the Script(s) to load..."));
+    const QStringList programUrls=QFileDialog::getOpenFileNames(this, tr("Select the Script(s) to load..."));
     if(!programUrls.isEmpty()){
-        QStringList::iterator iterator;
-        for(iterator = programUrls.begin();iterator != programUrls.end();++iterator){
-            QString programUrl = static_cast<QString>(*iterator);
+        Q_FOREACH(const QString &programUrl, programUrls) {
             QString filePath = programUrl;
             QFileInfo fileInfo(filePath);
 
@@ -119,14 +116,13 @@ void ProgramsPage::loadProgram(){
 
             //Check if the file is an XML file <=> conains the xml declaration
             QFile file(filePath);
-            if(!file.open(QIODevice::ReadOnly)){
-                QString message = tr("The file %1 is not readable.").arg(filePath);
+            if (!file.open(QIODevice::ReadOnly)) {
+                const QString message = tr("The file %1 is not readable.").arg(filePath);
                 QMessageBox::critical (this, tr("IO Error!"),message);
-            }
-            else{
+            } else {
                 QTextStream stream(&file);
                 QString firstLine = stream.readLine();
-                int i = firstLine.indexOf(QRegExp("^<\\?xml version"));
+                const int i = firstLine.indexOf(QRegExp("^<\\?xml version"));
                 file.close();
                 if(i == -1){
                     QString message = tr("The file %1 is not an xml file.").arg(filePath);

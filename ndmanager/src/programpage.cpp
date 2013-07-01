@@ -134,8 +134,7 @@ ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const QString& name)
         connect(saveParametersButton,SIGNAL(clicked()),this,SLOT(saveProgramParameters()));
         connect(scriptView,SIGNAL(textChanged()),this,SLOT(scriptModified()));
         connect(help,SIGNAL(textChanged()),this,SLOT(helpModified()));
-    }
-    else{
+    } else {
         removeButton = new QPushButton(tr("Remove Script"),buttons);
         QSizePolicy policy(QSizePolicy::Fixed,QSizePolicy::Fixed);
         policy.setHorizontalStretch(0);
