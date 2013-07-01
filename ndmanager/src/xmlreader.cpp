@@ -54,8 +54,10 @@ bool XmlReader::parseFile(const QString& url)
     QDomElement element = docElement.documentElement();
 
     if (element.tagName() == QLatin1String("parameters")) {
+        qDebug()<<" sssssssssssssssssssssss parameters";
         if( element.hasAttribute(DOC__VERSION)) {
             readVersion = element.attribute(DOC__VERSION);
+            qDebug()<<" readVersion"<<readVersion;
         }
     }
     documentNode = element;
@@ -138,36 +140,36 @@ void XmlReader::getAnatomicalDescription(int nbChannels,QMap<int, QList<int> >& 
                         if (!u.isNull()) {
                             tag = u.tagName();
                             if (tag == CHANNEL_GROUPS) {
-                               QDomNode channelGroup = u.firstChild(); // try to convert the node to an element.
-                               while(!channelGroup.isNull()) {
-                                   QDomElement val = channelGroup.toElement();
-                                   if (!val.isNull()) {
-                                       tag = val.tagName();
-                                       if (tag == GROUP) {
-                                           QList<int> channelList;
-                                           QDomNode group = val.firstChild(); // try to convert the node to an element.
-                                           while(!group.isNull()) {
-                                               QDomElement valGroup = group.toElement();
-                                               if (!valGroup.isNull()) {
-                                                   tag = valGroup.tagName();
-                                                   if (tag == CHANNEL) {
-                                                       int channelId = valGroup.text().toInt();
-                                                       channelList.append(channelId);
-                                                       //remove the channel from the trash list as it is part of a group
-                                                       trashList.removeAll(channelId);
-                                                       if (valGroup.hasAttribute(SKIP)) {
-                                                           skipStatus.insert(channelId,valGroup.attribute(SKIP));
-                                                       }
-                                                   }
-                                               }
-                                               group = group.nextSibling();
-                                           }
-                                           anatomicalGroups.insert(i + 1,channelList);
-                                           i++;
-                                       }
-                                   }
-                                   channelGroup = channelGroup.nextSibling();
-                               }
+                                QDomNode channelGroup = u.firstChild(); // try to convert the node to an element.
+                                while(!channelGroup.isNull()) {
+                                    QDomElement val = channelGroup.toElement();
+                                    if (!val.isNull()) {
+                                        tag = val.tagName();
+                                        if (tag == GROUP) {
+                                            QList<int> channelList;
+                                            QDomNode group = val.firstChild(); // try to convert the node to an element.
+                                            while(!group.isNull()) {
+                                                QDomElement valGroup = group.toElement();
+                                                if (!valGroup.isNull()) {
+                                                    tag = valGroup.tagName();
+                                                    if (tag == CHANNEL) {
+                                                        int channelId = valGroup.text().toInt();
+                                                        channelList.append(channelId);
+                                                        //remove the channel from the trash list as it is part of a group
+                                                        trashList.removeAll(channelId);
+                                                        if (valGroup.hasAttribute(SKIP)) {
+                                                            skipStatus.insert(channelId,valGroup.attribute(SKIP));
+                                                        }
+                                                    }
+                                                }
+                                                group = group.nextSibling();
+                                            }
+                                            anatomicalGroups.insert(i + 1,channelList);
+                                            i++;
+                                        }
+                                    }
+                                    channelGroup = channelGroup.nextSibling();
+                                }
                             }
                         }
                         anatomy = anatomy.nextSibling();
@@ -213,53 +215,53 @@ void XmlReader::getSpikeDescription(int nbChannels,QMap<int, QList<int> >& spike
                         if (!u.isNull()) {
                             tag = u.tagName();
                             if (tag == CHANNEL_GROUPS) {
-                               QDomNode channelGroup = u.firstChild(); // try to convert the node to an element.
-                               int i = 0;
-                               while(!channelGroup.isNull()) {
-                                   QDomElement val = channelGroup.toElement();
-                                   if (!val.isNull()) {
-                                       tag = val.tagName();
-                                       if (tag == GROUP) {
-                                           QMap<QString,QString> groupInfo;
-                                           QDomNode group = val.firstChild(); // try to convert the node to an element.
+                                QDomNode channelGroup = u.firstChild(); // try to convert the node to an element.
+                                int i = 0;
+                                while(!channelGroup.isNull()) {
+                                    QDomElement val = channelGroup.toElement();
+                                    if (!val.isNull()) {
+                                        tag = val.tagName();
+                                        if (tag == GROUP) {
+                                            QMap<QString,QString> groupInfo;
+                                            QDomNode group = val.firstChild(); // try to convert the node to an element.
 
-                                           while(!group.isNull()) {
-                                               QDomElement valGroup = group.toElement();
+                                            while(!group.isNull()) {
+                                                QDomElement valGroup = group.toElement();
 
-                                               if (!valGroup.isNull()) {
-                                                   tag = valGroup.tagName();
-                                                   if (tag == CHANNELS) {
-                                                       QDomNode channels = valGroup.firstChild(); // try to convert the node to an element.
-                                                       QList<int> channelList;
-                                                       while(!channels.isNull()) {
-                                                           QDomElement channelsElement = channels.toElement();
-                                                           if( channelsElement.tagName() == CHANNEL) {
-                                                               int channelId = channelsElement.text().toInt();
-                                                               channelList.append(channelId);
-                                                               //remove the channel from the spike trash list as it is part of a group
-                                                               spikeTrashList.removeAll(channelId);
+                                                if (!valGroup.isNull()) {
+                                                    tag = valGroup.tagName();
+                                                    if (tag == CHANNELS) {
+                                                        QDomNode channels = valGroup.firstChild(); // try to convert the node to an element.
+                                                        QList<int> channelList;
+                                                        while(!channels.isNull()) {
+                                                            QDomElement channelsElement = channels.toElement();
+                                                            if( channelsElement.tagName() == CHANNEL) {
+                                                                int channelId = channelsElement.text().toInt();
+                                                                channelList.append(channelId);
+                                                                //remove the channel from the spike trash list as it is part of a group
+                                                                spikeTrashList.removeAll(channelId);
 
-                                                           }
-                                                           channels = channels.nextSibling();
-                                                       }
-                                                       spikeGroups.insert(i + 1,channelList);
-                                                   }else if( tag == NB_SAMPLES) {
-                                                       groupInfo.insert(NB_SAMPLES,valGroup.text());
-                                                   } else if( tag == PEAK_SAMPLE_INDEX) {
-                                                       groupInfo.insert(PEAK_SAMPLE_INDEX,valGroup.text());
-                                                   } else if( tag == NB_FEATURES) {
-                                                       groupInfo.insert(NB_FEATURES,valGroup.text());
-                                                   }
-                                               }
-                                               group = group.nextSibling();
-                                           }
-                                           information.insert(i + 1,groupInfo);
-                                           ++i;
+                                                            }
+                                                            channels = channels.nextSibling();
+                                                        }
+                                                        spikeGroups.insert(i + 1,channelList);
+                                                    }else if( tag == NB_SAMPLES) {
+                                                        groupInfo.insert(NB_SAMPLES,valGroup.text());
+                                                    } else if( tag == PEAK_SAMPLE_INDEX) {
+                                                        groupInfo.insert(PEAK_SAMPLE_INDEX,valGroup.text());
+                                                    } else if( tag == NB_FEATURES) {
+                                                        groupInfo.insert(NB_FEATURES,valGroup.text());
+                                                    }
+                                                }
+                                                group = group.nextSibling();
+                                            }
+                                            information.insert(i + 1,groupInfo);
+                                            ++i;
 
-                                       }
-                                   }
-                                   channelGroup = channelGroup.nextSibling();
-                               }
+                                        }
+                                    }
+                                    channelGroup = channelGroup.nextSibling();
+                                }
                             }
                         }
                         anatomy = anatomy.nextSibling();
@@ -371,7 +373,7 @@ void XmlReader::getChannelColors(QList<ChannelColors>& list)const{
                                                 channelColors.setSpikeGroupColor(color);
                                             }
                                         }
-                                       channelGroup =  channelGroup.nextSibling();
+                                        channelGroup =  channelGroup.nextSibling();
                                     }
                                     list.append(channelColors);
                                 }
@@ -420,8 +422,8 @@ void XmlReader::getChannelDefaultOffset(QMap<int,int>& channelDefaultOffsets)con
                                         }
                                         //the channels must be numbered continuously from 0.
                                         //if(channelId < nbChannels)
-                                            channelDefaultOffsets.insert(channelId,offset);
-                                       channelGroup =  channelGroup.nextSibling();
+                                        channelDefaultOffsets.insert(channelId,offset);
+                                        channelGroup =  channelGroup.nextSibling();
                                     }
                                 }
                             }
@@ -865,7 +867,8 @@ void XmlReader::getProgramsInformation(QList<ProgramInformation>& programs) cons
 }
 
 
-void XmlReader::getProgramInformation(ProgramInformation& programInformation) const{
+void XmlReader::getProgramInformation(ProgramInformation& programInformation) const
+{
 
     QDomNode n = documentNode.firstChild();
     if (!n.isNull()) {
@@ -876,71 +879,56 @@ void XmlReader::getProgramInformation(ProgramInformation& programInformation) co
                 //ProgramInformation programInformation;
                 QMap<int, QStringList > parameters;
                 int parameterId = 0;
-                if (tag == PROGRAMS) {
-                    QDomNode unit = e.firstChild(); // try to convert the node to an element.
-                    while(!unit.isNull()) {
-                        QDomElement u = unit.toElement();
-                        if (!u.isNull()) {
-                            if( u.tagName() == PROGRAM) {
-                                QDomNode program = u.firstChild();
-                                while(!program.isNull()) {
-                                    QDomElement p = program.toElement();
-                                    QString tag =p.tagName();
-                                    if( tag == NAME) {
-                                        QString name = p.text();
-                                        programInformation.setProgramName(name);
-                                    } else if( tag == HELP) {
-                                        QString help = p.text();
-                                        programInformation.setHelp(help);
+                if (tag == PROGRAM) {
+                    QDomNode program = e.firstChild();
+                    while(!program.isNull()) {
+                        QDomElement p = program.toElement();
+                        QString tag =p.tagName();
+                        if( tag == NAME) {
+                            QString name = p.text();
+                            programInformation.setProgramName(name);
+                        } else if( tag == HELP) {
+                            QString help = p.text();
+                            programInformation.setHelp(help);
 
-                                    } else if(tag ==PARAMETERS ){
-                                        QDomNode parametersNode = p.firstChild().firstChild();
-                                        QStringList parameterInfo;
-                                        while(!parametersNode.isNull()) {
+                        } else if(tag ==PARAMETERS ){
+                            QDomNode parametersNode = p.firstChild().firstChild();
+                            QStringList parameterInfo;
+                            while(!parametersNode.isNull()) {
 
-                                            QDomElement parametersElement = parametersNode.toElement();
-                                            if(!parametersElement.isNull() ) {
-                                                QString tag = parametersElement.tagName();
-                                                if(tag == NAME) {
-                                                    QString name = parametersElement.text();
-                                                    parameterInfo.prepend(name);
+                                QDomElement parametersElement = parametersNode.toElement();
+                                if(!parametersElement.isNull() ) {
+                                    QString tag = parametersElement.tagName();
+                                    if(tag == NAME) {
+                                        QString name = parametersElement.text();
+                                        parameterInfo.prepend(name);
 
-                                                } else if(tag == STATUS ) {
-                                                    QString status = parametersElement.text();
-                                                    parameterInfo.append(status);
+                                    } else if(tag == STATUS ) {
+                                        QString status = parametersElement.text();
+                                        parameterInfo.append(status);
 
-                                                } else if(tag == VALUE) {
-                                                    QString value = parametersElement.text();
-                                                    if(parameterInfo.size() == 1)
-                                                        parameterInfo.append(value);
-                                                    else{
-                                                        QStringList::iterator it = parameterInfo.begin();
-                                                        parameterInfo.insert(++it,value);
-                                                    }
-
-                                                }
-                                            }
-                                            parametersNode = parametersNode.nextSibling();
-
-                                        }
-                                        if(parameterInfo.size() != 0) {
-                                            parameters.insert(parameterId,parameterInfo);
-                                            parameterId++;
+                                    } else if(tag == VALUE) {
+                                        QString value = parametersElement.text();
+                                        if(parameterInfo.size() == 1)
+                                            parameterInfo.append(value);
+                                        else{
+                                            QStringList::iterator it = parameterInfo.begin();
+                                            parameterInfo.insert(++it,value);
                                         }
 
                                     }
-                                    program= program.nextSibling();
-
                                 }
-                                if(!parameters.isEmpty())
-                                    programInformation.setParameterInformation(parameters);
-
+                                parametersNode = parametersNode.nextSibling();
+                            }
+                            if(!parameterInfo.isEmpty()) {
+                                parameters.insert(parameterId,parameterInfo);
+                                parameterId++;
                             }
                         }
-                        break;
-                        //unit = unit.nextSibling();
+                        program= program.nextSibling();
                     }
-
+                    if(!parameters.isEmpty())
+                        programInformation.setParameterInformation(parameters);
                 }
             }
             n = n.nextSibling();
