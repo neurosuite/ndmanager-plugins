@@ -195,6 +195,8 @@ private slots:
     void slotHanbook();
 
     void slotSaveRecentFiles();
+
+    void slotQuit();
 private:
     /**Sets up all the actions used.*/
     void setupActions();

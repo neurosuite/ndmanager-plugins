@@ -136,7 +136,7 @@ void ndManager::setupActions()
     mQuitAction = fileMenu->addAction(tr("Quit"));
     mQuitAction->setIcon(QPixmap(":/shared-icons/window-close"));
     mQuitAction->setShortcut(QKeySequence::Quit);
-    connect(mQuitAction, SIGNAL(triggered()), this, SLOT(close()));
+    connect(mQuitAction, SIGNAL(triggered()), this, SLOT(slotQuit()));
 
 
     QMenu *actionMenu = menuBar()->addMenu(tr("&Actions"));
@@ -812,4 +812,11 @@ void ndManager::slotSaveRecentFiles()
 {
     QSettings settings;
     settings.setValue(QLatin1String("Recent Files"),mFileOpenRecent->recentFiles());
+}
+
+void ndManager::slotQuit()
+{
+    if (!queryClose())
+        return;
+    close();
 }
