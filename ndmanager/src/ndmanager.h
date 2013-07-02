@@ -197,6 +197,10 @@ private slots:
     void slotSaveRecentFiles();
 
     void slotQuit();
+
+protected:
+    void closeEvent(QCloseEvent *event);
+
 private:
     /**Sets up all the actions used.*/
     void setupActions();

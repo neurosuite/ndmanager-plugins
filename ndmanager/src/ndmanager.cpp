@@ -76,6 +76,14 @@ ndManager::~ndManager(){
     delete mainDock;
 }
 
+void ndManager::closeEvent(QCloseEvent *event)
+{
+    if (!queryClose())
+        return;
+    QMainWindow::closeEvent(event);
+}
+
+
 void ndManager::setupActions()
 {
     //File Menu
