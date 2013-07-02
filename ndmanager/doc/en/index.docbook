@@ -22,7 +22,7 @@
 		<author>
 			<firstname></firstname>
 			<othername></othername>
-			<surname>MichaÃ«l Zugaro</surname>
+			<surname>Michaël Zugaro</surname>
 			<affiliation>
 			<address><email>michael.zugaro@college-de-france.fr</email></address>
 			</affiliation>
@@ -30,7 +30,7 @@
 	</authorgroup>
 	<copyright>
 		<year>2007-2011</year>
-		<holder>Lynn Hazan, MichaÃ«l Zugaro</holder>
+		<holder>Lynn Hazan, Michaël Zugaro</holder>
 	</copyright>
 	<legalnotice>&FDLNotice;</legalnotice>
 	<date>2011-08-04</date>
@@ -40,7 +40,7 @@
 		&ndmanager; (Neurophysiological Data Manager) is a simple graphical application designed to help neurophysiologists manage their experimental recording parameters (e.g., number of channels and sampling rate of the acquisition system) and process their data (data filtering, spike extraction, PCA, etc.)
 		</para>
 		<para>
-		&ndmanager; was developed by Lynn Hazan in G.&nbsp;Buzs&aacute;ki's lab (CMBN, Rutgers Newark, USA). The &plugins; were developed by MichaÃ«l Zugaro (CNRS-CollÃ¨ge de France, France). If you use Klusters for your analyses, please be kind enough to cite the following article in your publications:
+		&ndmanager; was developed by Lynn Hazan in G.&nbsp;Buzs&aacute;ki's lab (CMBN, Rutgers Newark, USA). The &plugins; were developed by Michaël Zugaro (CNRS-Collège de France, France). If you use Klusters for your analyses, please be kind enough to cite the following article in your publications:
 		</para>
 		<para>
 		<citetitle>
@@ -725,7 +725,7 @@ Initial offset: some acquisition systems record the data with a fixed offset.
 </listitem>
 <listitem>
 <para>
-Voltage range: the total voltage range, e.g. if the system is set to Â±5V, the range is 10V.
+Voltage range: the total voltage range, e.g. if the system is set to ±5V, the range is 10V.
 </para>
 </listitem>
 </itemizedlist>
@@ -1410,7 +1410,7 @@ Program copyright 2004 - 2007 Lynn Hazan <email>lynn&#46;hazan&#64;myrealbox&#46
 <para>
 Contributors:
 <itemizedlist>
-<listitem><para>MichaÃ«l B. Zugaro <email>michael.zugaro@college-de-france</email></para>
+<listitem><para>Michaël B. Zugaro <email>michael.zugaro@college-de-france</email></para>
 </listitem>
 </itemizedlist>
 </para>
