@@ -78,8 +78,10 @@ ndManager::~ndManager(){
 
 void ndManager::closeEvent(QCloseEvent *event)
 {
-    if (!queryClose())
+    if (!queryClose()) {
+        event->ignore();
         return;
+    }
     QMainWindow::closeEvent(event);
 }
 
@@ -144,7 +146,7 @@ void ndManager::setupActions()
     mQuitAction = fileMenu->addAction(tr("Quit"));
     mQuitAction->setIcon(QPixmap(":/shared-icons/window-close"));
     mQuitAction->setShortcut(QKeySequence::Quit);
-    connect(mQuitAction, SIGNAL(triggered()), this, SLOT(slotQuit()));
+    connect(mQuitAction, SIGNAL(triggered()), this, SLOT(close()));
 
 
     QMenu *actionMenu = menuBar()->addMenu(tr("&Actions"));
