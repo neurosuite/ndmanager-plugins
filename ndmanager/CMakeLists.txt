@@ -36,7 +36,7 @@ endif()
 
 
 include(MacroEnsureVersion)
-find_package(LibKlustersShared 1.0.6 REQUIRED)
+find_package(LibKlustersShared 1.0.7 REQUIRED)
 include(CheckCXXCompilerFlag)
 add_definitions(${QT_DEFINITIONS})
 set( QT_USE_XML TRUE)
