@@ -454,7 +454,7 @@ void ParameterView::loadProgram(const QString &programUrl) {
 
     if(programDict.contains(name)){
         const QString message =  tr("The selected script %1 is already loaded. Do you want to reload it?").arg(name);
-        const int answer = QMessageBox::question(this,tr("Script already loaded"),message );
+        const int answer = QMessageBox::question(this,tr("Script already loaded"),message, QMessageBox::Yes|QMessageBox::No );
         if(answer == QMessageBox::No){
             counter--;
             return;
