@@ -173,7 +173,7 @@ bool ProgramPage::saveProgramScript(){
     bool recall = false;
     //find the file corresponding to the program name
     QString name = parameters->getProgramName();
-    QString path = NdManagerUtils::findExecutable(name,QStringList()<<QString::fromLocal8Bit(getenv("PATH")));
+    QString path = NdManagerUtils::findExecutable(name);
     QString message;
     QString title;
     QString scriptUrl;
@@ -275,7 +275,7 @@ void ProgramPage::nameChanged(const QString& name){
         //in expert mode, update the script
         if(expertMode){
             //find the file corresponding to the program name
-            QString path = NdManagerUtils::findExecutable(name,QStringList()<<QString::fromLocal8Bit(getenv("PATH")));
+            QString path = NdManagerUtils::findExecutable(name);
 
             if(!path.isNull()){
                 QFile file(path);
@@ -288,6 +288,7 @@ void ProgramPage::nameChanged(const QString& name){
                     QString firstLine = stream.readLine();
                     const int i = firstLine.indexOf(QRegExp("^#!"));
                     if(i != -1){
+                        scriptView->setPlainText(stream.readAll());
                         file.close();
                         //Setting the content of the KTextEdit (named script) will trigger a scriptModified and therefore set scriptIsModified to true. The initial load of the script
                         //should no be considered as a modification.

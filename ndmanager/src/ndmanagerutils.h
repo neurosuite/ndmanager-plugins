@@ -27,7 +27,7 @@
 #include <QStringList>
 namespace NdManagerUtils
 {
-    QString findExecutable(const QString &executableName, const QStringList &paths);
+QString findExecutable(const QString &executableName, const QStringList &paths = QStringList());
 }
 
 

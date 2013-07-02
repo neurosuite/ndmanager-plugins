@@ -79,7 +79,6 @@ ParameterPage::ParameterPage(bool expertMode,QWidget *parent)
     //install a filter on the groupTable in order to validate the entries
     parameterTable->installEventFilter(this);
 
-
     connect(parameterTable, SIGNAL(currentCellChanged(int,int,int,int)),this, SLOT(propertyModified(int,int)));//does not seem to work (see the hack with the eventfiler)
 }
 
