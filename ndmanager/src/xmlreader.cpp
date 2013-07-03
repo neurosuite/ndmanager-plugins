@@ -54,7 +54,6 @@ bool XmlReader::parseFile(const QString& url)
     QDomElement element = docElement.documentElement();
 
     if (element.tagName() == QLatin1String("parameters")) {
-        qDebug()<<" sssssssssssssssssssssss parameters";
         if( element.hasAttribute(DOC__VERSION)) {
             readVersion = element.attribute(DOC__VERSION);
             qDebug()<<" readVersion"<<readVersion;
@@ -785,6 +784,7 @@ void XmlReader::getFilesInformation(QList<FileInformation>& files)const{
 
 void XmlReader::getProgramsInformation(QList<ProgramInformation>& programs) const{
     QDomNode n = documentNode.firstChild();
+    int parameterId = 0;
     if (!n.isNull()) {
         while(!n.isNull()) {
             QDomElement e = n.toElement(); // try to convert the node to an element.
@@ -792,7 +792,6 @@ void XmlReader::getProgramsInformation(QList<ProgramInformation>& programs) cons
                 QString tag = e.tagName();
                 ProgramInformation programInformation;
                 QMap<int, QStringList > parameters;
-                int parameterId = 0;
                 if (tag == PROGRAMS) {
                     QDomNode unit = e.firstChild(); // try to convert the node to an element.
                     while(!unit.isNull()) {
@@ -809,52 +808,54 @@ void XmlReader::getProgramsInformation(QList<ProgramInformation>& programs) cons
                                     } else if( tag == HELP) {
                                         QString help = p.text();
                                         programInformation.setHelp(help);
-
                                     } else if(tag ==PARAMETERS ){
-                                        QDomNode parametersNode = p.firstChild().firstChild();
+                                        QDomNode param = p.firstChild();
                                         QStringList parameterInfo;
-                                        while(!parametersNode.isNull()) {
+                                        while (!param.isNull()) {
+                                            QDomNode subparam = param.firstChild();
+                                            while (!subparam.isNull()) {
+                                                QDomElement pe = subparam.toElement();
+                                                if(!pe.isNull() ) {
+                                                    QString tag = pe.tagName();
+                                                    if(tag == NAME) {
+                                                        QString name = pe.text();
+                                                        qDebug()<<" name"<<name;
+                                                        parameterInfo.prepend(name);
+                                                    } else if(tag == STATUS ) {
+                                                        QString status = pe.text();
+                                                        qDebug()<<" status"<<status;
+                                                        parameterInfo.append(status);
 
-                                            QDomElement parametersElement = parametersNode.toElement();
-                                            if(!parametersElement.isNull() ) {
-                                                QString tag = parametersElement.tagName();
-                                                if(tag == NAME) {
-                                                    QString name = parametersElement.text();
-                                                    parameterInfo.prepend(name);
-
-                                                } else if(tag == STATUS ) {
-                                                    QString status = parametersElement.text();
-                                                    parameterInfo.append(status);
-
-                                                } else if(tag == VALUE) {
-                                                    QString value = parametersElement.text();
-                                                    if(parameterInfo.size() == 1)
-                                                        parameterInfo.append(value);
-                                                    else{
-                                                        QStringList::iterator it = parameterInfo.begin();
-                                                        parameterInfo.insert(++it,value);
+                                                    } else if(tag == VALUE) {
+                                                        QString value = pe.text();
+                                                        if(parameterInfo.size() == 1)
+                                                            parameterInfo.append(value);
+                                                        else{
+                                                            QStringList::iterator it = parameterInfo.begin();
+                                                            parameterInfo.insert(++it,value);
+                                                        }
                                                     }
-
                                                 }
+                                                subparam = subparam.nextSibling();
                                             }
-                                            parametersNode = parametersNode.nextSibling();
-
+                                            param = param.nextSibling();
                                         }
                                         if(!parameterInfo.isEmpty()) {
+                                            qDebug()<<" NEW ITEM";
                                             parameters.insert(parameterId,parameterInfo);
                                             parameterId++;
+                                            qDebug()<<" parameterId :"<<parameterId;
                                         }
-
                                     }
                                     program= program.nextSibling();
-
                                 }
-                                if(!parameters.isEmpty())
-                                    programInformation.setParameterInformation(parameters);
-                                if(!programInformation.getProgramName().isEmpty())
-                                    programs.append(programInformation);
-
                             }
+                            if(!parameters.isEmpty())
+                                programInformation.setParameterInformation(parameters);
+                            if(!programInformation.getProgramName().isEmpty())
+                                programs.append(programInformation);
+                            qDebug()<<" parameters.count "<<parameters.count();
+
                         }
                         unit = unit.nextSibling();
                     }
