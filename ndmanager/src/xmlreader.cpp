@@ -95,7 +95,7 @@ void XmlReader::getAcquisitionSystemInfo(QMap<QString,double>& acquisitionSystem
                                 acquisitionSystemInfo.insert(SAMPLING_RATE,samplingRate);
                             } else if (tag == VOLTAGE_RANGE) {
                                 double samplingRate = u.text().toDouble();
-                                acquisitionSystemInfo.insert(SAMPLING_RATE,samplingRate);
+                                acquisitionSystemInfo.insert(VOLTAGE_RANGE,samplingRate);
                             } else if(tag == AMPLIFICATION){
                                 int amplification = u.text().toInt();
                                 acquisitionSystemInfo.insert(AMPLIFICATION,amplification);
