@@ -784,20 +784,23 @@ void XmlReader::getFilesInformation(QList<FileInformation>& files)const{
 
 void XmlReader::getProgramsInformation(QList<ProgramInformation>& programs) const{
     QDomNode n = documentNode.firstChild();
-    int parameterId = 0;
+
     if (!n.isNull()) {
         while(!n.isNull()) {
             QDomElement e = n.toElement(); // try to convert the node to an element.
             if(!e.isNull()) {
                 QString tag = e.tagName();
-                ProgramInformation programInformation;
                 QMap<int, QStringList > parameters;
                 if (tag == PROGRAMS) {
                     QDomNode unit = e.firstChild(); // try to convert the node to an element.
+
                     while(!unit.isNull()) {
                         QDomElement u = unit.toElement();
                         if (!u.isNull()) {
+                            ProgramInformation programInformation;
+                            int parameterId = 0;
                             if( u.tagName() == PROGRAM) {
+
                                 QDomNode program = u.firstChild();
                                 while(!program.isNull()) {
                                     QDomElement p = program.toElement();
@@ -819,11 +822,9 @@ void XmlReader::getProgramsInformation(QList<ProgramInformation>& programs) cons
                                                     QString tag = pe.tagName();
                                                     if(tag == NAME) {
                                                         QString name = pe.text();
-                                                        qDebug()<<" name"<<name;
                                                         parameterInfo.prepend(name);
                                                     } else if(tag == STATUS ) {
                                                         QString status = pe.text();
-                                                        qDebug()<<" status"<<status;
                                                         parameterInfo.append(status);
 
                                                     } else if(tag == VALUE) {
@@ -838,13 +839,11 @@ void XmlReader::getProgramsInformation(QList<ProgramInformation>& programs) cons
                                                 }
                                                 subparam = subparam.nextSibling();
                                             }
+                                            if(!parameterInfo.isEmpty()) {
+                                                parameters.insert(parameterId,parameterInfo);
+                                                parameterId++;
+                                            }
                                             param = param.nextSibling();
-                                        }
-                                        if(!parameterInfo.isEmpty()) {
-                                            qDebug()<<" NEW ITEM";
-                                            parameters.insert(parameterId,parameterInfo);
-                                            parameterId++;
-                                            qDebug()<<" parameterId :"<<parameterId;
                                         }
                                     }
                                     program= program.nextSibling();
@@ -854,8 +853,8 @@ void XmlReader::getProgramsInformation(QList<ProgramInformation>& programs) cons
                                 programInformation.setParameterInformation(parameters);
                             if(!programInformation.getProgramName().isEmpty())
                                 programs.append(programInformation);
-                            qDebug()<<" parameters.count "<<parameters.count();
-
+                            parameters.clear();
+                            parameterId=0;
                         }
                         unit = unit.nextSibling();
                     }
