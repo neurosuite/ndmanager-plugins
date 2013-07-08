@@ -212,6 +212,8 @@ private:
    */
     void initStatusBar();
 
+    void readSettings();
+
 private:
 
     /** Doc represents your actual document and is created only once. It keeps

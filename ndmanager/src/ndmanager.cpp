@@ -54,6 +54,7 @@ ndManager::ndManager()
 
     setObjectName("NDManager");
     mMainToolBar = new QToolBar();
+    mMainToolBar->setObjectName("maintoolbar");
 
     addToolBar(mMainToolBar);
 
@@ -68,6 +69,7 @@ ndManager::ndManager()
     slotStateChanged("initState");
 
     slotViewStatusBar();
+    readSettings();
 }
 
 ndManager::~ndManager(){
@@ -82,6 +84,12 @@ void ndManager::closeEvent(QCloseEvent *event)
         event->ignore();
         return;
     }
+    QSettings settings;
+    settings.beginGroup("geometry");
+    settings.setValue("geometry", saveGeometry());
+    settings.setValue("windowState", saveState());
+    settings.endGroup();
+    settings.sync();
     QMainWindow::closeEvent(event);
 }
 
@@ -830,3 +838,13 @@ void ndManager::slotQuit()
         return;
     close();
 }
+
+void ndManager::readSettings()
+{
+    QSettings settings;
+    settings.beginGroup("geometry");
+    restoreGeometry(settings.value("geometry").toByteArray());
+    restoreState(settings.value("windowState").toByteArray());
+    settings.endGroup();
+}
+
