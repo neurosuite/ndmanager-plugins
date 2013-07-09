@@ -24,7 +24,7 @@
 #include <qdir.h>
 #include <qstring.h>
 #include <QApplication>
-
+#include <QDebug>
 //Application specific include files
 #include "ndmanager.h"
 
@@ -36,15 +36,27 @@ int main(int argc, char **argv)
     QApplication::setOrganizationDomain("sourceforge.net");
     QApplication::setApplicationName("ndmanager");
 
-    QStringList args;
-    for (int i = 1; i < argc; ++i) {
-        args.push_back(QString::fromLocal8Bit(argv[i]));
-    }
     QApplication app(argc, argv);
+    QStringList args = QApplication::arguments();
+    QStringList argsList;
+    for (int i = 1, n = args.size(); i < n; ++i) {
+        const QString arg = args.at(i);
+        if (arg == "-h" || arg == "--help" || arg == "-help") {
+            qWarning() << "Usage: " << qPrintable(args.at(0))
+                       << " [file]"
+                       << "\n\n"
+                       << "Arguments:\n"
+                       << "  -h, --help              print this help\n";
+            return 1;
+        }
+        argsList.push_back(QString::fromLocal8Bit(argv[i]));
+    }
+
+
     ndManager* manager = new ndManager();
     manager->show();
-    if(args.count()){
-        QString file = args.at(0);
+    if(argsList.count()){
+        QString file = argsList.at(0);
         if(file.left(1) != "/"){
             QString url;
             url = QDir::currentPath()+ QDir::separator() + file;
