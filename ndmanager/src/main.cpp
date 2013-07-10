@@ -57,7 +57,9 @@ int main(int argc, char **argv)
     manager->show();
     if(argsList.count()){
         QString file = argsList.at(0);
-        if(file.left(1) != "/"){
+        if (file.startsWith(QLatin1String("-")) ) {
+            qWarning() << "it's not a filename :"<<file;
+        } else if(file.left(1) != QLatin1String("/")) {
             QString url;
             url = QDir::currentPath()+ QDir::separator() + file;
             manager->openDocumentFile(url);
