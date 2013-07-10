@@ -25,10 +25,13 @@ public:
 
     QTreeWidgetItem* addPage(const QString &icon, const QString &name, QWidget *page);
     QTreeWidgetItem* addSubPage(QTreeWidgetItem *parentItem, const QString &name, QWidget *page);
+
 Q_SIGNALS:
     void showWidgetPage(QWidget *);
+
 private Q_SLOTS:
     void slotItemClicked(QTreeWidgetItem*,int);
+    void slotSelectionChanged();
 };
 
 #endif // PARAMETERTREE_H

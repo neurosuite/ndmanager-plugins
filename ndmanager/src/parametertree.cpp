@@ -32,6 +32,7 @@ ParameterTree::ParameterTree(QWidget *parent)
 {
     connect(this, SIGNAL(itemClicked(QTreeWidgetItem*,int)), SLOT(slotItemClicked(QTreeWidgetItem*,int)));
     connect(this, SIGNAL(itemPressed(QTreeWidgetItem*,int)), SLOT(slotItemClicked(QTreeWidgetItem*,int)));
+    connect(this, SIGNAL(itemSelectionChanged ()), SLOT(slotSelectionChanged()));
 }
 
 ParameterTree::~ParameterTree()
@@ -57,6 +58,15 @@ QTreeWidgetItem* ParameterTree::addSubPage(QTreeWidgetItem *parentItem, const QS
 
 void ParameterTree::slotItemClicked(QTreeWidgetItem*item,int)
 {
+    if (item) {
+        ParameterTreeItem *parameterItem = static_cast<ParameterTreeItem*>(item);
+        Q_EMIT showWidgetPage(parameterItem->widget());
+    }
+}
+
+void ParameterTree::slotSelectionChanged()
+{
+    QTreeWidgetItem *item = currentItem();
     if (item) {
         ParameterTreeItem *parameterItem = static_cast<ParameterTreeItem*>(item);
         Q_EMIT showWidgetPage(parameterItem->widget());
