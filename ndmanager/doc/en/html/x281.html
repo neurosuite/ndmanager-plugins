@@ -1,0 +1,369 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Example 3 (Neuralynx)</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="The NDManager Handbook"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Getting Started"
+HREF="c54.html"><LINK
+REL="PREVIOUS"
+TITLE="Example 2 (dual-Spike2)"
+HREF="x182.html"><LINK
+REL="NEXT"
+TITLE="More Information"
+HREF="x395.html"></HEAD
+><BODY
+CLASS="sect1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The <SPAN
+CLASS="application"
+>NDManager</SPAN
+> Handbook</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="x182.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 2. Getting Started</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="x395.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="sect1"
+><H1
+CLASS="sect1"
+><A
+NAME="example3"
+>2.3. Example 3 (Neuralynx)</A
+></H1
+><P
+>&#13;		The example data consists of two days of recordings (July 18-19, 2011). On the first day, two sessions were run: baseline in home cage and run on a maze. On the second day, there was a third session: sleep. The recording setup used Neuralynx acquisition software (Neuralynx, Bozeman, USA). Brain signals were sampled at 32552.083 Hz from 2 tetrodes (8 channels), and video was sampled at 25 Hz at 768x576 pixels.
+		</P
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="example3-preparing"
+>2.3.1. Preparing the Data Files</A
+></H2
+><P
+>&#13;			Initially, the data files are located in five different directories:
+			</P
+><DIV
+CLASS="mediaobject"
+><P
+><IMG
+SRC="Images/example3-initial.png"></P
+></DIV
+><P
+>&#13;			Right-click <SPAN
+CLASS="emphasis"
+><I
+CLASS="emphasis"
+>both directories</I
+></SPAN
+> corresponding to the first day, and select <SPAN
+CLASS="guimenu"
+>Action</SPAN
+>-&gt;<SPAN
+CLASS="guimenuitem"
+>Prepare for NDManager</SPAN
+>. This only works with a KDE file manager, but the same result can be achieved from a shell by typing: <PRE
+CLASS="programlisting"
+> ndm_prepare 2011-07-18_10-22-45 2011-07-18_10-45-12</PRE
+> This will start a graphical dialog where you can provide the information required to rename the files:
+			</P
+><DIV
+CLASS="mediaobject"
+><P
+><IMG
+SRC="Images/example3-prepare1.png"></P
+></DIV
+><P
+>&#13;			The <SPAN
+CLASS="guilabel"
+>Recording Setups</SPAN
+> entry is an arbitrary suffix that will be used to separate the original and processed files (see below). Here we choose <KBD
+CLASS="userinput"
+>nlx</KBD
+>. A more advanced use case is presented in <A
+HREF="x182.html"
+>Example 2</A
+>.
+			</P
+><P
+>&#13;			Click <SPAN
+CLASS="guibutton"
+>OK</SPAN
+>. In the next dialog, you can check and confirm the information you provided before the files are actually renamed:
+			</P
+><DIV
+CLASS="mediaobject"
+><P
+><IMG
+SRC="Images/example3-prepare2.png"></P
+></DIV
+><P
+>&#13;			Click <SPAN
+CLASS="guibutton"
+>OK</SPAN
+>. You are now presented with a list that is intended to help you find missing files:
+			</P
+><DIV
+CLASS="mediaobject"
+><P
+><IMG
+SRC="Images/example3-check.png"></P
+></DIV
+><P
+>&#13;			Had a file been missing, e.g. the video for the sleep session, a red cross would have appeared next to its name (see <A
+HREF="x182.html#example2-missing"
+>Example 2</A
+>). Note that <TT
+CLASS="filename"
+>ncs</TT
+> files are counted: a missing file would yield a lower count.
+			</P
+><P
+>&#13;			Prepare the other three directories. Your data files should now look like:
+			</P
+><DIV
+CLASS="mediaobject"
+><P
+><IMG
+SRC="Images/example3-prepared.png"></P
+></DIV
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN340"
+>2.3.2. Creating a Template Parameter File</A
+></H2
+><P
+>&#13;			Open <SPAN
+CLASS="application"
+>NDManager</SPAN
+>. To create a custom template parameter file from a standard template, select <SPAN
+CLASS="guimenu"
+>File</SPAN
+>-&gt;<SPAN
+CLASS="guimenuitem"
+>Use Template...</SPAN
+> and select <TT
+CLASS="filename"
+>Template-2-tetrodes-32552Hz.xml</TT
+> in <TT
+CLASS="filename"
+>/usr/share/ndmanager/templates/</TT
+>. In the <SPAN
+CLASS="guilabel"
+>General</SPAN
+> page, enter the name of the experimenter(s) and a description of the experiment (ignore the date and notes). In the <SPAN
+CLASS="guilabel"
+>Video</SPAN
+> page, enter the sampling rate (25), width (768) and height (576).
+			</P
+><P
+>&#13;			The <SPAN
+CLASS="guilabel"
+>Anatomical Groups</SPAN
+> and <SPAN
+CLASS="guilabel"
+>Spike Groups</SPAN
+> pages are already filled. Each line lists the channels belonging to the corresponding tetrode: <SPAN
+CLASS="guilabel"
+>0 1 2 3</SPAN
+> for line 1, and <SPAN
+CLASS="guilabel"
+>4 5 6 7</SPAN
+> for line 2 (note that channels are numbered from 0). Also indicated are the number of samples per waveform to extract from the wideband data (52 is appropriate for approximately 32 kHz), the location of the peak sample (26, i.e. at the center), and the number of features per channel for the PCA (in practice, a value of 3 is appropriate for a tetrode).
+			</P
+><DIV
+CLASS="mediaobject"
+><P
+><IMG
+SRC="Images/example3-spikegroups.png"></P
+></DIV
+><P
+>&#13;			Now go to the <SPAN
+CLASS="guilabel"
+>Scripts</SPAN
+> page, click <SPAN
+CLASS="guibutton"
+>Load...</SPAN
+> and load all the script descriptions located in <TT
+CLASS="filename"
+>/usr/share/ndmanager/descriptions/</TT
+> (not all of them are relevant here, but you can safely load and ignore them). The scripts are now listed under the <SPAN
+CLASS="guilabel"
+>Scripts</SPAN
+> entry. Select them one by one and set the parameter values to suit your needs. Use the <SPAN
+CLASS="guilabel"
+>Help</SPAN
+> tabs to get information about the meaning of each parameter. In many cases, default values are provided.
+			</P
+><P
+>&#13;			One special (and recurring) parameter deserves special attention: <SPAN
+CLASS="guilabel"
+>suffixes</SPAN
+>. This is the suffix that was provided when the data files were prepared, in <SPAN
+CLASS="guilabel"
+>Recording Setups</SPAN
+>. In this example, the suffix is <KBD
+CLASS="userinput"
+>nlx</KBD
+>. For instance, here is the page for <SPAN
+CLASS="application"
+>ndm_start</SPAN
+>:
+			</P
+><DIV
+CLASS="mediaobject"
+><P
+><IMG
+SRC="Images/example3-suffix.png"></P
+></DIV
+><P
+>&#13;			Save the file as e.g. <TT
+CLASS="filename"
+>2-tetrodes.xml</TT
+> next to your data directories, and quit.
+			</P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="example3-process"
+>2.3.3. Processing the Data</A
+></H2
+><P
+>&#13;			Now open a terminal, cd to the directory where your data is located, and type: <PRE
+CLASS="programlisting"
+> ndm_start 2-tetrodes.xml Example3-20110718 Example3-20110719</PRE
+> and let <SPAN
+CLASS="application"
+>NDManager</SPAN
+> automatically process all your data. Here is a brief extract of the output messages:
+			</P
+><DIV
+CLASS="mediaobject"
+><P
+><IMG
+SRC="Images/example3-processing.png"></P
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="x182.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="x395.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Example 2 (dual-Spike2)</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c54.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>More Information</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

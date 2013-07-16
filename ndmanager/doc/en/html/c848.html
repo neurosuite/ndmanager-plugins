@@ -1,0 +1,210 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Queries</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="The NDManager Handbook"
+HREF="index.html"><LINK
+REL="PREVIOUS"
+TITLE="Data Processing"
+HREF="c831.html"><LINK
+REL="NEXT"
+TITLE="File Formats"
+HREF="c867.html"></HEAD
+><BODY
+CLASS="chapter"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The <SPAN
+CLASS="application"
+>NDManager</SPAN
+> Handbook</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="c831.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="c867.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="chapter"
+><H1
+><A
+NAME="queries"
+></A
+>Chapter 5. Queries</H1
+><P
+>&#13;Queries are a means to look for specific information in several parameter files at once. For instance, you might want to list all the pyramidal cells that you have recorded in area CA1 of the hippocampus during the course of an experiment comprising several dozens of recordings. Here is how you would proceed. Select <SPAN
+CLASS="guimenu"
+>Actions</SPAN
+>-&gt;<SPAN
+CLASS="guimenuitem"
+>Query</SPAN
+>. This will open a small dialog where you can type a query (in standard <ACRONYM
+CLASS="acronym"
+>XQuery</ACRONYM
+> form) and a path, i.e. a starting directory under which all parameter files will be analyzed. In our example, you would type the following query:
+</P
+><PRE
+CLASS="programlisting"
+>&#13;//units/unit[type='PC' and structure='CA1']/*
+</PRE
+><P
+>&#13;assuming this is how you supplied information about units in the <SPAN
+CLASS="guilabel"
+>Units</SPAN
+> page. <SPAN
+CLASS="application"
+>NDManager</SPAN
+> will then search parameter files for all pyramidal cells recorded from CA1, and list them graphically. The output can be saved to disk either in <ACRONYM
+CLASS="acronym"
+>HTML</ACRONYM
+> format (which can then be viewed using any browser), or in plain text format (which can then be used as an input for batch processing scripts).
+</P
+><DIV
+CLASS="note"
+><P
+></P
+><TABLE
+CLASS="note"
+WIDTH="100%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="../images/note.gif"
+HSPACE="5"
+ALT="Note"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>&#13;In order to use this functionality, the program <TT
+CLASS="filename"
+>xpathReader</TT
+> must be installed. This program is available on NDManager's <A
+HREF="http://ndmanager.sourceforge.net"
+TARGET="_top"
+>website</A
+> on Sourceforge.
+</P
+><P
+>&#13;<ACRONYM
+CLASS="acronym"
+>XQuery</ACRONYM
+> is a standard query language for <ACRONYM
+CLASS="acronym"
+>XML</ACRONYM
+> data. Detailed information is available on hundreds of websites around the internet.
+</P
+></TD
+></TR
+></TABLE
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="c831.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="c867.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Data Processing</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>File Formats</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

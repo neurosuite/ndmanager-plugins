@@ -1,0 +1,333 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Example 2 (dual-Spike2)</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="The NDManager Handbook"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Getting Started"
+HREF="c54.html"><LINK
+REL="PREVIOUS"
+TITLE="Getting Started"
+HREF="c54.html"><LINK
+REL="NEXT"
+TITLE="Example 3 (Neuralynx)"
+HREF="x281.html"></HEAD
+><BODY
+CLASS="sect1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The <SPAN
+CLASS="application"
+>NDManager</SPAN
+> Handbook</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="c54.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 2. Getting Started</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="x281.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="sect1"
+><H1
+CLASS="sect1"
+><A
+NAME="example2"
+>2.2. Example 2 (dual-Spike2)</A
+></H1
+><P
+>&#13;		The example data consists of a single day of recording, but here two CED devices were used in parallel in order to record from 16 tetrodes (64 channels). This makes processing a little more difficult, because each device records separate files, which will eventually have to be merged. Also, we would like to resample the brain signals to 20 kHz.
+		</P
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="example2-preparing"
+>2.2.1. Preparing the Data Files</A
+></H2
+><P
+>&#13;			Initially, the data files are located in two different directories:
+			</P
+><DIV
+CLASS="mediaobject"
+><P
+><IMG
+SRC="Images/example2-initial.png"></P
+></DIV
+><P
+>&#13;			Right-click <SPAN
+CLASS="emphasis"
+><I
+CLASS="emphasis"
+>both</I
+></SPAN
+> directories and select <SPAN
+CLASS="guimenu"
+>Action</SPAN
+>-&gt;<SPAN
+CLASS="guimenuitem"
+>Prepare for NDManager</SPAN
+>. Again, the same result can be achieved from a shell by typing: <PRE
+CLASS="programlisting"
+> ndm_prepare "August 13, 2011 (1)" "August 13, 2011 (2)"</PRE
+>.
+			</P
+><DIV
+CLASS="mediaobject"
+><P
+><IMG
+SRC="Images/example2-prepare1.png"></P
+></DIV
+><P
+>&#13;			Because two recording devices were used in parallel, <SPAN
+CLASS="guilabel"
+>Recording Setups</SPAN
+> lists two entries. The actual suffixes are arbitrary, here we choose <KBD
+CLASS="userinput"
+>setup1</KBD
+> and <KBD
+CLASS="userinput"
+>setup2</KBD
+>.
+			</P
+><P
+>&#13;			Click <SPAN
+CLASS="guibutton"
+>OK</SPAN
+>. In the next dialog, check the information you provided and click <SPAN
+CLASS="guibutton"
+>OK</SPAN
+> to rename the files. In the list that is now presented, a red cross indicates that one video file is missing:
+			</P
+><DIV
+CLASS="mediaobject"
+><P
+><IMG
+SRC="Images/example2-check.png"></P
+></DIV
+><P
+>&#13;			This helps you anticipate possible problems before you start a time-consuming processing job (had you noticed that this file was missing?)
+			</P
+><P
+>&#13;			Your data files should now look like:
+			</P
+><DIV
+CLASS="mediaobject"
+><P
+><IMG
+SRC="Images/example2-prepared.png"></P
+></DIV
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="example2-parameters"
+>2.2.2. Creating a Template Parameter File</A
+></H2
+><P
+>&#13;			Creating the template parameter file is similar to <A
+HREF="c54.html#example1-parameters"
+>Example 1</A
+> (you can start from the standard template <TT
+CLASS="filename"
+>Template-16-tetrodes-20000Hz.xml</TT
+>). The main difference is that the data were recorded using two devices in parallel, resulting in separate files for the first and last 32 channels. <SPAN
+CLASS="application"
+>NDManager</SPAN
+> will thus have to merge them together. This is done by <SPAN
+CLASS="application"
+>ndm_mergedat</SPAN
+>:
+			</P
+><DIV
+CLASS="mediaobject"
+><P
+><IMG
+SRC="Images/example2-suffixes2.png"></P
+></DIV
+><P
+>&#13;			Note that as explained above, we now have two suffixes, <KBD
+CLASS="userinput"
+>setup1</KBD
+> and <KBD
+CLASS="userinput"
+>setup2</KBD
+>. This affects other scripts as well. For instance, here is the page for <SPAN
+CLASS="application"
+>ndm_start</SPAN
+>:
+			</P
+><DIV
+CLASS="mediaobject"
+><P
+><IMG
+SRC="Images/example2-suffixes1.png"></P
+></DIV
+><P
+>&#13;			Another difference worth mentioning is that in this example the final, processed data will have properties different from the original files. In particular, it will contain signals from 64 channels sampled at 20 kHz, whereas each input file had only 32 channels sampled at 19531.25 Hz. The <SPAN
+CLASS="guilabel"
+>Acquisition System</SPAN
+> page should reflect the <SPAN
+CLASS="emphasis"
+><I
+CLASS="emphasis"
+>processed</I
+></SPAN
+> data, i.e. it describes the <SPAN
+CLASS="emphasis"
+><I
+CLASS="emphasis"
+>virtual</I
+></SPAN
+> system that would have been used to yield the data:
+			</P
+><DIV
+CLASS="mediaobject"
+><P
+><IMG
+SRC="Images/example2-acquisition.png"></P
+></DIV
+><P
+>&#13;			Save the file as e.g. <TT
+CLASS="filename"
+>16-tetrodes.xml</TT
+> next to your data directories, and quit.
+			</P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="example2-process"
+>2.2.3. Processing the Data</A
+></H2
+><P
+>&#13;			Now open a terminal, cd to the directory where your data is located, and type: <PRE
+CLASS="programlisting"
+> ndm_start 16-tetrodes.xml Example2-20110813</PRE
+> and let <SPAN
+CLASS="application"
+>NDManager</SPAN
+> automatically process all your data. Here is a brief extract of the output messages:
+			</P
+><DIV
+CLASS="mediaobject"
+><P
+><IMG
+SRC="Images/example2-processing.png"></P
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="c54.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="x281.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Getting Started</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c54.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Example 3 (Neuralynx)</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

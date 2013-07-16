@@ -1,0 +1,421 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>NeuroScope Page</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="The NDManager Handbook"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Creation and Modification of Parameter Files"
+HREF="c456.html"><LINK
+REL="PREVIOUS"
+TITLE="Units Page"
+HREF="x642.html"><LINK
+REL="NEXT"
+TITLE="Scripts Page"
+HREF="x771.html"></HEAD
+><BODY
+CLASS="sect1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The <SPAN
+CLASS="application"
+>NDManager</SPAN
+> Handbook</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="x642.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 3. Creation and Modification of Parameter Files</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="x771.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="sect1"
+><H1
+CLASS="sect1"
+><A
+NAME="neuroscope"
+>3.10. NeuroScope Page</A
+></H1
+><P
+>&#13;<DIV
+CLASS="mediaobject"
+><P
+><IMG
+SRC="Images/neuroscope.png"></P
+></DIV
+>
+</P
+><P
+>This page allows you to specify the information needed by <A
+HREF="http://neuroscope.sourceforge.net"
+TARGET="_top"
+>NeuroScope</A
+>. This information is divided into five sections:
+<P
+></P
+><UL
+><LI
+><P
+>&#13;<SPAN
+CLASS="guilabel"
+>Miscellaneous</SPAN
+>
+</P
+></LI
+><LI
+><P
+>&#13;<SPAN
+CLASS="guilabel"
+>Video</SPAN
+>
+</P
+></LI
+><LI
+><P
+>&#13;<SPAN
+CLASS="guilabel"
+>Clusters</SPAN
+>
+</P
+></LI
+><LI
+><P
+>&#13;<SPAN
+CLASS="guilabel"
+>Channel Colors</SPAN
+>
+</P
+></LI
+><LI
+><P
+>&#13;<SPAN
+CLASS="guilabel"
+>Channel Offsets</SPAN
+>
+</P
+></LI
+></UL
+>
+</P
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN705"
+>3.10.1. Miscellaneous</A
+></H2
+><P
+>&#13;In this page, you can specify the screen gain used to display the traces. In <A
+HREF="http://neuroscope.sourceforge.net"
+TARGET="_top"
+>NeuroScope</A
+> amplitudes are described as follows. By convention, 'x1' corresponds to the current screen gain. Thus, assuming for instance a screen gain of 1 mV/cm, an amplitude of 'x0.38' corresponds to 0.38 mV/cm.
+</P
+><P
+>&#13;The <SPAN
+CLASS="guilabel"
+>Background image</SPAN
+> field allows you to specify an image to be used as a background for the traces. You can use any image format supported by Qt: JPEG, PNG, BMP, XBM, XPM, PNM, MNG and GIF. See your Qt documentation for details (e.g. the QImageIO class description).
+</P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN711"
+>3.10.2. Video</A
+></H2
+><P
+>&#13;In certain behavioral experiments, e.g. when studying place cells or head direction cells, it is necessary to record brain signals as well as the ongoing position and orientation of the animal. <A
+HREF="http://neuroscope.sourceforge.net"
+TARGET="_top"
+>NeuroScope</A
+> has the ability to simultaneously display brain signals and the successive positions of the animal during the same episode. <A
+HREF="http://neuroscope.sourceforge.net"
+TARGET="_top"
+>NeuroScope</A
+> uses the positions extracted from the video recording and stored in a position file.
+</P
+><P
+>&#13;By default, the positions are drawn against a black background, but an overview of the behavioral maze can also be used as a background image. This image can be flipped and rotated. In addition, an outline of the trajectory of the animal throughout the experiment can be drawn over the background (be it a black background or an image). All this is customizable through the following fields:
+</P
+><P
+></P
+><UL
+><LI
+><P
+>&#13;<SPAN
+CLASS="guilabel"
+>Sampling rate (Hz)</SPAN
+>. Default sampling rate of the position file.
+</P
+></LI
+><LI
+><P
+>&#13;<SPAN
+CLASS="guilabel"
+>Width (pixels)</SPAN
+>. Default horizontal resolution of the video camera.
+</P
+></LI
+><LI
+><P
+>&#13;<SPAN
+CLASS="guilabel"
+>Height (pixels)</SPAN
+>. Default vertical resolution of the video camera.
+</P
+></LI
+><LI
+><P
+>&#13;<SPAN
+CLASS="guilabel"
+>Background image</SPAN
+>. Background image to draw the positions against. You can use any image format supported by Qt: JPEG, PNG, BMP, XBM, XPM, PNM, MNG and GIF. See your Qt documentation for details (e.g. the QImageIO class description).
+</P
+></LI
+><LI
+><P
+>&#13;<SPAN
+CLASS="guilabel"
+>Draw trajectory</SPAN
+>. Activate this to draw over the background (be it a black background or an image) an outline of the trajectory of the animal throughout the experiment.
+</P
+></LI
+><LI
+><P
+>&#13;<SPAN
+CLASS="guilabel"
+>Rotate CCW (degrees)</SPAN
+>. This allows you to rotate (counterclockwise) both the position data and the background image.
+</P
+></LI
+><LI
+><P
+>&#13;<SPAN
+CLASS="guilabel"
+>flip</SPAN
+>. This allows you to flip both the position data and the background image.
+</P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN739"
+>3.10.3. Clusters</A
+></H2
+><P
+>&#13;<A
+HREF="http://neuroscope.sourceforge.net"
+TARGET="_top"
+>NeuroScope</A
+> allows you to browse identified unit activity together with local field potentials. In order to be able to do this, <A
+HREF="http://neuroscope.sourceforge.net"
+TARGET="_top"
+>NeuroScope</A
+> needs the information provided in this page together with the timestamp and the cluster Id of each spike (which are stored in a cluster file and a spike time file respectively).
+</P
+><P
+>&#13;The <SPAN
+CLASS="guilabel"
+>Number of samples per waveform</SPAN
+> and the <SPAN
+CLASS="guilabel"
+>index of the peak sample</SPAN
+> allows <A
+HREF="http://neuroscope.sourceforge.net"
+TARGET="_top"
+>NeuroScope</A
+> to highlight the spike waveforms on the traces.
+</P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN748"
+>3.10.4. Channel Colors</A
+></H2
+><P
+>&#13;This tab is available only in the <SPAN
+CLASS="guilabel"
+>Expert Mode</SPAN
+>.
+</P
+><P
+>&#13;In order to make individual channels as well as channel groups more readily visible, channels can be colored using three different schemes:
+</P
+><P
+></P
+><UL
+><LI
+><P
+>&#13;By Anatomical Group: A color can be assigned to all the channels in a given anatomical group, this color is referred to as the Anatomical Group color for the given channels.
+</P
+></LI
+><LI
+><P
+>&#13;By Spike Group: Similarly, a color can be assigned to all the channels in a given spike group, this color is referred to as the Spike Group colors for the given channels.
+</P
+></LI
+><LI
+><P
+>&#13;By Channel: Additionally, an individual channel can also be assigned a color.
+</P
+></LI
+></UL
+><P
+>&#13;To change a color, you can either manually type in the html color code or do it graphically. Middle-click on the cell containing the color to modify, this brings up the <SPAN
+CLASS="guilabel"
+>Color Chooser</SPAN
+>, as soon as you validate your new choice, the cell value is updated.
+</P
+><P
+>&#13;Usually the colors are set graphically with <A
+HREF="http://neuroscope.sourceforge.net"
+TARGET="_top"
+>NeuroScope</A
+>, this is why this page is not part of the default mode.
+</P
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="AEN764"
+>3.10.5. Channel Offsets</A
+></H2
+><P
+>&#13;This tab is available only in the <SPAN
+CLASS="guilabel"
+>Expert Mode</SPAN
+>.
+</P
+><P
+>&#13;When the physical organization of your electrodes is more complex than vertical arrays (e.g. epidural electrodes covering the surface of the brain), you might want to store  your electrode layout. This can be done by redefining the default offsets. The table contained in this page lists the default offsets.
+</P
+><P
+>&#13;Usually the default offsets are set graphically with <A
+HREF="http://neuroscope.sourceforge.net"
+TARGET="_top"
+>NeuroScope</A
+>, this is why this page is not part of the default mode.
+</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="x642.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="x771.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Units Page</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c456.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Scripts Page</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

@@ -1,0 +1,211 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Files Page</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="The NDManager Handbook"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Creation and Modification of Parameter Files"
+HREF="c456.html"><LINK
+REL="PREVIOUS"
+TITLE="Local Field Potential Page"
+HREF="x551.html"><LINK
+REL="NEXT"
+TITLE="Anatomical Groups Page"
+HREF="x592.html"></HEAD
+><BODY
+CLASS="sect1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The <SPAN
+CLASS="application"
+>NDManager</SPAN
+> Handbook</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="x551.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 3. Creation and Modification of Parameter Files</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="x592.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="sect1"
+><H1
+CLASS="sect1"
+><A
+NAME="files"
+>3.6. Files Page</A
+></H1
+><P
+>&#13;<DIV
+CLASS="mediaobject"
+><P
+><IMG
+SRC="Images/files.png"></P
+></DIV
+>
+</P
+><P
+>&#13;This page is available only in the <SPAN
+CLASS="guilabel"
+>Expert Mode</SPAN
+>.
+</P
+><P
+>The recorded data are stored in a file with the generic name <TT
+CLASS="filename"
+>base.dat</TT
+>. The sampling rate and the number of channels used are set in the <A
+HREF="x521.html#acquisitionSystem"
+>Acquisition System  Page</A
+>. The local field potentials are stored in a file with the generic name <TT
+CLASS="filename"
+>base.eeg</TT
+>, and more generally the file name is <TT
+CLASS="filename"
+>base.ext</TT
+> for any other type of filtered data (where <TT
+CLASS="filename"
+>ext</TT
+> is an extension describing the type of data stored in the file).
+</P
+><P
+>&#13;In this framework, each type of filtered data is defined by its file extension, its sampling rate and the number of channels it uses. Each channel, can be a one to one mapping with a channel in the original recording or a one to many mapping. This page allows you to describe the different filtered data related to the recorded data.
+</P
+><P
+>&#13;To add a new type of filtered data, press the <SPAN
+CLASS="guibutton"
+>Add File</SPAN
+> button; a new tab will be created where you will be able to set the information. The new tab caption will be set to the extension value provided in the <SPAN
+CLASS="guilabel"
+>Extension</SPAN
+> lineedit. To remove a type of filtered data, simply press the <SPAN
+CLASS="guibutton"
+>Remove File</SPAN
+> button.
+</P
+><P
+>&#13;New type of filtered data with a one to one channel mapping with the original recording can be created by <A
+HREF="http://neuroscope.sourceforge.net"
+TARGET="_top"
+>NeuroScope</A
+> (this is why this page is not part of the default mode). Simply open with NeuroScope a file with the new type of filtered data. You will be prompted for the corresponding sampling rate and the association file extension - sampling rate will be stored in the parameter file.
+</P
+><P
+>&#13;To add a channel mapping, press the <SPAN
+CLASS="guibutton"
+>Add</SPAN
+> button; in the newly created cell type in the channel ids separated by a whitespace. To remove channel mappings, select the corresponding rows and press the <SPAN
+CLASS="guibutton"
+>Remove</SPAN
+> button. The mapped channel ids will start at 0 for the first row to n-1 for the nth row.
+</P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="x551.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="x592.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Local Field Potential Page</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c456.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Anatomical Groups Page</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

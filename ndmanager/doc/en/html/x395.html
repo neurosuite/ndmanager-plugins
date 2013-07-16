@@ -1,0 +1,276 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>More Information</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="The NDManager Handbook"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Getting Started"
+HREF="c54.html"><LINK
+REL="PREVIOUS"
+TITLE="Example 3 (Neuralynx)"
+HREF="x281.html"><LINK
+REL="NEXT"
+TITLE="Creation and Modification of Parameter Files"
+HREF="c456.html"></HEAD
+><BODY
+CLASS="sect1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The <SPAN
+CLASS="application"
+>NDManager</SPAN
+> Handbook</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="x281.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 2. Getting Started</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="c456.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="sect1"
+><H1
+CLASS="sect1"
+><A
+NAME="more"
+>2.4. More Information</A
+></H1
+><P
+>&#13;		</P
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="more-acquisition-video"
+>2.4.1. Acquisition System and Video</A
+></H2
+><P
+>&#13;			Depending on the steps required by your specific application, processed data may have properties different from the original files. For instance, it may consist of a different number of channels, either because signals from more than a single recording device were merged (see <A
+HREF="x182.html"
+>Example 2</A
+>) or because one or more defective channels were discarded (using <SPAN
+CLASS="application"
+>ndm_extractchannels</SPAN
+>). The sampling rate may also have changed (using <SPAN
+CLASS="application"
+>ndm_resample</SPAN
+>). Even the video frame rate can be altered (by the LED tracking program <SPAN
+CLASS="application"
+>spots2pos</SPAN
+>, a <SPAN
+CLASS="application"
+>Matlab</SPAN
+> function included in the <SPAN
+CLASS="application"
+>NDManager Plugins</SPAN
+>).
+			</P
+><P
+>&#13;			The <SPAN
+CLASS="guilabel"
+>Acquisition System</SPAN
+> page should reflect the <SPAN
+CLASS="emphasis"
+><I
+CLASS="emphasis"
+>processed</I
+></SPAN
+> data, i.e. it must describe the <SPAN
+CLASS="emphasis"
+><I
+CLASS="emphasis"
+>virtual</I
+></SPAN
+> system that would have been used to yield the data. Consider this example: data was recorded using two systems in parallel, each sampling 32 channels at 19531.25 Hz, and you wish to merge the two and resample at 20 kHz. The <SPAN
+CLASS="guilabel"
+>Acquisition System</SPAN
+> page should look like:
+			</P
+><DIV
+CLASS="mediaobject"
+><P
+><IMG
+SRC="Images/example2-acquisition.png"></P
+></DIV
+><P
+>&#13;			Similarly, if the video camera sampled frames at 25 Hz but tracking was resampled at 39.0625 Hz, then the <SPAN
+CLASS="guilabel"
+>Video</SPAN
+> page should look like:
+			</P
+><DIV
+CLASS="mediaobject"
+><P
+><IMG
+SRC="Images/more-video.png"></P
+></DIV
+></DIV
+><DIV
+CLASS="sect2"
+><H2
+CLASS="sect2"
+><A
+NAME="more-neuroscope"
+>2.4.2. Editing a Parameter File with NeuroScope</A
+></H2
+><P
+>&#13;			Parameter files can be created and graphically edited using <A
+HREF="http://neuroscope.sourceforge.net"
+TARGET="_top"
+>NeuroScope</A
+>. If you open a wideband data file (<TT
+CLASS="filename"
+>.dat</TT
+> file) but do not have a corresponding parameter file (<TT
+CLASS="filename"
+>.xml</TT
+> file), <SPAN
+CLASS="application"
+>NeuroScope</SPAN
+> will present a dialog to gather minimum information and create one for you.
+			</P
+><DIV
+CLASS="mediaobject"
+><P
+><IMG
+SRC="Images/more-neuroscope-create.png"></P
+></DIV
+><P
+>&#13;			Also, if none of the standard template files suits your needs and you must create a template parameter file from scratch, it is a tedious process to manually create anatomical groups and spike groups (imagine manually entering all values shown in <A
+HREF="c54.html#example1-parameters"
+>Example 1</A
+>). An easier way to achieve this is to create and edit the groups using the palettes in <SPAN
+CLASS="application"
+>NeuroScope</SPAN
+>.
+			</P
+><DIV
+CLASS="mediaobject"
+><P
+><IMG
+SRC="Images/more-neuroscope-edit.png"></P
+></DIV
+><P
+>&#13;			Channel colors will also be saved in the parameter file. This can be used to easily improve an existing parameter file in order to create a template parameter file for subsequent batch processing.
+			</P
+><P
+>&#13;			The drawback is that obviously this requires an existing wideband data file (<TT
+CLASS="filename"
+>.dat</TT
+> file), which will typically not be available until the data was processed. One solution to this chicken-and-egg problem is to process the data for one day using a hand-made template parameter file, then open the wideband data file with <SPAN
+CLASS="application"
+>NeuroScope</SPAN
+> and edit the groups, then copy the parameter file as a new template.
+			</P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="x281.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="c456.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Example 3 (Neuralynx)</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c54.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Creation and Modification of Parameter Files</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

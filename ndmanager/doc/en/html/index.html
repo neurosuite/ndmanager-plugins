@@ -1,0 +1,491 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>The NDManager Handbook</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="NEXT"
+TITLE="Introduction"
+HREF="c38.html"><META
+NAME="KEYWORD"
+CONTENT="KDE"><META
+NAME="KEYWORD"
+CONTENT="NDManager"><META
+NAME="KEYWORD"
+CONTENT="XML"><META
+NAME="KEYWORD"
+CONTENT="Manager"></HEAD
+><BODY
+CLASS="book"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="BOOK"
+><A
+NAME="AEN1"
+></A
+><DIV
+CLASS="TITLEPAGE"
+><H1
+CLASS="title"
+><A
+NAME="AEN2"
+>The <SPAN
+CLASS="application"
+>NDManager</SPAN
+> Handbook</A
+></H1
+><H3
+CLASS="author"
+><A
+NAME="AEN6"
+></A
+>  Lynn Hazan</H3
+><H3
+CLASS="author"
+><A
+NAME="AEN10"
+></A
+>  Michaël Zugaro</H3
+><DIV
+CLASS="affiliation"
+><DIV
+CLASS="address"
+><P
+CLASS="address"
+><CODE
+CLASS="email"
+>&#60;<A
+HREF="mailto:michael.zugaro@college-de-france.fr"
+>michael.zugaro@college-de-france.fr</A
+>&#62;</CODE
+></P
+></DIV
+></DIV
+><P
+CLASS="copyright"
+>Copyright &copy; 2007-2011 Lynn Hazan, Michaël Zugaro</P
+><DIV
+><DIV
+CLASS="abstract"
+><P
+></P
+><A
+NAME="AEN25"
+></A
+><P
+>&#13;		<SPAN
+CLASS="application"
+>NDManager</SPAN
+> (Neurophysiological Data Manager) is a simple graphical application designed to help neurophysiologists manage their experimental recording parameters (e.g., number of channels and sampling rate of the acquisition system) and process their data (data filtering, spike extraction, PCA, etc.)
+		</P
+><P
+>&#13;		<SPAN
+CLASS="application"
+>NDManager</SPAN
+> was developed by Lynn Hazan in G. Buzsáki's lab (CMBN, Rutgers Newark, USA). The <SPAN
+CLASS="application"
+>NDManager Plugins</SPAN
+> were developed by Michaël Zugaro (CNRS-Collège de France, France). If you use Klusters for your analyses, please be kind enough to cite the following article in your publications:
+		</P
+><P
+>&#13;		<I
+CLASS="citetitle"
+>&#13;		L. Hazan, M. Zugaro, G. Buzsáki (2006). Klusters, NeuroScope, NDManager: a Free Software Suite for Neurophysiological Data Processing and Visualization, J. Neurosci. Methods 155:207-216.
+		</I
+>
+		</P
+><P
+></P
+></DIV
+></DIV
+><DIV
+CLASS="legalnotice"
+><P
+></P
+><A
+NAME="AEN20"
+></A
+><P
+>Permission is granted to copy, distribute and/or modify this
+document under the terms of the GNU Free Documentation License,
+Version 1.1 or any later version published by the Free Software
+Foundation; with no Invariant Sections, with no Front-Cover Texts, and
+with no Back-Cover Texts.  A copy of the license is included in <A
+HREF="c1049.html#gnu-fdl"
+>the section entitled "GNU Free Documentation License"</A
+>.</P
+><P
+></P
+></DIV
+><HR></DIV
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+>1. <A
+HREF="c38.html"
+>Introduction</A
+></DT
+><DT
+>2. <A
+HREF="c54.html"
+>Getting Started</A
+></DT
+><DD
+><DL
+><DT
+>2.1. <A
+HREF="c54.html#example1"
+>Example 1 (Spike2)</A
+></DT
+><DD
+><DL
+><DT
+>2.1.1. <A
+HREF="c54.html#example1-preparing"
+>Preparing the Data Files</A
+></DT
+><DT
+>2.1.2. <A
+HREF="c54.html#example1-parameters"
+>Creating a Template Parameter File</A
+></DT
+><DT
+>2.1.3. <A
+HREF="c54.html#example1-process"
+>Processing the Data</A
+></DT
+></DL
+></DD
+><DT
+>2.2. <A
+HREF="x182.html"
+>Example 2 (dual-Spike2)</A
+></DT
+><DD
+><DL
+><DT
+>2.2.1. <A
+HREF="x182.html#example2-preparing"
+>Preparing the Data Files</A
+></DT
+><DT
+>2.2.2. <A
+HREF="x182.html#example2-parameters"
+>Creating a Template Parameter File</A
+></DT
+><DT
+>2.2.3. <A
+HREF="x182.html#example2-process"
+>Processing the Data</A
+></DT
+></DL
+></DD
+><DT
+>2.3. <A
+HREF="x281.html"
+>Example 3 (Neuralynx)</A
+></DT
+><DD
+><DL
+><DT
+>2.3.1. <A
+HREF="x281.html#example3-preparing"
+>Preparing the Data Files</A
+></DT
+><DT
+>2.3.2. <A
+HREF="x281.html#AEN340"
+>Creating a Template Parameter File</A
+></DT
+><DT
+>2.3.3. <A
+HREF="x281.html#example3-process"
+>Processing the Data</A
+></DT
+></DL
+></DD
+><DT
+>2.4. <A
+HREF="x395.html"
+>More Information</A
+></DT
+><DD
+><DL
+><DT
+>2.4.1. <A
+HREF="x395.html#more-acquisition-video"
+>Acquisition System and Video</A
+></DT
+><DT
+>2.4.2. <A
+HREF="x395.html#more-neuroscope"
+>Editing a Parameter File with NeuroScope</A
+></DT
+></DL
+></DD
+></DL
+></DD
+><DT
+>3. <A
+HREF="c456.html"
+>Creation and Modification of Parameter Files</A
+></DT
+><DD
+><DL
+><DT
+>3.1. <A
+HREF="c456.html#starting"
+>Starting a session</A
+></DT
+><DD
+><DL
+><DT
+>3.1.1. <A
+HREF="c456.html#creating"
+>Creating a Parameter File</A
+></DT
+><DT
+>3.1.2. <A
+HREF="c456.html#modifying"
+>Modifying a Parameter File</A
+></DT
+></DL
+></DD
+><DT
+>3.2. <A
+HREF="x505.html"
+>General Page</A
+></DT
+><DT
+>3.3. <A
+HREF="x521.html"
+>Acquisition System Page</A
+></DT
+><DT
+>3.4. <A
+HREF="x539.html"
+>Video Page</A
+></DT
+><DT
+>3.5. <A
+HREF="x551.html"
+>Local Field Potential Page</A
+></DT
+><DT
+>3.6. <A
+HREF="x563.html"
+>Files Page</A
+></DT
+><DT
+>3.7. <A
+HREF="x592.html"
+>Anatomical Groups Page</A
+></DT
+><DT
+>3.8. <A
+HREF="x614.html"
+>Spike Groups Page</A
+></DT
+><DT
+>3.9. <A
+HREF="x642.html"
+>Units Page</A
+></DT
+><DT
+>3.10. <A
+HREF="x676.html"
+>NeuroScope Page</A
+></DT
+><DD
+><DL
+><DT
+>3.10.1. <A
+HREF="x676.html#AEN705"
+>Miscellaneous</A
+></DT
+><DT
+>3.10.2. <A
+HREF="x676.html#AEN711"
+>Video</A
+></DT
+><DT
+>3.10.3. <A
+HREF="x676.html#AEN739"
+>Clusters</A
+></DT
+><DT
+>3.10.4. <A
+HREF="x676.html#AEN748"
+>Channel Colors</A
+></DT
+><DT
+>3.10.5. <A
+HREF="x676.html#AEN764"
+>Channel Offsets</A
+></DT
+></DL
+></DD
+><DT
+>3.11. <A
+HREF="x771.html"
+>Scripts Page</A
+></DT
+></DL
+></DD
+><DT
+>4. <A
+HREF="c831.html"
+>Data Processing</A
+></DT
+><DT
+>5. <A
+HREF="c848.html"
+>Queries</A
+></DT
+><DT
+>6. <A
+HREF="c867.html"
+>File Formats</A
+></DT
+><DD
+><DL
+><DT
+>6.1. <A
+HREF="c867.html#parameter_files"
+>Parameter Files</A
+></DT
+><DT
+>6.2. <A
+HREF="x877.html"
+>Script Description Files</A
+></DT
+></DL
+></DD
+><DT
+>7. <A
+HREF="c885.html"
+>Menu Entries</A
+></DT
+><DD
+><DL
+><DT
+>7.1. <A
+HREF="c885.html#menu-file"
+>The File Menu</A
+></DT
+><DT
+>7.2. <A
+HREF="x960.html"
+>The Actions Menu</A
+></DT
+><DT
+>7.3. <A
+HREF="x979.html"
+>The Settings Menu</A
+></DT
+><DT
+>7.4. <A
+HREF="x1006.html"
+>The Help Menu</A
+></DT
+></DL
+></DD
+><DT
+>8. <A
+HREF="c1049.html"
+>Credits and License</A
+></DT
+><DT
+>A. <A
+HREF="a1066.html"
+>Installation</A
+></DT
+><DD
+><DL
+><DT
+>A.1. <A
+HREF="a1066.html#getting-ndmanager"
+>How to obtain <SPAN
+CLASS="application"
+>NDManager</SPAN
+></A
+></DT
+><DT
+>A.2. <A
+HREF="x1074.html"
+>Requirements</A
+></DT
+><DT
+>A.3. <A
+HREF="x1081.html"
+>Compilation and Installation</A
+></DT
+></DL
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="c38.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Introduction</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

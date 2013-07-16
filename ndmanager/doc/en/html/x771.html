@@ -1,0 +1,338 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Scripts Page</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="The NDManager Handbook"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Creation and Modification of Parameter Files"
+HREF="c456.html"><LINK
+REL="PREVIOUS"
+TITLE="NeuroScope Page"
+HREF="x676.html"><LINK
+REL="NEXT"
+TITLE="Data Processing"
+HREF="c831.html"></HEAD
+><BODY
+CLASS="sect1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The <SPAN
+CLASS="application"
+>NDManager</SPAN
+> Handbook</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="x676.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 3. Creation and Modification of Parameter Files</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="c831.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="sect1"
+><H1
+CLASS="sect1"
+><A
+NAME="scripts"
+>3.11. Scripts Page</A
+></H1
+><P
+>&#13;<DIV
+CLASS="mediaobject"
+><P
+><IMG
+SRC="Images/programs.png"></P
+></DIV
+>
+</P
+><P
+>In the framework <SPAN
+CLASS="application"
+>NDManager</SPAN
+> is part of the data processing is accomplished by a set of programs launch by scripts (e.g a program would convert data from the recording system format to the format used by <A
+HREF="http://neuroscope.sourceforge.net"
+TARGET="_top"
+>NeuroScope</A
+>). To centralize all the information for a given experiment, the parameter file contains all the parameters used to view/process/analyze your data, this includes the parameters needed by the scripts.
+</P
+><P
+>&#13;Each script is described by its name, the list of its parameters and their default values, and a small help text (describing the goals of the script and explaining its parameters).
+</P
+><P
+>&#13;How does <SPAN
+CLASS="application"
+>NDManager</SPAN
+> get its information about the scripts, in order to present a nice graphical interface? The information for each script can be stored in small (xml) description file and loaded into <SPAN
+CLASS="application"
+>NDManager</SPAN
+>. Some programs and their corresponding scripts are provided as part of the framework. To load a script description, go to the <SPAN
+CLASS="guilabel"
+>Scripts Page</SPAN
+> and press the <SPAN
+CLASS="guibutton"
+>Load</SPAN
+> button and navigate to the desire file. You can load several files at a time using Shift or Control while selecting the files in the dialog (the order of the scripts in <SPAN
+CLASS="application"
+>NDManager</SPAN
+> does not matter). Upon loading, a new page with a set of three tabs (<SPAN
+CLASS="guilabel"
+>Parameters</SPAN
+>, <SPAN
+CLASS="guilabel"
+>Help</SPAN
+> and <SPAN
+CLASS="guilabel"
+>Script</SPAN
+>) containing the information corresponding to the script will be created.
+</P
+><P
+>&#13;The framework provides some programs and their corresponding scripts, but you will certainly need to do specific processing on your data. You will therefore need to write your own programs and scripts. The scripts should read the parameters from the xml parameter file and then call the programs.
+</P
+><DIV
+CLASS="note"
+><P
+></P
+><TABLE
+CLASS="note"
+WIDTH="100%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="../images/note.gif"
+HSPACE="5"
+ALT="Note"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>&#13;Try to keep the programs and scripts modular (one task per script/program) and separate (independent).
+</P
+></TD
+></TR
+></TABLE
+></DIV
+><P
+>&#13;Once you have written your script and program, you will need to create a new script description. This is very easy to do with NDManager. First, be sure to be in <SPAN
+CLASS="guilabel"
+>Expert Mode</SPAN
+> (select <SPAN
+CLASS="guimenu"
+>Settings</SPAN
+>-&gt;<SPAN
+CLASS="guimenuitem"
+>Expert Mode</SPAN
+>) and go to the <SPAN
+CLASS="guilabel"
+>Scripts Page</SPAN
+> and press the <SPAN
+CLASS="guibutton"
+>Add</SPAN
+> button; a new page with a set of three tabs (<SPAN
+CLASS="guilabel"
+>Parameters</SPAN
+>, <SPAN
+CLASS="guilabel"
+>Help</SPAN
+> and <SPAN
+CLASS="guilabel"
+>Script</SPAN
+>) will be created. Use this page to describe your new script.
+</P
+><P
+>&#13;The <SPAN
+CLASS="guilabel"
+>Parameters</SPAN
+> tab allows you to specify the parameters used by the script. To add a parameter, press the <SPAN
+CLASS="guibutton"
+>Add</SPAN
+> button; and, in the newly created row provide the parameter name, default value and status. To remove parameters, select the corresponding rows and press the <SPAN
+CLASS="guibutton"
+>Remove</SPAN
+> button.
+</P
+><P
+>&#13;The <SPAN
+CLASS="guilabel"
+>Help</SPAN
+> tab contains a simple text editor which allows you to describe the aim of the script and provide information about the parameters. This description is saved in the parameter file.
+</P
+><P
+>&#13;The <SPAN
+CLASS="guilabel"
+>Script</SPAN
+> tab contains an advanced text editor with syntax highlighting (it is a Kate Part) which allows you to easily edit your script (if the script is in
+your path, it will be automatically loaded when you specify its name in the Parameters tab). To save the modification done to your scrip, press the <SPAN
+CLASS="guibutton"
+>Save Script as...</SPAN
+> button.
+</P
+><DIV
+CLASS="note"
+><P
+></P
+><TABLE
+CLASS="note"
+WIDTH="100%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="../images/note.gif"
+HSPACE="5"
+ALT="Note"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>&#13;Using the application <SPAN
+CLASS="guimenu"
+>File</SPAN
+>-&gt;<SPAN
+CLASS="guimenuitem"
+>Save</SPAN
+> entry will save the parameter file (including the script descriptions) but not the script itself.
+</P
+></TD
+></TR
+></TABLE
+></DIV
+><P
+>&#13;Using the application <SPAN
+CLASS="guimenu"
+>File</SPAN
+>-&gt;<SPAN
+CLASS="guimenuitem"
+>Save</SPAN
+> entry will save your new script description in the current parameter file. To save your new script description to file (the containts of the <SPAN
+CLASS="guilabel"
+>Parameters</SPAN
+> and <SPAN
+CLASS="guilabel"
+>Help</SPAN
+> tabs), press the <SPAN
+CLASS="guibutton"
+>Save Script Description As ...</SPAN
+> button. Creating a script description file, allows you to reuse the same script for different kind of experiments and to share it with other researchers.
+</P
+><P
+>&#13;To remove a script description from a given parameter file, simply press the <SPAN
+CLASS="guibutton"
+>Remove Script</SPAN
+> button.
+</P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="x676.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="c831.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>NeuroScope Page</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c456.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Data Processing</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

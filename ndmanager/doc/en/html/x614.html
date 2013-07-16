@@ -1,0 +1,208 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML
+><HEAD
+><TITLE
+>Spike Groups Page</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.79"><LINK
+REL="HOME"
+TITLE="The NDManager Handbook"
+HREF="index.html"><LINK
+REL="UP"
+TITLE="Creation and Modification of Parameter Files"
+HREF="c456.html"><LINK
+REL="PREVIOUS"
+TITLE="Anatomical Groups Page"
+HREF="x592.html"><LINK
+REL="NEXT"
+TITLE="Units Page"
+HREF="x642.html"></HEAD
+><BODY
+CLASS="sect1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+LINK="#0000FF"
+VLINK="#840084"
+ALINK="#0000FF"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+SUMMARY="Header navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>The <SPAN
+CLASS="application"
+>NDManager</SPAN
+> Handbook</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="x592.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 3. Creation and Modification of Parameter Files</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="x642.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="sect1"
+><H1
+CLASS="sect1"
+><A
+NAME="spike-groups"
+>3.8. Spike Groups Page</A
+></H1
+><P
+>&#13;<DIV
+CLASS="mediaobject"
+><P
+><IMG
+SRC="Images/spike.png"></P
+></DIV
+>
+</P
+><P
+>&#13;This page is available only in the <SPAN
+CLASS="guilabel"
+>Expert Mode</SPAN
+>.
+</P
+><P
+>&#13;Spike groups are related to unit activity. In most experimental paradigms, you will want to study neuronal firing patterns, and thus you will need to extract unit activity from local field potentials. Usually, the spikes emitted by each single unit appear only on a limited subset of the channels. In the framework <SPAN
+CLASS="application"
+>NDManager</SPAN
+> is part of, each such set of channels (e.g. a tetrode) is referred to as a spike group. Remember that spike groups are not necessarily equivalent to physical electrode groups: for instance, if one channel from a tetrode is floating or too noisy, discarding it altogether will yield better results during subsequent spike sorting. In general, these groups cannot be efficiently defined without first inspecting the data. This is why <A
+HREF="http://neuroscope.sourceforge.net"
+TARGET="_top"
+>NeuroScope</A
+> provides the ability to graphically define spike groups and why this page is not part of the default mode.
+</P
+><P
+>&#13;To add a group, press the <SPAN
+CLASS="guibutton"
+>Add</SPAN
+> button; in the newly created row, type in the <SPAN
+CLASS="guilabel"
+>Channels</SPAN
+> column the channel ids separated by a whitespace. To remove groups, select the corresponding rows and press the <SPAN
+CLASS="guibutton"
+>Remove</SPAN
+> button. The unlisted channels are not part of any group.
+</P
+><P
+>&#13;The two columns <SPAN
+CLASS="guilabel"
+># Samples per waveform</SPAN
+> and <SPAN
+CLASS="guilabel"
+>Peak sample</SPAN
+> provide information needed to extact spikes from the local field potentials. The last column, <SPAN
+CLASS="guilabel"
+>Features</SPAN
+>, provides information for spike sorting. In the current version of the framework <SPAN
+CLASS="application"
+>NDManager</SPAN
+> is part of, PCA coefficients are used as spike features to perform spike sorting and the value contained in the column <SPAN
+CLASS="guilabel"
+>Features</SPAN
+> represents the number of principal components to use for a given spike group.
+</P
+><P
+>&#13;In most of the cases, you do not have to manually fill the three last columns as this will be done by a dedicated script (see the <A
+HREF="x771.html"
+>Scripts Page</A
+>).
+</P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+SUMMARY="Footer navigation table"
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="x592.html"
+ACCESSKEY="P"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="index.html"
+ACCESSKEY="H"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="x642.html"
+ACCESSKEY="N"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Anatomical Groups Page</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="c456.html"
+ACCESSKEY="U"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Units Page</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>
