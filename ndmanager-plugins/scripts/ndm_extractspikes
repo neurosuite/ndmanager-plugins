@@ -38,7 +38,7 @@ inputs_missing $session.xml $session.fil && exit $INPUTS_MISSING
 
 secondsToBytes()
 {
-	unset LANG && echo $1 $samplingRate $nChannels $resolution | awk '{printf "%d",int($1*$2/8)*$3*$4}'
+	unset LANG && echo $1 $samplingRate $nChannels $resolution | awk '{printf "%f",int($1*$2)/8*$3*$4}' | sed 's/[.].*//'
 }
 
 # ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -50,9 +50,15 @@ resolution=$(xml_read $session "//acquisitionSystem/nBits")
 samplingRate=$(xml_read $session "//acquisitionSystem/samplingRate")
 nElectrodeGroups=$(xml_count $session "//spikeDetection/channelGroups/group")
 
-# Check output files
-outputs=$(echo $session.spk.$(seq $nElectrodeGroups)|sed 's/ / '$session'.spk./g')
-outputs_exist $outputs && exit $OUTPUTS_EXIST
+# Check output files (process only new ones)
+for group in $(seq 1 $nElectrodeGroups)
+do
+	output=$session.spk.$group
+	if ! outputs_exist $output
+	then
+		electrodeGroups="$electrodeGroups $group"
+	fi
+done
 
 check_mandatory_variable $nChannels "missing number of channels"
 check_mandatory_variable $resolution "missing resolution (in bits)"
@@ -62,7 +68,7 @@ then
   echo_error "missing spike groups"
   exit $GENERAL_ERROR
 fi
-for ((electrodeGroup=1;electrodeGroup<=$nElectrodeGroups;electrodeGroup++))
+for electrodeGroup in $electrodeGroups
 do
 	electrodes=$(xml_read $session "//spikeDetection/channelGroups/group[$electrodeGroup]/channels/channel")
 	check_mandatory_variable $electrodes "missing electrode list"
@@ -111,5 +117,17 @@ echo_info "    threshold $baseline"
 # ////////////////////////////////////////////////////////////////////////////////////////////////
 
 echo_info -e "2. Extracting spike waveforms (creating .res and .spk files)"
-process_extractspikes -n $nChannels -c $electrodeList -w $samplesInWaveform -p $peakSample -t $baseline -l $peakSearchLength -r $refractoryPeriod $session
+# Use temporary file name to avoid overwriting existing files
+ln -s $session.fil $session-tmp.fil
+# Process
+process_extractspikes -n $nChannels -c $electrodeList -w $samplesInWaveform -p $peakSample -t $baseline -l $peakSearchLength -r $refractoryPeriod $session-tmp
 check_command_status process_extractspikes
+# Rename files
+rm $session-tmp.fil
+declare -i i=0
+for group in $electrodeGroups
+do
+	i=$i+1
+	mv $session-tmp.res.$i $session.res.$group
+	mv $session-tmp.spk.$i $session.spk.$group
+done

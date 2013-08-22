@@ -29,7 +29,7 @@ List of suffixes for the individual files to resample
 
 # samplingRate
 
-List of original sampling rates (in the same order as the suffixes)
+List of original sampling rates (in the same order as the suffixes). Leave this empty if you do not need resampling.
 
 # nChannels
 

@@ -130,22 +130,20 @@
 	<refsect1>
 		<title>Author</title>
 		<para>
-			<author>
-				<firstname>Nicolas</firstname>
-				<othername role="mi">B</othername>
-				<surname>Lebas</surname>
-				<contrib>Original author</contrib>
-			</author>,&nbsp;
-			<email>nicolas.lebas@college-de-france.fr</email>.
-		</para>
-		<para>
-			<author>
-				<firstname>Michael</firstname>
-				<othername role="mi">B</othername>
-				<surname>Zugaro</surname>
-				<contrib>LFS support, bug corrections</contrib>
-			</author>,&nbsp;
-			<email>michael.zugaro@college-de-france.fr</email>.
+		<author>
+			<firstname>Nicolas</firstname>
+			<othername role="mi">B</othername>
+			<surname>Lebas</surname>
+			<contrib>Original author</contrib>
+		</author>,&nbsp;
+		<email>nicolas.lebas@college-de-france.fr</email>.
+		<author>
+			<firstname>Michael</firstname>
+			<othername role="mi">B</othername>
+			<surname>Zugaro</surname>
+			<contrib>LFS support, bug corrections</contrib>
+		</author>,&nbsp;
+		<email>michael.zugaro@college-de-france.fr</email>.
 		</para>
 	</refsect1>
 

@@ -1,3 +1,36 @@
+The following notes describe the changes from 1.4.7 to 1.4.8
+
+* fixed a crash in process_extractspikes
+
+------------------------------------------------------------------------------------------------------------
+
+The following notes describe the changes from 1.4.6 to 1.4.7
+
+* fixed another bug in spots2pos when using absolute file paths to access .spots or .cat.evt files
+* some files for ffmpeg were missing in the source tarball; this was corrected.
+* removed size limit for process_pca
+* removed limit for number of channels (was 128) in process_resample
+* concatenation now works with single files
+* fixed problem with large 'start' values in ndm_extractspikes (can now seek past 2^31 bytes)
+
+------------------------------------------------------------------------------------------------------------
+
+The following notes describe the changes from 1.4.5 to 1.4.6
+
+* ndm_start can now process recordings from Amplipex
+* ndm_start now has an option to disable concatenation
+* fixed a bug in spots2pos when using absolute file paths to access .spots or .cat.evt files
+
+------------------------------------------------------------------------------------------------------------
+
+The following notes describe the changes from 1.4.4 to 1.4.5
+
+* ndm_start traps HUP signal so that processing goes on if the user closes the shell by mistake
+* ndm_start logs activity by default
+* ndm_extractspikes can now process only missing electrode groups
+
+------------------------------------------------------------------------------------------------------------
+
 The following notes describe the changes from 1.4.3 to 1.4.4
 
 * fixed bug in process_smrconvert that prevented processing of large files in version 7 format

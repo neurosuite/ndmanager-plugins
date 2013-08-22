@@ -36,7 +36,7 @@
 %    If <a href="http://fmatoolbox.sourceforge.net">FMAToolbox</a> is installed, all properties can have custom default values
 %    (type 'help <a href="matlab:help CustomDefaults">CustomDefaults</a>' for details).
 
-% Copyright (C) 2004-2011 by Michaël Zugaro, 2004 by Ken Harris
+% Copyright (C) 2004-2012 by Michaël Zugaro, 2004 by Ken Harris
 %
 % This program is free software; you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
@@ -77,12 +77,14 @@ if ~isempty(regexp(filename,'[.]cat[.]evt$')),
 	start = events.time(1:2:end);
 	durations = diff(events.time);
 	durations = durations(1:2:end);
-	path = fileparts(filename);
+	[path,filename] = fileparts(filename);
+	filename = regexprep(filename,'.cat','.pos');
 	if isempty(path), path = '.'; end
 else
 	[path,filename] = fileparts(filename);
-	if isempty(path), path = '.'; end
 	bases = {filename};
+	filename = [filename '.pos'];
+	if isempty(path), path = '.'; end
 end
 
 % Parse options
@@ -124,7 +126,6 @@ end
 concatenated = [];
 
 % Process each file
-
 for i = 1:length(bases),
 	new = ProcessOne([path '/' bases{i}],inputFrequency,outputFrequency,resolution,threshold,leds);
 	if isempty(events), continue; end
@@ -170,7 +171,6 @@ if ~isempty(events),
 	output = interp1(concatenated(:,1),concatenated(:,2:end),t,'linear',-1);
 	warning('on','MATLAB:interp1:NaNinY');
 	output(~isfinite(output)) = -1;
-	filename = regexprep(filename,'.cat.evt','.pos');
 	dlmwrite([path '/' filename],round(output),'\t');
 	disp(' ');
 end
@@ -201,10 +201,12 @@ end
 % There can be more than one .spots file for a given session (e.g. with Neuralynx systems),
 % in which case we will concatenate them
 d = dir([basename '*.spots']);
+path = fileparts(basename);
+
 filenames = {d(:).name};
 
 if length(filenames) == 0,
-	warning(['\nNo .spots file for session ''' basename '''. Creating empty .pos file.']);
+	warning(['No .spots file for session ''' basename '''. Creating empty .pos file.']);
 	output = [];
 	dlmwrite(posFile,output,'\t');
 	return
@@ -216,7 +218,7 @@ nFrames = 0;
 for i = 1:length(filenames),
 	moreSpots = [];
 	n = 0;
-	filename = filenames{i};
+	filename = [path '/' filenames{i}];
 	if exist(filename),
         disp(['Reading ''' filename '''...']);
 		moreSpots = load(filename);
@@ -256,7 +258,7 @@ while true,
 	end
 end
 if isempty(spots),
-	warning(['No spots left in file ''' filename ''' after removal of spurious spots.']);
+	warning(['No spots left for session ''' basename ''' after removal of spurious spots.']);
 	return
 end
 
