@@ -175,7 +175,8 @@ void ndManager::setupActions()
     settingsMenu->addSeparator();
 
     settings.beginGroup("General");
-    mExpertMode->setChecked(settings.value("expertMode").toBool());
+    if ( settings.contains("expertMode")) mExpertMode->setChecked(settings.value("expertMode").toBool());
+	 else mExpertMode->setChecked(true);
     settings.endGroup();
 
     viewMainToolBar = settingsMenu->addAction(tr("Show Main Toolbar"));
