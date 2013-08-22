@@ -14,6 +14,9 @@
 #//
 #////////////////////////////////////////////////////////////////////////////
 
+# Do not hang up, e.g. keep processing if the shell is closed by mistake
+trap "" hup
+
 # Source helper functions
 source ndm_functions
 
@@ -48,11 +51,6 @@ inputs_missing $template.xml && exit $INPUTS_MISSING
 # // Read Parameters
 # ////////////////////////////////////////////////////////////////////////////////////////////////
 
-# Suffixes
-suffixes=($(read_script_parameter $template suffixes))
-check_mandatory_variable ${suffixes[0]} "missing suffixes"
-# check_optional_variable ${suffixes[0]} || suffixes=($(list_suffixes $))
-
 # Brain signals, video and events
 wideband=$(read_script_parameter $template wideband)
 check_optional_variable $wideband || wideband=true
@@ -60,6 +58,13 @@ video=$(read_script_parameter $template video)
 check_optional_variable $video || video=true
 events=$(read_script_parameter $template events)
 check_optional_variable $events || events=true
+
+# Suffixes
+suffixes=($(read_script_parameter $template suffixes))
+if $wideband || $events
+then
+	check_mandatory_variable ${suffixes[0]} "missing suffixes"
+fi
 
 # Concatenation, spikes and LFPs
 concatenation=$(read_script_parameter $template concatenation)
@@ -75,7 +80,7 @@ check_optional_variable $clean || clean=false
 
 # Logging
 log=$(read_script_parameter $template log)
-check_optional_variable $log || log=false
+check_optional_variable $log || log=true
 
 # Make sure spike groups have been defined
 if $spikes
@@ -182,7 +187,10 @@ do_sessions()
 
 do_concatenation()
 {
- 	# $concatenation || return
+ 	$concatenation || return
+ 	
+	n_wideband_files=$(ls *dat | grep -v $directory.dat|wc -l 2>/dev/null)
+	[ $n_wideband_files -lt 1 ] && return
 
 	# Print a header to indicate current processing step
 	print_header "$directory - Concatenating data files"

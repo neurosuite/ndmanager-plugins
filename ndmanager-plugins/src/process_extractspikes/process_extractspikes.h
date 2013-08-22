@@ -31,6 +31,7 @@
 #define SPIKE_REC_OUT_EXT "spk"
 
 #include <iostream>
+#include <sys/types.h>
 using namespace std;
 
 

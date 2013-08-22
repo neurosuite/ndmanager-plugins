@@ -47,7 +47,7 @@
 
 int buffer_size = BUFFER_CHANNEL_SIZE; // total buffer size
 static bool verbose = false;
-const char *program_version = "process_extractspikes 0.8 (01-12-2010)";
+const char *program_version = "process_extractspikes 0.8.1 (08-08-2012)";
 
 /** Usage error **/
 void error(const char* name) {
@@ -237,7 +237,7 @@ int main(int argc,char *argv[]) {
 		<< endl;
 		return 1;
 	} // if
-
+	
 	/* init buffers */
 	
 	// +totChN for next Rec
@@ -305,23 +305,26 @@ int main(int argc,char *argv[]) {
 	/************** SPIKES TIME DETECTION **************/
 	// Open positions output files
 	for (int grp=0; grp<nbGroups; grp++) {
+		if(channelNb_group[grp] == 0) // skip empty group
+			continue;
+		
 		ostringstream oss;
-
+		
 		// Output file name for spikes time
 		oss << arguments.outputBaseFileName << "." << SPIKE_TIME_OUT_EXT << ".";
 		oss << (grp+1);
 		spikeTimeOutputFileName[grp] = oss.str();
 		spikeTimeOutputFile[grp] = fopen(spikeTimeOutputFileName[grp].c_str(), 
 										 "w");
-
+		
 		if(verbose)
 			cout << "Positions output file for group #"<<grp+1<<" : " 
 			<< spikeTimeOutputFileName[grp] << endl;
 	} // for grp
-
+	
 	// Search spikes position loop
 	while(!feof(inputFile) && !isLastLoop) {
-
+		
 		if(nbLoops == 0) {
 			// Store 1st records in nextRec for the init phase
 			if(arguments.isInputFileProvided) {
@@ -361,6 +364,9 @@ int main(int argc,char *argv[]) {
 		
 		/* Analyse each channel group */
 		for(int grp = 0; grp < nbGroups; grp++) {
+			if(channelNb_group[grp] == 0) // skip empty group
+				continue;
+			
 			int i = 0;
 			// start analyzing after the given time before spike (only at the
 			// begening)
@@ -416,19 +422,21 @@ int main(int argc,char *argv[]) {
 												arguments.totalChannelNumber,
 												prevVals);
 						}
-						
+					
 						if(maxId[grp] != -1) {
 							double prevVal = cur_buffer[(maxId[grp]
 								- arguments.totalChannelNumber
 								+ spkChanId[grp])];
 							
 							double nextVal; // rec after max
+							
 							// next rec is current buffer 1st rec
 							if((maxId[grp] + 
 								arguments.totalChannelNumber) ==
 								buffer_size) {
-								
-								nextVal = nextRec[spkChanId[grp]];
+									if(!isLastLoop) {
+										nextVal = nextRec[spkChanId[grp]];
+									}
 							}
 							// next rec is in previous buffer
 							else {
@@ -444,11 +452,12 @@ int main(int argc,char *argv[]) {
 								prevBuffer_spkChanId[grp] = spkChanId[grp];
 							} // if isRealPeak
 						} // if maxId != -1
+						
 						recInPrevBuffer[grp] = (rec_nb-i) /
 												arguments.totalChannelNumber;
 						maxId[grp] = -1;  // reset MAX value for next buffer
 						i = buffer_size; // go to the end of the buffer
-						
+					
 					// spike is in current buffer (if it is a significant one)
 					} else {
 						off_t maxFullId = -1;
@@ -683,7 +692,7 @@ int main(int argc,char *argv[]) {
 								} // if spike in current buffer
 							} // if isMaxInCurBuf
 						} // if maxFullId
-						
+
 						i = maxEndSpike;
 						
 						// Reset all variables
@@ -691,6 +700,7 @@ int main(int argc,char *argv[]) {
 						// no more MAX value
 						isNegativeMax[grp] = false;  isMaxInCurBuf[grp] = true;
 						maxEndSpike = -1; isMaxInCurBuf[grp] = true;
+						
 						if(!isKeepPrevMax) {
 							spkChanId[grp] = -1; prevBuffer_spkChanId[grp] = -1;
 							// nothing in old buffer
@@ -700,15 +710,19 @@ int main(int argc,char *argv[]) {
 						}
 					} // if maxEndSpike >= rec_nb (spike in current buffer)
 				} // if spkChanId[grp] > -1
+
 				i+=arguments.totalChannelNumber;
 			} // while i (current buffer)
 		} // for grp
-
+		
 		nRecTot += rec_nb/arguments.totalChannelNumber;
 		nbLoops++; // one more loop
 	} // while (inputFile)
 
 	for(int g =0; g<nbGroups; g++) {
+		if(channelNb_group[g] == 0) // skip empty group
+			continue;
+		
 		fclose( spikeTimeOutputFile[g] ); // close spikes time file
 	} // for g
 
@@ -747,12 +761,15 @@ int main(int argc,char *argv[]) {
 	spikeTimeOutputFile = new FILE*[nbGroups];
 
 	for(int grp = 0; grp < nbGroups; grp++) {
+		if(channelNb_group[grp] == 0) // skip empty group
+			continue;
+		
 		ostringstream oss;
-
+		
 		// Re-open spike times file, but in read access only
 		spikeTimeOutputFile[grp] = fopen(spikeTimeOutputFileName[grp].c_str(), 
 										 "r");
-
+		
 		// Open output file for spikes extraction
 		oss << arguments.outputBaseFileName << "." << SPIKE_REC_OUT_EXT << ".";
 		oss << (grp+1);
@@ -828,7 +845,8 @@ int main(int argc,char *argv[]) {
 
 	for(int g =0; g<nbGroups; g++) {
 		channelListSize += channelNb_group[g]; // Total number of given channels
-   		fclose( spikeTimeOutputFile[g] ); // close spikes time file
+		if(channelNb_group[g] > 0) // skip empty group
+			fclose( spikeTimeOutputFile[g] ); // close spikes time file
 	} // for g
 	
 	// Free Memory
@@ -1592,7 +1610,7 @@ bool checkChanAndThres(int **cList, int *cNb_group, int nbC, int *tNb_group,
 
 		for(int i = 0; i < cNb_group[g]; i++) {
 			if(cList[g][i] < 0) {
-				cerr << "error: negative channel ID (" << cList[g][i] 
+				cerr << "ERROR: negative channel ID (" << cList[g][i] 
 				<< ") in electrode group " << g << "." << endl;
 			} // if
 		} // for i
@@ -1612,6 +1630,7 @@ bool checkChanAndThres(int **cList, int *cNb_group, int nbC, int *tNb_group,
 int getThresholdsFromArg(int *thresNb_group, double **thresList, 
 						 const struct arguments arguments) {
 
+	char zero = '0'; // Zero as a char (used to test arguments)
 	int nbGroups = 0; // Number of thresholds groups
 	char *groups, *currentGroup, *thresholds; // Groups of electrodes and thr
 
@@ -1625,6 +1644,14 @@ int getThresholdsFromArg(int *thresNb_group, double **thresList,
 
 		thresholds = strsep (&currentGroup, CHANNEL_SEPARATOR); // split thr
 		while(thresholds != NULL) {
+			if(atoi(thresholds)<1 && *thresholds != zero) {
+				if(thresNb_group[nbGroups] == 0 && atoi(thresholds) == 0) {
+					if(verbose)
+						cerr << "Warning: threshold group " << nbGroups+1 << " is empty." << endl;
+					break;
+				}
+			}
+			
 			// current group threshold
 			thresList[nbGroups][thresNb_group[nbGroups]] = atof(thresholds);
 
@@ -1675,8 +1702,14 @@ int getChannelsFromArg(int *channelNb_group, int **channelList,
 		channels = strsep (&currentGroup, CHANNEL_SEPARATOR); // split channels
 		while(channels != NULL) {
 			if(atoi(channels)<1 && *channels != zero) {
-				cerr << "error: negative channel IDs." << endl;
-				exit(1);
+				if(atoi(channels) < 0 || channelNb_group[nbGroups] > 0) {
+					cerr << "ERROR: negative channel IDs." << endl;
+					exit(1);
+				} else {
+					if(verbose)
+						cerr << "Warning: channel group " << nbGroups+1 << " is empty." << endl;
+					break;
+				}
 			}
 			if(atoi(channels)>= arguments.totalChannelNumber) {
 				cerr << "error: channel ID greater to total number of channels"

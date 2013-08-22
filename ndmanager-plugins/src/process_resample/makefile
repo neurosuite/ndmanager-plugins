@@ -11,22 +11,28 @@
 #//
 #////////////////////////////////////////////////////////////////////////////
 
+LIBSR = libsamplerate
+LIBSR_DIR = $(LIBSR)-0.1.8
+LIBSRA = $(LIBSR_DIR)/src/.libs/$(LIBSR).a
 CC = gcc -O3
-LDFLAGS = -lsamplerate -lm
+LDFLAGS = -lm
 SRC = $(wildcard *.c)
 HDR = $(wildcard *.h)
 OBJ = $(SRC:.cpp=.o)
 LIBS = -L/usr/lib
 EXEC = process_resample
 
-all: $(EXEC) doc
+all: lib $(EXEC) doc
 
 %.o: %.c
 	$(CC) -c $<
 
 $(EXEC): $(OBJ)
-	$(CC) $(LIBS) -I. -o $(EXEC) $(OBJ) $(LDFLAGS)
+	$(CC) $(LIBS) -I. -o $(EXEC) $(OBJ) $(LIBSRA) $(LDFLAGS)
 
+lib:
+	cd $(LIBSR_DIR) && ./configure && make
+	
 MANSRC = $(EXEC).docbook
 MANOBJ = $(EXEC).1
 MANGZ = $(MANOBJ).gz

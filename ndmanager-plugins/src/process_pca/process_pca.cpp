@@ -579,11 +579,11 @@ bool checkInputs(const arguments arguments)
 		cerr << "error: incorrect input size " << arguments.inputSize << "." << endl<< endl;
 		return false;
 	}
-	else if ( arguments.inputSize > MAX_INPUT_SIZE )
-	{
-		cerr << "error: input size " << arguments.inputSize << " is too large (>" << MAX_INPUT_SIZE << ")." << endl<< endl;
-		return false;
-	}
+// 	else if ( arguments.inputSize > MAX_INPUT_SIZE )
+// 	{
+// 		cerr << "error: input size " << arguments.inputSize << " is too large (>" << MAX_INPUT_SIZE << ")." << endl<< endl;
+// 		return false;
+// 	}
 	else if ( arguments.inputSize%RECORD_BYTE_SIZE != 0 )
 	{
 		cerr << "error: input size " << arguments.inputSize << " is not a multiple of resolution " << RECORD_BYTE_SIZE << "." << endl<< endl;

@@ -26,25 +26,6 @@ done
 	rm description-pak
 )
 
-# Add 'Replaces' info to package
-mkdir repackaged
-mv ndmanager-plugins*.deb repackaged
-cd repackaged
-ar -x ndmanager-plugins*.deb
-mv ndmanager-plugins*.deb ..
-tar xf control.tar.gz
-tar xf data.tar.gz
-rm *gz debian-binary
-mkdir DEBIAN
-sed -i '/Replaces:/d' control
-echo "Replaces: process" >> control
-mv con* DEBIAN
-cd ..
-dpkg -b repackaged
-rm -rf repackaged
-mv -f repackaged.deb ndmanager-plugins*.deb
-sudo chown root.root ndmanager-plugins*.deb
-
 # Install?
 if $install
 then
