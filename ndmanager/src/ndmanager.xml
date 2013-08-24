@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<mime-info xmlns='http://www.freedesktop.org/standards/shared-mime-info'>
+
+	<!-- 	Preprocessing -->
+	
+	<mime-type type="application/nphys-xml">
+		<comment>parameter file</comment>
+		<comment xml:lang="fr">fichier de paramètres</comment>
+		<glob pattern="*.xml"/>
+		<magic priority="100">
+			<match type="string" offset="0:200" value="ndManager"/>
+		</magic>
+	</mime-type>
+	
+</mime-info>
