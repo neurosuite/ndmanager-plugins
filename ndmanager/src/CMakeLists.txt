@@ -104,4 +104,12 @@ install(FILES hi22-app-ndmanager.png DESTINATION share/icons/hicolor/22x22/apps/
 install(FILES hi32-app-ndmanager.png DESTINATION share/icons/hicolor/32x32/apps/ RENAME ndmanager.png)
 install(FILES hi48-app-ndmanager.png DESTINATION share/icons/hicolor/48x48/apps/ RENAME ndmanager.png)
 install(FILES hi64-app-ndmanager.png DESTINATION share/icons/hicolor/64x64/apps/ RENAME ndmanager.png)
+
+install(FILES hi16-nphys-xml.png DESTINATION share/icons/hicolor/16x16/mimetypes/ RENAME application-nphys-xml.png)
+install(FILES hi22-nphys-xml.png DESTINATION share/icons/hicolor/22x22/mimetypes/ RENAME application-nphys-xml.png)
+install(FILES hi32-nphys-xml.png DESTINATION share/icons/hicolor/32x32/mimetypes/ RENAME application-nphys-xml.png)
+install(FILES hi48-nphys-xml.png DESTINATION share/icons/hicolor/48x48/mimetypes/ RENAME application-nphys-xml.png)
+install(FILES hi64-nphys-xml.png DESTINATION share/icons/hicolor/64x64/mimetypes/ RENAME application-nphys-xml.png)
+
 install(FILES ndmanager.desktop DESTINATION share/applications/ )
+install(FILES ndmanager.xml DESTINATION share/mime/packages/)
