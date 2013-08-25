@@ -139,7 +139,7 @@ void ManagerView::launchScript(){
     }
     else{
         if(!isUptoDate){
-            const QString message = tr("The parameter file contains unsaved data or script, please save before launching %1.").arg(script);
+            const QString message = tr("The parameter file contains unsaved data or plugin, please save before launching %1.").arg(script);
             QMessageBox::critical (this, tr("Unsaved data!"),message);
             return;
         }

@@ -411,7 +411,7 @@ void ndManager::slotFileClose(){
         QStringList scriptModified = parameterView->modifiedScripts();
         if(!scriptModified.isEmpty()) {
             Q_FOREACH(const QString& name, scriptModified ) {
-                switch(QMessageBox::question(0,tr("Script modification"),tr("The script %1 has been modified, do you want to save the it?").arg(name),QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
+                switch(QMessageBox::question(0,tr("Plugin modification"),tr("The plugin %1 has been modified, do you want to save the it?").arg(name),QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
                 case QMessageBox::Save://<=> Save
                     parameterView->saveScript(name);
                     break;
@@ -474,7 +474,7 @@ bool ndManager::queryClose()
         const QStringList scriptModified = parameterView->modifiedScripts();
         if( !scriptModified.isEmpty() ){
             Q_FOREACH(const QString& name, scriptModified) {
-                switch(QMessageBox::question(this,tr("Script modification"),tr("The script %1 has been modified, do you want to save the it?").arg(name),QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
+                switch(QMessageBox::question(this,tr("Plugin modification"),tr("The plugin %1 has been modified, do you want to save the it?").arg(name),QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
                 case QMessageBox::Save://<=> Save
                     parameterView->saveScript(name);
                     break;

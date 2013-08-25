@@ -163,7 +163,7 @@ ParameterView::ParameterView(ndManager*,ndManagerDoc& doc,QWidget* parent, const
     programs = new ProgramsPage(expertMode);
 
     mStackWidget->addWidget(programs);
-    mScriptsItem = mParameterTree->addPage(":/icons/programs", tr("Scripts"), programs);
+    mScriptsItem = mParameterTree->addPage(":/icons/programs", tr("Plugins"), programs);
 
     //set connections
     connect(acquisitionSystem,SIGNAL(nbChannelsModified(int)),this,SLOT(nbChannelsModified(int)));
@@ -207,7 +207,7 @@ ParameterView::~ParameterView()
 void ParameterView::addNewProgram(){
     counter++;
     programId++;
-    QString programName = QString::fromLatin1("New Script-%1").arg(programId);
+    QString programName = QString::fromLatin1("New Plugin-%1").arg(programId);
     ProgramPage* program = addProgram(programName);
     program->initialisationOver();
     emit scriptListHasBeenModified(QStringList()<<programDict.keys());
@@ -261,8 +261,8 @@ void ParameterView::changeProgramName(ProgramPage* programPage, const QString& n
         //this method will be call anyway but by calling it now a first time, we ensure that the text display in the script tab in consistent with the program (the old program which is kept)
         programPage->nameChanged(oldName);
 
-        const QString currentMessage =  tr("There is already a script with the name %1.").arg(newName);
-        QMessageBox::critical (this, tr("script name conflict"),currentMessage);
+        const QString currentMessage =  tr("There is already a plugin with the name %1.").arg(newName);
+        QMessageBox::critical (this, tr("plugin name conflict"),currentMessage);
 
         return;
     }
@@ -423,7 +423,7 @@ void ParameterView::initialize(QMap<int, QList<int> >& anatomicalGroups,QMap<QSt
                         scriptView->setText(stream.readAll());
                         file.close();
                     } else {
-                        const QString message = tr("The file %1  does not appear to be a script file (a script file should begin with #!).").arg(name);
+                        const QString message = tr("The file %1  does not appear to be a plugin file (a script file should begin with #!).").arg(name);
                         QMessageBox::critical (this,tr("IO Error!"),message);
                         scriptView->clear();
                     }
@@ -453,8 +453,8 @@ void ParameterView::loadProgram(const QString &programUrl) {
         name = QString::fromLatin1("Untitled-%1").arg(programId);
 
     if(programDict.contains(name)){
-        const QString message =  tr("The selected script %1 is already loaded. Do you want to reload it?").arg(name);
-        const int answer = QMessageBox::question(this,tr("Script already loaded"),message, QMessageBox::Yes|QMessageBox::No );
+        const QString message =  tr("The selected plugin %1 is already loaded. Do you want to reload it?").arg(name);
+        const int answer = QMessageBox::question(this,tr("plugin already loaded"),message, QMessageBox::Yes|QMessageBox::No );
         if(answer == QMessageBox::No){
             counter--;
             return;
@@ -496,7 +496,7 @@ void ParameterView::loadProgram(const QString &programUrl) {
                     scriptView->setText(stream.readAll());
                     file.close();
                 } else {
-                    const QString message =  tr("The file %1  does not appear to be a script file (a script file should begin with #!).").arg(name);
+                    const QString message =  tr("The file %1  does not appear to be a plugin file (a script file should begin with #!).").arg(name);
                     QMessageBox::critical (this,tr("IO Error!"),message);
                     scriptView->clear();
                 }
