@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
 Name=NDManager
-GenericName=Manager for Neurophysiological Data
+GenericName=Manager for neurophysiological and behavioral data
 Comment=
 Icon=ndmanager
 Exec=ndmanager %u
