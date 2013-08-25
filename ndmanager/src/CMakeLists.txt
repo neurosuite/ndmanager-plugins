@@ -113,3 +113,7 @@ install(FILES hi64-nphys-xml.png DESTINATION share/icons/hicolor/64x64/mimetypes
 
 install(FILES ndmanager.desktop DESTINATION share/applications/ )
 install(FILES ndmanager.xml DESTINATION share/mime/packages/)
+
+file(GLOB files "${CMAKE_CURRENT_SOURCE_DIR}/Template*.xml")
+install(FILES ${files} DESTINATION share/ndmanager/templates/)
+
