@@ -80,7 +80,7 @@ set(ndmanager_UI
 
 qt4_wrap_ui(ndmanager_SRCS ${ndmanager_UI})
 
-add_executable(ndmanager ${ndmanager_SRCS} )
+add_executable(ndmanager WIN32 ${ndmanager_SRCS} )
 
 
 if(Qt5Core_FOUND)
