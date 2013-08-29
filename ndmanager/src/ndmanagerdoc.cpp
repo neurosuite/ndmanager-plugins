@@ -143,7 +143,14 @@ ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::openDocument(const QStri
 
 ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::newDocument(){
     //If the user has no local version of the file the system default is used
+#ifdef Q_WS_WIN
+	// In Windows, QStandardPaths returns the path to user applications, not not system applications
+	// Therefore we cannot use it here
+	QString path(getenv("PROGRAMFILES"));
+	path += QLatin1String("/NDManager/share/applications/ndmanager/ndManagerDefault.xml");
+#else	
     QString path = QStandardPaths::locate (QStandardPaths::ApplicationsLocation, QLatin1String("ndmanager/ndManagerDefault.xml"));
+#endif
     if (path.isEmpty()) {
        qDebug()<<" ndManagerDefault.xml is not found. Verify install";
        QMessageBox::critical (0, QObject::tr("Error!"),QObject::tr("The file ndManagerDefault.xml does not exist. Please verify installation"));
