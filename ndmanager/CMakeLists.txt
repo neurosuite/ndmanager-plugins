@@ -258,7 +258,7 @@ if(UNIX)
     # Set package name and type (deb vs rpm)
     if(DISTRIBUTION STREQUAL "Ubuntu")
 
-      # Set Debian-specific information (see http://www.cmake.org/Wiki/CMake:CPackPackageGenerators)
+      # Set Ubuntu-specific information (see http://www.cmake.org/Wiki/CMake:CPackPackageGenerators)
       if(ARCHITECTURE MATCHES ".*x86_64.*")
         set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "amd64")
       else()
@@ -274,6 +274,26 @@ if(UNIX)
       set(CPACK_PACKAGE_FILE_NAME ${CPACK_PACKAGE_NAME}_${CPACK_PACKAGE_VERSION}-${RELEASE}_${CPACK_DEBIAN_PACKAGE_ARCHITECTURE})
       set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA "${CMAKE_CURRENT_SOURCE_DIR}/postinst;${CMAKE_CURRENT_SOURCE_DIR}/postrm;" )
 
+    # >>> TEMPLATE CODE FOR ADDITIONAL DEBIAN-LIKE DISTRIBUTIONS <<<
+    
+    #elsif(DISTRIBUTION STREQUAL "Ubuntu")
+
+    #  # Set Ubuntu-specific information (see http://www.cmake.org/Wiki/CMake:CPackPackageGenerators)
+    #  if(ARCHITECTURE MATCHES ".*x86_64.*")
+    #    set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "amd64")
+    #  else()
+    #    set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "i386")
+    #  endif()
+    #  set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Michaël Zugaro")
+    #  set(CPACK_DEBIAN_PACKAGE_SECTION "Science")
+    #  set(CPACK_DEBIAN_PACKAGE_RECOMMENDS "nphys-data, klusters, neuroscope")
+    #  set(CPACK_DEBIAN_PACKAGE_DEPENDS "libklustersshared, libqt4-network, libqt4-xml, libqtcore4, libqtgui4, libqtwebkit4")
+    #  set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA "${CMAKE_CURRENT_SOURCE_DIR}/postinst;${CMAKE_CURRENT_SOURCE_DIR}/postrm;" )
+    #  set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "http://ndmanager.sourceforge.net")
+    #  set(CPACK_GENERATOR "DEB")
+    #  set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA "${CMAKE_CURRENT_SOURCE_DIR}/postinst;${CMAKE_CURRENT_SOURCE_DIR}/postrm;" )
+    #  set(CPACK_PACKAGE_FILE_NAME ${CPACK_PACKAGE_NAME}_${CPACK_PACKAGE_VERSION}-${RELEASE}_${CPACK_DEBIAN_PACKAGE_ARCHITECTURE})
+    
     elseif(DISTRIBUTION MATCHES "openSUSE.*")
 
       # Set openSUSE-specific information (see http://www.cmake.org/Wiki/CMake:CPackPackageGenerators)
@@ -312,6 +332,27 @@ if(UNIX)
       set(CPACK_PACKAGE_FILE_NAME ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}.fc${RELEASE}.${CPACK_RPM_PACKAGE_ARCHITECTURE})
       set(CPACK_RPM_POST_INSTALL_SCRIPT_FILE "${CMAKE_CURRENT_SOURCE_DIR}/postinst")
       set(CPACK_RPM_POST_UNINSTALL_SCRIPT_FILE "${CMAKE_CURRENT_SOURCE_DIR}/postrm")
+
+    # >>> TEMPLATE CODE FOR ADDITIONAL REDHAT-LIKE DISTRIBUTIONS <<<
+    
+    #elseif(DISTRIBUTION MATCHES "openSUSE.*")
+    #
+    #  # Set openSUSE-specific information (see http://www.cmake.org/Wiki/CMake:CPackPackageGenerators)
+    #  if(ARCHITECTURE MATCHES ".*x86_64.*")
+    #    set(CPACK_RPM_PACKAGE_ARCHITECTURE "x86_64")
+    #  else()
+    #    set(CPACK_RPM_PACKAGE_ARCHITECTURE "i586")
+    #  endif()
+    #  set(CPACK_PACKAGE_CONTACT "Michaël Zugaro")
+    #  set(CPACK_RPM_PACKAGE_GROUP "Science")
+    #  set(CPACK_RPM_PACKAGE_LICENSE "GPL")		
+    #  set(CPACK_RPM_PACKAGE_SUGGESTS "nphys-data, klusters, neuroscope")
+    #  set(CPACK_RPM_PACKAGE_REQUIRES "libklustersshared, libqt4, libqt4-x11, libQtWebKit4")
+    #  set(CPACK_RPM_PACKAGE_URL "http://ndmanager.sourceforge.net")
+    #  set(CPACK_GENERATOR "RPM")
+    #  set(CPACK_RPM_POST_INSTALL_SCRIPT_FILE "${CMAKE_CURRENT_SOURCE_DIR}/postinst")
+    #  set(CPACK_RPM_POST_UNINSTALL_SCRIPT_FILE "${CMAKE_CURRENT_SOURCE_DIR}/postrm")
+    #  set(CPACK_PACKAGE_FILE_NAME ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${RELEASE}.${CPACK_RPM_PACKAGE_ARCHITECTURE})
         
     endif()
   endif()
