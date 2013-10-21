@@ -1,10 +1,10 @@
 #////////////////////////////////////////////////////////////////////////////
 #//   Makefile to compile and install process_extractspikes
 #//
-#//   copyright            : (C) 2008-2011 by Michaël Zugaro
-#//   email                : michael.zugaro@college-de-france.fr
-#//   copyright            : (C) 2007 by Nicolas LEBAS
+#//   copyright            : (C) 2007-2011 by Nicolas LEBAS
 #//   email                : nicolas.lebas@college-de-france.fr
+#//   copyright            : (C) 2008 by Michaël Zugaro
+#//   email                : michael.zugaro@college-de-france.fr
 #//
 #//   This program is free software; you can redistribute it and/or modify
 #//   it under the terms of the GNU General Public License as published by
@@ -32,9 +32,9 @@ MANSRC = $(EXEC).docbook
 MANOBJ = $(EXEC).1
 MANGZ = $(MANOBJ).gz
 XSLTPROC = /usr/bin/xsltproc
-LOCAL = $(shell locate manpages/docbook.xsl|tail -1)
+LOCAL = \`locate manpages/docbook.xsl|tail -1\`
 WEB = http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl
-XSL = $(shell [ -z "$(LOCAL)" ] && echo $(WEB) || echo $(LOCAL))
+XSL = `a=$(LOCAL) && [ -z "$(LOCAL)" ] && echo $(WEB) || echo $(LOCAL)`
 GZIP = gzip -9
 
 doc: $(MANGZ)
@@ -45,7 +45,7 @@ $(MANGZ): $(MANSRC)
 
 clean:
 	@echo "Cleaning $(EXEC) and manual page..."
-	@- rm -f $(EXEC) *.o $(MANOBJ) $(MANGZ)
+	- rm -f $(EXEC) *.o $(MANOBJ) $(MANGZ) manpage*
 
 INSTALLDIR = /usr
 BINDIR = $(INSTALLDIR)/bin
@@ -63,5 +63,5 @@ install:
 
 uninstall:
 	@echo "Uninstalling $(EXEC) and manual page..."
-	@rm $(BINDIR)/$(EXEC) $(MANDIR)/$(MANGZ)
+	- rm $(BINDIR)/$(EXEC) $(MANDIR)/$(MANGZ)
 

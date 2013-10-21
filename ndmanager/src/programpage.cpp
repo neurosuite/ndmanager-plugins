@@ -4,7 +4,7 @@
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  *   This program is distributed in the hope that it will be useful,       *
@@ -74,7 +74,7 @@ ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const QString& name)
     if(expertMode){
         scriptView = new QTextEdit(this);
         scriptView->setAcceptRichText(false);
-        tabWidget->addTab(scriptView,tr("Script"));
+        tabWidget->addTab(scriptView,tr("Plugin"));
     } else {
         scriptView = 0;
     }
@@ -87,7 +87,7 @@ ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const QString& name)
     frameLayout->addWidget(buttons);
 
     if(expertMode){
-        saveParametersButton = new QPushButton(tr("Save Script Description As ..."),buttons);
+        saveParametersButton = new QPushButton(tr("Save Plugin Description As ..."),buttons);
 
         QSizePolicy policy(QSizePolicy::Fixed,QSizePolicy::Fixed);
         policy.setHorizontalStretch(0);
@@ -99,7 +99,7 @@ ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const QString& name)
         saveParametersButton->setMaximumSize(QSize(300,32767));
         gridLayout->addWidget(saveParametersButton,0,1);
 
-        saveScriptButton = new QPushButton(tr("Save Script As ..."),buttons);
+        saveScriptButton = new QPushButton(tr("Save Plugin As ..."),buttons);
         policy = QSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
         policy.setHorizontalStretch(0);
         policy.setVerticalStretch(0);
@@ -110,7 +110,7 @@ ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const QString& name)
         saveScriptButton->setMaximumSize(QSize(130,32767));
         gridLayout->addWidget(saveScriptButton,0,3);
 
-        removeButton = new QPushButton(tr("Remove Script"),buttons);
+        removeButton = new QPushButton(tr("Remove Plugin"),buttons);
         policy = QSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
         policy.setHorizontalStretch(0);
         policy.setVerticalStretch(0);
@@ -135,7 +135,7 @@ ProgramPage::ProgramPage(bool expertMode,QWidget *parent, const QString& name)
         connect(scriptView,SIGNAL(textChanged()),this,SLOT(scriptModified()));
         connect(help,SIGNAL(textChanged()),this,SLOT(helpModified()));
     } else {
-        removeButton = new QPushButton(tr("Remove Script"),buttons);
+        removeButton = new QPushButton(tr("Remove Plugin"),buttons);
         QSizePolicy policy(QSizePolicy::Fixed,QSizePolicy::Fixed);
         policy.setHorizontalStretch(0);
         policy.setVerticalStretch(0);
@@ -294,7 +294,7 @@ void ProgramPage::nameChanged(const QString& name){
                         //should no be considered as a modification.
                         scriptIsModified = false;
                     } else {
-                        message =  tr("The file %1 does not appear to be a script file (a script file should begin with #!).").arg(name);
+                        message =  tr("The file %1 does not appear to be a plugin file (a script file should begin with #!).").arg(name);
                         title = tr("IO Error!");
                         scriptView->clear();
                     }

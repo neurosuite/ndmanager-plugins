@@ -4,7 +4,7 @@
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  *   This program is distributed in the hope that it will be useful,       *
@@ -175,7 +175,8 @@ void ndManager::setupActions()
     settingsMenu->addSeparator();
 
     settings.beginGroup("General");
-    mExpertMode->setChecked(settings.value("expertMode").toBool());
+    if ( settings.contains("expertMode")) mExpertMode->setChecked(settings.value("expertMode").toBool());
+	 else mExpertMode->setChecked(true);
     settings.endGroup();
 
     viewMainToolBar = settingsMenu->addAction(tr("Show Main Toolbar"));
@@ -418,7 +419,7 @@ void ndManager::slotFileClose(){
         QStringList scriptModified = parameterView->modifiedScripts();
         if(!scriptModified.isEmpty()) {
             Q_FOREACH(const QString& name, scriptModified ) {
-                switch(QMessageBox::question(0,tr("Script modification"),tr("The script %1 has been modified, do you want to save the it?").arg(name),QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
+                switch(QMessageBox::question(0,tr("Plugin modification"),tr("The plugin %1 has been modified, do you want to save the it?").arg(name),QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
                 case QMessageBox::Save://<=> Save
                     parameterView->saveScript(name);
                     break;
@@ -481,7 +482,7 @@ bool ndManager::queryClose()
         const QStringList scriptModified = parameterView->modifiedScripts();
         if( !scriptModified.isEmpty() ){
             Q_FOREACH(const QString& name, scriptModified) {
-                switch(QMessageBox::question(this,tr("Script modification"),tr("The script %1 has been modified, do you want to save the it?").arg(name),QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
+                switch(QMessageBox::question(this,tr("Plugin modification"),tr("The plugin %1 has been modified, do you want to save the it?").arg(name),QMessageBox::Save|QMessageBox::Discard|QMessageBox::Cancel)){
                 case QMessageBox::Save://<=> Save
                     parameterView->saveScript(name);
                     break;

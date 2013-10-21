@@ -15,5 +15,5 @@ source ./version
 
 	dir=$(basename $(pwd))
 	cd ..
-	sudo tar -cvz --exclude $dir/$tarball -f $dir/package/$tarball $dir
+	sudo tar -cvz --exclude $dir/$tarball --exclude $dir/package/*deb --exclude $dir/backup* -f $dir/package/$tarball $dir
 )

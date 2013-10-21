@@ -4,7 +4,7 @@
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  *   This program is distributed in the hope that it will be useful,       *
@@ -44,7 +44,7 @@ ProgramsPage::ProgramsPage(bool expertMode,QWidget *parent)
     frameLayout->setMargin(0);
     frameLayout->setSpacing(0);
 
-    const QString message = tr("Here you can add a new script description or load an existing one from disk.");
+    const QString message = tr("Here you can add a new plugin description or load an existing one from disk.");
     QLabel* description = new QLabel(message,this);
     description->adjustSize();
     description->setAlignment(Qt::AlignCenter);
@@ -103,7 +103,7 @@ ProgramsPage::~ProgramsPage(){}
 
 void ProgramsPage::loadProgram(){
 
-    const QStringList programUrls=QFileDialog::getOpenFileNames(this, tr("Select the Script(s) to load..."));
+    const QStringList programUrls=QFileDialog::getOpenFileNames(this, tr("Select the Plugin(s) to load..."));
     if(!programUrls.isEmpty()){
         Q_FOREACH(const QString &programUrl, programUrls) {
             QString filePath = programUrl;

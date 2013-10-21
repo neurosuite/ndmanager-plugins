@@ -33,6 +33,10 @@ Process video files recorded by the acquisition system: transcode and extract LE
 
 Process event files recorded by the acquisition system: convert to .evt format and rename events (default = true)
 
+# concatenation
+
+Concatenate subsession files (default = true)
+
 # spikes
 
 Process spikes: detect and extract spike waveforms, perform PCA (default = true)
@@ -47,7 +51,7 @@ Remove intermediate files after pre-processing is complete (default = false)
 
 # log
 
-Save progress information to log files for later review (use 'cat' or 'less -R' for correct formatting) (default = false)
+Save progress information to log files for later review (use 'cat' or 'less -R' for correct formatting) (default = true)
 </help>
 </program>
 </parameter>

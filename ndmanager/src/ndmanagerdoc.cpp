@@ -4,7 +4,7 @@
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
+ *   the Free Software Foundation; either version 3 of the License, or     *
  *   (at your option) any later version.                                   *
  *                                                                         *
  *   This program is distributed in the hope that it will be useful,       *
@@ -143,7 +143,14 @@ ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::openDocument(const QStri
 
 ndManagerDoc::OpenSaveCreateReturnMessage ndManagerDoc::newDocument(){
     //If the user has no local version of the file the system default is used
+#ifdef Q_WS_WIN
+	// In Windows, QStandardPaths returns the path to user applications, not not system applications
+	// Therefore we cannot use it here
+	QString path(getenv("PROGRAMFILES"));
+	path += QLatin1String("/NDManager/share/applications/ndmanager/ndManagerDefault.xml");
+#else	
     QString path = QStandardPaths::locate (QStandardPaths::ApplicationsLocation, QLatin1String("ndmanager/ndManagerDefault.xml"));
+#endif
     if (path.isEmpty()) {
        qDebug()<<" ndManagerDefault.xml is not found. Verify install";
        QMessageBox::critical (0, QObject::tr("Error!"),QObject::tr("The file ndManagerDefault.xml does not exist. Please verify installation"));
