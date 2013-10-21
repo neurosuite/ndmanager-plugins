@@ -242,10 +242,14 @@ void ndManager::slotFileOpen()
 {
     slotStatusMsg(tr("Opening file..."));
 
-    const QString url=QFileDialog::getOpenFileName(this, tr("Open File..."),QString(),
+    QSettings settings;
+    const QString url=QFileDialog::getOpenFileName(this, tr("Open File..."),settings.value("CurrentDirectory").toString(),
                                                    tr("Parameter File (*.xml);;All files (*.*)") );
-    if(!url.isEmpty())
+    if(!url.isEmpty()) {
+        QDir CurrentDir;
+        settings.setValue("CurrentDirectory", CurrentDir.absoluteFilePath(url));
         openDocumentFile(url);
+    }
 
     slotStatusMsg(tr("Ready."));
 }
@@ -388,10 +392,14 @@ void ndManager::slotImport(){
     slotStatusMsg(tr("importing file as model..."));
     importedFile = true;
 
-    const QString url = QFileDialog::getOpenFileName(this, tr("Import file as model..."),QString(),
+    QSettings settings;
+    const QString url = QFileDialog::getOpenFileName(this, tr("Import file as model..."),settings.value("CurrentDirectory").toString(),
                                                      tr("Parameter File (*.xml);;All files (*.*)") );
-    if(!url.isEmpty())
+    if(!url.isEmpty()) {
+        QDir CurrentDir;
+        settings.setValue("CurrentDirectory", CurrentDir.absoluteFilePath(url));
         openDocumentFile(url);
+    }
 
     importedFileUrl = url + QDir::separator() + "Untitled";
 
