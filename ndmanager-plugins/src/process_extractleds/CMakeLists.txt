@@ -1,0 +1,25 @@
+project(ndmanager-plugins-src-process_extractleds)
+cmake_minimum_required(VERSION 2.8.6)
+
+# Build and install program
+set(source process_extractleds.c)
+set(program process_extractleds)
+set(ffmpeg ffmpeg-0.cvs20070307)
+add_custom_command(OUTPUT ffmpeg1 COMMAND [ -d ffmpeg ] || cp -a "${CMAKE_CURRENT_SOURCE_DIR}/${ffmpeg}" ffmpeg)
+add_custom_command(OUTPUT ffmpeg2 COMMAND cp "${CMAKE_CURRENT_SOURCE_DIR}/${source}" ffmpeg/ffplay.c DEPENDS ffmpeg1)
+add_custom_command(OUTPUT ffmpeg3 COMMAND cd ffmpeg && ./configure && make ffplay && mv ffplay ../${program} DEPENDS ffmpeg2)
+add_custom_target(${program} ALL DEPENDS ffmpeg3)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${program}" DESTINATION bin)
+
+# Create and install man pages
+set(docbooks process_extractleds.docbook)
+find_file(xsl docbook.xsl /usr/share/apps/ksgmltools2/docbook/xsl/manpages/)
+set(manpages)
+foreach(docbook ${docbooks})
+	string(REGEX REPLACE docbook 1 manpage ${docbook})
+	add_custom_command(OUTPUT ${manpage} DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/${docbook}" COMMAND xsltproc ${xsl} "${CMAKE_CURRENT_SOURCE_DIR}/${docbook}")
+	add_custom_command(OUTPUT ${manpage}.gz DEPENDS ${manpage} COMMAND gzip ${manpage})
+	list(APPEND manpages ${manpage}.gz)
+	install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${manpage}.gz" DESTINATION man/man1)
+endforeach()
+add_custom_target(man-${program} ALL DEPENDS ${manpages})
