@@ -45,7 +45,13 @@ set(docbooks
 	pad.docbook
 	process_reorderclusters.docbook
 	rn.docbook)
-find_file(xsl docbook.xsl /usr/share/apps/ksgmltools2/docbook/xsl/manpages/)
+file(GLOB_RECURSE files /usr/share/docbook.xsl)
+foreach(file ${files})
+	string(FIND ${file} manpages found)
+	if (NOT found EQUAL -1)
+		set(xsl ${file})
+	endif()
+endforeach()
 set(manpages)
 foreach(docbook ${docbooks})
 	string(REGEX REPLACE docbook 1 manpage ${docbook})
