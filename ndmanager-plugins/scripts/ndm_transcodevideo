@@ -34,7 +34,7 @@ print_header "$session - Converting video"
 inputs_missing $session.xml && exit $INPUTS_MISSING
 
 # Check required programs
-check_commands_installed xpathReader mencoder
+check_commands_installed xpathReader avconv
 
 # ////////////////////////////////////////////////////////////////////////////////////////////////
 # // Read Parameters
@@ -56,33 +56,22 @@ inputs_missing $video_file && exit $INPUTS_MISSING
 # // Process
 # ////////////////////////////////////////////////////////////////////////////////////////////////
 
-input_codec=$(ffmpeg -i $video_file 2>&1|grep "Video:"|sed -r 's/.*Video: ([0-9A-Za-z]{4}).*/\1/')
-if [ "$input_codec" == "IV50" ] && [ "$(uname -m)" == "x86_64" ]
-then
-	# Intel Indeo V5.0 (IV50) is a proprietary codec used by Spike2, that can be decoded only by the 32bit version
-	# of mencoder. Therefore, on 64bit platforms, we need to run mencoder32 for this codec (this has to be painfully
-	# installed separately)
-	menc="mencoder32"
-else
-	menc="mencoder"
-fi
-
 case $output_codec in
 	m1v)
 		outputs_exist $session.m1v && exit $OUTPUTS_EXIST
-		eval $menc $video_file -ovc lavc -lavcopts vcodec=mpeg1video -of rawvideo -o $session-tmp.m1v
+		avconv -i $video_file -vcodec mpeg1video -f rawvideo -r 30 -b 800k $session-tmp.m1v
 		error=$?
-		check_command_status mencoder $error
+		check_command_status avconv $error
 		mv $session-tmp.m1v $session.m1v
 		;;
 	x264)
 		# If target file already exists, skip conversion (note that testing for the existence of a file with the target
 		# name is not reliable, because 'avi' is a very common extension, so the source and target files could have the
 		# same name; therefore, if we find a file with the target name, we also have to test its codec)
-		[ -f $session.avi ] && ffmpeg -i $session.avi 2>&1 | grep 'Video.*h264' >/dev/null && outputs_exist $session.avi && exit $OUTPUTS_EXIST
-		eval $menc $video_file -noskip -ovc x264 -x264encopts qp=20 -nosound -o $session-tmp.avi
+		[ -f $session.avi ] && avconv -i $session.avi 2>&1 | grep 'Video.*h264' >/dev/null && outputs_exist $session.avi && exit $OUTPUTS_EXIST
+		avconv -i $video_file -vcodec libx264 -qp 20 $session-tmp.avi
 		error=$?
-		check_command_status mencoder $error
+		check_command_status avconv $error
 		mv $session-tmp.avi $session.avi
 		;;
 esac

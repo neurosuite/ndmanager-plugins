@@ -9,7 +9,7 @@ add_custom_command(OUTPUT ffmpeg1 COMMAND [ -d ffmpeg ] || cp -a "${CMAKE_CURREN
 add_custom_command(OUTPUT ffmpeg2 COMMAND cp "${CMAKE_CURRENT_SOURCE_DIR}/${source}" ffmpeg/ffplay.c DEPENDS ffmpeg1)
 add_custom_command(OUTPUT ffmpeg3 COMMAND cd ffmpeg && ./configure && make ffplay && mv ffplay ../${program} DEPENDS ffmpeg2)
 add_custom_target(${program} ALL DEPENDS ffmpeg3)
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${program}" DESTINATION bin)
+install(PROGRAMS "${CMAKE_CURRENT_BINARY_DIR}/${program}" DESTINATION bin)
 
 # Create and install man pages
 set(docbooks process_extractleds.docbook)
