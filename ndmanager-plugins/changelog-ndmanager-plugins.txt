@@ -1,16 +1,19 @@
-The following notes describe the changes from 1.4.8 to 1.4.9
+1.4.9 ==> 1.4.10
+
+* convert indeo5 videos using avconv, fix executable flag
+
+------------------------------------------------------------------------------------------------------------
+1.4.8 ==> 1.4.9
 
 * moved to CMake
 
 ------------------------------------------------------------------------------------------------------------
-
-The following notes describe the changes from 1.4.7 to 1.4.8
+1.4.7 ==> 1.4.8
 
 * fixed a crash in process_extractspikes
 
 ------------------------------------------------------------------------------------------------------------
-
-The following notes describe the changes from 1.4.6 to 1.4.7
+1.4.6 ==> 1.4.7
 
 * fixed another bug in spots2pos when using absolute file paths to access .spots or .cat.evt files
 * some files for ffmpeg were missing in the source tarball; this was corrected.
@@ -20,38 +23,33 @@ The following notes describe the changes from 1.4.6 to 1.4.7
 * fixed problem with large 'start' values in ndm_extractspikes (can now seek past 2^31 bytes)
 
 ------------------------------------------------------------------------------------------------------------
-
-The following notes describe the changes from 1.4.5 to 1.4.6
+1.4.5 ==> 1.4.6
 
 * ndm_start can now process recordings from Amplipex
 * ndm_start now has an option to disable concatenation
 * fixed a bug in spots2pos when using absolute file paths to access .spots or .cat.evt files
 
 ------------------------------------------------------------------------------------------------------------
-
-The following notes describe the changes from 1.4.4 to 1.4.5
+1.4.4 ==> 1.4.5
 
 * ndm_start traps HUP signal so that processing goes on if the user closes the shell by mistake
 * ndm_start logs activity by default
 * ndm_extractspikes can now process only missing electrode groups
 
 ------------------------------------------------------------------------------------------------------------
-
-The following notes describe the changes from 1.4.3 to 1.4.4
+1.4.3 ==> 1.4.4
 
 * fixed bug in process_smrconvert that prevented processing of large files in version 7 format
 * 'duration' can now handle (unusual) file names including '.' in their basename
 
 ------------------------------------------------------------------------------------------------------------
-
-The following notes describe the changes from 1.4.2 to 1.4.3
+1.4.2 ==> 1.4.3
 
 * process_extractchannels: possibility to select post-hoc a different reference (among recorded channels) for each channel
 * Bux fixes in ndm_pca (feature count) and ndm_extractleds (list of video files for Spike2)
 
 ------------------------------------------------------------------------------------------------------------
-
-The following notes describe the changes from 1.4.1 to 1.4.2
+1.4.1 ==> 1.4.2
 
 Bux fixes
 
@@ -59,8 +57,7 @@ Bux fixes
 * Duplicate <help> tag was removed (ndm_start.xml)
 
 ------------------------------------------------------------------------------------------------------------
-
-The following notes describe the changes from 1.4 to 1.4.1
+1.4 ==> 1.4.1
 
 Features
 
@@ -77,6 +74,7 @@ Bux fixes
 * Fixed a nasty bug that replaced /usr/bin/man with an empty link (python makefile)
 
 ------------------------------------------------------------------------------------------------------------
+1.3.4 ==> 1.4
 
 Version 1.4 is a major overhaul. The following notes try to describe most of the changes from 1.3.4 to 1.4.
 
