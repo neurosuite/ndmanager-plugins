@@ -4,11 +4,11 @@ cmake_minimum_required(VERSION 2.8.6)
 # Build and install program
 set(source process_extractleds.c)
 set(program process_extractleds)
-set(ffmpeg ffmpeg-0.cvs20070307)
-add_custom_command(OUTPUT ffmpeg1 COMMAND [ -d ffmpeg ] || cp -a "${CMAKE_CURRENT_SOURCE_DIR}/${ffmpeg}" ffmpeg)
-add_custom_command(OUTPUT ffmpeg2 COMMAND cp "${CMAKE_CURRENT_SOURCE_DIR}/${source}" ffmpeg/ffplay.c DEPENDS ffmpeg1)
-add_custom_command(OUTPUT ffmpeg3 COMMAND cd ffmpeg && ./configure && make ffplay && mv ffplay ../${program} DEPENDS ffmpeg2)
-add_custom_target(${program} ALL DEPENDS ffmpeg3)
+set(libav libav-11.2)
+add_custom_command(OUTPUT libav1 COMMAND [ -d ${libav} ] || tar xvf "${CMAKE_CURRENT_SOURCE_DIR}/${libav}.tar.gz")
+add_custom_command(OUTPUT libav2 COMMAND cp "${CMAKE_CURRENT_SOURCE_DIR}/${source}" ${libav}/avplay.c DEPENDS libav1)
+add_custom_command(OUTPUT libav3 COMMAND cd ${libav} && ./configure && make && mv avplay ../${program} DEPENDS libav2)
+add_custom_target(${program} ALL DEPENDS libav3)
 install(PROGRAMS "${CMAKE_CURRENT_BINARY_DIR}/${program}" DESTINATION bin)
 
 # Create and install man pages
