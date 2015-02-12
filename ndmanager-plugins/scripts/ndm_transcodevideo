@@ -69,7 +69,7 @@ case $output_codec in
 		# name is not reliable, because 'avi' is a very common extension, so the source and target files could have the
 		# same name; therefore, if we find a file with the target name, we also have to test its codec)
 		[ -f $session.avi ] && avconv -i $session.avi 2>&1 | grep 'Video.*h264' >/dev/null && outputs_exist $session.avi && exit $OUTPUTS_EXIST
-		avconv -i $video_file -vcodec libx264 -qp 20 $session-tmp.avi
+		avconv -i $video_file -vcodec libx264 -qp 20 -r 30 $session-tmp.avi
 		error=$?
 		check_command_status avconv $error
 		mv $session-tmp.avi $session.avi

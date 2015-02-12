@@ -1,3 +1,8 @@
+1.4.10 ==> 1.4.11
+
+* rebase process_extractleds on libav-11.2
+
+------------------------------------------------------------------------------------------------------------
 1.4.9 ==> 1.4.10
 
 * convert indeo5 videos using avconv, fix executable flag

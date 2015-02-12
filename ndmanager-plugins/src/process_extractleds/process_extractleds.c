@@ -2999,13 +2999,14 @@ static void event_loop(void)
 }
 
 // Custom code for LED extraction ->
-static void opt_threshold(const char *arg)
+static int opt_threshold(void *optctx, const char *opt, const char *arg)
 {
-    Thresh = atoi(arg);
+    Thresh = parse_number_or_die(opt, arg, OPT_INT64, 1, INT_MAX);
     if(Thresh<0||Thresh>255){
         fprintf(stderr, "invalid threshold (0 to 255)\n");
         exit(1);
     }
+    return 0;
 }
 // <- Custom code for LED extraction
 
@@ -3075,11 +3076,11 @@ static int opt_duration(void *optctx, const char *opt, const char *arg)
 static const OptionDef options[] = {
 #include "cmdutils_common_opts.h"
     // Custom code for LED extraction ->
-    { "t", HAS_ARG, {(void*)opt_threshold}, "set detection threshold (default 90)", "threshold" },
     { "n", OPT_BOOL, {(void*)&simulate}, "simulate, i.e. do not write to disk" },
     { "hide", OPT_BOOL, {(void*)&hide_video}, "hide video output to speed up processing" },
     { "i", OPT_BOOL, {(void*)&show_video_info}, "show video rate and duration using stream header" },
     { "i2", OPT_BOOL, {(void*)&show_video_info2}, "show video rate and duration after counting frames (slower but required for incorrect headers)" },
+    { "t", HAS_ARG, { .func_arg = opt_threshold }, "set detection threshold (default 90)", "threshold" },
     // <- Custom code for LED extraction
     { "x", HAS_ARG, { .func_arg = opt_width }, "force displayed width", "width" },
     { "y", HAS_ARG, { .func_arg = opt_height }, "force displayed height", "height" },
