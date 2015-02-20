@@ -43,10 +43,12 @@ check_commands_installed xpathReader avconv
 extension=$(read_script_parameter $session extension)
 output_codec=$(read_script_parameter $session codec)
 suffix=$(read_script_parameter $session suffix)
+frequency=$(read_script_parameter $session frequency)
 
 check_optional_variable $output_codec || { echo_info "No transcoding requested" ; exit $NO_ERROR ; }
 check_mandatory_variable $extension "missing extension"
 check_mandatory_variable $suffix "missing suffix"
+check_optional_variable $frequency || { frequency=30 && echo_info "Using default frequency $frequency" ; }
 
 # Check input file
 video_file=../$directory-$suffix/$session-$suffix.$extension
@@ -57,19 +59,19 @@ inputs_missing $video_file && exit $INPUTS_MISSING
 # ////////////////////////////////////////////////////////////////////////////////////////////////
 
 case $output_codec in
+	# If target file already exists, skip conversion (note that testing for the existence of a file with the target
+	# name is not reliable, because 'avi' is a very common extension, so the source and target files could have the
+	# same name; therefore, if we find a file with the target name, we also have to test its codec)
 	m1v)
-		outputs_exist $session.m1v && exit $OUTPUTS_EXIST
-		avconv -i $video_file -vcodec mpeg1video -f rawvideo -r 30 -b 800k $session-tmp.m1v
+		[ -f $session.m1v ] && avprobe $session.m1v 2>&1 | grep 'Video.*mpeg1video' >/dev/null && outputs_exist $session.m1v && exit $OUTPUTS_EXIST
+		avconv -i $video_file -vcodec mpeg1video -f rawvideo -r $frequency -b 800k $session-tmp.m1v
 		error=$?
 		check_command_status avconv $error
 		mv $session-tmp.m1v $session.m1v
 		;;
 	x264)
-		# If target file already exists, skip conversion (note that testing for the existence of a file with the target
-		# name is not reliable, because 'avi' is a very common extension, so the source and target files could have the
-		# same name; therefore, if we find a file with the target name, we also have to test its codec)
-		[ -f $session.avi ] && avconv -i $session.avi 2>&1 | grep 'Video.*h264' >/dev/null && outputs_exist $session.avi && exit $OUTPUTS_EXIST
-		avconv -i $video_file -vcodec libx264 -qp 20 -r 30 $session-tmp.avi
+		[ -f $session.avi ] && avprobe $session.avi 2>&1 | grep 'Video.*h264' >/dev/null && outputs_exist $session.avi && exit $OUTPUTS_EXIST
+		avconv -i $video_file -vcodec libx264 -qp 20 -r $frequency $session-tmp.avi
 		error=$?
 		check_command_status avconv $error
 		mv $session-tmp.avi $session.avi
