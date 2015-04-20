@@ -16,13 +16,14 @@
 %    =========================================================================
 %     Properties    Values
 %    -------------------------------------------------------------------------
-%     'input'       input frequency (default = 25)
-%     'output'      output frequency (default = 39.0625)
+%     'input'       input frequency (default = 25 Hz)
+%     'output'      output frequency (default = 39.0625 Hz)
 %     'resolution'  [maxX maxY] video resolution (default = [320 240])
 %     'threshold'   luminance threshold (default = 0)
 %     'gap'         missing frames are filled with empty frames, unless the
-%                   time gap exceeds this threshold (in s, default 10)
+%                   time gap exceeds this threshold (default = 10 s)
 %     'leds'        1 or 2 (default = 1)
+%     'shift'       corrective time shift for positions (default = 0 s)
 %    =========================================================================
 %
 %  NOTES
@@ -67,6 +68,7 @@ else
 	resolution = [320 240];
 	events = [];
 end
+shift = 0;
 
 % Is the input file a spots file or an event file?
 if ~isempty(regexp(filename,'[.]cat[.]evt$')),
@@ -117,6 +119,16 @@ for i = 1:2:length(varargin),
 			leds = varargin{i+1};
 			if prod(size(leds)) ~= 1 | ~isnumeric(leds) | leds ~= round(leds) | leds <= 0,
 				error('Incorrect value for property ''leds'' (type ''help spots2pos'' for details).');
+            end
+		case 'shift',
+			shift = varargin{i+1};
+			if ~isdvector(shift),
+				error('Incorrect value for property ''shift'' (type ''help spots2pos'' for details).');
+			end
+			if length(shift) == 1,
+				shift = repmat(shift,length(bases),1);
+			elseif length(shift) ~= length(bases),
+				error('Incorrect number of time shifts (type ''help spots2pos'' for details).');
 			end
 		otherwise,
 			error(['Unknown property ''' num2str(varargin{i}) ''' (type ''help spots2pos'' for details).']);
@@ -127,7 +139,7 @@ concatenated = [];
 
 % Process each file
 for i = 1:length(bases),
-	new = ProcessOne([path '/' bases{i}],inputFrequency,outputFrequency,resolution,threshold,leds);
+	new = ProcessOne([path '/' bases{i}],inputFrequency,outputFrequency,resolution,threshold,leds,shift(i));
 	if isempty(events), continue; end
 	% Display info about source and target durations (and # samples)
 	nSourceSamples = size(new,1);
@@ -177,7 +189,7 @@ end
 
 % ------------------------------------------------------------------------------------------
 
-function output = ProcessOne(basename,inputFrequency,outputFrequency,resolution,threshold,leds)
+function output = ProcessOne(basename,inputFrequency,outputFrequency,resolution,threshold,leds,shift)
 
 nSamplesPerScreen = 100;
 
@@ -392,6 +404,16 @@ if ~isempty(spots),
 end
 
 output = [targetTimestamps resampledPositions];
+
+if shift ~= 0,
+	output= [targetTimestamps+shift resampledPositions];
+	if shift < 0,
+		del = output(:,1)<0;
+	else
+		del = output(:,1)>output(end,1)-shift;
+	end
+	output(del,:) = [];
+end
 
 % ------------------------------------------------------------------------------------------
 
