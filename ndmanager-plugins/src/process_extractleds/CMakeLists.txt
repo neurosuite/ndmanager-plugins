@@ -7,7 +7,7 @@ set(program process_extractleds)
 set(libav libav-11.2)
 add_custom_command(OUTPUT libav1 COMMAND [ -d ${libav} ] || tar xvf "${CMAKE_CURRENT_SOURCE_DIR}/${libav}.tar.gz")
 add_custom_command(OUTPUT libav2 COMMAND cp "${CMAKE_CURRENT_SOURCE_DIR}/${source}" ${libav}/avplay.c DEPENDS libav1)
-add_custom_command(OUTPUT libav3 COMMAND cd ${libav} && ./configure && make && mv avplay ../${program} DEPENDS libav2)
+add_custom_command(OUTPUT libav3 COMMAND cd ${libav} && ./configure --enable-shared --disable-static && make && mv avplay ../${program} DEPENDS libav2)
 add_custom_target(${program} ALL DEPENDS libav3)
 install(PROGRAMS "${CMAKE_CURRENT_BINARY_DIR}/${program}" DESTINATION bin)
 
