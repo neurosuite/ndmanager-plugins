@@ -1,5 +1,0 @@
-*.o
-Makefile
-*.moc
-*.moc.cpp
-doc/en/index.cache.bz2
