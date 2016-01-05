@@ -8,7 +8,8 @@ def CommonPrefix(items):
 	if len(items) == 1:
 		common = re.sub('-[^-]*$','-',items[0])
 	else:
-		common = re.sub('-[^-]*$','-',items[0])
+		#common = re.sub('-[^-]*$','-',items[0])
+		common = items[0]
 		for next in items[1:]:
 			i = 0
 			while i < len(common) and i < len(next):
@@ -21,24 +22,32 @@ def CommonPrefix(items):
 def ListSuffixes(directories):
 	"""Guess suffixes for a list of directories"""
 	common = CommonPrefix(directories)
-	suffixes = [re.sub('^'+common,'',directory) for directory in directories]
+	if common.endswith('-'):
+		# All directories have a suffix (neuralynx, spike2)
+		suffixes = [re.sub('^'+common,'',directory) for directory in directories]
+	else:
+		# One directory does not have a suffix (amplipex)
+		suffixes = [re.sub('^'+common,'',directory) for directory in directories]
+		suffixes = [re.sub('^-','',suffix) for suffix in suffixes]
 	return suffixes
 
 def GuessDate(directory):
 	"""Guess date from directory name"""
 	return re.sub('.*([0-9]{8}).*',r'\1',directory)
 
-def CountFiles(base,session,suffix,extension):
+def CountFiles(mode,base,session,suffix,extension):
 	"""Check that a given file (or list of files) exists"""
-	if extension == 'ncs' or extension == 'mpg' or extension == 'smi':
+	if suffix != '':
+		suffix = '-'+suffix
+	directories = fnmatch.filter(os.listdir('.'),base+suffix)
+	files = []
+	if extension == 'ncs' or (extension == 'mpg' and mode == 'neuralynx') or extension == 'smi':
 		nnn = r'-[0-9]*'
 	else:
 		nnn = ''
-	directories = fnmatch.filter(os.listdir('.'),base+'-'+suffix)
-	files = []
 	for directory in directories:
 		files.extend(os.listdir(directory))
-	files = fnmatch.filter(files,session+'-'+suffix+nnn+'.'+extension)
+	files = fnmatch.filter(files,session+suffix+nnn+'.'+extension)
 	return len(files)
 
 # -------------------------------------------------------------------------------------
@@ -49,12 +58,24 @@ class FileInfo():
 	def __init__(self,directories):
 		self.directories = directories
 		self.base = re.sub(r'-$','',CommonPrefix(directories))
-		# Mode
-		l = fnmatch.filter(os.listdir(directories[0]),'*.smr')
-		if len(l) == 0:
+
+		# Guess acquisition system based on directory contents
+		self.mode = ''
+		l1 = fnmatch.filter(os.listdir(directories[0]),'*.dat')
+		l2 = fnmatch.filter(os.listdir(directories[0]),'*.tsp')
+		if len(l1) != 0 or len(l2) != 0:
+			# Contains at least one dat file -> amplipex
+			self.mode = 'amplipex'
+		l1 = fnmatch.filter(os.listdir(directories[0]),'*.ncs')
+		l2 = fnmatch.filter(os.listdir(directories[0]),'*.nvt')
+		if len(l1) != 0 or len(l2) != 0:
+			# Contains at least one ncs file -> neuralynx
 			self.mode = 'neuralynx'
-		else:
+		l = fnmatch.filter(os.listdir(directories[0]),'*.smr')
+		if len(l) != 0:
+			# Contains at least one smr file -> spike2
 			self.mode = 'spike2'
+
 		# Complete file list (across directories)
 		files = []
 		for d in directories:
@@ -70,6 +91,22 @@ class FileInfo():
 		# Loop through sessions
 		self.items = []
 		for session in self.sessions:
+			if self.mode == 'amplipex':
+				item = []
+				item.append(session)
+				item.append('')
+				item.append('dat')
+				item.append(CountFiles(self.mode,self.base,session,'','dat'))
+				self.items.append(item)
+				for suffix in self.suffixes:
+					if suffix != '':
+						for extension in ['tsp','meta','ini','mpg']:
+							item = []
+							item.append(session)
+							item.append(suffix)
+							item.append(extension)
+							item.append(CountFiles(self.mode,self.base,session,suffix,extension))
+							self.items.append(item)
 			if self.mode == 'neuralynx':
 				for suffix in self.suffixes:
 					for extension in ['ncs','nvt','nev','mpg','smi']:
@@ -77,21 +114,21 @@ class FileInfo():
 						item.append(session)
 						item.append(suffix)
 						item.append(extension)
-						item.append(CountFiles(self.base,session,suffix,extension))
+						item.append(CountFiles(self.mode,self.base,session,suffix,extension))
 						self.items.append(item)
 			elif self.mode == 'spike2':
 				item = []
 				item.append(session)
 				item.append(suffix)
 				item.append('avi')
-				item.append(CountFiles(self.base,session,'*','avi'))
+				item.append(CountFiles(self.mode,self.base,session,'*','avi'))
 				self.items.append(item)
 				for suffix in self.suffixes:
 					item = []
 					item.append(session)
 					item.append(suffix)
 					item.append('smr')
-					item.append(CountFiles(self.base,session,suffix,'smr'))
+					item.append(CountFiles(self.mode,self.base,session,suffix,'smr'))
 					self.items.append(item)
 
 # -------------------------------------------------------------------------------------
@@ -110,7 +147,7 @@ class InfoDialog(QtGui.QDialog):
 			extension = info.items[row][2]
 			n = info.items[row][3]
 			for column in range(0,4):
-				if column == 3 and (extension != 'ncs' and extension != 'mpg' and extension != 'smi'):
+				if column == 3 and (extension != 'ncs' and (info.mode != 'neuralynx' or extension != 'mpg') and extension != 'smi'):
 					if n == 0:
 						icon = QtGui.QIcon(':/images/cancel.png')
 					else:
@@ -120,8 +157,7 @@ class InfoDialog(QtGui.QDialog):
 				else:
 					cell = QtGui.QTableWidgetItem(str(info.items[row][column]))
 					if column == 2:
-						#if extension == 'mpg' or extension == 'smi' or extension == 'nvt':
-						if extension in ['mpg','smi','nvt','avi']:
+						if extension in ['mpg','smi','nvt','avi','tsp']:
 							icon = QtGui.QIcon(':/images/video.png')
 						else:
 							icon = QtGui.QIcon(':/images/binary.png')
@@ -160,6 +196,13 @@ if __name__ == '__main__':
 			sys.exit(0)
 
 	# Check directory list
+	for directory in directories:
+		if not os.path.exists(directory):
+			box = QtGui.QMessageBox()
+			box.setText('Data directory \''+directory+'\' not found.')
+			box.setIcon(QtGui.QMessageBox.Critical)
+			box.exec_()
+			sys.exit(1)
 	path = os.path.dirname(directories[0])
 	for directory in directories[1:]:
 		if os.path.dirname(directory) != path:

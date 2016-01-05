@@ -158,6 +158,7 @@ static void PaintDetectedPixels(uint8_t *lum, uint8_t *Cr, uint8_t *Cb, int widt
 		for ( y = 0 ; y < height ; ++y )
 			if ( PixLabel[x+y*width] == 2 ) { lum [x+y*width] += 20;Cr[x/2+y/2*width/2] = 255;Cb[x/2+y/2*width/2] = 10; }
 }
+
 // <- Custom code for LED extraction
 
 /*
@@ -1248,7 +1249,12 @@ static double compute_target_time(double frame_current_pts, VideoState *is)
     return is->frame_timer;
 }
 
+// Custom code for LED extraction ->
+static void stream_close(VideoState *is);
+// <- Custom code for LED extraction
+
 /* called to display each frame */
+
 static void video_refresh_timer(void *opaque)
 {
     VideoState *is = opaque;
@@ -1267,14 +1273,30 @@ retry:
             if ( !is->paused )
             {
             	count++;
-            	if ( count >= 100 )
+            	if ( count >= 10000 )
             	{
             		printf("\nDone!\n");
-            		// Write one empty frame at the end (so that we know how many frames were in the video,
-            		// even if there is no spot in the last frame!)
-            		fprintf(SpotFp,"%d -1 -1 -1 -1 -1 -1 -1 -1\n",FrameNo-1);
-            		fflush(SpotFp);
-            		exit(0);
+						if ( ! simulate )
+						{
+							// Write one empty frame at the end (so that we know how many frames were in the video,
+							// even if there is no spot in the last frame!)
+							fprintf(SpotFp,"%d -1 -1 -1 -1 -1 -1 -1 -1\n",FrameNo-1);
+							fflush(SpotFp);
+							exit(0);
+						}
+						else
+						{
+							if (cur_stream) {
+								stream_close(cur_stream);
+								cur_stream = NULL;
+							}
+							uninit_opts();
+							avformat_network_deinit();
+							if (show_status)
+								printf("\n");
+							SDL_Quit();
+							av_log(NULL, AV_LOG_QUIET, "");
+						}
             	}
             }
             // <- Custom code for LED extraction
@@ -2552,6 +2574,7 @@ static int decode_thread(void *arg)
     if (show_video_info2) {
 		AVPacket pkt;
 		int64_t n = 0;
+		simulate = 1;
 		while ( av_read_frame(ic,&pkt) == 0 ) if (pkt.stream_index == st_index[AVMEDIA_TYPE_VIDEO]) n++;
 		fprintf(stdout,"VIDEO Average Sampling Rate (Hz)   %f\n",(double) is->video_st->avg_frame_rate.num / is->video_st->avg_frame_rate.den);
 		fprintf(stdout,"VIDEO Number of Frames             %ld\n",n);

@@ -60,13 +60,16 @@ if exist('GetCustomDefaults.m'),
 	leds = GetCustomDefaults('leds',1);
 	resolution = GetCustomDefaults('resolution',[320 240]);
 	events = [];
+	picture = GetCustomDefaults('picture','');
 else
 	inputFrequency = 25;
 	outputFrequency = 39.0625;
 	threshold = 0;
+    gap = 10;
 	leds = 1;
 	resolution = [320 240];
 	events = [];
+	picture = '';
 end
 shift = 0;
 
@@ -130,6 +133,11 @@ for i = 1:2:length(varargin),
 			elseif length(shift) ~= length(bases),
 				error('Incorrect number of time shifts (type ''help spots2pos'' for details).');
 			end
+		case 'picture',
+			picture = varargin{i+1};
+			if ~ischar(picture),
+				error('Incorrect value for property ''picture'' (type ''help spots2pos'' for details).');
+			end
 		otherwise,
 			error(['Unknown property ''' num2str(varargin{i}) ''' (type ''help spots2pos'' for details).']);
 	end
@@ -139,7 +147,7 @@ concatenated = [];
 
 % Process each file
 for i = 1:length(bases),
-	new = ProcessOne([path '/' bases{i}],inputFrequency,outputFrequency,resolution,threshold,leds,shift(i));
+	new = ProcessOne([path '/' bases{i}],inputFrequency,outputFrequency,resolution,threshold,leds,picture,shift(i));
 	if isempty(events), continue; end
 	% Display info about source and target durations (and # samples)
 	nSourceSamples = size(new,1);
@@ -189,7 +197,7 @@ end
 
 % ------------------------------------------------------------------------------------------
 
-function output = ProcessOne(basename,inputFrequency,outputFrequency,resolution,threshold,leds,shift)
+function output = ProcessOne(basename,inputFrequency,outputFrequency,resolution,threshold,leds,picture,shift)
 
 nSamplesPerScreen = 100;
 
@@ -232,7 +240,7 @@ for i = 1:length(filenames),
 	n = 0;
 	filename = [path '/' filenames{i}];
 	if exist(filename),
-        disp(['Reading ''' filename '''...']);
+		disp(['Reading ''' filename '''...']);
 		moreSpots = load(filename);
 		moreSpots(:,1) = moreSpots(:,1) + 1;
 		initialTimestamps = (1:max(moreSpots(:,1)))';
@@ -241,6 +249,8 @@ for i = 1:length(filenames),
 	end
 	if isempty(moreSpots),
 		warning(['Empty spots file ''' filename ''' (or threshold too high)']);
+		output = [];
+		dlmwrite(posFile,output,'\t');
 		return
 	end
 	moreSpots(:,1) = moreSpots(:,1) + nFrames;
@@ -248,10 +258,15 @@ for i = 1:length(filenames),
 	spots = [spots;moreSpots];
 end
 
-fig = figure;
+fig = figure;hold on;
 if exist('Browse.m'),
 	Browse(fig,'off');
 end
+
+if ~isempty(picture),
+	pic = imread(picture);
+	image(pic);
+end 
 
 % Optionnally, remove spurious spots
 while true,

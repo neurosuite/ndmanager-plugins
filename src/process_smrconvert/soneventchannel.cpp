@@ -89,6 +89,8 @@ void SONEventChannel::write(ostream& out) const throw (SONError)
 	// Read info to convert from ticks to seconds
 	double millisecondsPerTick = file->getSecondsPerTick() * 1000;
 
+	out.precision(12);
+
 	if ( file->isSimpleEventChannel(channel) )
 		for ( uint32_t i = 0 ; i < nEvents ; ++i ) out << time[i] * millisecondsPerTick << '\t' << 0 << '\n';
 	else

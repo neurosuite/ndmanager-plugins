@@ -189,7 +189,7 @@ do_concatenation()
 {
  	$concatenation || return
  	
-	n_wideband_files=$(ls *dat | grep -v $directory.dat|wc -l 2>/dev/null)
+	n_wideband_files=$(ls *dat 2>/dev/null | grep -v $directory.dat |wc -l)
 	[ $n_wideband_files -lt 1 ] && return
 
 	# Print a header to indicate current processing step

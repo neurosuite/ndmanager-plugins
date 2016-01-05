@@ -1,0 +1,22 @@
+<?xml version='1.0'?>
+<parameter>
+ <program>
+  <name>ndm_tsp2sts</name>
+  <parameters>
+   <parameter>
+    <name>suffix</name>
+    <value></value>
+    <status>Mandatory</status>
+   </parameter>
+  </parameters>
+  <help>Extract spots timestamps from .tsp and .meta (Amplipex files).
+
+PARAMETERS
+
+# suffix
+
+Suffix of the directory where the TSP and META files are located
+
+</help>
+ </program>
+</parameter>

@@ -1,0 +1,64 @@
+#!/bin/bash
+
+#////////////////////////////////////////////////////////////////////////////
+#//
+#//   Extract timestamps from .tsp and .meta files (Amplipex systems)
+#//
+#//   copyright       (C) 2009-2015 by Michaël Zugaro
+#//   email           michael.zugaro@college-de-france.fr
+#//
+#//   This program is free software; you can redistribute it and/or modify
+#//   it under the terms of the GNU General Public License as published by
+#//   the Free Software Foundation; either version 3 of the License, or
+#//   (at your option) any later version.
+#//
+#////////////////////////////////////////////////////////////////////////////
+
+# Source helper functions
+source ndm_functions
+
+# Parse command-line
+program=$(basename $0)
+if [ $# -ne 1 ]
+then
+	echo_error "usage: $program xml-file"
+	exit $GENERAL_ERROR
+fi
+session=${1%.xml}
+directory=$(basename "$(pwd)")
+
+# Print a header to indicate current processing step
+print_header "$session - Converting TSP files -> sts"
+
+# Check required programs
+check_commands_installed xpathReader
+
+# Check input/output files
+inputs_missing $session.xml && exit $INPUTS_MISSING
+
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+# // Read Parameters
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+suffix=$(read_script_parameter $session suffix)
+check_mandatory_variable $suffix "missing suffix"
+
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+# // Process
+# ////////////////////////////////////////////////////////////////////////////////////////////////
+
+# Make sure output file does not already exist
+sts_file=$session.sts
+outputs_exist $sts_file && exit $OUTPUTS_EXIST
+# Check inputs
+tsp_file=$(ls ../$directory-$suffix/$session-$suffix.tsp 2>/dev/null)
+meta_file=$(ls ../$directory-$suffix/$session-$suffix.meta 2>/dev/null)
+[ -z "$tsp_file" ] && echo_warning "missing .tsp file." && exit $INPUTS_MISSING
+[ -z "$meta_file" ] && echo_warning "missing .meta file." && exit $INPUTS_MISSING
+
+# Read tsp timestamp at beginning of recording session
+shift=$(grep "TimeStamp of the start of recording" $meta_file|sed 's/.* = //')
+
+# Convert tsp file
+awk '{print ($1-'$shift')*1000}' $tsp_file > $sts_file
+echo "Done"

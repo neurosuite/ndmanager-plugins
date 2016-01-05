@@ -28,6 +28,7 @@ set(scripts
 	ndm_smr2evt
 	ndm_start
 	ndm_transcodevideo
+	ndm_tsp2sts
 	pad
 	process_renameevents_SPWR
 	process_renameevents_TMaze

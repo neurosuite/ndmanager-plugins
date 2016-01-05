@@ -44,40 +44,78 @@ def GuessDate(directory):
 
 class InputData():
 	def __init__(self,directories):
-		# Mode
-		l = fnmatch.filter(os.listdir(directories[0]),'*.smr')
-		if len(l) == 0:
+		
+		# Guess acquisition system based on directory contents
+		self.mode = ''
+		l1 = fnmatch.filter(os.listdir(directories[0]),'*.dat')
+		l2 = fnmatch.filter(os.listdir(directories[0]),'*.tsp')
+		if len(l1) != 0 or len(l2) != 0:
+			# Contains at least one dat file -> amplipex
+			self.mode = 'amplipex'
+		l1 = fnmatch.filter(os.listdir(directories[0]),'*.ncs')
+		l2 = fnmatch.filter(os.listdir(directories[0]),'*.nvt')
+		if len(l1) != 0 or len(l2) != 0:
+			# Contains at least one ncs file -> neuralynx
 			self.mode = 'neuralynx'
-		else:
+		l = fnmatch.filter(os.listdir(directories[0]),'*.smr')
+		if len(l) != 0:
+			# Contains at least one smr file -> spike2
 			self.mode = 'spike2'
+			
+		# Initialize a few items (same for all acquisition systems)
 		self.directories = directories
 		self.date = GuessDate(directories[0])
 		self.descriptions = []
 		self.name = re.sub('(_|-)$','',CommonPrefix(directories))
-		if self.mode == 'spike2':
+		self.name = re.sub('-'+self.date+'$','',self.name)
+		sessions = []
+		
+		# Initialize sessions and suffixes (depends on the acquisition system)
+				
+		if self.mode == 'amplipex':
+			# List files, remove extensions to get list of sessions
+			files = os.listdir(directories[0])
+			files = [re.sub('[.][^.]*$','',file) for file in files]
+			sessions = sorted(list(set(files)))
+			self.nSessions = len(sessions)
+			# Propose 'apx' as suffix
+			self.suffixes = ['apx']
+			self.nSuffixes = 1
+			# Descriptions
+		
+		elif self.mode == 'neuralynx':
+			# One directory per session
+			sessions = directories
+			self.nSessions = len(directories)
+			# Propose 'nlx' as suffix
+			self.suffixes = ['nlx']
+			self.nSuffixes = 1
+
+		elif self.mode == 'spike2':
 			self.nSessions = -1
 			for directory in directories:
+				# List avi and other files, remove extensions to get list of sessions
 				files = os.listdir(directory)
 				files = [re.sub('([0-9])-1.avi$',r'\1',file) for file in files]
 				files = [re.sub('[.][^.]*$','',file) for file in files]
-				sessions = list(set(files))
+				sessions = sorted(list(set(files)))
 				if self.nSessions == -1:
 					self.nSessions = len(sessions)
 				elif self.nSessions != len(sessions):
 					self.nSessions = -1
 					break
+			# Get list of suffixes from list of directories
 			self.suffixes = ListSuffixes(directories)
 			self.nSuffixes = len(self.suffixes)
-		elif self.mode == 'neuralynx':
-			self.nSessions = len(directories)
-			self.suffixes = ['nlx']
-			self.nSuffixes = 1
+
+		self.descriptions = [re.sub('.*-([0-9]){2}-','',session) for session in sessions]
 
 # -------------------------------------------------------------------------------------
 #    Input dialog
 # -------------------------------------------------------------------------------------
 
 class InputDialog(QtGui.QDialog):
+	
 	def __init__(self,data):
 		"""Initialize variables and dialog items"""
 		QtGui.QDialog.__init__(self)
@@ -86,12 +124,14 @@ class InputDialog(QtGui.QDialog):
 		self.ui.setupUi(self)
 		date = QtCore.QDate(int(data.date[0:4]),int(data.date[4:6]),int(data.date[6:8]))
 		self.ui.date.setSelectedDate(date)
+		# Create and populate session table
 		self.ui.descriptions.setRowCount(data.nSessions)
 		for row in range(0,data.nSessions):
-			cell = QtGui.QTableWidgetItem('')
+			cell = QtGui.QTableWidgetItem(data.descriptions[row])
 			self.ui.descriptions.setItem(row,0,cell)
 			self.ui.descriptions.resizeRowToContents(row)
 		self.ui.descriptions.horizontalHeader().setStretchLastSection(True)
+		# Create empty suffix table
 		self.ui.suffixes.setRowCount(data.nSuffixes)
 		for row in range(0,data.nSuffixes):
 			cell = QtGui.QTableWidgetItem(data.suffixes[row])
@@ -99,11 +139,16 @@ class InputDialog(QtGui.QDialog):
 			self.ui.suffixes.resizeRowToContents(row)
 		self.ui.suffixes.horizontalHeader().setStretchLastSection(True)
 		self.ui.name.setText(data.name)
-		if data.mode == 'neuralynx':
+		# Display acquisition system name
+		if data.mode == 'amplipex':
+			self.ui.system.setText('Amplipex')
+		elif data.mode == 'neuralynx':
 			self.ui.system.setText('Neuralynx')
 		elif data.mode == 'spike2':
 			self.ui.system.setText('CED Spike2')
+			
 	def done(self,result):
+		"""User hits OK, check all dialog items before accepting"""
 		if result == QtGui.QDialog.Accepted:
 			if self.ui.name.text() == '':
 				box = QtGui.QMessageBox()
@@ -128,6 +173,7 @@ class InputDialog(QtGui.QDialog):
 				QtGui.QDialog.done(self,result)
 		else:
 			QtGui.QDialog.done(self,result)
+			
 	def getData(self,data):
 		"""Read variables from dialog items"""
 		data.name = str(self.ui.name.text())
@@ -147,25 +193,28 @@ class RenameDialog(QtGui.QDialog):
 	def __init__(self,renamer):
 		"""Initialize variables and dialog items"""
 		QtGui.QDialog.__init__(self)
-		# Create input dialog
+		# Create rename dialog
 		self.ui = Ui_RenameDialog()
 		self.ui.setupUi(self)
 		self.ui.names.setRowCount(len(renamer.currentNames))
 		for row in range(0,len(renamer.currentNames)):
+			# Display current name (with icon)
 			name = renamer.currentNames[row]
 			cell = QtGui.QTableWidgetItem(name)
 			cell.setFlags(QtCore.Qt.ItemIsEnabled)
 			extension = re.sub(r'.*[.]([^.]*)',r'\1',name)
-			if extension in ['mpg','smi','nvt','avi']:
+			if extension in ['mpg','smi','nvt','avi','tsp']:
 				icon = QtGui.QIcon(':/images/video.png')
 			else:
 				icon = QtGui.QIcon(':/images/binary.png')
 			cell.setIcon(icon)
 			self.ui.names.setItem(row,0,cell)
+			# Display target name (with icon)
 			cell = QtGui.QTableWidgetItem(renamer.newNames[row])
 			cell.setFlags(QtCore.Qt.ItemIsEnabled)
 			cell.setIcon(icon)
 			self.ui.names.setItem(row,1,cell)
+		# Tidy up table
 		self.ui.names.resizeColumnToContents(0)
 		self.ui.names.resizeColumnToContents(1)
 		self.ui.names.verticalHeader().hide()
@@ -180,7 +229,37 @@ class RenameDialog(QtGui.QDialog):
 class BatchRenamer():
 	def __init__(self,data):
 		self.currentDirectories = data.directories
-		if data.mode == 'neuralynx':
+		
+		if data.mode == 'amplipex':
+			self.currentNames = []
+			self.newNames = []
+			self.newDirectories = [data.name + '-' + data.date,data.name + '-' + data.date + '-' + data.suffixes[0]]
+			n = 0
+			directory = data.directories[0];
+			sessions = [re.sub('[.][^.]*$','',x) for x in os.listdir(directory)]
+			sessions = sorted(list(set(sessions)))
+			# Loop through sessions
+			for session in sessions:
+				n = n+1
+				currentNames = fnmatch.filter(os.listdir(directory),session+'*')
+				# Loop through files
+				for name in currentNames:
+					# Determine target base name
+					nn = str(n).zfill(2)
+					if name.endswith('.dat'):
+						base = data.name + '-' + data.date + '-' + nn + '-' + data.descriptions[n-1]
+						newName = re.sub('^.*[.]',base+r'.',name.lower(),re.IGNORECASE)
+						# Add current and new names to stored lists
+						self.currentNames.append(directory+'/'+name)
+						self.newNames.append(self.newDirectories[0]+'/'+newName)
+					else:
+						base = data.name + '-' + data.date + '-' + nn + '-' + data.descriptions[n-1] + '-' + data.suffixes[0]
+						newName = re.sub('^.*[.]',base+r'.',name.lower(),re.IGNORECASE)
+						# Add current and new names to stored lists
+						self.currentNames.append(directory+'/'+name)
+						self.newNames.append(self.newDirectories[1]+'/'+newName)
+
+		elif data.mode == 'neuralynx':
 			# Loop through subdirectories
 			n = 0
 			self.currentNames = []
@@ -207,6 +286,7 @@ class BatchRenamer():
 					newNames.append(newName)
 				self.currentNames.extend([directory+'/'+f for f in currentNames])
 				self.newNames.extend([self.newDirectories[0]+'/'+f for f in newNames])
+				
 		elif data.mode == 'spike2':
 			# Loop through subdirectories
 			self.currentNames = []
@@ -237,17 +317,20 @@ class BatchRenamer():
 					self.currentNames.extend([directory+'/'+f for f in currentNames])
 					self.newNames.extend([target+'/'+f for f in newNames])
 					self.newDirectories.append(target)
-			self.newDirectories = list(set(self.newDirectories))
+			self.newDirectories = sorted(list(set(self.newDirectories)))
+			
 	def rename(self):
 		# Create new directories
 		for d in self.newDirectories:
-			os.mkdir(d)
+			if not os.path.exists(d):
+				os.mkdir(d)
 		# Rename files
 		for i in range(0,len(self.newNames)):
 			os.rename(self.currentNames[i],self.newNames[i])
-		# Remove old directories
+		# Remove old directories (if empty)
 		for d in self.currentDirectories:
-			os.rmdir(d)
+			if not os.listdir(d):
+				os.rmdir(d)
 
 
 # -------------------------------------------------------------------------------------
@@ -279,6 +362,13 @@ if __name__ == '__main__':
 	directories.sort()
 
 	# Check directory list
+	for directory in directories:
+		if not os.path.exists(directory):
+			box = QtGui.QMessageBox()
+			box.setText('Data directory \''+directory+'\' not found.')
+			box.setIcon(QtGui.QMessageBox.Critical)
+			box.exec_()
+			sys.exit(1)
 	path = os.path.dirname(directories[0])
 	for directory in directories[1:]:
 		if os.path.dirname(directory) != path:
@@ -294,6 +384,12 @@ if __name__ == '__main__':
 
 	# Setup session data and display input dialog
 	data = InputData(directories)
+	if not data.mode:
+		box = QtGui.QMessageBox()
+		box.setText('Cannot determine acquisition system type.')
+		box.setIcon(QtGui.QMessageBox.Critical)
+		box.exec_()
+		sys.exit(1)
 	if data.nSessions == -1:
 		box = QtGui.QMessageBox()
 		box.setText('These directories contain different numbers of sessions.')
@@ -302,10 +398,10 @@ if __name__ == '__main__':
 		sys.exit(1)
 	dialog = InputDialog(data)
 	result = dialog.exec_()
-
-	# Rename files
 	if result == QtGui.QDialog.Rejected:
 		sys.exit(0)
+
+	# Rename files
 	dialog.getData(data)
 	renamer = BatchRenamer(data)
 	dialog = RenameDialog(renamer)
@@ -316,7 +412,7 @@ if __name__ == '__main__':
 	renamer.rename()
 
 	# Display final info
-	command = 'ndm_checkconsistency '
+	command = 'ndm_checkconsistency'
 	for directory in renamer.newDirectories:
 		command = command + ' ' + directory
 	print command

@@ -132,7 +132,7 @@
 								<term><command moreinfo="refentry">ndm_smi2sts</command></term>
 								<listitem>
 									<para>
-										convert Neuralynx <replaceable>.smi</replaceable> video timestamp file to spots timestamps  (<replaceable>.sts</replaceable> file).
+										convert Neuralynx <replaceable>.smi</replaceable> video timestamp file to spots timestamps (<replaceable>.sts</replaceable> file).
 									</para>
 								</listitem>
 							</varlistentry>
@@ -149,6 +149,14 @@
 								<listitem>
 									<para>
 										convert Spike2 <replaceable>.smr</replaceable> data files to event format.
+									</para>
+								</listitem>
+							</varlistentry>
+							<varlistentry>
+								<term><command moreinfo="refentry">ndm_tsp2sts</command></term>
+								<listitem>
+									<para>
+										convert Amplipex <replaceable>.tsp</replaceable> video timestamp file to spots timestamps (<replaceable>.sts</replaceable> file).
 									</para>
 								</listitem>
 							</varlistentry>

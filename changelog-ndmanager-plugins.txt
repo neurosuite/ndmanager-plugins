@@ -1,5 +1,15 @@
 ------------------------------------------------------------------------------------------------------------
-1.4.11 ==> 1.4.12
+1.4.13 ==> 1.4.14
+
+* change time precision for events in process_smrconvert
+
+------------------------------------------------------------------------------------------------------------
+1.4.12 ==> 1.4.13
+
+* add ndm_tsp2sts (script and description) for Amplipex video timestamps
+* update ndm_extractleds to call ndm_tsp2sts
+* add 'picture' option in spots2pos (and fix small bug with empty spots files)
+
 ------------------------------------------------------------------------------------------------------------
 1.4.11 ==> 1.4.12
 

@@ -1,0 +1,41 @@
+#!/bin/bash
+
+manpages=$(find . -name '*.docbook'|wc -l)
+scripts=$(find scripts -name 'ndm_*'|grep -v docbook|wc -l)
+python=$(find python -name 'main.py'|wc -l)
+ndm=$(($scripts+$python))
+process_tools=$(find src -name 'process_*.c' -o -name 'process_*.cpp'|wc -l)
+process_scripts=$(find scripts -name 'process_*' |grep -v '[.]'|wc -l)
+process=$(($process_tools+$process_scripts))
+descriptions=$(find descriptions -name '*.xml'|wc -l)
+matlab=$(find matlab -name '*.m'|wc -l)
+other_src=$(find src -name '*.c' -o -name '*.cpp'|grep -v 'process_'|wc -l)
+other_scripts=$(find scripts |grep -v docbook|grep -v 'ndm_'|grep -v 'process_'|grep -v '.txt$'|grep -v '^scripts$'|wc -l)
+others=$(($other_src+$other_scripts))
+
+echo "SOURCES"
+echo "======="
+echo "Manual pages        : $manpages"
+echo "Scripts             : $ndm"
+echo "Tools               : $process"
+echo "Others              : $others"
+echo "Matlab functions    : $matlab"
+echo "Descriptions        : $descriptions"
+
+echo ""
+
+manpages=$(dpkg -c *deb|grep '.1.gz'|wc -l)
+ndm=$(dpkg -c *deb|grep '/usr/bin/ndm_'|wc -l)
+src=$(dpkg -c *deb|grep '/usr/bin/process_'|wc -l)
+descriptions=$(dpkg -c *deb|grep xml|wc -l)
+matlab=$(dpkg -c *deb|grep '.m$'|wc -l)
+others=$(dpkg -c *deb|grep '/usr/bin'|grep -v '/usr/bin/$'|grep -v 'ndm_'|grep -v 'process_'|wc -l)
+
+echo "TARGETS"
+echo "======="
+echo "Manual pages        : $manpages"
+echo "Scripts             : $ndm"
+echo "Tools               : $src"
+echo "Others              : $others"
+echo "Matlab functions    : $matlab"
+echo "Descriptions        : $descriptions"

@@ -72,6 +72,10 @@ else
 	video_files=$(ls $session.$extension 2>/dev/null)
 	if [ -z "$video_files" ]
 	then
+		video_files=$(ls ../$directory-$suffix/$session-$suffix.$extension 2>/dev/null)
+	fi
+	if [ -z "$video_files" ]
+	then
 		video_files=$(ls ../$directory-$suffix/$session-$suffix-[0-9]*.$extension 2>/dev/null)
 	fi
 	if [ -z "$video_files" ]
@@ -86,11 +90,18 @@ else
 		inputs_missing $video_file && exit $INPUTS_MISSING
 		process_extractleds -t $threshold $options $video_file
 		check_command_status process_extractleds
+		mv ${video_file/$extension/spots} $spots_file
 	done
-	if $(extension_exists "smi" $directory $session ${suffixes[*]})
+	if $(extension_exists "smi" $directory $session $suffix)
 	then
 		# Neuralynx systems: generate timestamp file
 		ndm_smi2sts $session.xml
 		step_completed ndm_smi2sts || exit $GENERAL_ERROR
+	fi
+	if $(extension_exists "tsp" $directory $session $suffix)
+	then
+		# Neuralynx systems: generate timestamp file
+		ndm_tsp2sts $session.xml
+		step_completed ndm_tsp2sts || exit $GENERAL_ERROR
 	fi
 fi
