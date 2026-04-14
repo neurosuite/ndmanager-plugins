@@ -56,7 +56,7 @@ class NCSFileCollection
 			Open files
 			@return	false if one of the files could not be opened
 		*/
-		virtual void open() throw(NLXError);
+		virtual void open() ;
 		/**
 			Close files
 		*/
@@ -64,7 +64,7 @@ class NCSFileCollection
 		/**
 			Read frequency and record duration, and determine number of records
 		*/
-		virtual void init() throw(NLXError);
+		virtual void init() ;
 		/**
 			Count the number of records in the files
 			@return	number of records

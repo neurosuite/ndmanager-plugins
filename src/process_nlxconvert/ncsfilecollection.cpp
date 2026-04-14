@@ -38,7 +38,7 @@ void NCSFileCollection::add(string filename)
 /**
 	Open files
 */
-void NCSFileCollection::open() throw(NLXError)
+void NCSFileCollection::open() 
 {
 	for ( int i = 0 ; i < n ; ++i ) files[i].open();
 }
@@ -54,7 +54,7 @@ void NCSFileCollection::close()
 /**
 	Read frequency and record duration, and determine number of records
 */
-void NCSFileCollection::init() throw(NLXError)
+void NCSFileCollection::init() 
 {
 	Frequency f;
 

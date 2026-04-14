@@ -149,18 +149,18 @@ class InfoDialog(QtGui.QDialog):
 			for column in range(0,4):
 				if column == 3 and (extension != 'ncs' and (info.mode != 'neuralynx' or extension != 'mpg') and extension != 'smi'):
 					if n == 0:
-						icon = QtGui.QIcon(':/images/cancel.png')
+						icon = QtGui.QIcon.fromTheme('process-stop', QtGui.QIcon(':/images/cancel.png'))
 					else:
-						icon = QtGui.QIcon(':/images/ok.png')
+						icon = QtGui.QIcon.fromTheme('emblem-success', QtGui.QIcon(':/images/ok.png'))
 					cell = QtGui.QTableWidgetItem()
 					cell.setIcon(icon)
 				else:
 					cell = QtGui.QTableWidgetItem(str(info.items[row][column]))
 					if column == 2:
 						if extension in ['mpg','smi','nvt','avi','tsp']:
-							icon = QtGui.QIcon(':/images/video.png')
+							icon = QtGui.QIcon.fromTheme('video-x-generic', QtGui.QIcon(':/images/video.png'))
 						else:
-							icon = QtGui.QIcon(':/images/binary.png')
+							icon = QtGui.QIcon.fromTheme('package-x-generic', QtGui.QIcon(':/images/binary.png'))
 						cell.setIcon(icon)
 				cell.setFlags(QtCore.Qt.ItemIsEnabled)
 				self.ui.list.setItem(row,column,cell)

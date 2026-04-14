@@ -204,9 +204,9 @@ class RenameDialog(QtGui.QDialog):
 			cell.setFlags(QtCore.Qt.ItemIsEnabled)
 			extension = re.sub(r'.*[.]([^.]*)',r'\1',name)
 			if extension in ['mpg','smi','nvt','avi','tsp']:
-				icon = QtGui.QIcon(':/images/video.png')
+				icon = QtGui.QIcon.fromTheme('video-x-generic', QtGui.QIcon(':/images/video.png'))
 			else:
-				icon = QtGui.QIcon(':/images/binary.png')
+				icon = QtGui.QIcon.fromTheme('package-x-generic', QtGui.QIcon(':/images/binary.png'))
 			cell.setIcon(icon)
 			self.ui.names.setItem(row,0,cell)
 			# Display target name (with icon)
