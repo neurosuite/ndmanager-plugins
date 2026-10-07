@@ -114,11 +114,11 @@ class InputData():
 #    Input dialog
 # -------------------------------------------------------------------------------------
 
-class InputDialog(QtGui.QDialog):
+class InputDialog(QtWidgets.QDialog):
 	
 	def __init__(self,data):
 		"""Initialize variables and dialog items"""
-		QtGui.QDialog.__init__(self)
+		QtWidgets.QDialog.__init__(self)
 		# Create input dialog
 		self.ui = Ui_InputDialog()
 		self.ui.setupUi(self)
@@ -127,14 +127,14 @@ class InputDialog(QtGui.QDialog):
 		# Create and populate session table
 		self.ui.descriptions.setRowCount(data.nSessions)
 		for row in range(0,data.nSessions):
-			cell = QtGui.QTableWidgetItem(data.descriptions[row])
+			cell = QtWidgets.QTableWidgetItem(data.descriptions[row])
 			self.ui.descriptions.setItem(row,0,cell)
 			self.ui.descriptions.resizeRowToContents(row)
 		self.ui.descriptions.horizontalHeader().setStretchLastSection(True)
 		# Create empty suffix table
 		self.ui.suffixes.setRowCount(data.nSuffixes)
 		for row in range(0,data.nSuffixes):
-			cell = QtGui.QTableWidgetItem(data.suffixes[row])
+			cell = QtWidgets.QTableWidgetItem(data.suffixes[row])
 			self.ui.suffixes.setItem(row,0,cell)
 			self.ui.suffixes.resizeRowToContents(row)
 		self.ui.suffixes.horizontalHeader().setStretchLastSection(True)
@@ -149,35 +149,35 @@ class InputDialog(QtGui.QDialog):
 			
 	def done(self,result):
 		"""User hits OK, check all dialog items before accepting"""
-		if result == QtGui.QDialog.Accepted:
+		if result == QtWidgets.QDialog.DialogCode.Accepted:
 			if self.ui.name.text() == '':
-				box = QtGui.QMessageBox()
+				box = QtWidgets.QMessageBox()
 				box.setText('Missing name.')
-				box.setIcon(QtGui.QMessageBox.Critical)
-				box.exec_()
+				box.setIcon(QtWidgets.QMessageBox.Icon.Critical)
+				box.exec()
 			else:
 				for row in range(0,self.ui.descriptions.rowCount()):
 					if str(self.ui.descriptions.item(0,row).text()) == '':
-						box = QtGui.QMessageBox()
+						box = QtWidgets.QMessageBox()
 						box.setText('Missing descriptions.')
-						box.setIcon(QtGui.QMessageBox.Critical)
-						box.exec_()
+						box.setIcon(QtWidgets.QMessageBox.Icon.Critical)
+						box.exec()
 						return
 				for row in range(0,self.ui.suffixes.rowCount()):
 					if str(self.ui.suffixes.item(0,row).text()) == '':
-						box = QtGui.QMessageBox()
+						box = QtWidgets.QMessageBox()
 						box.setText('Missing suffixes.')
-						box.setIcon(QtGui.QMessageBox.Critical)
-						box.exec_()
+						box.setIcon(QtWidgets.QMessageBox.Icon.Critical)
+						box.exec()
 						return
-				QtGui.QDialog.done(self,result)
+				QtWidgets.QDialog.done(self,result)
 		else:
-			QtGui.QDialog.done(self,result)
+			QtWidgets.QDialog.done(self,result)
 			
 	def getData(self,data):
 		"""Read variables from dialog items"""
 		data.name = str(self.ui.name.text())
-		data.date = re.sub('-','',str(self.ui.date.selectedDate().toString(QtCore.Qt.ISODate)))
+		data.date = re.sub('-','',str(self.ui.date.selectedDate().toString(QtCore.Qt.DateFormat.ISODate)))
 		data.descriptions = []
 		for row in range(0,data.nSessions):
 			data.descriptions.append(str(self.ui.descriptions.item(0,row).text()))
@@ -189,10 +189,10 @@ class InputDialog(QtGui.QDialog):
 #    Rename dialog
 # -------------------------------------------------------------------------------------
 
-class RenameDialog(QtGui.QDialog):
+class RenameDialog(QtWidgets.QDialog):
 	def __init__(self,renamer):
 		"""Initialize variables and dialog items"""
-		QtGui.QDialog.__init__(self)
+		QtWidgets.QDialog.__init__(self)
 		# Create rename dialog
 		self.ui = Ui_RenameDialog()
 		self.ui.setupUi(self)
@@ -200,25 +200,25 @@ class RenameDialog(QtGui.QDialog):
 		for row in range(0,len(renamer.currentNames)):
 			# Display current name (with icon)
 			name = renamer.currentNames[row]
-			cell = QtGui.QTableWidgetItem(name)
-			cell.setFlags(QtCore.Qt.ItemIsEnabled)
+			cell = QtWidgets.QTableWidgetItem(name)
+			cell.setFlags(QtCore.Qt.ItemFlag.ItemIsEnabled)
 			extension = re.sub(r'.*[.]([^.]*)',r'\1',name)
 			if extension in ['mpg','smi','nvt','avi','tsp']:
-				icon = QtGui.QIcon.fromTheme('video-x-generic', QtGui.QIcon(':/images/video.png'))
+				icon = QtGui.QIcon.fromTheme('video-x-generic', QtGui.QIcon('images:video.png'))
 			else:
-				icon = QtGui.QIcon.fromTheme('package-x-generic', QtGui.QIcon(':/images/binary.png'))
+				icon = QtGui.QIcon.fromTheme('package-x-generic', QtGui.QIcon('images:binary.png'))
 			cell.setIcon(icon)
 			self.ui.names.setItem(row,0,cell)
 			# Display target name (with icon)
-			cell = QtGui.QTableWidgetItem(renamer.newNames[row])
-			cell.setFlags(QtCore.Qt.ItemIsEnabled)
+			cell = QtWidgets.QTableWidgetItem(renamer.newNames[row])
+			cell.setFlags(QtCore.Qt.ItemFlag.ItemIsEnabled)
 			cell.setIcon(icon)
 			self.ui.names.setItem(row,1,cell)
 		# Tidy up table
 		self.ui.names.resizeColumnToContents(0)
 		self.ui.names.resizeColumnToContents(1)
 		self.ui.names.verticalHeader().hide()
-		self.ui.names.horizontalHeader().setResizeMode(0,QtGui.QHeaderView.Stretch)
+		self.ui.names.horizontalHeader().setSectionResizeMode(0,QtWidgets.QHeaderView.ResizeMode.Stretch)
 		for row in range(0,len(renamer.currentNames)):
 			self.ui.names.resizeRowToContents(row)
 
@@ -339,16 +339,20 @@ class BatchRenamer():
 
 if __name__ == '__main__':
 	import sys
-	app = QtGui.QApplication(sys.argv)
+	app = QtWidgets.QApplication(sys.argv)
+	QtCore.QDir.addSearchPath('images', os.path.join(os.path.dirname(os.path.realpath(sys.argv[0])), '..', 'share', 'ndmanager-plugins', 'images'))
 
 	# Get directory list (either graphically, or from the command-line)
 	directories = [re.sub(r'/$','',x) for x in sys.argv[1:]]
 	if len(directories) == 0:
-		dialog = QtGui.QFileDialog()
-		dialog.setFileMode(QtGui.QFileDialog.DirectoryOnly)
-		dialog.findChild(QtGui.QListView,'listView').setSelectionMode(QtGui.QAbstractItemView.MultiSelection)
+		dialog = QtWidgets.QFileDialog()
+		# Selecting several directories needs Qt's own (non-native) file dialog
+		dialog.setOption(QtWidgets.QFileDialog.Option.DontUseNativeDialog, True)
+		dialog.setOption(QtWidgets.QFileDialog.Option.ShowDirsOnly, True)
+		dialog.setFileMode(QtWidgets.QFileDialog.FileMode.Directory)
+		dialog.findChild(QtWidgets.QListView,'listView').setSelectionMode(QtWidgets.QAbstractItemView.SelectionMode.MultiSelection)
 		dialog.setWindowTitle('Choose one or more directories to prepare')
-		if dialog.exec_():
+		if dialog.exec():
 			d = [re.sub(r'/$','',str(x)) for x in list(dialog.selectedFiles())]
 			here = dialog.directory().path()
 			for directory in d:
@@ -364,18 +368,18 @@ if __name__ == '__main__':
 	# Check directory list
 	for directory in directories:
 		if not os.path.exists(directory):
-			box = QtGui.QMessageBox()
+			box = QtWidgets.QMessageBox()
 			box.setText('Data directory \''+directory+'\' not found.')
-			box.setIcon(QtGui.QMessageBox.Critical)
-			box.exec_()
+			box.setIcon(QtWidgets.QMessageBox.Icon.Critical)
+			box.exec()
 			sys.exit(1)
 	path = os.path.dirname(directories[0])
 	for directory in directories[1:]:
 		if os.path.dirname(directory) != path:
-			box = QtGui.QMessageBox()
+			box = QtWidgets.QMessageBox()
 			box.setText('Data directories should have the same parent directory.')
-			box.setIcon(QtGui.QMessageBox.Critical)
-			box.exec_()
+			box.setIcon(QtWidgets.QMessageBox.Icon.Critical)
+			box.exec()
 			sys.exit(1)
 	# Make directory list relative and chdir to parent directory
 	directories = [os.path.basename(x) for x in directories]
@@ -385,28 +389,28 @@ if __name__ == '__main__':
 	# Setup session data and display input dialog
 	data = InputData(directories)
 	if not data.mode:
-		box = QtGui.QMessageBox()
+		box = QtWidgets.QMessageBox()
 		box.setText('Cannot determine acquisition system type.')
-		box.setIcon(QtGui.QMessageBox.Critical)
-		box.exec_()
+		box.setIcon(QtWidgets.QMessageBox.Icon.Critical)
+		box.exec()
 		sys.exit(1)
 	if data.nSessions == -1:
-		box = QtGui.QMessageBox()
+		box = QtWidgets.QMessageBox()
 		box.setText('These directories contain different numbers of sessions.')
-		box.setIcon(QtGui.QMessageBox.Critical)
-		box.exec_()
+		box.setIcon(QtWidgets.QMessageBox.Icon.Critical)
+		box.exec()
 		sys.exit(1)
 	dialog = InputDialog(data)
-	result = dialog.exec_()
-	if result == QtGui.QDialog.Rejected:
+	result = dialog.exec()
+	if result == QtWidgets.QDialog.DialogCode.Rejected:
 		sys.exit(0)
 
 	# Rename files
 	dialog.getData(data)
 	renamer = BatchRenamer(data)
 	dialog = RenameDialog(renamer)
-	result = dialog.exec_()
-	if result == QtGui.QDialog.Rejected:
+	result = dialog.exec()
+	if result == QtWidgets.QDialog.DialogCode.Rejected:
 		sys.exit(0)
 	exit
 	renamer.rename()
@@ -415,6 +419,6 @@ if __name__ == '__main__':
 	command = 'ndm_checkconsistency'
 	for directory in renamer.newDirectories:
 		command = command + ' ' + directory
-	print command
+	print(command)
 	os.system(command)
 	sys.exit(0)

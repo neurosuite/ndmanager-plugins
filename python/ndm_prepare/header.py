@@ -1,11 +1,5 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-try:
-    from PyQt6 import QtCore, QtGui, QtWidgets
-except ImportError:
-    try:
-        from PyQt5 import QtCore, QtGui, QtWidgets
-    except ImportError:
-        from PyQt4 import QtCore, QtGui
+from PyQt6 import QtCore, QtGui, QtWidgets
 import os,re,fnmatch,datetime

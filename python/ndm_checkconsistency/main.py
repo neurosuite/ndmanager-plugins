@@ -135,10 +135,10 @@ class FileInfo():
 #    Info dialog
 # -------------------------------------------------------------------------------------
 
-class InfoDialog(QtGui.QDialog):
+class InfoDialog(QtWidgets.QDialog):
 	def __init__(self,info):
 		"""Initialize variables and dialog items"""
-		QtGui.QDialog.__init__(self)
+		QtWidgets.QDialog.__init__(self)
 		# Create input dialog
 		self.ui = Ui_InfoDialog()
 		self.ui.setupUi(self)
@@ -149,24 +149,24 @@ class InfoDialog(QtGui.QDialog):
 			for column in range(0,4):
 				if column == 3 and (extension != 'ncs' and (info.mode != 'neuralynx' or extension != 'mpg') and extension != 'smi'):
 					if n == 0:
-						icon = QtGui.QIcon.fromTheme('process-stop', QtGui.QIcon(':/images/cancel.png'))
+						icon = QtGui.QIcon.fromTheme('process-stop', QtGui.QIcon('images:cancel.png'))
 					else:
-						icon = QtGui.QIcon.fromTheme('emblem-success', QtGui.QIcon(':/images/ok.png'))
-					cell = QtGui.QTableWidgetItem()
+						icon = QtGui.QIcon.fromTheme('emblem-success', QtGui.QIcon('images:ok.png'))
+					cell = QtWidgets.QTableWidgetItem()
 					cell.setIcon(icon)
 				else:
-					cell = QtGui.QTableWidgetItem(str(info.items[row][column]))
+					cell = QtWidgets.QTableWidgetItem(str(info.items[row][column]))
 					if column == 2:
 						if extension in ['mpg','smi','nvt','avi','tsp']:
-							icon = QtGui.QIcon.fromTheme('video-x-generic', QtGui.QIcon(':/images/video.png'))
+							icon = QtGui.QIcon.fromTheme('video-x-generic', QtGui.QIcon('images:video.png'))
 						else:
-							icon = QtGui.QIcon.fromTheme('package-x-generic', QtGui.QIcon(':/images/binary.png'))
+							icon = QtGui.QIcon.fromTheme('package-x-generic', QtGui.QIcon('images:binary.png'))
 						cell.setIcon(icon)
-				cell.setFlags(QtCore.Qt.ItemIsEnabled)
+				cell.setFlags(QtCore.Qt.ItemFlag.ItemIsEnabled)
 				self.ui.list.setItem(row,column,cell)
 		for column in range(0,4):
 			self.ui.list.resizeColumnToContents(column)
-		self.ui.list.horizontalHeader().setResizeMode(0,QtGui.QHeaderView.Stretch)
+		self.ui.list.horizontalHeader().setSectionResizeMode(0,QtWidgets.QHeaderView.ResizeMode.Stretch)
 		self.ui.list.verticalHeader().hide()
 		for row in range(0,len(info.items)):
 			self.ui.list.resizeRowToContents(row)
@@ -177,16 +177,20 @@ class InfoDialog(QtGui.QDialog):
 
 if __name__ == '__main__':
 	import sys
-	app = QtGui.QApplication(sys.argv)
+	app = QtWidgets.QApplication(sys.argv)
+	QtCore.QDir.addSearchPath('images', os.path.join(os.path.dirname(os.path.realpath(sys.argv[0])), '..', 'share', 'ndmanager-plugins', 'images'))
 
 	# Get directory list (either graphically, or from the command-line)
 	directories = [re.sub(r'/$','',x) for x in sys.argv[1:]]
 	if len(directories) == 0:
-		dialog = QtGui.QFileDialog()
-		dialog.setFileMode(QtGui.QFileDialog.DirectoryOnly)
-		dialog.findChild(QtGui.QListView,'listView').setSelectionMode(QtGui.QAbstractItemView.MultiSelection)
+		dialog = QtWidgets.QFileDialog()
+		# Selecting several directories needs Qt's own (non-native) file dialog
+		dialog.setOption(QtWidgets.QFileDialog.Option.DontUseNativeDialog, True)
+		dialog.setOption(QtWidgets.QFileDialog.Option.ShowDirsOnly, True)
+		dialog.setFileMode(QtWidgets.QFileDialog.FileMode.Directory)
+		dialog.findChild(QtWidgets.QListView,'listView').setSelectionMode(QtWidgets.QAbstractItemView.SelectionMode.MultiSelection)
 		dialog.setWindowTitle('Choose one or more directories to check')
-		if dialog.exec_():
+		if dialog.exec():
 			d = [re.sub(r'/$','',str(x)) for x in list(dialog.selectedFiles())]
 			here = dialog.directory().path()
 			for directory in d:
@@ -198,18 +202,18 @@ if __name__ == '__main__':
 	# Check directory list
 	for directory in directories:
 		if not os.path.exists(directory):
-			box = QtGui.QMessageBox()
+			box = QtWidgets.QMessageBox()
 			box.setText('Data directory \''+directory+'\' not found.')
-			box.setIcon(QtGui.QMessageBox.Critical)
-			box.exec_()
+			box.setIcon(QtWidgets.QMessageBox.Icon.Critical)
+			box.exec()
 			sys.exit(1)
 	path = os.path.dirname(directories[0])
 	for directory in directories[1:]:
 		if os.path.dirname(directory) != path:
-			box = QtGui.QMessageBox()
+			box = QtWidgets.QMessageBox()
 			box.setText('Data directories should have the same parent directory.')
-			box.setIcon(QtGui.QMessageBox.Critical)
-			box.exec_()
+			box.setIcon(QtWidgets.QMessageBox.Icon.Critical)
+			box.exec()
 			sys.exit(1)
 	# Make directory list relative and chdir to parent directory
 	directories = [os.path.basename(x) for x in directories]
@@ -219,6 +223,6 @@ if __name__ == '__main__':
 	# List all files
 	info = FileInfo(directories)
 	dialog = InfoDialog(info)
-	result = dialog.exec_()
+	result = dialog.exec()
 	sys.exit(0)
 
