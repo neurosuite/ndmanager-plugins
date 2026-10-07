@@ -31,7 +31,7 @@ extern string program;
 /**
 	Initialization
 */
-void NLXExtractor::init(char *inputs[],int nInputs,char *output) throw(NLXError)
+void NLXExtractor::init(char *inputs[],int nInputs,char *output) 
 {
 	// Initialize input file objects
 	for ( int i = 0 ; i < nInputs ; ++i )
@@ -139,7 +139,7 @@ void NLXExtractor::init(char *inputs[],int nInputs,char *output) throw(NLXError)
 /**
 	Extract to .dat
 */
-void NLXExtractor::extractWideband() throw(NLXError)
+void NLXExtractor::extractWideband() 
 {
 	bool doWideband = wideband;
 	bool doTimestamps = timestamps;
@@ -265,7 +265,7 @@ void NLXExtractor::extractWideband() throw(NLXError)
 /**
 	Read sync info from file
 */
-void NLXExtractor::readSyncs(string filename) throw(NLXError)
+void NLXExtractor::readSyncs(string filename) 
 {
 	ifstream file;
 	file.open(filename.c_str(),ifstream::in);
@@ -307,7 +307,7 @@ void NLXExtractor::findSyncs()
 /**
 	Extract to .spots
 */
-void NLXExtractor::extractSpots() throw(NLXError)
+void NLXExtractor::extractSpots() 
 {
 	bool doSpots = spots;
 	bool doSpotsTimestamps = spots;
@@ -420,7 +420,7 @@ void NLXExtractor::extractSpots() throw(NLXError)
 /**
 	Resynchronize .spots file (using .smi file)
 */
-void NLXExtractor::syncSpots() throw(NLXError)
+void NLXExtractor::syncSpots() 
 {
 	bool doSpotsTimestamps = spots;
 
@@ -500,7 +500,7 @@ void NLXExtractor::syncSpots() throw(NLXError)
 /**
 	Extract to .evt
 */
-void NLXExtractor::extractEvents() throw(NLXError)
+void NLXExtractor::extractEvents() 
 {
 	bool doEvents = events;
 	bool doTimestamps = timestamps;
@@ -590,7 +590,7 @@ void NLXExtractor::extractEvents() throw(NLXError)
 /**
 	Read 'restart acquisition' events from file
 */
-void NLXExtractor::readRestarts(string filename) throw(NLXError)
+void NLXExtractor::readRestarts(string filename) 
 {
 	ifstream file;
 	file.open(filename.c_str(),ifstream::in);
@@ -662,7 +662,7 @@ bool NLXExtractor::isRestart(Time gap,Time timestamp)
 /**
 	Extract
 */
-void NLXExtractor::extract() throw(NLXError)
+void NLXExtractor::extract() 
 {
 	// If restart file was not provided among inputs, and .nev file is available, find 'restart acquisition' events
 	if ( nevProvided && !restartsProvided ) findRestarts();

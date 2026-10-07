@@ -26,7 +26,7 @@ message(message)
 {
 }
 
-SONError::~SONError() throw ()
+SONError::~SONError() 
 {
 }
 

@@ -36,7 +36,7 @@ void SMIFileCollection::add(string filename)
 /**
 	Open files
 */
-void SMIFileCollection::open() throw(NLXError)
+void SMIFileCollection::open() 
 {
 	for ( int i = 0 ; i < n ; ++i ) files[i].open();
 }
@@ -52,7 +52,7 @@ void SMIFileCollection::close()
 /**
 	Read frequency and record duration, and determine number of records
 */
-void SMIFileCollection::init() throw(NLXError)
+void SMIFileCollection::init() 
 {
 	if ( n == 0 ) return;
 	for ( int i = 0 ; i < n ; ++i ) files[i].init();

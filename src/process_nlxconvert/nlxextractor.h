@@ -62,15 +62,15 @@ class NLXExtractor : public ifstream
 			@param	nInputs	number of input files
 			@param	output	output file base name
 		*/
-		virtual void init(char *inputs[],int nInputs,char *output) throw(NLXError);
+		virtual void init(char *inputs[],int nInputs,char *output) ;
 		/**
 			Extract to .dat
 		*/
-		virtual void extractWideband() throw(NLXError);
+		virtual void extractWideband() ;
 		/**
 			Read sync info from file
 		*/
-		virtual void readSyncs(string filename) throw(NLXError);
+		virtual void readSyncs(string filename) ;
 		/**
 			Browse .ncs files to find sync info
 		*/
@@ -78,19 +78,19 @@ class NLXExtractor : public ifstream
 		/**
 			Extract to .spots
 		*/
-		virtual void extractSpots() throw(NLXError);
+		virtual void extractSpots() ;
 		/**
 			Resynchronize .spots file (using .smi file)
 		*/
-		virtual void syncSpots() throw(NLXError);
+		virtual void syncSpots() ;
 		/**
 			Extract to .evt
 		*/
-		virtual void extractEvents() throw(NLXError);
+		virtual void extractEvents() ;
 		/**
 			Read 'restart acquisition' events from file
 		*/
-		virtual void readRestarts(string filename) throw(NLXError);
+		virtual void readRestarts(string filename) ;
 		/**
 			Find 'restart acquisition' events
 		*/
@@ -102,7 +102,7 @@ class NLXExtractor : public ifstream
 		/**
 			Extract
 		*/
-		virtual void extract() throw(NLXError);
+		virtual void extract() ;
 		/**
 			Show file headers
 		*/

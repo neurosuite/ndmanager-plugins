@@ -28,7 +28,7 @@ using namespace std;
 /**
 	Open file
 */
-void NCSFile::open() throw(NLXError)
+void NCSFile::open() 
 {
 	ifstream::open(filename.c_str(),ifstream::in);
 	if ( !good() ) throw NLXError(NLXError::READ_ERROR,"error: could not open '" + filename + "'.");
@@ -72,7 +72,7 @@ void NCSFile::init()
 /**
 	Read next record
 */
-bool NCSFile::readRecord() throw(NLXError)
+bool NCSFile::readRecord() 
 {
 	read((char*)recordHeader,sizeof(recordHeader));
 	read((char*)recordData,sizeof(recordData));

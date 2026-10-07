@@ -28,7 +28,7 @@ using namespace std;
 /**
 	Open file
 */
-void SMIFile::open() throw(NLXError)
+void SMIFile::open() 
 {
 	ifstream::open(filename.c_str(),ifstream::in);
 	if ( !good() ) throw NLXError(NLXError::READ_ERROR,"could not open '" + filename + "'.");

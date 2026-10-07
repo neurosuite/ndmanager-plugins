@@ -93,5 +93,6 @@ ostream& operator<<(ostream& out,const SONFileHeader& fileHeader)
 	out << "Date-year        " << fileHeader.timeDate.year << endl;
 	out << "COMMENTS         [1] " << fileHeader.fileComment[0] << endl;
 	for ( int i = 1 ; i  < 5 ; ++i ) out << "                 [" << i+1 << "] " << fileHeader.fileComment[i] << endl;
+	return out;
 }
 

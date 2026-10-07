@@ -57,14 +57,14 @@ class SONADCChannels
 		/**
 			Read ADC data (one buffer at a time)
 		*/
-		virtual void read() throw (SONError);
+		virtual void read() ;
 		/**
 			Write ADC data (one buffer at a time)
 
 			@param	out	output stream (.dat file)
 			@param	reverse	should data values be reversed?
 		*/
-		virtual void write(ostream& out,bool reverse = false) const throw (SONError);
+		virtual void write(ostream& out,bool reverse = false) const ;
 		/**
 			Return percentage of input file read
 		*/

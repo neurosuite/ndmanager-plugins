@@ -75,7 +75,7 @@ bool SONADCChannels::done() const
 	return true;
 }
 
-void SONADCChannels::read() throw (SONError)
+void SONADCChannels::read() 
 {
 	// Make sure all channels are ADC channels and have the same sampling rate, and initialize all pointers
 	if ( bof )
@@ -166,7 +166,7 @@ void SONADCChannels::read() throw (SONError)
 // cout << "---" << endl;
 }
 
-void SONADCChannels::write(ostream& out,bool reverse) const throw (SONError)
+void SONADCChannels::write(ostream& out,bool reverse) const 
 {
 	int sign = 1;
 

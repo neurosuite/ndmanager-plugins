@@ -41,13 +41,13 @@ class SONEventChannel : public SONChannel
 		/**
 			Read Event data
 		*/
-		virtual void read() throw (SONError);
+		virtual void read() ;
 		/**
 			Write event data
 
 			@param	out	output stream (.evt file)
 		*/
-		virtual void write(ostream& out) const throw (SONError);
+		virtual void write(ostream& out) const ;
 
 	private:
 

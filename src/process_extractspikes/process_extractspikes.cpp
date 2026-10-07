@@ -907,7 +907,7 @@ bool writeTimeSpike(const off_t iPeak, const int nChanTot, FILE *output) {
 		return false;
 
 	off_t i = iPeak/nChanTot; // Index of the peak (in timestamp)
-	fprintf(output,"%lld\n",i);
+	fprintf(output,"%lld\n",(long long) i);
 
 	return true;
 } // writeTimeSpike

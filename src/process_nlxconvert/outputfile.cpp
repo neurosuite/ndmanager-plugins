@@ -23,7 +23,7 @@
 
 using namespace std;
 
-void OutputFile::create() throw(NLXError)
+void OutputFile::create() 
 {
 	// Data file exists?
 	if ( !force )

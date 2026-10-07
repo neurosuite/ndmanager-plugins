@@ -62,7 +62,7 @@ class SMIFileCollection
 			Open files
 			@return	false if one of the files could not be opened
 		*/
-		virtual void open() throw(NLXError);
+		virtual void open() ;
 		/**
 			Close files
 		*/
@@ -70,7 +70,7 @@ class SMIFileCollection
 		/**
 			Determine total number of records
 		*/
-		virtual void init() throw(NLXError);
+		virtual void init() ;
 		/**
 			Count the total number of frames in the files
 			@return	number of frames

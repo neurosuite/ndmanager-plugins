@@ -40,14 +40,14 @@ class SONADCMarkChannel : public SONChannel
 		/**
 			Read ADC data
 		*/
-		virtual void read() throw (SONError);
+		virtual void read() ;
 		/**
 			Write ADC data
 			@param	times	timestamp file
 			@param	waveforms	waveform file
 			@param	reverse	reverse values?
 		*/
-		virtual void write(ostream& times,ostream& waveforms,bool reverse = false) const throw (SONError);
+		virtual void write(ostream& times,ostream& waveforms,bool reverse = false) const ;
 
 	private:
 

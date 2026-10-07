@@ -193,5 +193,6 @@ ostream& operator<<(ostream& out,const SONChannelInfo& channelInfo)
 			out << "Units                                 " << channelInfo.v.real.units << endl;
 			break;
 	}
+	return out;
 }
 

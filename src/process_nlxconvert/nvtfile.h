@@ -57,7 +57,7 @@ class NVTFile : public ifstream
 			Open file
 			@return	false if the file could not be opened
 		*/
-		virtual void open() throw(NLXError);
+		virtual void open() ;
 		/**
 			Read frequency and frame duration, and determine number of frames
 		*/

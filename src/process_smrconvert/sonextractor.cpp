@@ -60,7 +60,7 @@ SONExtractor::~SONExtractor()
 {
 }
 
-void SONExtractor::checkDat() throw(SONError)
+void SONExtractor::checkDat() 
 {
 	if ( !force )
 	{
@@ -72,7 +72,7 @@ void SONExtractor::checkDat() throw(SONError)
 	}
 }
 
-void SONExtractor::checkSpk() throw(SONError)
+void SONExtractor::checkSpk() 
 {
 	if ( !force )
 		for ( uint16_t i = 0 ; i < nADCMarkChannels ; ++i )
@@ -94,7 +94,7 @@ void SONExtractor::checkSpk() throw(SONError)
 		}
 }
 
-void SONExtractor::checkEvt() throw(SONError)
+void SONExtractor::checkEvt() 
 {
 	if ( !force )
 		for ( uint16_t i = 0 ; i < nEventChannels ; ++i )
@@ -110,7 +110,7 @@ void SONExtractor::checkEvt() throw(SONError)
 		}
 }
 
-void SONExtractor::extractDat() throw(SONError)
+void SONExtractor::extractDat() 
 {
 	SONADCChannels		channels(file,nADCChannels,ADCChannels);
 
@@ -147,7 +147,7 @@ void SONExtractor::extractDat() throw(SONError)
 	cout << endl;
 }
 
-void SONExtractor::extractEvt() throw(SONError)
+void SONExtractor::extractEvt() 
 {
 	cout << "...extracting data for " << nEventChannels << " event channels: " << flush;
 
@@ -184,7 +184,7 @@ void SONExtractor::extractEvt() throw(SONError)
 	cout << endl;
 }
 
-void SONExtractor::extractSpk() throw(SONError)
+void SONExtractor::extractSpk() 
 {
 	cout << "...extracting data for " << nADCMarkChannels << " waveform channels: " << flush;
 
@@ -210,7 +210,7 @@ void SONExtractor::extractSpk() throw(SONError)
 	cout << endl;
 }
 
-void SONExtractor::extract() throw(SONError)
+void SONExtractor::extract() 
 {
 	// Open input file, and read file header + channel info
 	file->open();

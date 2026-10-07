@@ -40,7 +40,7 @@ SONADCMarkChannel::~SONADCMarkChannel()
 	delete[] time;
 }
 
-void SONADCMarkChannel::read() throw (SONError)
+void SONADCMarkChannel::read() 
 {
 	if ( !file->isADCMarkChannel(channel) )
 	{
@@ -88,7 +88,7 @@ void SONADCMarkChannel::read() throw (SONError)
 	}
 }
 
-void SONADCMarkChannel::write(ostream& times,ostream& waveforms,bool reverse) const throw (SONError)
+void SONADCMarkChannel::write(ostream& times,ostream& waveforms,bool reverse) const 
 {
 	if ( reverse ) for ( int32_t i = 0 ; i < nWaveforms*nSamplesPerWaveform ; ++i ) waveform[i] = -waveform[i];
 

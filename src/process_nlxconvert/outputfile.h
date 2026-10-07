@@ -57,7 +57,7 @@ class OutputFile : public ofstream
 		/**
 			Create output file
 		*/
-		virtual void create() throw(NLXError);
+		virtual void create() ;
 
 	private:
 

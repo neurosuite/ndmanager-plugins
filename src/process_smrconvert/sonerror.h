@@ -45,7 +45,7 @@ class SONError : public exception
 		/**
 			Destructor
 		*/
-		virtual ~SONError() throw ();
+		virtual ~SONError() ;
 		/**
 			Report error
 			

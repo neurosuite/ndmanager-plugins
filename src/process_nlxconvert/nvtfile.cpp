@@ -27,7 +27,7 @@ using namespace std;
 /**
 	Open file
 */
-void NVTFile::open() throw(NLXError)
+void NVTFile::open() 
 {
 	ifstream::open(filename.c_str(),ifstream::in);
 	if ( !good() ) throw NLXError(NLXError::READ_ERROR,"could not open '" + filename + "'.");

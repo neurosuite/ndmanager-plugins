@@ -63,7 +63,7 @@ SONBlockHeaders::~SONBlockHeaders()
 	delete[] nSamplesInBlock;
 }
 
-void SONBlockHeaders::readNext() throw (SONError)
+void SONBlockHeaders::readNext() 
 {
 	if ( currentBlock == 0 )
 	{
@@ -121,7 +121,7 @@ void SONBlockHeaders::readNext() throw (SONError)
 	currentBlock++;
 }
 
-void SONBlockHeaders::read() throw (SONError)
+void SONBlockHeaders::read() 
 {
 	nBlocks = file->getNBlocks(channel);
 	currentBlock = 0;

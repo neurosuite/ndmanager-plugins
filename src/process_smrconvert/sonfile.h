@@ -76,11 +76,11 @@ class SONFile : public ifstream
 		/**
 			Open file
 		*/
-		virtual void open() throw(SONError);
+		virtual void open() ;
 		/**
 			Initialization: read file header and channel information
 		*/
-		virtual void init() throw(SONError);
+		virtual void init() ;
 		/**
 			Read block headers for a given channel. This is not done on initialization
 			because it can take a lot of time and we do not want to block the program

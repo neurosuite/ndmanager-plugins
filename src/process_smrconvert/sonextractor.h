@@ -55,31 +55,31 @@ class SONExtractor
 		/**
 			Make sure .dat output file do not exist (unless forcing overwrite)
 		*/
-		virtual void checkDat() throw(SONError);
+		virtual void checkDat() ;
 		/**
 			Make sure .spk/.res output files do not exist (unless forcing overwrite)
 		*/
-		virtual void checkSpk() throw(SONError);
+		virtual void checkSpk() ;
 		/**
 			Make sure .evt output file do not exist (unless forcing overwrite)
 		*/
-		virtual void checkEvt() throw(SONError);
+		virtual void checkEvt() ;
 		/**
 			Extract to dat
 		*/
-		virtual void extractDat() throw(SONError);
+		virtual void extractDat() ;
 		/**
 			Extract to spk/res
 		*/
-		virtual void extractSpk() throw(SONError);
+		virtual void extractSpk() ;
 		/**
 			Extract to evt
 		*/
-		virtual void extractEvt() throw(SONError);
+		virtual void extractEvt() ;
 		/**
 			Extract
 		*/
-		virtual void extract() throw(SONError);
+		virtual void extract() ;
 
 	private:
 

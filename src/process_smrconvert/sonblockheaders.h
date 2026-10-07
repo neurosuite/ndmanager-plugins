@@ -64,11 +64,11 @@ class SONBlockHeaders
 		/**
 			Read all block headers
 		*/
-		virtual void read() throw (SONError);
+		virtual void read() ;
 		/**
 			Read next channel block header
 		*/
-		virtual void readNext() throw (SONError);
+		virtual void readNext() ;
 		/**
 			Get total number of samples
 		*/

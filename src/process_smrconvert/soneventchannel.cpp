@@ -37,7 +37,7 @@ SONEventChannel::~SONEventChannel()
 {
 }
 
-void SONEventChannel::read() throw (SONError)
+void SONEventChannel::read() 
 {
 	// Make sure this is an Event channel
 	if ( !file->isEventChannel(channel) )
@@ -84,7 +84,7 @@ void SONEventChannel::read() throw (SONError)
 	}
 }
 
-void SONEventChannel::write(ostream& out) const throw (SONError)
+void SONEventChannel::write(ostream& out) const 
 {
 	// Read info to convert from ticks to seconds
 	double millisecondsPerTick = file->getSecondsPerTick() * 1000;

@@ -44,13 +44,13 @@ SONFile::~SONFile()
 	delete[] blockHeaders;
 }
 
-void SONFile::open() throw(SONError)
+void SONFile::open() 
 {
 	ifstream::open(filename.c_str(),ios::in);
 	if ( !good() ) throw SONError(SONError::READ_ERROR,"'" + filename + "' not found. Aborting.");
 }
 
-void SONFile::init() throw(SONError)
+void SONFile::init() 
 {
 	fileHeader = new SONFileHeader(this);
 	fileHeader->read();

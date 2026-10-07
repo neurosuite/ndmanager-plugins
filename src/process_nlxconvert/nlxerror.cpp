@@ -31,7 +31,7 @@ message(message)
 {
 }
 
-NLXError::~NLXError() throw ()
+NLXError::~NLXError() 
 {
 }
 

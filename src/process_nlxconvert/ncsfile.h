@@ -58,7 +58,7 @@ class NCSFile : public ifstream
 		/**
 			Open file
 		*/
-		virtual void open() throw(NLXError);
+		virtual void open() ;
 		/**
 			Read frequency and record duration, and determine number of records
 		*/
@@ -67,7 +67,7 @@ class NCSFile : public ifstream
 			Read next data record
 			@return	false if the record could not be read (end of file)
 		*/
-		virtual bool readRecord() throw(NLXError);
+		virtual bool readRecord() ;
 
 	private:
 

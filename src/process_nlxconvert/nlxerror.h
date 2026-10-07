@@ -46,7 +46,7 @@ class NLXError : public exception
 		/**
 			Destructor
 		*/
-		virtual ~NLXError() throw ();
+		virtual ~NLXError() ;
 		/**
 			Report error
 			
