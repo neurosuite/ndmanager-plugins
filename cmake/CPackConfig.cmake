@@ -1,0 +1,16 @@
+set(CPACK_PACKAGE_NAME "ndmanager-plugins")
+set(CPACK_PACKAGE_VENDOR "Neurosuite")
+set(CPACK_PACKAGE_CONTACT "Florian Franzen <FlorianFranzen@gmail.com>")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "${PROJECT_DESCRIPTION}")
+set(CPACK_PACKAGE_HOMEPAGE_URL "${PROJECT_HOMEPAGE_URL}")
+set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE")
+
+set(CPACK_GENERATOR "DEB")
+set(CPACK_DEBIAN_FILE_NAME DEB-DEFAULT)
+set(CPACK_DEBIAN_PACKAGE_SECTION "science")
+set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
+# Used by the scripts and the Python tools at run time
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "bash, gawk, ffmpeg, python3-pyqt6")
+set(CPACK_DEBIAN_PACKAGE_RECOMMENDS "ndmanager, klusters, neuroscope")
+
+include(CPack)

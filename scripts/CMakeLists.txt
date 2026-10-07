@@ -1,9 +1,3 @@
-project(ndmanager-plugins-scripts)
-cmake_minimum_required(VERSION 2.8.6)
-
-# Install scripts
-# Create list with 'ls|grep -v CMakeLists.txt|grep -v docbook'
-set(program ndm)
 set(scripts
 	cnt
 	duration
@@ -34,31 +28,15 @@ set(scripts
 	process_renameevents_TMaze
 	process_reorderclusters
 	rn)
-install(PROGRAMS ${scripts} DESTINATION bin)
+install(PROGRAMS ${scripts} DESTINATION ${CMAKE_INSTALL_BINDIR})
 
-# Create and install man pages
-set(docbooks
-	cnt.docbook
-	duration.docbook
-	ndm.docbook
-	ndm_recolorchannels.docbook
-	ndm_start.docbook
-	pad.docbook
-	process_reorderclusters.docbook
-	rn.docbook)
-file(GLOB_RECURSE files /usr/share/docbook.xsl)
-foreach(file ${files})
-	string(FIND ${file} manpages found)
-	if (NOT found EQUAL -1)
-		set(xsl ${file})
-	endif()
-endforeach()
-set(manpages)
-foreach(docbook ${docbooks})
-	string(REGEX REPLACE docbook 1 manpage ${docbook})
-	add_custom_command(OUTPUT ${manpage} DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/${docbook}" COMMAND xsltproc ${xsl} "${CMAKE_CURRENT_SOURCE_DIR}/${docbook}")
-	add_custom_command(OUTPUT ${manpage}.gz DEPENDS ${manpage} COMMAND gzip -f ${manpage})
-	list(APPEND manpages ${manpage}.gz)
-	install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${manpage}.gz" DESTINATION man/man1)
-endforeach()
-add_custom_target(man-${program} ALL DEPENDS ${manpages})
+ndm_add_manpages(scripts
+    cnt.docbook
+    duration.docbook
+    ndm.docbook
+    ndm_recolorchannels.docbook
+    ndm_start.docbook
+    pad.docbook
+    process_reorderclusters.docbook
+    rn.docbook
+)

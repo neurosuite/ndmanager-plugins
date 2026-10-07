@@ -1,120 +1,27 @@
-project(ndmanager-plugins)
-cmake_minimum_required(VERSION 2.8.6)
+# SPDX-License-Identifier: GPL-3.0-or-later
+cmake_minimum_required(VERSION 3.16)
+project(ndmanager-plugins
+    VERSION 3.0.0
+    DESCRIPTION "Processing tools and scripts for NDManager"
+    HOMEPAGE_URL "https://neurosuite.github.io"
+    LANGUAGES C CXX)
 
-set(CMAKE_INCLUDE_CURRENT_DIR TRUE)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+option(WITH_PYTHON_TOOLS "Build ndm_prepare and ndm_checkconsistency (needs PyQt6's pyuic6)" ON)
+option(WITH_MANPAGES "Build manual pages from the DocBook sources (needs xsltproc)" ON)
+
+include(GNUInstallDirs)
+include(cmake/Manpages.cmake)
+
+add_subdirectory(src)
 add_subdirectory(scripts)
 add_subdirectory(descriptions)
-add_subdirectory(src)
-add_subdirectory(python)
 add_subdirectory(matlab)
-
-# Set package information
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Plugins for NDManager")
-set(CPACK_PACKAGE_NAME "ndmanager-plugins" )
-set(CPACK_PACKAGE_VERSION_MAJOR "1")
-set(CPACK_PACKAGE_VERSION_MINOR "4")
-SET(CPACK_PACKAGE_VERSION_PATCH "14")
-set(CPACK_PACKAGE_VERSION "${CPACK_PACKAGE_VERSION_MAJOR}.${CPACK_PACKAGE_VERSION_MINOR}.${CPACK_PACKAGE_VERSION_PATCH}")
-set(CPACK_PACKAGE_INSTALL_DIRECTORY "ndmanager-plugins")
-
-# Determine distribution and release
-execute_process(COMMAND lsb_release -si OUTPUT_VARIABLE DISTRIBUTION OUTPUT_STRIP_TRAILING_WHITESPACE)
-execute_process(COMMAND lsb_release -sc OUTPUT_VARIABLE RELEASE OUTPUT_STRIP_TRAILING_WHITESPACE)
-execute_process(COMMAND uname -i OUTPUT_VARIABLE ARCHITECTURE)
-
-# Set package name and type (deb vs rpm)
-if(DISTRIBUTION STREQUAL "Ubuntu")
-
-  # Set Ubuntu-specific information (see http://www.cmake.org/Wiki/CMake:CPackPackageGenerators)
-  if(ARCHITECTURE MATCHES ".*x86_64.*")
-    set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "amd64")
-  else()
-    set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "i386")
-  endif()
-  set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Michaël Zugaro")
-  set(CPACK_DEBIAN_PACKAGE_SECTION "Science")
-  set(CPACK_DEBIAN_PACKAGE_RECOMMENDS "klusters, neuroscope, ndmanager")
-  set(CPACK_DEBIAN_PACKAGE_DEPENDS "libasyncns0, libjson0, libtinfo5, libgsl0ldbl, python-qt4, libav-tools")
-  set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "http://ndmanager.sourceforge.net")
-  set(CPACK_GENERATOR "DEB")
-  set(CPACK_PACKAGE_FILE_NAME ${CPACK_PACKAGE_NAME}_${CPACK_PACKAGE_VERSION}-${RELEASE}_${CPACK_DEBIAN_PACKAGE_ARCHITECTURE})
-  set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA "${CMAKE_CURRENT_SOURCE_DIR}/postinst;${CMAKE_CURRENT_SOURCE_DIR}/postrm;" )
-
-# >>> TEMPLATE CODE FOR ADDITIONAL DEBIAN-LIKE DISTRIBUTIONS <<<
-
-#elseif(DISTRIBUTION STREQUAL "Ubuntu")
-#
-#  # Set Ubuntu-specific information (see http://www.cmake.org/Wiki/CMake:CPackPackageGenerators)
-#  if(ARCHITECTURE MATCHES ".*x86_64.*")
-#    set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "amd64")
-#  else()
-#    set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "i386")
-#  endif()
-#  set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Michaël Zugaro")
-#  set(CPACK_DEBIAN_PACKAGE_SECTION "Science")
-#  set(CPACK_DEBIAN_PACKAGE_RECOMMENDS "klusters, neuroscope, ndmanager")
-#  set(CPACK_DEBIAN_PACKAGE_DEPENDS "")
-#  set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "http://ndmanager.sourceforge.net")
-#  set(CPACK_GENERATOR "DEB")
-#  set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA "${CMAKE_CURRENT_SOURCE_DIR}/postinst;${CMAKE_CURRENT_SOURCE_DIR}/postrm;" )
-#  set(CPACK_PACKAGE_FILE_NAME ${CPACK_PACKAGE_NAME}_${CPACK_PACKAGE_VERSION}-${RELEASE}_${CPACK_DEBIAN_PACKAGE_ARCHITECTURE})
-
-elseif(DISTRIBUTION MATCHES "openSUSE.*")
-
-  # Set openSUSE-specific information (see http://www.cmake.org/Wiki/CMake:CPackPackageGenerators)
-  if(ARCHITECTURE MATCHES ".*x86_64.*")
-    set(CPACK_RPM_PACKAGE_ARCHITECTURE "x86_64")
-  else()
-    set(CPACK_RPM_PACKAGE_ARCHITECTURE "i586")
-  endif()
-  set(CPACK_PACKAGE_CONTACT "Michaël Zugaro")
-  set(CPACK_RPM_PACKAGE_GROUP "Science")
-  set(CPACK_RPM_PACKAGE_LICENSE "GPL-3.0-or-later")
-  set(CPACK_RPM_PACKAGE_SUGGESTS "klusters, neuroscope, ndmanager")
-  set(CPACK_RPM_PACKAGE_REQUIRES "")
-  set(CPACK_RPM_PACKAGE_URL "http://ndmanager.sourceforge.net")
-  set(CPACK_GENERATOR "RPM")
-  set(CPACK_PACKAGE_FILE_NAME ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${RELEASE}.${CPACK_RPM_PACKAGE_ARCHITECTURE})
-  set(CPACK_RPM_POST_INSTALL_SCRIPT_FILE "${CMAKE_CURRENT_SOURCE_DIR}/postinst")
-  set(CPACK_RPM_POST_UNINSTALL_SCRIPT_FILE "${CMAKE_CURRENT_SOURCE_DIR}/postrm")
-
-elseif(DISTRIBUTION STREQUAL "Fedora")
-
-  # Set Fedora-specific information (see http://www.cmake.org/Wiki/CMake:CPackPackageGenerators)
-  execute_process(COMMAND lsb_release -sr OUTPUT_VARIABLE RELEASE OUTPUT_STRIP_TRAILING_WHITESPACE)
-  if(ARCHITECTURE MATCHES ".*x86_64.*")
-    set(CPACK_RPM_PACKAGE_ARCHITECTURE "x86_64")
-  else()
-    set(CPACK_RPM_PACKAGE_ARCHITECTURE "i686")
-  endif()
-  set(CPACK_PACKAGE_CONTACT "Michaël Zugaro")
-  set(CPACK_RPM_PACKAGE_GROUP "Science")
-  set(CPACK_RPM_PACKAGE_LICENSE "GPL-3.0-or-later")
-  set(CPACK_RPM_PACKAGE_SUGGESTS "klusters, neuroscope, ndmanager")
-  set(CPACK_RPM_PACKAGE_REQUIRES "")
-  set(CPACK_RPM_PACKAGE_URL "http://ndmanager.sourceforge.net")
-  set(CPACK_GENERATOR "RPM")
-  set(CPACK_PACKAGE_FILE_NAME ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}.fc${RELEASE}.${CPACK_RPM_PACKAGE_ARCHITECTURE})
-  set(CPACK_RPM_POST_INSTALL_SCRIPT_FILE "${CMAKE_CURRENT_SOURCE_DIR}/postinst")
-  set(CPACK_RPM_POST_UNINSTALL_SCRIPT_FILE "${CMAKE_CURRENT_SOURCE_DIR}/postrm")
-
-# >>> TEMPLATE CODE FOR ADDITIONAL REDHAT-LIKE DISTRIBUTIONS <<<
-
-#elseif(DISTRIBUTION MATCHES "openSUSE.*")
-#
-#  # Set openSUSE-specific information (see http://www.cmake.org/Wiki/CMake:CPackPackageGenerators)
-#  set(CPACK_RPM_PACKAGE_ARCHITECTURE "noarch")
-#  set(CPACK_PACKAGE_CONTACT "Michaël Zugaro")
-#  set(CPACK_RPM_PACKAGE_GROUP "Science")
-#  set(CPACK_RPM_PACKAGE_LICENSE "GPL-3.0-or-later")
-#  set(CPACK_RPM_PACKAGE_SUGGESTS "klusters, neuroscope, ndmanager")
-#  set(CPACK_RPM_PACKAGE_REQUIRES "")
-#  set(CPACK_RPM_PACKAGE_URL "http://ndmanager.sourceforge.net")
-#  set(CPACK_GENERATOR "RPM")
-#  set(CPACK_RPM_POST_INSTALL_SCRIPT_FILE "${CMAKE_CURRENT_SOURCE_DIR}/postinst")
-#  set(CPACK_RPM_POST_UNINSTALL_SCRIPT_FILE "${CMAKE_CURRENT_SOURCE_DIR}/postrm")
-#  set(CPACK_PACKAGE_FILE_NAME ${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}-${RELEASE}.${CPACK_RPM_PACKAGE_ARCHITECTURE})
-
+if(WITH_PYTHON_TOOLS)
+    add_subdirectory(python)
 endif()
 
-include(CPack)
+include(cmake/CPackConfig.cmake)
