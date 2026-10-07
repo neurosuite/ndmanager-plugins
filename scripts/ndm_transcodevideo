@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #////////////////////////////////////////////////////////////////////////////
 #//
@@ -34,7 +34,7 @@ print_header "$session - Converting video"
 inputs_missing $session.xml && exit $INPUTS_MISSING
 
 # Check required programs
-check_commands_installed xpathReader avconv
+check_commands_installed xpathReader ffmpeg ffprobe
 
 # ////////////////////////////////////////////////////////////////////////////////////////////////
 # // Read Parameters
@@ -63,17 +63,17 @@ case $output_codec in
 	# name is not reliable, because 'avi' is a very common extension, so the source and target files could have the
 	# same name; therefore, if we find a file with the target name, we also have to test its codec)
 	m1v)
-		[ -f $session.m1v ] && avprobe $session.m1v 2>&1 | grep 'Video.*mpeg1video' >/dev/null && outputs_exist $session.m1v && exit $OUTPUTS_EXIST
-		avconv -i $video_file -vcodec mpeg1video -f rawvideo -r $frequency -b 800k $session-tmp.m1v
+		[ -f $session.m1v ] && ffprobe $session.m1v 2>&1 | grep 'Video.*mpeg1video' >/dev/null && outputs_exist $session.m1v && exit $OUTPUTS_EXIST
+		ffmpeg -i $video_file -vcodec mpeg1video -f rawvideo -r $frequency -b:v 800k $session-tmp.m1v
 		error=$?
-		check_command_status avconv $error
+		check_command_status ffmpeg $error
 		mv $session-tmp.m1v $session.m1v
 		;;
 	x264)
-		[ -f $session.avi ] && avprobe $session.avi 2>&1 | grep 'Video.*h264' >/dev/null && outputs_exist $session.avi && exit $OUTPUTS_EXIST
-		avconv -i $video_file -vcodec libx264 -qp 20 -r $frequency $session-tmp.avi
+		[ -f $session.avi ] && ffprobe $session.avi 2>&1 | grep 'Video.*h264' >/dev/null && outputs_exist $session.avi && exit $OUTPUTS_EXIST
+		ffmpeg -i $video_file -vcodec libx264 -qp 20 -r $frequency $session-tmp.avi
 		error=$?
-		check_command_status avconv $error
+		check_command_status ffmpeg $error
 		mv $session-tmp.avi $session.avi
 		;;
 esac
