@@ -29,7 +29,7 @@
 #include <string.h>
 #include <math.h>
 
-#include "samplerate.h"
+#include <samplerate.h>
 
 #define	BUFFER_LEN	 1024
 
@@ -272,7 +272,7 @@ sample_rate_convert (FILE *infile, FILE *outfile, int converter, double src_rati
 // 		output_count = 0 ;
 // 		return -1 ;
 // 		} ;
-	printf("\n",chunk,nChunks);
+	printf("\n");
 	return output_count ;
 } /* sample_rate_convert */
 
