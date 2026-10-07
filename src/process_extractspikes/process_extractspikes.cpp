@@ -1635,7 +1635,7 @@ int getThresholdsFromArg(int *thresNb_group, double **thresList,
 	char *groups, *currentGroup, *thresholds; // Groups of electrodes and thr
 
 	// extract thresholds from arguments
-	groups = strdupa (arguments.thresList); // Split groups
+	groups = strdup (arguments.thresList); // Split groups (released at exit)
 	currentGroup = strsep (&groups, GROUP_SEPARATOR); // focus on the 1st group
 
 	while(currentGroup != NULL) {
@@ -1692,7 +1692,7 @@ int getChannelsFromArg(int *channelNb_group, int **channelList,
 	char *groups, *currentGroup, *channels; // Groups of electrodes and channels
 
 	// extract channels from arguments
-	groups = strdupa (arguments.channelList); // Split groups
+	groups = strdup (arguments.channelList); // Split groups (released at exit)
 	currentGroup = strsep (&groups, GROUP_SEPARATOR); // focus on the 1st group
 
 	while(currentGroup != NULL) {

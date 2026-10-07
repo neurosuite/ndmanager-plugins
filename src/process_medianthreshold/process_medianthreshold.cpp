@@ -193,7 +193,7 @@ int main(int argc,char *argv[]) {
 	} // for i
 
 	/** Computes threshold for each channel groups */
-	groups = strdupa (arguments.channelList); // Split groups
+	groups = strdup (arguments.channelList); // Split groups (released at exit)
 	currentGroup = strsep (&groups, GROUP_SEPARATOR); // focus on the first group
 
 	while(currentGroup != NULL) {
