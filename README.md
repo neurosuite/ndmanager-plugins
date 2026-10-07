@@ -14,7 +14,7 @@ Public License v3 or later (`process_extractleds` is LGPL-2.1-or-later).
 
 Requires CMake 3.16+, C and C++17 compilers, GSL, libxml2, libsamplerate and the FFmpeg
 libraries (libavformat, libavcodec, libswscale, libavutil). The Python tools need Python 3 and
-PyQt6 (`pyuic6`); manual pages need `xsltproc` and the DocBook XSL stylesheets.
+PyQt6 (`pyuic6`). Manual pages need `xsltproc` and the DocBook XSL stylesheets.
 
 ```bash
 cmake -B build -S . -DCMAKE_BUILD_TYPE=Release

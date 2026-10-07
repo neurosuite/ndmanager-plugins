@@ -15,7 +15,7 @@ Version numbers now follow the rest of Neurosuite.
 
 ### Changed
 - `process_extractleds` decodes video with the system FFmpeg libraries instead of a bundled,
-  modified copy of libav 11.2's player. Output is unchanged; it no longer waits about 100 s
+  modified copy of libav 11.2's player. Output is unchanged, but it no longer waits about 100 s
   after the last frame, and the live video display is gone (`-hide` is accepted and ignored).
   For full-range (MJPEG) video the colour averages can differ by less than one unit.
 - `process_resample` uses the system libsamplerate instead of a bundled copy.
@@ -23,7 +23,7 @@ Version numbers now follow the rest of Neurosuite.
   Théotime de Charrin).
 - `ndm_transcodevideo` uses `ffmpeg`/`ffprobe` instead of libav's `avconv`/`avprobe`.
 - Scripts start with `#!/usr/bin/env bash`.
-- New CMake build (3.16, C++17, GNUInstallDirs); manual pages and the Python tools are optional.
+- New CMake build (3.16, C++17, GNUInstallDirs). Manual pages and the Python tools are optional.
   MATLAB files are installed to `share/ndmanager-plugins/matlab`.
 - Licence file corrected to GPL-3.0-or-later, matching the source headers.
 
